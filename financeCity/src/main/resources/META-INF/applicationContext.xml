@@ -29,7 +29,7 @@
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url"
-			value="jdbc:mysql://localhost:3306/hw1?autoReconnect=true" />
+			value="jdbc:mysql://localhost:3306" />
 		<property name="username" value="root" />
 		<property name="password" value="root" />
 	</bean>
@@ -37,7 +37,7 @@
 	<!-- 配置sessionFactory -->
 
 	<bean id="sessionFactory"
-		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="packagesToScan" value="edu.nju.model" />
 		<property name="hibernateProperties">
@@ -52,7 +52,7 @@
 	</bean>
 
 	<bean id="transactionManager"
-		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
