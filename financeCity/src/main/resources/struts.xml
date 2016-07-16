@@ -5,5 +5,11 @@
 
 <struts>
 
+	<package name="struts2" extends="struts-default">
+		<action name="test" class="TestAction">
+		<result name="success">/new.jsp</result>
+		</action>
+	</package>
+
 </struts>
 
