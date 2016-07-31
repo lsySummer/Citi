@@ -1,5 +1,7 @@
 package edu.nju.vo;
 
+import java.util.Map;
+
 /**
  * @author lsy
  * 历史数据
@@ -9,10 +11,10 @@ public class HistoryDataVO {
 	private int term;
 	
 	/**波动率*/
-	private double volatility;
+	private Map volatility;
 	
 	/**收益率*/
-	private double incomeRate;
+	private Map incomeRate;
 	
 	/**成立时价值*/
 	private double builtValue;
@@ -20,19 +22,19 @@ public class HistoryDataVO {
 	/**当前价值*/
 	private double currentValue;
 	
-	public double getVolatility() {
+	public Map getVolatility() {
 		return volatility;
 	}
 
-	public void setVolatility(double volatility) {
+	public void setVolatility(Map volatility) {
 		this.volatility = volatility;
 	}
 
-	public double getIncomeRate() {
+	public Map getIncomeRate() {
 		return incomeRate;
 	}
 
-	public void setIncomeRate(double incomeRate) {
+	public void setIncomeRate(Map incomeRate) {
 		this.incomeRate = incomeRate;
 	}
 
