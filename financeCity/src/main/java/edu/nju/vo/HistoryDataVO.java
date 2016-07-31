@@ -11,10 +11,10 @@ public class HistoryDataVO {
 	private int term;
 	
 	/**波动率*/
-	private Map volatility;
+	private Map<String,Double> volatility;
 	
 	/**收益率*/
-	private Map incomeRate;
+	private Map<String,Double> incomeRate;
 	
 	/**成立时价值*/
 	private double builtValue;
@@ -26,7 +26,7 @@ public class HistoryDataVO {
 		return volatility;
 	}
 
-	public void setVolatility(Map volatility) {
+	public void setVolatility(Map<String,Double> volatility) {
 		this.volatility = volatility;
 	}
 
@@ -34,7 +34,7 @@ public class HistoryDataVO {
 		return incomeRate;
 	}
 
-	public void setIncomeRate(Map incomeRate) {
+	public void setIncomeRate(Map<String,Double> incomeRate) {
 		this.incomeRate = incomeRate;
 	}
 
