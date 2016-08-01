@@ -1,4 +1,4 @@
-﻿package edu.nju.dao.impl;
+package edu.nju.dao.impl;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class BaseDaoImpl implements BaseDao {
 	public Session getSession() {
 		return sessionFactory.getCurrentSession();
 	}
-	
+
 
 	/** * openSession 需要手动关闭session 意思是打开一个新的session * * @return */
 	public Session getNewSession() {
@@ -118,18 +118,18 @@ public class BaseDaoImpl implements BaseDao {
 			}
 		}
 	}
-	
-	// 根据HQL语句进行查询 
-	@SuppressWarnings("unchecked") 
-	public List find(String queryString) { 
+
+	// 根据HQL语句进行查询
+	@SuppressWarnings("unchecked")
+	public List find(String queryString) {
 		Session session = getNewSession();
 		return session.createQuery(queryString).list();
-	
-	} 
-	// 根据HQL语句进行查询 
-	public List login(String queryString,String uname,String pass) { 
+
+	}
+	// 根据HQL语句进行查询
+	public List login(String queryString,String uname,String pass) {
 		Session session = getNewSession();
 		return session.createQuery(queryString).setParameter(0, uname).setParameter(1, pass).list();
-	} 
+	}
 
 }
