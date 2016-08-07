@@ -1,0 +1,7 @@
+package edu.nju.service.POJO;
+
+/**
+ * Created by dell on 2016/7/25.
+ */
+public class Identity {
+}
