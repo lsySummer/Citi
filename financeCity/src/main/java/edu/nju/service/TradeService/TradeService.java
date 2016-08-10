@@ -11,14 +11,14 @@ public interface TradeService extends BaseService {
      * @param productID .
      * @return if success
      */
-    boolean buyProduct(String productID);
+    boolean buyProduct(Long productID);
 
     /**
      * redeem/sell product
      * @param ProductID .
      * @return if success
      */
-    boolean redeemProduct(String ProductID);
+    boolean redeemProduct(Long ProductID);
 
     /**
      * enforce investment plan

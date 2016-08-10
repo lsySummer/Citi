@@ -7,17 +7,17 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by dell on 2016/7/25.
+ * Created by Sun YuHao on 2016/7/25.
  */
 public class TradeServiceImpl extends BaseFunctionService implements TradeService {
 
     @Override
-    public boolean buyProduct(String productID) {
+    public boolean buyProduct(Integer productID) {
         return false;
     }
 
     @Override
-    public boolean redeemProduct(String ProductID) {
+    public boolean redeemProduct(Integer ProductID) {
         return false;
     }
 

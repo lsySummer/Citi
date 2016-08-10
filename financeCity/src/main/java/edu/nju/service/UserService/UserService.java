@@ -2,11 +2,12 @@ package edu.nju.service.UserService;
 
 import edu.nju.dao.BaseDao;
 import edu.nju.service.BaseService.BaseService;
+import edu.nju.service.Exceptions.NotLoginException;
 import edu.nju.service.POJO.RegisterInfo;
 import edu.nju.service.POJO.UserInfo;
 
 /**
- * Created by dell on 2016/7/25.
+ * Created by Sun YuHao on 2016/7/25.
  */
 public interface UserService extends BaseService {
 
@@ -15,7 +16,7 @@ public interface UserService extends BaseService {
      * @param regInfo .
      * @return user id
      */
-    String register(RegisterInfo regInfo);
+    Long register(RegisterInfo regInfo);
 
     /**
      * user login
@@ -23,7 +24,7 @@ public interface UserService extends BaseService {
      * @param password .
      * @return user id
      */
-    String login(String userName, String password);
+    Long login(String userName, String password);
 
     /**
      * user logout
@@ -48,11 +49,11 @@ public interface UserService extends BaseService {
      * get user id
      * @return user id .
      */
-    String getID();
+    Long getID() throws NotLoginException;
 
     /**
      * get user dao
      * @return dao .
      */
-    BaseDao getUserDao();
+    BaseDao getUserDao() throws NotLoginException;
 }

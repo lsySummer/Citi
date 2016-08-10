@@ -48,12 +48,8 @@ public class ServiceManagerImpl implements ServiceManager {
                 new SearchServiceImpl(),
                 new TradeServiceImpl()
         };
-        for (int i = 0; i < serviceNames.length; ++i) {
-            if (serviceNames[i].equals("UserService")) {
-                continue;
-            }
-
-            services[i].bindUserService(userState);
+        for (BaseFunctionService service : services) {
+            service.bindUserService(userState);
         }
     }
 

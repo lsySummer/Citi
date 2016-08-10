@@ -5,7 +5,7 @@ import edu.nju.service.POJO.PushConfiguration;
 import edu.nju.service.POJO.PushContent;
 
 /**
- * Created by dell on 2016/7/25.
+ * Created by Sun YuHao on 2016/7/25.
  */
 public interface PushService extends BaseService {
     /**
@@ -13,7 +13,7 @@ public interface PushService extends BaseService {
      * @param contentID .
      * @return push content
      */
-    PushContent updatePushContent(String contentID);
+    PushContent updatePushContent(Long contentID);
 
     /**
      * set push configuration

@@ -2,10 +2,9 @@ package edu.nju.service.InvestAdvisorService;
 
 import edu.nju.service.BaseService.BaseService;
 import edu.nju.service.Exceptions.NotAllConfigurationSetException;
-import edu.nju.service.POJO.Identity;
+import edu.nju.service.Exceptions.NotLoginException;
 import edu.nju.service.POJO.InvestmentPortFolio;
 import edu.nju.service.POJO.Preference;
-import edu.nju.service.POJO.UserInfo;
 import edu.nju.vo.FamilySpendingVO;
 import edu.nju.vo.IdentityVO;
 import edu.nju.vo.TemperPreferVO;
@@ -13,7 +12,7 @@ import edu.nju.vo.UserVO;
 
 
 /**
- * Created by dell on 2016/7/25.
+ * Created by Sun YuHao on 2016/7/25.
  */
 public interface InvestAdvisorService extends BaseService {
     /**
@@ -83,12 +82,11 @@ public interface InvestAdvisorService extends BaseService {
      * get investment portfolio
      * @return investment portfolio
      */
-    InvestmentPortFolio createInvestmentPortFolio() throws NotAllConfigurationSetException;
+    InvestmentPortFolio createInvestmentPortFolio() throws NotAllConfigurationSetException, NotLoginException;
 
     /**
      * get user vo
-     * @param id .
      * @return user vo
      */
-    UserVO getUserVO(String id);
+    UserVO getUserVO();
 }

@@ -53,26 +53,25 @@ public interface SearchService extends BaseService{
      * @param productId .
      * @return history data
      */
-    HistoryDataVO getHistoryDataVO(String productId);
+    HistoryDataVO getHistoryDataVO(Long productId);
 
     /**
      * get product detail
      * @param productID .
      * @return product detail
      */
-    ProductDetailVO getProductDetailVO(String productID);
+    ProductDetailVO getProductDetailVO(Long productID);
 
     /**
      * get project
      * @param projectID .
      * @return project
      */
-    ProjectVO getProjectVO(String projectID);
+    ProjectVO getProjectVO(Long projectID);
 
     /**
      * get Timeline
-     * @param ID .
      * @return timeline
      */
-    TimeLineVO getTimeLineVO(String ID);
+    TimeLineVO getTimeLineVO();
 }
