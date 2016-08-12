@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
- * Created by dell on 2016/8/11.
+ * Created by dell on 2016/8/12.
  */
 @Entity
 @Table(name = "user_temper_prefer", schema = "citi", catalog = "")

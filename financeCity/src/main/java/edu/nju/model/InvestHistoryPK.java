@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
- * Created by dell on 2016/8/11.
+ * Created by dell on 2016/8/12.
  */
 public class InvestHistoryPK implements Serializable {
     private int userId;

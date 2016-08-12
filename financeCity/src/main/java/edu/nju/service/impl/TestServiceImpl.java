@@ -18,4 +18,11 @@ public class TestServiceImpl implements TestService{
 		return testDao.addName(text);
 	}
 
+	public TestDao getTestDao() {
+		return testDao;
+	}
+
+	public void setTestDao(TestDao testDao) {
+		this.testDao = testDao;
+	}
 }

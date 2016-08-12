@@ -135,6 +135,15 @@ public class BaseDaoImpl implements BaseDao {
 		return session.createQuery(queryString).list();
 
 	}
+
+	public SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
+
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+
 	// 根据HQL语句进行查询
 	public List login(String queryString,String uname,String pass) {
 		Session session = getNewSession();

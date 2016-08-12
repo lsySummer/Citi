@@ -20,4 +20,12 @@ public class TestAction extends BaseAction {
 		String text = request.getParameter("txt");
 		return testService.test(text);
 	}
+
+	public TestService getTestService() {
+		return testService;
+	}
+
+	public void setTestService(TestService testService) {
+		this.testService = testService;
+	}
 }
