@@ -2,6 +2,9 @@ package edu.nju.service;
 
 import edu.nju.service.Exceptions.InvalidAPINameException;
 import edu.nju.service.Exceptions.InvalidServiceNameException;
+import edu.nju.service.Exceptions.NotLoginException;
+import edu.nju.service.POJO.RegisterInfo;
+import edu.nju.service.POJO.UserInfo;
 
 import java.util.List;
 import java.util.Map;
@@ -34,4 +37,12 @@ public interface ServiceManager {
      * Note: use the first api found in services
      */
     Object invokeAPI(String apiName, List<Object> param) throws InvalidAPINameException;
+
+    /** User service APIS*/
+    Long register(RegisterInfo regInfo);
+    Long login(String userName, String password);
+    boolean logout();
+    boolean isLogin();
+    boolean modifyUserInfo(UserInfo userInfo);
+    Long getID() throws NotLoginException;
 }

@@ -46,7 +46,7 @@ public class BaseDaoImpl implements BaseDao {
 	/** * 获取所有信息 * * @param c * * @return */
 
 	public List getAllList(Class c) {
-		String hql = "from " + c.getName()+" order by id desc";
+		String hql = "from " + c.getName()+ " object";
 		Session session = getSession();
 		return session.createQuery(hql).list();
 
@@ -91,6 +91,15 @@ public class BaseDaoImpl implements BaseDao {
 
 		Session session = getNewSession();
 		session.delete(bean);
+		session.flush();
+		session.clear();
+		session.close();
+	}
+
+	@Override
+	public void saveOrUpdate(Object bean) {
+		Session session = getSession();
+		session.saveOrUpdate(bean);
 		session.flush();
 		session.clear();
 		session.close();

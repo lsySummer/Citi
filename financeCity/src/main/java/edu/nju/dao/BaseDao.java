@@ -1,6 +1,7 @@
 package edu.nju.dao;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.hibernate.Session;
 
@@ -30,6 +31,8 @@ public interface BaseDao {
 	public void update(Object bean) ;
 
 	public void delete(Object bean) ;
+
+	public void saveOrUpdate(Object bean);
 	
 	public void delete(Class c, int id) ;
 

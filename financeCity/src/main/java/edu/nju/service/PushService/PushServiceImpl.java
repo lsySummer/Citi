@@ -9,8 +9,9 @@ import edu.nju.service.POJO.PushContent;
  */
 public class PushServiceImpl extends BaseFunctionService implements PushService {
 
+
     @Override
-    public PushContent updatePushContent(Integer contentID) {
+    public PushContent updatePushContent(Long contentID) {
         return null;
     }
 

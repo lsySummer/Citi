@@ -12,12 +12,12 @@ import java.util.Map;
 public class TradeServiceImpl extends BaseFunctionService implements TradeService {
 
     @Override
-    public boolean buyProduct(Integer productID) {
+    public boolean buyProduct(Long productID) {
         return false;
     }
 
     @Override
-    public boolean redeemProduct(Integer ProductID) {
+    public boolean redeemProduct(Long ProductID) {
         return false;
     }
 

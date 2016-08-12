@@ -31,10 +31,10 @@ public interface InvestAdvisorService extends BaseService {
     /**
      * set preference
      *
-     * @param preference .
+     * @param temperPreferVO preference .
      * @return if it's successful
      */
-    boolean setPreference(Preference preference);
+    boolean setTemperPrefer(TemperPreferVO temperPreferVO);
 
     /**
      * get temper preference

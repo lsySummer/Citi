@@ -28,9 +28,13 @@
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url"
+		<!--<property name="url"
 			value="jdbc:mysql://localhost:3306/test?autoReconnect=true" />
 		<property name="username" value="root" />
+		<property name="password" value="root" />-->
+		<property name="url"
+				  value="jdbc:mysql://123.206.202.103:3306/citi/test?autoReconnect=true" />
+		<property name="username" value="user" />
 		<property name="password" value="root" />
 	</bean>
 
@@ -46,6 +50,8 @@
 				<prop key="hibernate.show_sql">true</prop>
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
 				<prop key="hibernate.connection.autocommit">true</prop>
+				<prop key="hibernate.connection.url">jdbc:mysql://123.206.202.103:3306/citi</prop>
+				<prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>
 			</props>
 		</property>
 

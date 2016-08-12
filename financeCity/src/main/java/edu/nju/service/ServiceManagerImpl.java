@@ -5,7 +5,10 @@ import edu.nju.service.BaseService.BaseFunctionService;
 import edu.nju.service.BaseService.BaseService;
 import edu.nju.service.Exceptions.InvalidAPINameException;
 import edu.nju.service.Exceptions.InvalidServiceNameException;
+import edu.nju.service.Exceptions.NotLoginException;
 import edu.nju.service.InvestAdvisorService.InvestAdvisorServiceImpl;
+import edu.nju.service.POJO.RegisterInfo;
+import edu.nju.service.POJO.UserInfo;
 import edu.nju.service.PushService.PushServiceImpl;
 import edu.nju.service.SearchService.SearchServiceImpl;
 import edu.nju.service.TradeService.TradeServiceImpl;
@@ -92,6 +95,7 @@ public class ServiceManagerImpl implements ServiceManager {
 
     /**
      * TODO:Load Methods To Run Faster/Check Methods
+     * TODO:Combine filter and this
      * @param apiName .
      * @param param .
      * @return .
@@ -111,6 +115,36 @@ public class ServiceManagerImpl implements ServiceManager {
         }
 
         throw new InvalidAPINameException(apiName);
+    }
+
+    @Override
+    public Long register(RegisterInfo regInfo) {
+        return userState.register(regInfo);
+    }
+
+    @Override
+    public Long login(String userName, String password) {
+        return userState.login(userName, password);
+    }
+
+    @Override
+    public boolean logout() {
+        return userState.logout();
+    }
+
+    @Override
+    public boolean isLogin() {
+        return userState.isLogin();
+    }
+
+    @Override
+    public boolean modifyUserInfo(UserInfo userInfo) {
+        return userState.modifyUserInfo(userInfo);
+    }
+
+    @Override
+    public Long getID() throws NotLoginException {
+        return userState.getID();
     }
 
     private BaseService getService(String serviceName) throws InvalidServiceNameException {
