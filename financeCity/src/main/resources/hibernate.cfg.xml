@@ -6,7 +6,6 @@
   <session-factory>
     <property name="connection.url">jdbc:mysql://123.206.202.103:3306/citi</property>
     <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-    <mapping class="edu.nju.model.UserLogin"/>
     <mapping class="edu.nju.model.DeletedCommodity"/>
     <mapping class="edu.nju.model.DeletedProduct"/>
     <mapping class="edu.nju.model.Institution"/>
@@ -24,6 +23,7 @@
     <mapping class="edu.nju.model.History"/>
     <mapping class="edu.nju.model.ProductBond"/>
     <mapping class="edu.nju.model.UserFamilySpeeding"/>
+    <mapping class="edu.nju.model.UserLogin"/>
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hbm2ddl.auto">update</property> -->
   </session-factory>

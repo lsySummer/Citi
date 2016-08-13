@@ -1,6 +1,6 @@
 package edu.nju.service.SearchService;
 
-import edu.nju.service.BaseService.BaseFunctionService;
+import edu.nju.service.BaseService.BaseFunctionServiceAdaptor;
 import edu.nju.service.Exceptions.InvalidProductNameException;
 import edu.nju.service.POJO.Filter;
 import edu.nju.service.POJO.Product;
@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by Sun YuHao on 2016/7/25.
  */
-public class SearchServiceImpl extends BaseFunctionService implements SearchService {
+public class SearchServiceImpl extends BaseFunctionServiceAdaptor implements SearchService {
 
     @Override
     public Product getProductByName(String productName) throws InvalidProductNameException {

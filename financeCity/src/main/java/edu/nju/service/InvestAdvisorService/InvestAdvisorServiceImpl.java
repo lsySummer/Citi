@@ -5,8 +5,7 @@ import edu.nju.model.User;
 import edu.nju.model.UserFamilySpeeding;
 import edu.nju.model.UserInformation;
 import edu.nju.model.UserTemperPrefer;
-import edu.nju.service.BaseService.BaseFunctionService;
-import edu.nju.service.BaseService.BaseService;
+import edu.nju.service.BaseService.BaseFunctionServiceAdaptor;
 import edu.nju.service.Exceptions.NotAllConfigurationSetException;
 import edu.nju.service.Exceptions.NotLoginException;
 import edu.nju.service.InvestAdvisorService.Strategy.InvestStrategy;
@@ -23,7 +22,7 @@ import java.util.List;
 /**
  * Created by Sun YuHao on 2016/7/25.
  */
-public class InvestAdvisorServiceImpl extends BaseFunctionService implements InvestAdvisorService {
+public class InvestAdvisorServiceImpl extends BaseFunctionServiceAdaptor implements InvestAdvisorService {
 
     private InvestStrategy investStrategy;
 

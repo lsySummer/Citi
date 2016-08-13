@@ -4,22 +4,22 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
- * Created by dell on 2016/8/11.
+ * Created by dell on 2016/8/12.
  */
 @Entity
 @Table(name = "user_login", schema = "citi", catalog = "")
 public class UserLogin {
-    private long userId;
+    private int userId;
     private String loginId;
     private Timestamp date;
 
     @Id
     @Column(name = "user_id")
-    public long getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
@@ -59,7 +59,7 @@ public class UserLogin {
 
     @Override
     public int hashCode() {
-        int result = (int) (userId ^ (userId >>> 32));
+        int result = userId;
         result = 31 * result + (loginId != null ? loginId.hashCode() : 0);
         result = 31 * result + (date != null ? date.hashCode() : 0);
         return result;

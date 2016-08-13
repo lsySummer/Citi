@@ -1,10 +1,8 @@
 package edu.nju.service.AssetManagementService;
 
 import edu.nju.model.InvestStatus;
-import edu.nju.service.BaseService.BaseFunctionService;
+import edu.nju.service.BaseService.BaseFunctionServiceAdaptor;
 import edu.nju.service.POJO.Event;
-import edu.nju.service.POJO.InvestmentPortFolio;
-import edu.nju.service.POJO.Product;
 import edu.nju.vo.InvestProductVO;
 
 import java.util.ArrayList;
@@ -13,7 +11,7 @@ import java.util.List;
 /**
  * Created by Sun YuHao on 2016/7/25.
  */
-public class AssetManagementServiceImpl extends BaseFunctionService implements AssetManagementService {
+public class AssetManagementServiceImpl extends BaseFunctionServiceAdaptor implements AssetManagementService {
 
     @SuppressWarnings("unchecked")
     @Override

@@ -2,11 +2,8 @@ package edu.nju.dao.impl;
 
 import edu.nju.model.UserLogin;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
-import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 
 import edu.nju.dao.BaseDao;
@@ -33,14 +30,19 @@ public class TestDaoImpl implements TestDao{
 		baseDao.save(bean);
 	}
 
+	@Override
+	public void delete(Object bean) {
+		baseDao.delete(bean);
+	}
+
 	public static void main(String[] args) {
 		ApplicationContext applicationContext = new FileSystemXmlApplicationContext("src/main/java/applicationContext.xml");
-		TestDao testDao = (TestDao)applicationContext.getBean("TestDaoImpl");
+		TestDao testDao = (TestDao)applicationContext.getBean("testDaoImpl");
 		UserLogin userLogin = new UserLogin();
 
-		userLogin.setDate(new Timestamp(0));
+		userLogin.setDate(new Timestamp(100000));
 		userLogin.setLoginId("???");
 		userLogin.setUserId(0);
-		testDao.save(userLogin);
+		testDao.delete(userLogin);
 	}
 }

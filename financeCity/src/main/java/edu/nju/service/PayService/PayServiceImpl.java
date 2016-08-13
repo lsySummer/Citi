@@ -1,6 +1,6 @@
 package edu.nju.service.PayService;
 
-import edu.nju.service.BaseService.BaseFunctionService;
+import edu.nju.service.BaseService.BaseFunctionServiceAdaptor;
 import edu.nju.service.POJO.Payment;
 
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by Sun YuHao on 2016/7/25.
  */
-public class PayServiceImpl extends BaseFunctionService implements PayService {
+public class PayServiceImpl extends BaseFunctionServiceAdaptor implements PayService {
 
     @Override
     public boolean bindCards() {

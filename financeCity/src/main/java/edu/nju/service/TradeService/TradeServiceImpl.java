@@ -1,15 +1,11 @@
 package edu.nju.service.TradeService;
 
-import edu.nju.service.BaseService.BaseFunctionService;
-import edu.nju.service.Exceptions.InvalidAPINameException;
-
-import java.util.List;
-import java.util.Map;
+import edu.nju.service.BaseService.BaseFunctionServiceAdaptor;
 
 /**
  * Created by Sun YuHao on 2016/7/25.
  */
-public class TradeServiceImpl extends BaseFunctionService implements TradeService {
+public class TradeServiceImpl extends BaseFunctionServiceAdaptor implements TradeService {
 
     @Override
     public boolean buyProduct(Long productID) {

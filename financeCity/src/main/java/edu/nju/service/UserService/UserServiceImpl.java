@@ -2,6 +2,7 @@ package edu.nju.service.UserService;
 
 import edu.nju.dao.BaseDao;
 import edu.nju.dao.impl.BaseDaoImpl;
+import edu.nju.service.BaseService.BaseServiceAdaptor;
 import edu.nju.service.Exceptions.InvalidAPINameException;
 import edu.nju.service.Exceptions.NotLoginException;
 import edu.nju.service.POJO.Online;
@@ -15,7 +16,7 @@ import java.util.List;
 /**
  * Created by Sun YuHao on 2016/7/25.
  */
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
     private Long ID;
     private String loginID;
     private boolean loginState;
@@ -23,35 +24,6 @@ public class UserServiceImpl implements UserService {
 
     public UserServiceImpl() {
         DAO = new BaseDaoImpl();
-    }
-
-    @Override
-    public Object invokeAPI(String apiName, List<Object> param) throws InvalidAPINameException {
-        List<Class> paramType = new ArrayList<>();
-        for (Object arg : param) {
-            paramType.add(arg.getClass());
-        }
-
-        try {
-            Class[] args = new Class[param.size()];
-            paramType.toArray(args);
-            Method method = getClass().getMethod(apiName, args);
-            return method.invoke(this, param.toArray());
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            throw new InvalidAPINameException(apiName);
-        }
-    }
-
-    @Override
-    public List<String> getAPIList() {
-        List<String> apiList = new ArrayList<>();
-        for (Method method : getClass().getMethods()) {
-            apiList.add(method.getName());
-        }
-
-        return apiList;
     }
 
     @Override
@@ -102,7 +74,7 @@ public class UserServiceImpl implements UserService {
         }
 
         try {
-            List list = DAO.find("SELECT loginID FROM Online online WHERE online.id=" + getID());
+            List list = DAO.find("SELECT loginID FROM UserLogin userLogin WHERE userLogin.id=" + getID());
             /** weather login id is the same as the one in database*/
             return (loginID.equals((String) list.get(0)));
         }

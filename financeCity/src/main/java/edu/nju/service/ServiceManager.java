@@ -26,23 +26,9 @@ public interface ServiceManager {
     List<String> getAPIList(String serviceName) throws InvalidServiceNameException;
 
     /**
-     * invoke API by service name and API name and param
-     * @return return Object
-     */
-    Object invokeAPI(String serviceName, String apiName, List<Object> param) throws InvalidServiceNameException, InvalidAPINameException;
-
-    /**
      * invoke API just by API name and param.
      * @return return Object
      * Note: use the first api found in services
      */
     Object invokeAPI(String apiName, List<Object> param) throws InvalidAPINameException;
-
-    /** User service APIS*/
-    Long register(RegisterInfo regInfo);
-    Long login(String userName, String password);
-    boolean logout();
-    boolean isLogin();
-    boolean modifyUserInfo(UserInfo userInfo);
-    Long getID() throws NotLoginException;
 }
