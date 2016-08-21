@@ -19,6 +19,8 @@ public interface BaseDao {
 	public Object load(Class c, int id) ;
 
 	 List find(String queryString);
+
+	void query(String query);
 	 
 	public List getAllList(Class c) ;
 	

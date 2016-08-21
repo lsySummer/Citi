@@ -150,4 +150,9 @@ public class BaseDaoImpl implements BaseDao {
 		return session.createQuery(queryString).setParameter(0, uname).setParameter(1, pass).list();
 	}
 
+	@Override
+	public void query(String query) {
+		Session session = getSession();
+		session.createQuery(query);
+	}
 }

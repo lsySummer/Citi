@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
- * Created by dell on 2016/8/12.
+ * Created by Sun YuHao on 2016/8/17.
  */
 @Entity
 @Table(name = "user_information", schema = "citi", catalog = "")

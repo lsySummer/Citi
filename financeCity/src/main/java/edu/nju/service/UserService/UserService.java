@@ -5,10 +5,13 @@ import edu.nju.service.BaseService.BaseService;
 import edu.nju.service.Exceptions.NotLoginException;
 import edu.nju.service.POJO.RegisterInfo;
 import edu.nju.service.POJO.UserInfo;
+import edu.nju.vo.UserVO;
+import org.springframework.stereotype.Service;
 
 /**
  * Created by Sun YuHao on 2016/7/25.
  */
+@Service
 public interface UserService extends BaseService {
 
     /**
@@ -16,7 +19,7 @@ public interface UserService extends BaseService {
      * @param regInfo .
      * @return user id
      */
-    Long register(RegisterInfo regInfo);
+    Integer register(RegisterInfo regInfo);
 
     /**
      * user login
@@ -24,7 +27,7 @@ public interface UserService extends BaseService {
      * @param password .
      * @return user id
      */
-    Long login(String userName, String password);
+    Integer login(String userName, String password);
 
     /**
      * user logout
@@ -40,16 +43,16 @@ public interface UserService extends BaseService {
 
     /**
      * modify user info
-     * @param userInfo .
+     * @param userVO .
      * @return if it's successful
      */
-    boolean modifyUserInfo(UserInfo userInfo);
+    boolean modifyUserInfo(UserVO userVO);
 
     /**
      * get user id
      * @return user id .
      */
-    Long getID() throws NotLoginException;
+    Integer getID() throws NotLoginException;
 
     /**
      * get user dao

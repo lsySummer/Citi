@@ -1,9 +1,13 @@
 package edu.nju.service.AssetManagementService;
 
 import edu.nju.model.InvestStatus;
+import edu.nju.model.TradeHistory;
 import edu.nju.service.BaseService.BaseFunctionServiceAdaptor;
+import edu.nju.service.Exceptions.NotLoginException;
 import edu.nju.service.POJO.Event;
 import edu.nju.vo.InvestProductVO;
+import edu.nju.vo.TimeLineVO;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +15,7 @@ import java.util.List;
 /**
  * Created by Sun YuHao on 2016/7/25.
  */
+@Service
 public class AssetManagementServiceImpl extends BaseFunctionServiceAdaptor implements AssetManagementService {
 
     @SuppressWarnings("unchecked")
@@ -48,6 +53,21 @@ public class AssetManagementServiceImpl extends BaseFunctionServiceAdaptor imple
 
     @Override
     public List<Event> getEvents() {
+        return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public TimeLineVO getTimeLineVO() {
+        try {
+            List<TradeHistory> list = (List<TradeHistory>)getUserService().getUserDao().find(
+                    "FROM TradeHistory tradHistory WHERE tradeHistory.userId=" + getUserService().getID());
+
+            //TODO:create timelineVO
+        }
+        catch (NotLoginException n) {
+            n.printStackTrace();
+        }
         return null;
     }
 }

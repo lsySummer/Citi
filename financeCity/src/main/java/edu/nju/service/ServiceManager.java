@@ -1,6 +1,7 @@
 package edu.nju.service;
 
 import edu.nju.service.Exceptions.InvalidAPINameException;
+import edu.nju.service.Exceptions.InvalidParametersException;
 import edu.nju.service.Exceptions.InvalidServiceNameException;
 import edu.nju.service.Exceptions.NotLoginException;
 import edu.nju.service.POJO.RegisterInfo;
@@ -30,5 +31,5 @@ public interface ServiceManager {
      * @return return Object
      * Note: use the first api found in services
      */
-    Object invokeAPI(String apiName, List<Object> param) throws InvalidAPINameException;
+    Object invokeAPI(String apiName, List<Object> param) throws InvalidAPINameException, InvalidParametersException;
 }

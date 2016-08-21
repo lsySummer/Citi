@@ -10,10 +10,14 @@ import edu.nju.service.Exceptions.NotAllConfigurationSetException;
 import edu.nju.service.Exceptions.NotLoginException;
 import edu.nju.service.InvestAdvisorService.Strategy.InvestStrategy;
 import edu.nju.service.POJO.*;
+import edu.nju.service.SearchService.SearchService;
+import edu.nju.service.TradeService.TradeService;
 import edu.nju.vo.FamilySpendingVO;
 import edu.nju.vo.IdentityVO;
 import edu.nju.vo.TemperPreferVO;
 import edu.nju.vo.UserVO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -22,8 +26,11 @@ import java.util.List;
 /**
  * Created by Sun YuHao on 2016/7/25.
  */
+@Service
 public class InvestAdvisorServiceImpl extends BaseFunctionServiceAdaptor implements InvestAdvisorService {
+    private SearchService searchService;
 
+    @Autowired
     private InvestStrategy investStrategy;
 
     @Override
@@ -203,11 +210,11 @@ public class InvestAdvisorServiceImpl extends BaseFunctionServiceAdaptor impleme
     @Override
     public InvestmentPortFolio createInvestmentPortFolio() throws NotAllConfigurationSetException, NotLoginException {
         BaseDao DAO = getUserService().getUserDao();
-        UserInformation identity = (UserInformation)DAO.find("SELECT id FROM UserInformation identity WHERE identity.id=" + getUserService().getID()).get(0);
-        UserTemperPrefer preference = (UserTemperPrefer)DAO.find("SELECT id FROM UserTemperPrefer preference WHERE preference.id=" + getUserService().getID()).get(0);
-        UserFamilySpeeding familyExpense = (UserFamilySpeeding) DAO.find("SELECT id FROM UserFamilySpending familySpending WHERE familySpending.id=" + getUserService().getID()).get(0);
+        UserInformation identity = (UserInformation)DAO.find("FROM UserInformation identity WHERE identity.id=" + getUserService().getID()).get(0);
+        UserTemperPrefer preference = (UserTemperPrefer)DAO.find("FROM UserTemperPrefer preference WHERE preference.id=" + getUserService().getID()).get(0);
+        UserFamilySpeeding familyExpense = (UserFamilySpeeding) DAO.find("FROM UserFamilySpending familySpending WHERE familySpending.id=" + getUserService().getID()).get(0);
 
-        return investStrategy.createInvestmentPortfolio(identity, preference, familyExpense);
+        return investStrategy.createInvestmentPortfolio(identity, preference, familyExpense, searchService);
     }
 
     @Override
@@ -234,5 +241,10 @@ public class InvestAdvisorServiceImpl extends BaseFunctionServiceAdaptor impleme
             e.printStackTrace();
             return null;
         }
+    }
+
+    @Override
+    public void bindSearchService(SearchService searchService) {
+        this.searchService = searchService;
     }
 }

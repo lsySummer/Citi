@@ -5,15 +5,19 @@ import edu.nju.service.Exceptions.NotAllConfigurationSetException;
 import edu.nju.service.Exceptions.NotLoginException;
 import edu.nju.service.POJO.InvestmentPortFolio;
 import edu.nju.service.POJO.Preference;
+import edu.nju.service.SearchService.SearchService;
+import edu.nju.service.TradeService.TradeService;
 import edu.nju.vo.FamilySpendingVO;
 import edu.nju.vo.IdentityVO;
 import edu.nju.vo.TemperPreferVO;
 import edu.nju.vo.UserVO;
+import org.springframework.stereotype.Service;
 
 
 /**
  * Created by Sun YuHao on 2016/7/25.
  */
+@Service
 public interface InvestAdvisorService extends BaseService {
     /**
      * set identity
@@ -89,4 +93,10 @@ public interface InvestAdvisorService extends BaseService {
      * @return user vo
      */
     UserVO getUserVO();
+
+    /**
+     * bind search service
+     * @param searchService .
+     */
+    void bindSearchService(SearchService searchService);
 }

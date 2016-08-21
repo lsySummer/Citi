@@ -2,37 +2,39 @@ package edu.nju.service.UserService;
 
 import edu.nju.dao.BaseDao;
 import edu.nju.dao.impl.BaseDaoImpl;
+import edu.nju.model.User;
+import edu.nju.model.UserLogin;
 import edu.nju.service.BaseService.BaseServiceAdaptor;
-import edu.nju.service.Exceptions.InvalidAPINameException;
 import edu.nju.service.Exceptions.NotLoginException;
-import edu.nju.service.POJO.Online;
 import edu.nju.service.POJO.RegisterInfo;
 import edu.nju.service.POJO.UserInfo;
+import edu.nju.vo.UserVO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.util.DigestUtils;
 
-import java.lang.reflect.Method;
-import java.util.ArrayList;
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
  * Created by Sun YuHao on 2016/7/25.
  */
+@Service
 public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
-    private Long ID;
+    private Integer ID;
     private String loginID;
     private boolean loginState;
+
+    @Autowired
     private BaseDao DAO;
 
-    public UserServiceImpl() {
-        DAO = new BaseDaoImpl();
-    }
-
     @Override
-    public Long register(RegisterInfo regInfo) {
+    public Integer register(RegisterInfo regInfo) {
         return null;
     }
 
     @Override
-    public Long login(String userName, String password) {
+    public Integer login(String userName, String password) {
         /** match username and password */
         List list = DAO.login("SELECT id FROM User user WHERE user.username=? AND user.password=?", userName, password);
 
@@ -42,9 +44,14 @@ public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
         }
         /** if succeed */
         else {
-            ID = (Long)list.get(0);
+            ID = (Integer)list.get(0);
             /** online */
-            DAO.save(new Online(ID));
+            UserLogin userLogin = new UserLogin();
+            userLogin.setUserId(ID);
+            userLogin.setDate(new Timestamp(System.currentTimeMillis()));
+            loginID = MD5_32(new Timestamp(System.currentTimeMillis()).toString() + ID);
+            userLogin.setLoginId(loginID);
+            DAO.save(userLogin);
             loginState = true;
 
             return ID;
@@ -53,12 +60,18 @@ public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
 
     @Override
     public boolean logout() {
-        ID = null;
-        loginState = false;
-
         /** not online */
         try {
-            getUserDao().delete(new Online(ID));
+            UserLogin userLogin = (UserLogin)DAO.find("FROM UserLogin userLogin WHERE userLogin.id=" + ID +
+            " AND userLogin.loginID=" + loginID).get(0);
+            if (userLogin != null) {
+                getUserDao().delete(userLogin);
+                ID = null;
+                loginState = false;
+            }
+            else {
+                return false;
+            }
         }
         catch (NotLoginException n) {
             n.printStackTrace();
@@ -84,12 +97,37 @@ public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
     }
 
     @Override
-    public boolean modifyUserInfo(UserInfo userInfo) {
-        return false;
+    public boolean modifyUserInfo(UserVO userVO) {
+        try {
+            List list = getUserDao().find("FROM User user WHERE user.id=" + ID);
+            if (list == null || list.size() == 0) {
+                return false;
+            }
+
+            User user = (User)list.get(0);
+
+            if (validPassword(userVO.getPassword())) {
+                user.setPassword(userVO.getPassword());
+            }
+            user.setEmail(userVO.getEmail());
+            user.setSecureAnswer(userVO.getAnswer());
+            user.setPhone(userVO.getPhone());
+            user.setUpdateAt(new Timestamp(System.currentTimeMillis()));
+            //TODO:set account
+            user.setAccount("");
+            //TODO:set chosen question
+            user.setChoosedQuestions(0);
+
+            return true;
+        }
+        catch (NotLoginException n) {
+            n.printStackTrace();
+            return false;
+        }
     }
 
     @Override
-    public Long getID() throws NotLoginException {
+    public Integer getID() throws NotLoginException {
         if (ID == null) {
             throw new NotLoginException();
         }
@@ -105,5 +143,13 @@ public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
         else {
             return DAO;
         }
+    }
+
+    private String MD5_32(String message) {
+        return DigestUtils.md5DigestAsHex(message.getBytes());
+    }
+    private boolean validPassword(String password) {
+        //TODO:add judge
+        return false;
     }
 }

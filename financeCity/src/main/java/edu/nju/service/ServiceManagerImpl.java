@@ -7,6 +7,7 @@ import edu.nju.service.BaseService.BaseFunctionServiceAdaptor;
 import edu.nju.service.BaseService.BaseService;
 import edu.nju.service.Exceptions.DuplicateFunctionNameException;
 import edu.nju.service.Exceptions.InvalidAPINameException;
+import edu.nju.service.Exceptions.InvalidParametersException;
 import edu.nju.service.Exceptions.InvalidServiceNameException;
 import edu.nju.service.InvestAdvisorService.InvestAdvisorService;
 import edu.nju.service.Invoker.APIFilter;
@@ -121,7 +122,7 @@ public class ServiceManagerImpl implements ServiceManager {
      * @throws InvalidAPINameException .
      */
     @Override
-    public Object invokeAPI(String apiName, List<Object> param) throws InvalidAPINameException {
+    public Object invokeAPI(String apiName, List<Object> param) throws InvalidAPINameException, InvalidParametersException {
         return invokerManager.invokeAPI(apiName, param);
     }
 

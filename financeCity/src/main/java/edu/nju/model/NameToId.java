@@ -3,13 +3,13 @@ package edu.nju.model;
 import javax.persistence.*;
 
 /**
- * Created by dell on 2016/8/12.
+ * Created by Sun YuHao on 2016/8/17.
  */
 @Entity
 @Table(name = "name_to_id", schema = "citi", catalog = "")
 public class NameToId {
     private String name;
-    private Long id;
+    private int id;
 
     @Id
     @Column(name = "name")
@@ -23,11 +23,11 @@ public class NameToId {
 
     @Basic
     @Column(name = "id")
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -38,8 +38,8 @@ public class NameToId {
 
         NameToId nameToId = (NameToId) o;
 
+        if (id != nameToId.id) return false;
         if (name != null ? !name.equals(nameToId.name) : nameToId.name != null) return false;
-        if (id != null ? !id.equals(nameToId.id) : nameToId.id != null) return false;
 
         return true;
     }
@@ -47,7 +47,7 @@ public class NameToId {
     @Override
     public int hashCode() {
         int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + (id != null ? id.hashCode() : 0);
+        result = 31 * result + id;
         return result;
     }
 }

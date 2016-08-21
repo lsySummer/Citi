@@ -63,8 +63,6 @@
 	</bean>
 
 	<!--test-->
-	<bean id="baseDao" class="edu.nju.dao.impl.BaseDaoImpl">
-	</bean>
 
 	<bean id="testDaoImpl"
 		 class="edu.nju.dao.impl.TestDaoImpl">
