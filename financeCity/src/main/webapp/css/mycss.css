@@ -1,0 +1,27 @@
+@CHARSET "UTF-8";
+.headerSquare{
+	width:55px;
+	height:55px;
+	background-color:#11b7f3;
+	margin-left:12%;
+	float:left;
+}
+.header{
+	height:60px;background-color:white;padding-top:5px;
+}
+.footer{
+	position: absolute; bottom: 0; background-color: white; width: 100%
+}
+.headerButton{
+	float:right;margin-right:10%;padding-top:2%
+}
+.buttonStyle{
+	border:none;cursor:pointer;background-color: transparent;font-size:18px;
+	;outline: 0;
+}
+.buttonStyle:hover{
+	background-color: #EAEAEA;
+}
+.hfont{
+	font-family:微软雅黑
+}
