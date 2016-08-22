@@ -12,17 +12,7 @@
 <body>
 
 <body>
-<div class="header shadow">
-    <div class="container">
-        <div class="header-square"></div>
-        <h1 class="header-title">Invest Go</h1>
-        <div class="header-button">
-            <button class="button-style">注册</button>
-            <button class="button-style">登录</button>
-        </div>
-    </div>
-
-</div>
+<s:include value="header.jsp"></s:include>
 
 
 <div class="main">
@@ -133,16 +123,7 @@
     </div>
 </div>
 
-<div class="footer shadow">
-    <div class="container">
-        <br/><br/><br/>
-        <span class="footer-text">还没想好的一些footer信息</span>
-        <br/><br/>
-        <span class="footer-text"> Copyright &copy; 2016 小组名, Nanjing University</span>
-        <br/><br/>
-    </div>
-
-</div>
+<s:include value="footer.jsp"></s:include>
 </body>
 
 </body>
