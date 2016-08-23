@@ -44,26 +44,30 @@ public class Footer extends LinearLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
+
+    }
+
+    private void initComponents() {
         items = new LinearLayout[4];
-        items[0] = (LinearLayout) findViewById(R.id.footer_item1);
-        items[1] = (LinearLayout) findViewById(R.id.footer_item2);
-        items[2] = (LinearLayout) findViewById(R.id.footer_item3);
-        items[3] = (LinearLayout) findViewById(R.id.footer_item4);
+        items[0] = (LinearLayout) findViewById(R.id.itmProduct);
+        items[1] = (LinearLayout) findViewById(R.id.itmInvestment);
+        items[2] = (LinearLayout) findViewById(R.id.itmAsset);
+        items[3] = (LinearLayout) findViewById(R.id.itmPersonalInfo);
 
         imgs = new ImageView[4];
-        imgs[0] = (ImageView) findViewById(R.id.footer_img1);
-        imgs[1] = (ImageView) findViewById(R.id.footer_img2);
-        imgs[2] = (ImageView) findViewById(R.id.footer_img3);
-        imgs[3] = (ImageView) findViewById(R.id.footer_img4);
+        imgs[0] = (ImageView) findViewById(R.id.imgProduct);
+        imgs[1] = (ImageView) findViewById(R.id.imgInvestment);
+        imgs[2] = (ImageView) findViewById(R.id.imgAsset);
+        imgs[3] = (ImageView) findViewById(R.id.imgPersonalInfo);
 
         lbls = new TextView[4];
-        lbls[0] = (TextView) findViewById(R.id.footer_lbl1);
+        lbls[0] = (TextView) findViewById(R.id.lblProduct);
         lbls[0].setText(getResources().getString(R.string.footer_lbl1));
-        lbls[1] = (TextView) findViewById(R.id.footer_lbl2);
+        lbls[1] = (TextView) findViewById(R.id.lblInvestment);
         lbls[1].setText(getResources().getString(R.string.footer_lbl2));
-        lbls[2] = (TextView) findViewById(R.id.footer_lbl3);
+        lbls[2] = (TextView) findViewById(R.id.lblAsset);
         lbls[2].setText(getResources().getString(R.string.footer_lbl3));
-        lbls[3] = (TextView) findViewById(R.id.footer_lbl4);
+        lbls[3] = (TextView) findViewById(R.id.lblInvestment);
         lbls[3].setText(getResources().getString(R.string.footer_lbl4));
     }
 
