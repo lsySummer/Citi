@@ -1,0 +1,254 @@
+.selection-wrapper {
+    width: 100%;
+    /*height: 210px;*/
+    padding: 20px 20px 20px 20px;
+    box-sizing: border-box;
+    background-color: white;
+}
+
+.input-add-on {
+    display: flex;
+}
+
+.input-add-on-field {
+    flex: 1;
+}
+
+.keyword-wrapper {
+    font-size: 20px;
+    margin-bottom: 18px;
+}
+
+.keyword-wrapper label {
+    font-size: 20px;
+    padding-top: 11px;
+}
+
+.keyword-wrapper input[type="text"] {
+    width: 350px;
+    padding: 9px 9px 9px 9px;
+    font-size: 19px;
+    margin-left: 8px;
+}
+
+#sift_product_button {
+    width: 100px;
+    height: 36px;
+    padding: 0 5px 4px 5px;
+    float: right;
+}
+
+.quota-wrapper {
+    margin-top: 18px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.quota-item {
+
+}
+
+.selector {
+    margin-left: 13px;
+    width: 150px;
+    font-size: 16px;
+}
+
+input[type="text"].num-range {
+    width: 80px;
+    margin-left: 11px;
+    padding: 3px 9px 3px 9px;
+    font-size: 14px;
+}
+
+.line {
+    width: 20px;
+    height: 1px;
+    margin-left: 11px;
+    border: 1px solid #535353;
+}
+
+.product-wrapper {
+    width: 100%;
+    height: 830px;
+    margin-top: 13px;
+    /*background-color: white;*/
+
+    display: flex;
+    flex-flow: row wrap;
+    align-content: flex-start;
+    justify-content: space-between;
+}
+
+.product {
+    /*width: 235px;*/
+    height: 370px;
+    margin-bottom: 9px;
+    padding: 0px 15px 8px 15px;
+    background-color: white;
+
+    flex: 0 0 24%;
+}
+
+.product.nothing {
+    background: none;
+    border: 0px;
+}
+
+.product.bank-financing {
+    border-bottom: 2px solid rgb(255, 206, 0);
+}
+
+.product.fund {
+    border-bottom: 2px solid rgb(255, 37, 122);
+}
+
+.product.insurance {
+    border-bottom: 2px solid rgb(211, 0, 255);
+}
+
+.product.bond {
+    border-bottom: 2px solid rgb(255, 150, 53);
+}
+
+.bank-financing .circle{
+    background-color: rgb(255, 206, 0);
+    box-shadow: 0px 0px 8px rgba(255, 206, 0, 0.7);
+}
+
+.fund .circle {
+    background-color: rgb(255, 37, 122);
+    box-shadow: 0px 0px 8px rgba(255, 37, 122, 0.7);
+}
+
+.insurance .circle {
+    background-color: rgb(211, 0, 255);
+    box-shadow: 0px 0px 8px rgba(211, 0, 255, 0.7);
+}
+
+.bond .circle {
+    background-color: rgb(255, 150, 53);
+    box-shadow: 0px 0px 8px rgba(255, 150, 53, 0.7);
+}
+
+.circle {
+    width: 147px;
+    height: 147px;
+    padding: 30px 20px 0px 20px;
+    margin: 17px auto auto auto;
+    border-radius: 50%;
+    color: white;
+    text-align: center;
+}
+
+.bank-financing .circle.empty-circle {
+    background: none;
+    color: rgb(255, 206, 0);
+}
+
+.fund .circle.empty-circle {
+    background: none;
+    color: rgb(255, 37, 122);
+}
+
+.insurance .circle.empty-circle {
+    background: none;
+    color: rgb(211, 0, 255);
+}
+
+.bond .circle.empty-circle {
+    background: none;
+    color: rgb(255, 150, 53);
+}
+
+.circle h1 {
+    font-size: 38px;
+}
+
+.circle hr {
+    margin: 8px auto 8px auto;
+}
+
+.circle h3 {
+    font-size: 19px;
+}
+
+.circle h4 {
+    font-size: 14px;
+}
+
+.more-info {
+    padding-top: 23px;
+}
+
+.more-info h3 {
+    text-align: center;
+    font-size: 16px;
+    /*color: #535353;*/
+}
+
+.column {
+    display: flex;
+    align-content: space-between;
+}
+
+.column-item {
+    flex: 1;
+}
+
+.u1of3 {
+    flex: 0 0 33%;
+}
+
+.tag {
+    /*color: #535353;*/
+}
+
+.info {
+    text-align: end;
+    color: rgb(180, 180, 180);
+}
+
+.paging-wrapper {
+    height: 100px;
+    /*border-top: 1px solid #bababa;*/
+
+    position: relative;
+
+    display: flex;
+    flex-flow: nowrap;
+    justify-content: center;
+}
+
+.paging-wrapper .fix {
+    width: 100%;
+    margin: 0;
+    border-color: #bababa;
+    z-index: -1;
+    position: absolute;
+}
+
+.paging-item {
+    text-align: center;
+    margin: 10px 20px 10px 20px;
+    /*flex: 1;*/
+}
+
+.page-number {
+    margin: 0px 10px 0px 10px;
+    /*padding-top: 10px;*/
+    box-sizing: border-box;
+
+    display: inline-flex;
+}
+
+.page-number li {
+    flex: 1;
+    padding: 10px 10px 10px 10px ;
+    margin: 0 2px 0 2px;
+    text-align: center;
+}
+
+.page-number li.current {
+    border-top: 1px solid;
+}
