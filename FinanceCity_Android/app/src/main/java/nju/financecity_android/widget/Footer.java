@@ -54,6 +54,46 @@ public class Footer extends LinearLayout {
         items[id].setOnClickListener(listener);
     }
 
+    public void setSelectedById(int id) {
+        imgs[0].setImageResource(R.mipmap.products_unselected);
+        imgs[1].setImageResource(R.mipmap.investment_unselected);
+        imgs[2].setImageResource(R.mipmap.asset_unselected);
+        imgs[3].setImageResource(R.mipmap.personal_unselected);
+        switch (id) {
+            case 0:
+                imgs[0].setImageResource(R.mipmap.products_selected);
+                break;
+            case 1:
+                imgs[1].setImageResource(R.mipmap.investment_selected);
+                break;
+            case 2:
+                imgs[2].setImageResource(R.mipmap.asset_selected);
+                break;
+            case 3:
+                imgs[3].setImageResource(R.mipmap.personal_selected);
+                break;
+            default:
+        }
+    }
+
+    public void setSelectedByName(String name) {
+        switch (name) {
+            case "product":
+                setSelectedById(0);
+                return;
+            case "investment":
+                setSelectedById(1);
+                return;
+            case "asset":
+                setSelectedById(2);
+                return;
+            case "personal":
+                setSelectedById(3);
+                return;
+            default:
+        }
+    }
+
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
