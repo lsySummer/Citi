@@ -16,5 +16,7 @@
 	</nju.financecity_android.widget.Footer>
 	<nju.financecity_android.widget.Banner android:layout_width="match_parent"
 	                                       android:layout_height="40dp" android:orientation="vertical"
-	                                       android:id="@+id/banner"></nju.financecity_android.widget.Banner>
+	                                       android:id="@+id/banner">
+
+	</nju.financecity_android.widget.Banner>
 </RelativeLayout>
