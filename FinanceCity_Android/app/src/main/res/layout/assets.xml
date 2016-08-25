@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/assets"
+	android:orientation="vertical"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<lecho.lib.hellocharts.view.LineChartView
+		android:id="@+id/chart"
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_weight="4"
+		android:layout_marginLeft="0dp"
+		android:layout_marginRight="10dp"
+		android:layout_marginTop="30dp"
+		android:layout_gravity="center"/>
+
+	<ListView
+		android:id="@+id/timeline"
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_weight="6"
+		android:layout_marginLeft="10dp"
+		android:layout_marginRight="10dp"
+		android:layout_marginBottom="10dp"/>
+
+</LinearLayout>
+
