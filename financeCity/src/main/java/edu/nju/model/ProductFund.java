@@ -5,29 +5,49 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
- * Created by Sun YuHao on 2016/8/20.
+ * Created by Sun YuHao on 2016/8/25.
  */
 @Entity
 @Table(name = "product_fund", schema = "citi", catalog = "")
 public class ProductFund {
     private int id;
-    private String title;
+    private String name;
     private String productCode;
     private BigDecimal dayRate;
-    private BigDecimal yearRate;
-    private Byte fundType;
-    private Byte bondState;
-    private Timestamp releaseDate;
-    private Timestamp establishmentDate;
-    private String manager;
-    private BigDecimal manageExpense;
-    private BigDecimal sellServiceExpenses;
-    private BigDecimal maxBuyExpense;
-    private BigDecimal maxRedemption;
-    private BigDecimal maxApplyBuyExpense;
+    private BigDecimal yearlyRtnRate;
+    private Byte category;
+    private Byte state;
+    private String managerName;
+    private BigDecimal rateManage;
+    private BigDecimal rateSubscribe;
+    private BigDecimal rateRedem;
+    private BigDecimal ratePurchase;
     private String riskIncomeDescription;
     private BigDecimal fundSize;
     private Integer shareSize;
+    private BigDecimal nav;
+    private Byte riskLevel;
+    private String institutionManage;
+    private String custodian;
+    private Integer purchaseThreshold;
+    private Integer increasingUnit;
+    private Timestamp onPurchaseDate;
+    private Timestamp offPurchaseDate;
+    private Timestamp firstAccrRate;
+    private Timestamp onRedemptionDate;
+    private Integer length;
+    private Integer subscribeSpeed;
+    private String perfBenchmark;
+    private String targetId;
+    private Integer redemptionSpeed;
+    private BigDecimal adjustNav;
+    private BigDecimal accumNav;
+    private Byte operationMode;
+    private BigDecimal monthRate;
+    private BigDecimal assetLiabilityRatio;
+    private BigDecimal institutionNetworthRatio;
+    private BigDecimal stockBondProportion;
+    private BigDecimal fundScore;
 
     @Id
     @Column(name = "id")
@@ -40,13 +60,13 @@ public class ProductFund {
     }
 
     @Basic
-    @Column(name = "title")
-    public String getTitle() {
-        return title;
+    @Column(name = "name")
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Basic
@@ -70,113 +90,83 @@ public class ProductFund {
     }
 
     @Basic
-    @Column(name = "year_rate")
-    public BigDecimal getYearRate() {
-        return yearRate;
+    @Column(name = "yearly_rtn_rate")
+    public BigDecimal getYearlyRtnRate() {
+        return yearlyRtnRate;
     }
 
-    public void setYearRate(BigDecimal yearRate) {
-        this.yearRate = yearRate;
-    }
-
-    @Basic
-    @Column(name = "fund_type")
-    public Byte getFundType() {
-        return fundType;
-    }
-
-    public void setFundType(Byte fundType) {
-        this.fundType = fundType;
+    public void setYearlyRtnRate(BigDecimal yearlyRtnRate) {
+        this.yearlyRtnRate = yearlyRtnRate;
     }
 
     @Basic
-    @Column(name = "bond_state")
-    public Byte getBondState() {
-        return bondState;
+    @Column(name = "category")
+    public Byte getCategory() {
+        return category;
     }
 
-    public void setBondState(Byte bondState) {
-        this.bondState = bondState;
-    }
-
-    @Basic
-    @Column(name = "release_date")
-    public Timestamp getReleaseDate() {
-        return releaseDate;
-    }
-
-    public void setReleaseDate(Timestamp releaseDate) {
-        this.releaseDate = releaseDate;
+    public void setCategory(Byte category) {
+        this.category = category;
     }
 
     @Basic
-    @Column(name = "establishment_date")
-    public Timestamp getEstablishmentDate() {
-        return establishmentDate;
+    @Column(name = "state")
+    public Byte getState() {
+        return state;
     }
 
-    public void setEstablishmentDate(Timestamp establishmentDate) {
-        this.establishmentDate = establishmentDate;
-    }
-
-    @Basic
-    @Column(name = "manager")
-    public String getManager() {
-        return manager;
-    }
-
-    public void setManager(String manager) {
-        this.manager = manager;
+    public void setState(Byte state) {
+        this.state = state;
     }
 
     @Basic
-    @Column(name = "manage_expense")
-    public BigDecimal getManageExpense() {
-        return manageExpense;
+    @Column(name = "manager_name")
+    public String getManagerName() {
+        return managerName;
     }
 
-    public void setManageExpense(BigDecimal manageExpense) {
-        this.manageExpense = manageExpense;
-    }
-
-    @Basic
-    @Column(name = "sell_service_expenses")
-    public BigDecimal getSellServiceExpenses() {
-        return sellServiceExpenses;
-    }
-
-    public void setSellServiceExpenses(BigDecimal sellServiceExpenses) {
-        this.sellServiceExpenses = sellServiceExpenses;
+    public void setManagerName(String managerName) {
+        this.managerName = managerName;
     }
 
     @Basic
-    @Column(name = "max_buy_expense")
-    public BigDecimal getMaxBuyExpense() {
-        return maxBuyExpense;
+    @Column(name = "rate_manage")
+    public BigDecimal getRateManage() {
+        return rateManage;
     }
 
-    public void setMaxBuyExpense(BigDecimal maxBuyExpense) {
-        this.maxBuyExpense = maxBuyExpense;
-    }
-
-    @Basic
-    @Column(name = "max_redemption")
-    public BigDecimal getMaxRedemption() {
-        return maxRedemption;
-    }
-
-    public void setMaxRedemption(BigDecimal maxRedemption) {
-        this.maxRedemption = maxRedemption;
+    public void setRateManage(BigDecimal rateManage) {
+        this.rateManage = rateManage;
     }
 
     @Basic
-    @Column(name = "max_apply_buy_expense")
-    public BigDecimal getMaxApplyBuyExpense() {
-        return maxApplyBuyExpense;
+    @Column(name = "rate_subscribe")
+    public BigDecimal getRateSubscribe() {
+        return rateSubscribe;
     }
 
-    public void setMaxApplyBuyExpense(BigDecimal maxApplyBuyExpense) {
-        this.maxApplyBuyExpense = maxApplyBuyExpense;
+    public void setRateSubscribe(BigDecimal rateSubscribe) {
+        this.rateSubscribe = rateSubscribe;
+    }
+
+    @Basic
+    @Column(name = "rate_redem")
+    public BigDecimal getRateRedem() {
+        return rateRedem;
+    }
+
+    public void setRateRedem(BigDecimal rateRedem) {
+        this.rateRedem = rateRedem;
+    }
+
+    @Basic
+    @Column(name = "rate_purchase")
+    public BigDecimal getRatePurchase() {
+        return ratePurchase;
+    }
+
+    public void setRatePurchase(BigDecimal ratePurchase) {
+        this.ratePurchase = ratePurchase;
     }
 
     @Basic
@@ -209,6 +199,236 @@ public class ProductFund {
         this.shareSize = shareSize;
     }
 
+    @Basic
+    @Column(name = "NAV")
+    public BigDecimal getNav() {
+        return nav;
+    }
+
+    public void setNav(BigDecimal nav) {
+        this.nav = nav;
+    }
+
+    @Basic
+    @Column(name = "risk_level")
+    public Byte getRiskLevel() {
+        return riskLevel;
+    }
+
+    public void setRiskLevel(Byte riskLevel) {
+        this.riskLevel = riskLevel;
+    }
+
+    @Basic
+    @Column(name = "institution_manage")
+    public String getInstitutionManage() {
+        return institutionManage;
+    }
+
+    public void setInstitutionManage(String institutionManage) {
+        this.institutionManage = institutionManage;
+    }
+
+    @Basic
+    @Column(name = "custodian")
+    public String getCustodian() {
+        return custodian;
+    }
+
+    public void setCustodian(String custodian) {
+        this.custodian = custodian;
+    }
+
+    @Basic
+    @Column(name = "purchase_threshold")
+    public Integer getPurchaseThreshold() {
+        return purchaseThreshold;
+    }
+
+    public void setPurchaseThreshold(Integer purchaseThreshold) {
+        this.purchaseThreshold = purchaseThreshold;
+    }
+
+    @Basic
+    @Column(name = "increasing_unit")
+    public Integer getIncreasingUnit() {
+        return increasingUnit;
+    }
+
+    public void setIncreasingUnit(Integer increasingUnit) {
+        this.increasingUnit = increasingUnit;
+    }
+
+    @Basic
+    @Column(name = "on_purchase_date")
+    public Timestamp getOnPurchaseDate() {
+        return onPurchaseDate;
+    }
+
+    public void setOnPurchaseDate(Timestamp onPurchaseDate) {
+        this.onPurchaseDate = onPurchaseDate;
+    }
+
+    @Basic
+    @Column(name = "off_purchase_date")
+    public Timestamp getOffPurchaseDate() {
+        return offPurchaseDate;
+    }
+
+    public void setOffPurchaseDate(Timestamp offPurchaseDate) {
+        this.offPurchaseDate = offPurchaseDate;
+    }
+
+    @Basic
+    @Column(name = "first_accr_rate")
+    public Timestamp getFirstAccrRate() {
+        return firstAccrRate;
+    }
+
+    public void setFirstAccrRate(Timestamp firstAccrRate) {
+        this.firstAccrRate = firstAccrRate;
+    }
+
+    @Basic
+    @Column(name = "on_redemption_date")
+    public Timestamp getOnRedemptionDate() {
+        return onRedemptionDate;
+    }
+
+    public void setOnRedemptionDate(Timestamp onRedemptionDate) {
+        this.onRedemptionDate = onRedemptionDate;
+    }
+
+    @Basic
+    @Column(name = "length")
+    public Integer getLength() {
+        return length;
+    }
+
+    public void setLength(Integer length) {
+        this.length = length;
+    }
+
+    @Basic
+    @Column(name = "subscribe_speed")
+    public Integer getSubscribeSpeed() {
+        return subscribeSpeed;
+    }
+
+    public void setSubscribeSpeed(Integer subscribeSpeed) {
+        this.subscribeSpeed = subscribeSpeed;
+    }
+
+    @Basic
+    @Column(name = "perf_benchmark")
+    public String getPerfBenchmark() {
+        return perfBenchmark;
+    }
+
+    public void setPerfBenchmark(String perfBenchmark) {
+        this.perfBenchmark = perfBenchmark;
+    }
+
+    @Basic
+    @Column(name = "target_ID")
+    public String getTargetId() {
+        return targetId;
+    }
+
+    public void setTargetId(String targetId) {
+        this.targetId = targetId;
+    }
+
+    @Basic
+    @Column(name = "redemption_speed")
+    public Integer getRedemptionSpeed() {
+        return redemptionSpeed;
+    }
+
+    public void setRedemptionSpeed(Integer redemptionSpeed) {
+        this.redemptionSpeed = redemptionSpeed;
+    }
+
+    @Basic
+    @Column(name = "adjust_NAV")
+    public BigDecimal getAdjustNav() {
+        return adjustNav;
+    }
+
+    public void setAdjustNav(BigDecimal adjustNav) {
+        this.adjustNav = adjustNav;
+    }
+
+    @Basic
+    @Column(name = "accum_NAV")
+    public BigDecimal getAccumNav() {
+        return accumNav;
+    }
+
+    public void setAccumNav(BigDecimal accumNav) {
+        this.accumNav = accumNav;
+    }
+
+    @Basic
+    @Column(name = "operation_mode")
+    public Byte getOperationMode() {
+        return operationMode;
+    }
+
+    public void setOperationMode(Byte operationMode) {
+        this.operationMode = operationMode;
+    }
+
+    @Basic
+    @Column(name = "month_rate")
+    public BigDecimal getMonthRate() {
+        return monthRate;
+    }
+
+    public void setMonthRate(BigDecimal monthRate) {
+        this.monthRate = monthRate;
+    }
+
+    @Basic
+    @Column(name = "asset_liability_ratio")
+    public BigDecimal getAssetLiabilityRatio() {
+        return assetLiabilityRatio;
+    }
+
+    public void setAssetLiabilityRatio(BigDecimal assetLiabilityRatio) {
+        this.assetLiabilityRatio = assetLiabilityRatio;
+    }
+
+    @Basic
+    @Column(name = "institution_networth_ratio")
+    public BigDecimal getInstitutionNetworthRatio() {
+        return institutionNetworthRatio;
+    }
+
+    public void setInstitutionNetworthRatio(BigDecimal institutionNetworthRatio) {
+        this.institutionNetworthRatio = institutionNetworthRatio;
+    }
+
+    @Basic
+    @Column(name = "stock_bond_proportion")
+    public BigDecimal getStockBondProportion() {
+        return stockBondProportion;
+    }
+
+    public void setStockBondProportion(BigDecimal stockBondProportion) {
+        this.stockBondProportion = stockBondProportion;
+    }
+
+    @Basic
+    @Column(name = "fund_score")
+    public BigDecimal getFundScore() {
+        return fundScore;
+    }
+
+    public void setFundScore(BigDecimal fundScore) {
+        this.fundScore = fundScore;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -217,30 +437,60 @@ public class ProductFund {
         ProductFund that = (ProductFund) o;
 
         if (id != that.id) return false;
-        if (title != null ? !title.equals(that.title) : that.title != null) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (productCode != null ? !productCode.equals(that.productCode) : that.productCode != null) return false;
         if (dayRate != null ? !dayRate.equals(that.dayRate) : that.dayRate != null) return false;
-        if (yearRate != null ? !yearRate.equals(that.yearRate) : that.yearRate != null) return false;
-        if (fundType != null ? !fundType.equals(that.fundType) : that.fundType != null) return false;
-        if (bondState != null ? !bondState.equals(that.bondState) : that.bondState != null) return false;
-        if (releaseDate != null ? !releaseDate.equals(that.releaseDate) : that.releaseDate != null) return false;
-        if (establishmentDate != null ? !establishmentDate.equals(that.establishmentDate) : that.establishmentDate != null)
+        if (yearlyRtnRate != null ? !yearlyRtnRate.equals(that.yearlyRtnRate) : that.yearlyRtnRate != null)
             return false;
-        if (manager != null ? !manager.equals(that.manager) : that.manager != null) return false;
-        if (manageExpense != null ? !manageExpense.equals(that.manageExpense) : that.manageExpense != null)
+        if (category != null ? !category.equals(that.category) : that.category != null) return false;
+        if (state != null ? !state.equals(that.state) : that.state != null) return false;
+        if (managerName != null ? !managerName.equals(that.managerName) : that.managerName != null) return false;
+        if (rateManage != null ? !rateManage.equals(that.rateManage) : that.rateManage != null) return false;
+        if (rateSubscribe != null ? !rateSubscribe.equals(that.rateSubscribe) : that.rateSubscribe != null)
             return false;
-        if (sellServiceExpenses != null ? !sellServiceExpenses.equals(that.sellServiceExpenses) : that.sellServiceExpenses != null)
-            return false;
-        if (maxBuyExpense != null ? !maxBuyExpense.equals(that.maxBuyExpense) : that.maxBuyExpense != null)
-            return false;
-        if (maxRedemption != null ? !maxRedemption.equals(that.maxRedemption) : that.maxRedemption != null)
-            return false;
-        if (maxApplyBuyExpense != null ? !maxApplyBuyExpense.equals(that.maxApplyBuyExpense) : that.maxApplyBuyExpense != null)
-            return false;
+        if (rateRedem != null ? !rateRedem.equals(that.rateRedem) : that.rateRedem != null) return false;
+        if (ratePurchase != null ? !ratePurchase.equals(that.ratePurchase) : that.ratePurchase != null) return false;
         if (riskIncomeDescription != null ? !riskIncomeDescription.equals(that.riskIncomeDescription) : that.riskIncomeDescription != null)
             return false;
         if (fundSize != null ? !fundSize.equals(that.fundSize) : that.fundSize != null) return false;
         if (shareSize != null ? !shareSize.equals(that.shareSize) : that.shareSize != null) return false;
+        if (nav != null ? !nav.equals(that.nav) : that.nav != null) return false;
+        if (riskLevel != null ? !riskLevel.equals(that.riskLevel) : that.riskLevel != null) return false;
+        if (institutionManage != null ? !institutionManage.equals(that.institutionManage) : that.institutionManage != null)
+            return false;
+        if (custodian != null ? !custodian.equals(that.custodian) : that.custodian != null) return false;
+        if (purchaseThreshold != null ? !purchaseThreshold.equals(that.purchaseThreshold) : that.purchaseThreshold != null)
+            return false;
+        if (increasingUnit != null ? !increasingUnit.equals(that.increasingUnit) : that.increasingUnit != null)
+            return false;
+        if (onPurchaseDate != null ? !onPurchaseDate.equals(that.onPurchaseDate) : that.onPurchaseDate != null)
+            return false;
+        if (offPurchaseDate != null ? !offPurchaseDate.equals(that.offPurchaseDate) : that.offPurchaseDate != null)
+            return false;
+        if (firstAccrRate != null ? !firstAccrRate.equals(that.firstAccrRate) : that.firstAccrRate != null)
+            return false;
+        if (onRedemptionDate != null ? !onRedemptionDate.equals(that.onRedemptionDate) : that.onRedemptionDate != null)
+            return false;
+        if (length != null ? !length.equals(that.length) : that.length != null) return false;
+        if (subscribeSpeed != null ? !subscribeSpeed.equals(that.subscribeSpeed) : that.subscribeSpeed != null)
+            return false;
+        if (perfBenchmark != null ? !perfBenchmark.equals(that.perfBenchmark) : that.perfBenchmark != null)
+            return false;
+        if (targetId != null ? !targetId.equals(that.targetId) : that.targetId != null) return false;
+        if (redemptionSpeed != null ? !redemptionSpeed.equals(that.redemptionSpeed) : that.redemptionSpeed != null)
+            return false;
+        if (adjustNav != null ? !adjustNav.equals(that.adjustNav) : that.adjustNav != null) return false;
+        if (accumNav != null ? !accumNav.equals(that.accumNav) : that.accumNav != null) return false;
+        if (operationMode != null ? !operationMode.equals(that.operationMode) : that.operationMode != null)
+            return false;
+        if (monthRate != null ? !monthRate.equals(that.monthRate) : that.monthRate != null) return false;
+        if (assetLiabilityRatio != null ? !assetLiabilityRatio.equals(that.assetLiabilityRatio) : that.assetLiabilityRatio != null)
+            return false;
+        if (institutionNetworthRatio != null ? !institutionNetworthRatio.equals(that.institutionNetworthRatio) : that.institutionNetworthRatio != null)
+            return false;
+        if (stockBondProportion != null ? !stockBondProportion.equals(that.stockBondProportion) : that.stockBondProportion != null)
+            return false;
+        if (fundScore != null ? !fundScore.equals(that.fundScore) : that.fundScore != null) return false;
 
         return true;
     }
@@ -248,23 +498,43 @@ public class ProductFund {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (title != null ? title.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (productCode != null ? productCode.hashCode() : 0);
         result = 31 * result + (dayRate != null ? dayRate.hashCode() : 0);
-        result = 31 * result + (yearRate != null ? yearRate.hashCode() : 0);
-        result = 31 * result + (fundType != null ? fundType.hashCode() : 0);
-        result = 31 * result + (bondState != null ? bondState.hashCode() : 0);
-        result = 31 * result + (releaseDate != null ? releaseDate.hashCode() : 0);
-        result = 31 * result + (establishmentDate != null ? establishmentDate.hashCode() : 0);
-        result = 31 * result + (manager != null ? manager.hashCode() : 0);
-        result = 31 * result + (manageExpense != null ? manageExpense.hashCode() : 0);
-        result = 31 * result + (sellServiceExpenses != null ? sellServiceExpenses.hashCode() : 0);
-        result = 31 * result + (maxBuyExpense != null ? maxBuyExpense.hashCode() : 0);
-        result = 31 * result + (maxRedemption != null ? maxRedemption.hashCode() : 0);
-        result = 31 * result + (maxApplyBuyExpense != null ? maxApplyBuyExpense.hashCode() : 0);
+        result = 31 * result + (yearlyRtnRate != null ? yearlyRtnRate.hashCode() : 0);
+        result = 31 * result + (category != null ? category.hashCode() : 0);
+        result = 31 * result + (state != null ? state.hashCode() : 0);
+        result = 31 * result + (managerName != null ? managerName.hashCode() : 0);
+        result = 31 * result + (rateManage != null ? rateManage.hashCode() : 0);
+        result = 31 * result + (rateSubscribe != null ? rateSubscribe.hashCode() : 0);
+        result = 31 * result + (rateRedem != null ? rateRedem.hashCode() : 0);
+        result = 31 * result + (ratePurchase != null ? ratePurchase.hashCode() : 0);
         result = 31 * result + (riskIncomeDescription != null ? riskIncomeDescription.hashCode() : 0);
         result = 31 * result + (fundSize != null ? fundSize.hashCode() : 0);
         result = 31 * result + (shareSize != null ? shareSize.hashCode() : 0);
+        result = 31 * result + (nav != null ? nav.hashCode() : 0);
+        result = 31 * result + (riskLevel != null ? riskLevel.hashCode() : 0);
+        result = 31 * result + (institutionManage != null ? institutionManage.hashCode() : 0);
+        result = 31 * result + (custodian != null ? custodian.hashCode() : 0);
+        result = 31 * result + (purchaseThreshold != null ? purchaseThreshold.hashCode() : 0);
+        result = 31 * result + (increasingUnit != null ? increasingUnit.hashCode() : 0);
+        result = 31 * result + (onPurchaseDate != null ? onPurchaseDate.hashCode() : 0);
+        result = 31 * result + (offPurchaseDate != null ? offPurchaseDate.hashCode() : 0);
+        result = 31 * result + (firstAccrRate != null ? firstAccrRate.hashCode() : 0);
+        result = 31 * result + (onRedemptionDate != null ? onRedemptionDate.hashCode() : 0);
+        result = 31 * result + (length != null ? length.hashCode() : 0);
+        result = 31 * result + (subscribeSpeed != null ? subscribeSpeed.hashCode() : 0);
+        result = 31 * result + (perfBenchmark != null ? perfBenchmark.hashCode() : 0);
+        result = 31 * result + (targetId != null ? targetId.hashCode() : 0);
+        result = 31 * result + (redemptionSpeed != null ? redemptionSpeed.hashCode() : 0);
+        result = 31 * result + (adjustNav != null ? adjustNav.hashCode() : 0);
+        result = 31 * result + (accumNav != null ? accumNav.hashCode() : 0);
+        result = 31 * result + (operationMode != null ? operationMode.hashCode() : 0);
+        result = 31 * result + (monthRate != null ? monthRate.hashCode() : 0);
+        result = 31 * result + (assetLiabilityRatio != null ? assetLiabilityRatio.hashCode() : 0);
+        result = 31 * result + (institutionNetworthRatio != null ? institutionNetworthRatio.hashCode() : 0);
+        result = 31 * result + (stockBondProportion != null ? stockBondProportion.hashCode() : 0);
+        result = 31 * result + (fundScore != null ? fundScore.hashCode() : 0);
         return result;
     }
 }

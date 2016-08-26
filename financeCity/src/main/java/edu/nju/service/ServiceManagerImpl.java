@@ -86,10 +86,13 @@ public class ServiceManagerImpl implements ServiceManager {
                 }
 
                 /** build service list */
-                serviceList.add(service.getClass().getName());
+                serviceList.add(service.getName());
                 /** build service map */
-                serviceMap.put(service.getClass().getName(), service);
+                serviceMap.put(service.getName(), service);
             }
+
+            /** bind search service to invest advisor */
+            investAdvisorService.bindSearchService(searchService);
 
             System.out.println("Service Manager Init Successfully");
         }

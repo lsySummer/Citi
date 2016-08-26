@@ -22,4 +22,10 @@ public interface BaseService {
      * get API list
      */
     List<String> getAPIList();
+
+    /**
+     * get service name
+     * @return name
+     */
+    String getName();
 }

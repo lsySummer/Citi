@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
- * Created by Sun YuHao on 2016/8/18.
+ * Created by Sun YuHao on 2016/8/26.
  */
 @Entity
 @Table(name = "unpaid_item", schema = "citi", catalog = "")
@@ -14,7 +14,7 @@ public class UnpaidItem {
     private int productId;
     private String unit;
     private int amount;
-    private BigDecimal price;
+    private BigDecimal tradingVolume;
     private String checkCode;
     private Timestamp expirationTime;
     private int userId;
@@ -60,13 +60,13 @@ public class UnpaidItem {
     }
 
     @Basic
-    @Column(name = "price")
-    public BigDecimal getPrice() {
-        return price;
+    @Column(name = "trading_volume")
+    public BigDecimal getTradingVolume() {
+        return tradingVolume;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public void setTradingVolume(BigDecimal tradingVolume) {
+        this.tradingVolume = tradingVolume;
     }
 
     @Basic
@@ -111,7 +111,8 @@ public class UnpaidItem {
         if (amount != that.amount) return false;
         if (userId != that.userId) return false;
         if (unit != null ? !unit.equals(that.unit) : that.unit != null) return false;
-        if (price != null ? !price.equals(that.price) : that.price != null) return false;
+        if (tradingVolume != null ? !tradingVolume.equals(that.tradingVolume) : that.tradingVolume != null)
+            return false;
         if (checkCode != null ? !checkCode.equals(that.checkCode) : that.checkCode != null) return false;
         if (expirationTime != null ? !expirationTime.equals(that.expirationTime) : that.expirationTime != null)
             return false;
@@ -125,7 +126,7 @@ public class UnpaidItem {
         result = 31 * result + productId;
         result = 31 * result + (unit != null ? unit.hashCode() : 0);
         result = 31 * result + amount;
-        result = 31 * result + (price != null ? price.hashCode() : 0);
+        result = 31 * result + (tradingVolume != null ? tradingVolume.hashCode() : 0);
         result = 31 * result + (checkCode != null ? checkCode.hashCode() : 0);
         result = 31 * result + (expirationTime != null ? expirationTime.hashCode() : 0);
         result = 31 * result + userId;

@@ -5,35 +5,37 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
- * Created by Sun YuHao on 2016/8/20.
+ * Created by Sun YuHao on 2016/8/21.
  */
 @Entity
 @Table(name = "product_insurance", schema = "citi", catalog = "")
 public class ProductInsurance {
-    private long id;
+    private int id;
     private String title;
     private Long institution;
-    private Byte ageLower;
-    private Byte ageUpper;
-    private String riskInstruction;
-    private BigDecimal maxAmount;
-    private BigDecimal minAmount;
+    private String riskDesctiption;
     private Integer warrantyPeriod;
+    private Integer denomination;
+    private Integer indemnityPerUnit;
+    private Integer indemnity;
     private BigDecimal dayRate;
     private BigDecimal yearRate;
-    private Timestamp balanceDate;
-    private Byte tradeMinUnit;
-    private Byte tradeMaxUnit;
+    private Integer dateLimit;
     private Byte payType;
-    private BigDecimal payPrice;
+    private Timestamp dayBuy;
+    private Timestamp dayDue;
+    private BigDecimal expectedRate;
+    private BigDecimal guaranteedRate;
+    private Integer productPeriod;
+    private String abbreviation;
 
     @Id
     @Column(name = "id")
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -58,53 +60,13 @@ public class ProductInsurance {
     }
 
     @Basic
-    @Column(name = "age_lower")
-    public Byte getAgeLower() {
-        return ageLower;
+    @Column(name = "risk_desctiption")
+    public String getRiskDesctiption() {
+        return riskDesctiption;
     }
 
-    public void setAgeLower(Byte ageLower) {
-        this.ageLower = ageLower;
-    }
-
-    @Basic
-    @Column(name = "age_upper")
-    public Byte getAgeUpper() {
-        return ageUpper;
-    }
-
-    public void setAgeUpper(Byte ageUpper) {
-        this.ageUpper = ageUpper;
-    }
-
-    @Basic
-    @Column(name = "risk_instruction")
-    public String getRiskInstruction() {
-        return riskInstruction;
-    }
-
-    public void setRiskInstruction(String riskInstruction) {
-        this.riskInstruction = riskInstruction;
-    }
-
-    @Basic
-    @Column(name = "max_amount")
-    public BigDecimal getMaxAmount() {
-        return maxAmount;
-    }
-
-    public void setMaxAmount(BigDecimal maxAmount) {
-        this.maxAmount = maxAmount;
-    }
-
-    @Basic
-    @Column(name = "min_amount")
-    public BigDecimal getMinAmount() {
-        return minAmount;
-    }
-
-    public void setMinAmount(BigDecimal minAmount) {
-        this.minAmount = minAmount;
+    public void setRiskDesctiption(String riskDesctiption) {
+        this.riskDesctiption = riskDesctiption;
     }
 
     @Basic
@@ -115,6 +77,36 @@ public class ProductInsurance {
 
     public void setWarrantyPeriod(Integer warrantyPeriod) {
         this.warrantyPeriod = warrantyPeriod;
+    }
+
+    @Basic
+    @Column(name = "denomination")
+    public Integer getDenomination() {
+        return denomination;
+    }
+
+    public void setDenomination(Integer denomination) {
+        this.denomination = denomination;
+    }
+
+    @Basic
+    @Column(name = "indemnity_per_unit")
+    public Integer getIndemnityPerUnit() {
+        return indemnityPerUnit;
+    }
+
+    public void setIndemnityPerUnit(Integer indemnityPerUnit) {
+        this.indemnityPerUnit = indemnityPerUnit;
+    }
+
+    @Basic
+    @Column(name = "indemnity")
+    public Integer getIndemnity() {
+        return indemnity;
+    }
+
+    public void setIndemnity(Integer indemnity) {
+        this.indemnity = indemnity;
     }
 
     @Basic
@@ -138,33 +130,13 @@ public class ProductInsurance {
     }
 
     @Basic
-    @Column(name = "balance_date")
-    public Timestamp getBalanceDate() {
-        return balanceDate;
+    @Column(name = "date_limit")
+    public Integer getDateLimit() {
+        return dateLimit;
     }
 
-    public void setBalanceDate(Timestamp balanceDate) {
-        this.balanceDate = balanceDate;
-    }
-
-    @Basic
-    @Column(name = "trade_min_unit")
-    public Byte getTradeMinUnit() {
-        return tradeMinUnit;
-    }
-
-    public void setTradeMinUnit(Byte tradeMinUnit) {
-        this.tradeMinUnit = tradeMinUnit;
-    }
-
-    @Basic
-    @Column(name = "trade_max_unit")
-    public Byte getTradeMaxUnit() {
-        return tradeMaxUnit;
-    }
-
-    public void setTradeMaxUnit(Byte tradeMaxUnit) {
-        this.tradeMaxUnit = tradeMaxUnit;
+    public void setDateLimit(Integer dateLimit) {
+        this.dateLimit = dateLimit;
     }
 
     @Basic
@@ -178,13 +150,63 @@ public class ProductInsurance {
     }
 
     @Basic
-    @Column(name = "pay_price")
-    public BigDecimal getPayPrice() {
-        return payPrice;
+    @Column(name = "day_buy")
+    public Timestamp getDayBuy() {
+        return dayBuy;
     }
 
-    public void setPayPrice(BigDecimal payPrice) {
-        this.payPrice = payPrice;
+    public void setDayBuy(Timestamp dayBuy) {
+        this.dayBuy = dayBuy;
+    }
+
+    @Basic
+    @Column(name = "day_due")
+    public Timestamp getDayDue() {
+        return dayDue;
+    }
+
+    public void setDayDue(Timestamp dayDue) {
+        this.dayDue = dayDue;
+    }
+
+    @Basic
+    @Column(name = "expected_rate")
+    public BigDecimal getExpectedRate() {
+        return expectedRate;
+    }
+
+    public void setExpectedRate(BigDecimal expectedRate) {
+        this.expectedRate = expectedRate;
+    }
+
+    @Basic
+    @Column(name = "guaranteed_rate")
+    public BigDecimal getGuaranteedRate() {
+        return guaranteedRate;
+    }
+
+    public void setGuaranteedRate(BigDecimal guaranteedRate) {
+        this.guaranteedRate = guaranteedRate;
+    }
+
+    @Basic
+    @Column(name = "product_period")
+    public Integer getProductPeriod() {
+        return productPeriod;
+    }
+
+    public void setProductPeriod(Integer productPeriod) {
+        this.productPeriod = productPeriod;
+    }
+
+    @Basic
+    @Column(name = "abbreviation")
+    public String getAbbreviation() {
+        return abbreviation;
+    }
+
+    public void setAbbreviation(String abbreviation) {
+        this.abbreviation = abbreviation;
     }
 
     @Override
@@ -197,43 +219,50 @@ public class ProductInsurance {
         if (id != that.id) return false;
         if (title != null ? !title.equals(that.title) : that.title != null) return false;
         if (institution != null ? !institution.equals(that.institution) : that.institution != null) return false;
-        if (ageLower != null ? !ageLower.equals(that.ageLower) : that.ageLower != null) return false;
-        if (ageUpper != null ? !ageUpper.equals(that.ageUpper) : that.ageUpper != null) return false;
-        if (riskInstruction != null ? !riskInstruction.equals(that.riskInstruction) : that.riskInstruction != null)
+        if (riskDesctiption != null ? !riskDesctiption.equals(that.riskDesctiption) : that.riskDesctiption != null)
             return false;
-        if (maxAmount != null ? !maxAmount.equals(that.maxAmount) : that.maxAmount != null) return false;
-        if (minAmount != null ? !minAmount.equals(that.minAmount) : that.minAmount != null) return false;
         if (warrantyPeriod != null ? !warrantyPeriod.equals(that.warrantyPeriod) : that.warrantyPeriod != null)
             return false;
+        if (denomination != null ? !denomination.equals(that.denomination) : that.denomination != null) return false;
+        if (indemnityPerUnit != null ? !indemnityPerUnit.equals(that.indemnityPerUnit) : that.indemnityPerUnit != null)
+            return false;
+        if (indemnity != null ? !indemnity.equals(that.indemnity) : that.indemnity != null) return false;
         if (dayRate != null ? !dayRate.equals(that.dayRate) : that.dayRate != null) return false;
         if (yearRate != null ? !yearRate.equals(that.yearRate) : that.yearRate != null) return false;
-        if (balanceDate != null ? !balanceDate.equals(that.balanceDate) : that.balanceDate != null) return false;
-        if (tradeMinUnit != null ? !tradeMinUnit.equals(that.tradeMinUnit) : that.tradeMinUnit != null) return false;
-        if (tradeMaxUnit != null ? !tradeMaxUnit.equals(that.tradeMaxUnit) : that.tradeMaxUnit != null) return false;
+        if (dateLimit != null ? !dateLimit.equals(that.dateLimit) : that.dateLimit != null) return false;
         if (payType != null ? !payType.equals(that.payType) : that.payType != null) return false;
-        if (payPrice != null ? !payPrice.equals(that.payPrice) : that.payPrice != null) return false;
+        if (dayBuy != null ? !dayBuy.equals(that.dayBuy) : that.dayBuy != null) return false;
+        if (dayDue != null ? !dayDue.equals(that.dayDue) : that.dayDue != null) return false;
+        if (expectedRate != null ? !expectedRate.equals(that.expectedRate) : that.expectedRate != null) return false;
+        if (guaranteedRate != null ? !guaranteedRate.equals(that.guaranteedRate) : that.guaranteedRate != null)
+            return false;
+        if (productPeriod != null ? !productPeriod.equals(that.productPeriod) : that.productPeriod != null)
+            return false;
+        if (abbreviation != null ? !abbreviation.equals(that.abbreviation) : that.abbreviation != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
+        int result = id;
         result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + (institution != null ? institution.hashCode() : 0);
-        result = 31 * result + (ageLower != null ? ageLower.hashCode() : 0);
-        result = 31 * result + (ageUpper != null ? ageUpper.hashCode() : 0);
-        result = 31 * result + (riskInstruction != null ? riskInstruction.hashCode() : 0);
-        result = 31 * result + (maxAmount != null ? maxAmount.hashCode() : 0);
-        result = 31 * result + (minAmount != null ? minAmount.hashCode() : 0);
+        result = 31 * result + (riskDesctiption != null ? riskDesctiption.hashCode() : 0);
         result = 31 * result + (warrantyPeriod != null ? warrantyPeriod.hashCode() : 0);
+        result = 31 * result + (denomination != null ? denomination.hashCode() : 0);
+        result = 31 * result + (indemnityPerUnit != null ? indemnityPerUnit.hashCode() : 0);
+        result = 31 * result + (indemnity != null ? indemnity.hashCode() : 0);
         result = 31 * result + (dayRate != null ? dayRate.hashCode() : 0);
         result = 31 * result + (yearRate != null ? yearRate.hashCode() : 0);
-        result = 31 * result + (balanceDate != null ? balanceDate.hashCode() : 0);
-        result = 31 * result + (tradeMinUnit != null ? tradeMinUnit.hashCode() : 0);
-        result = 31 * result + (tradeMaxUnit != null ? tradeMaxUnit.hashCode() : 0);
+        result = 31 * result + (dateLimit != null ? dateLimit.hashCode() : 0);
         result = 31 * result + (payType != null ? payType.hashCode() : 0);
-        result = 31 * result + (payPrice != null ? payPrice.hashCode() : 0);
+        result = 31 * result + (dayBuy != null ? dayBuy.hashCode() : 0);
+        result = 31 * result + (dayDue != null ? dayDue.hashCode() : 0);
+        result = 31 * result + (expectedRate != null ? expectedRate.hashCode() : 0);
+        result = 31 * result + (guaranteedRate != null ? guaranteedRate.hashCode() : 0);
+        result = 31 * result + (productPeriod != null ? productPeriod.hashCode() : 0);
+        result = 31 * result + (abbreviation != null ? abbreviation.hashCode() : 0);
         return result;
     }
 }

@@ -1,17 +1,13 @@
 package edu.nju.service.SearchService;
 
+import edu.nju.model.CategoryIndex;
 import edu.nju.service.BaseService.BaseFunctionServiceAdaptor;
+import edu.nju.service.CategoryAndProduct.Product;
+import edu.nju.service.CategoryAndProduct.ProductFactory;
 import edu.nju.service.Exceptions.NoSuchProductException;
-import edu.nju.service.Exceptions.NotLoginException;
-import edu.nju.service.POJO.Filter;
-import edu.nju.service.POJO.Product;
-import edu.nju.service.POJO.ProductBaseInfo;
-import edu.nju.service.POJO.SearchConfig;
-import edu.nju.service.SearchService.ProductManager.ProductCategoryManager;
-import edu.nju.service.SearchService.ProductManager.ProductCategoryManagerImpl;
-import edu.nju.service.SearchService.ProductManager.ProductFilter;
+import edu.nju.service.CategoryAndProduct.Category;
+import edu.nju.service.CategoryAndProduct.ProductCategoryManager;
 import edu.nju.vo.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,42 +18,25 @@ import java.util.List;
  */
 @Service
 public class SearchServiceImpl extends BaseFunctionServiceAdaptor implements SearchService {
-    private ProductCategoryManager productCategoryManager;
-
-    public SearchServiceImpl() {
-        productCategoryManager = ProductCategoryManagerImpl.getInstance();
-    }
 
     @Override
     public Product getProductByName(String productName) throws NoSuchProductException {
-        try {
-            List list = getUserService().getUserDao().find("SELECT id FROM NameToId nameToId WHERE nameToId.name=" + productName);
-            if (list == null || list.size() == 0) {
-                throw  new NoSuchProductException(productName);
-            }
+        List list = getUserService().getCommonDao().find("SELECT id FROM NameToId nameToId WHERE nameToId.name=" + productName);
+        if (list == null || list.size() == 0) {
+            throw  new NoSuchProductException(productName);
+        }
 
-            Integer id = (Integer) list.get(0);
-            return getProductByID(id);
-        }
-        catch (NotLoginException n) {
-            n.printStackTrace();
-            return null;
-        }
+        Integer id = (Integer) list.get(0);
+        return getProductByID(id);
     }
 
     @Override
     public Product getProductByID(Integer ID) throws NoSuchProductException {
-        String category = productCategoryManager.getType(ID);
-        int index = productCategoryManager.getProductItemIndex(ID);
+        Category category = ProductCategoryManager.getCategoryByID(ID);
+        int index = ProductCategoryManager.getProductItemIndex(ID);
 
-        try {
-            List list = getUserService().getUserDao().find("FROM Product" + category + " product WHERE product.id=" + index);
-            return new Product(list.get(0), category);
-        }
-        catch (NotLoginException n) {
-            n.printStackTrace();
-            return null;
-        }
+        List list = getUserService().getCommonDao().find("FROM Product" + category + " product WHERE product.id=" + index);
+        return ProductFactory.createProduct(list.get(0), category.getCategoryName());
     }
 
     @Override
@@ -65,24 +44,24 @@ public class SearchServiceImpl extends BaseFunctionServiceAdaptor implements Sea
         List<Product> chosenList = new ArrayList<>();
         List<String> searchScope = filter.getSearchScope();
 
-        try {
-            for (String category : searchScope) {
-                List productList = getUserService().getUserDao().find("FROM Product" + category +
-                " product");
-
-                for (Object product: productList) {
-                    if (filter.isChosen(product)) {
-                        chosenList.add(new Product(product, category));
-                    }
-                }
+        for (String categoryName : searchScope) {
+            Category category = ProductCategoryManager.getCategoryByName(categoryName);
+            List productList;
+            if (!category.equals(ProductCategoryManager.categoryFund)) {
+                productList = getUserService().getCommonDao().find("FROM Product" + category + " product");
+            }
+            else {
+                productList = getUserService().getCommonDao().find("FROM Product" + category.getBiggerCategory() + " p WHERE p.category=" + category.getSubTypeIndex());
             }
 
-            return chosenList;
+            for (Object product: productList) {
+                if (filter.isChosen(product)) {
+                    chosenList.add(ProductFactory.createProduct(product, categoryName));
+                }
+            }
         }
-        catch (NotLoginException n) {
-            n.printStackTrace();
-            return null;
-        }
+
+        return chosenList;
     }
 
     @SuppressWarnings("unchecked")
@@ -90,7 +69,7 @@ public class SearchServiceImpl extends BaseFunctionServiceAdaptor implements Sea
     public List<Product> searchProductsByKey(String keyWord) {
         try {
             List<Product> productList = new ArrayList<>();
-            List<Integer> list = getUserService().getUserDao().find("SELECT id FROM NameToId nameToId WHERE nameToId.name LIKE %" +
+            List<Integer> list = getUserService().getCommonDao().find("SELECT id FROM NameToId nameToId WHERE nameToId.name LIKE %" +
             keyWord + "%");
 
             for (Integer id : list) {
@@ -121,14 +100,15 @@ public class SearchServiceImpl extends BaseFunctionServiceAdaptor implements Sea
     }
 
     @Override
-    public int generateProductID(String product_type, int index) {
-        return productCategoryManager.generateProductID(index, product_type);
-    }
-
-    @Override
-    public Object searchMin(String PO, String word) {
+    public Object searchMin(String type, String word) {
         try {
-            return getUserService().getUserDao().find("SELECT MIN(o." + word + ") FROM PO o").get(0);
+            Category category = ProductCategoryManager.getCategoryByName(type);
+            if (!category.equals(ProductCategoryManager.categoryFund)) {
+                return getUserService().getCommonDao().find("SELECT MIN(o." + word + ") FROM Product" + category + " o").get(0);
+            }
+            else {
+                return getUserService().getCommonDao().find("SELECT MIN(o." + word + ") FROM Product" + category.getBiggerCategory() + " o WHERE o.category=" + category.getSubTypeIndex()).get(0);
+            }
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -138,39 +118,52 @@ public class SearchServiceImpl extends BaseFunctionServiceAdaptor implements Sea
 
     @Override
     public List<Product> searchProductsByCondition(String type, String cond) {
-        try {
-            List list = getUserService().getUserDao().find("FROM Product" + type +
-                    " p WHERE " + cond);
+        Category category = ProductCategoryManager.getCategoryByName(type);
+        List list;
 
-            List<Product> productList = new ArrayList<>();
-            for (Object object : list) {
-                productList.add(new Product(object, type));
-            }
+        if (!category.equals(ProductCategoryManager.categoryFund)) {
+            list = getUserService().getCommonDao().find("FROM Product" + category + " p WHERE " + cond);
+        }
+        else {
+            list = getUserService().getCommonDao().find("FROM Product" + category.getBiggerCategory() + " p WHERE p.category=" + category.getSubTypeIndex() + " AND " + cond);
+        }
 
-            return productList;
+        List<Product> productList = new ArrayList<>();
+        for (Object object : list) {
+            productList.add(ProductFactory.createProduct(object, category.getCategoryName()));
         }
-        catch (NotLoginException n) {
-            n.printStackTrace();
-            return null;
-        }
+
+        return productList;
     }
 
     @Override
     public List<Product> getProductListByOrder(String type, String order) {
-        try {
-            List<Product> productList = new ArrayList<>();
-            List list = getUserService().getUserDao().find("FROM Product" + type +
-            " p ORDER BY " + order);
+        Category category = ProductCategoryManager.getCategoryByName(type);
+        List list;
 
-            for (Object object : list) {
-                productList.add(new Product(object, type));
-            }
-
-            return productList;
+        if (!category.equals(ProductCategoryManager.categoryFund)) {
+            list = getUserService().getCommonDao().find("FROM Product" + category + " p ORDER BY " + order);
         }
-        catch (NotLoginException n) {
-            n.printStackTrace();
+        else {
+            list = getUserService().getCommonDao().find("FROM Product" + category.getBiggerCategory() + " p WHERE p.category=" + category.getSubTypeIndex() + " ORDER BY " + order);
+        }
+
+        List<Product> productList = new ArrayList<>();
+
+        for (Object object : list) {
+            productList.add(ProductFactory.createProduct(object, category.getCategoryName()));
+        }
+
+        return productList;
+    }
+
+    @Override
+    public CategoryIndex getCategoryIndex() {
+        List list = getUserService().getCommonDao().find("SELECT TOP 1 FROM CategoryIndex c ORDER BY id DESC");
+        if (list == null || list.size() == 0) {
             return null;
         }
+
+        return (CategoryIndex)list.get(0);
     }
 }

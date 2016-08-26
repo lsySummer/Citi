@@ -1,5 +1,8 @@
 package edu.nju.service.InvestAdvisorService;
 
+import edu.nju.model.UserFamilySpeeding;
+import edu.nju.model.UserInformation;
+import edu.nju.model.UserTemperPrefer;
 import edu.nju.service.BaseService.BaseService;
 import edu.nju.service.Exceptions.NotAllConfigurationSetException;
 import edu.nju.service.Exceptions.NotLoginException;
@@ -87,6 +90,8 @@ public interface InvestAdvisorService extends BaseService {
      * @return investment portfolio
      */
     InvestmentPortFolio createInvestmentPortFolio() throws NotAllConfigurationSetException, NotLoginException;
+
+    InvestmentPortFolio createInvestmentPortFolio(UserInformation identity, UserTemperPrefer preference, UserFamilySpeeding familyExpense) throws NotAllConfigurationSetException;
 
     /**
      * get user vo

@@ -1,6 +1,6 @@
 package edu.nju.service.InvestAdvisorService;
 
-import edu.nju.dao.BaseDao;
+import edu.nju.dao.UserDao;
 import edu.nju.model.User;
 import edu.nju.model.UserFamilySpeeding;
 import edu.nju.model.UserInformation;
@@ -11,7 +11,6 @@ import edu.nju.service.Exceptions.NotLoginException;
 import edu.nju.service.InvestAdvisorService.Strategy.InvestStrategy;
 import edu.nju.service.POJO.*;
 import edu.nju.service.SearchService.SearchService;
-import edu.nju.service.TradeService.TradeService;
 import edu.nju.vo.FamilySpendingVO;
 import edu.nju.vo.IdentityVO;
 import edu.nju.vo.TemperPreferVO;
@@ -35,19 +34,29 @@ public class InvestAdvisorServiceImpl extends BaseFunctionServiceAdaptor impleme
 
     @Override
     public boolean setIdentity(IdentityVO identity) {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
         try {
+            List list = getUserService().getUserDao().find("SELECT i.createAt FROM UserInformation i WHERE i.id=" + getUserService().getID());
+            Timestamp createAt;
+            if (list ==null || list.size() == 0) {
+                createAt = timestamp;
+            }
+            else {
+                createAt = (Timestamp) list.get(0);
+            }
+
+            //TODO:check vo
             UserInformation userInformation = new UserInformation();
-            userInformation.setId(getUserService().getID().intValue());
-            //TODO:add timestamp
-            userInformation.setCreatedAt(new Timestamp(0));
+            userInformation.setId(getUserService().getID());
+            userInformation.setCreatedAt(createAt);
             userInformation.setExperience(Byte.valueOf(identity.getExperience()));
-            userInformation.setId(getUserService().getID().intValue());
-            //TODO:add intention/job/marriage/salary/update time
+            userInformation.setId(getUserService().getID());
+            userInformation.setUpdateAt(timestamp);
             userInformation.setIntention(new Byte((identity.getRiskPrefer())));
             userInformation.setJob(new Byte(identity.getJob()));
             userInformation.setMarriageStatus(new Byte(identity.getMarriage()));
-            userInformation.setSalary(new Integer((int)identity.getIncome()));
-            userInformation.setUpdateAt(new Timestamp(0));
+            userInformation.setSalary((int)identity.getIncome());
 
             getUserService().getUserDao().saveOrUpdate(userInformation);
 
@@ -89,7 +98,7 @@ public class InvestAdvisorServiceImpl extends BaseFunctionServiceAdaptor impleme
     public boolean setTemperPrefer(TemperPreferVO temperPreferVO) {
         try {
             UserTemperPrefer userTemperPrefer = new UserTemperPrefer();
-            userTemperPrefer.setId(getUserService().getID().intValue());
+            userTemperPrefer.setId(getUserService().getID());
             userTemperPrefer.setBearLoss(new BigDecimal(temperPreferVO.getBearLoss()));
             //TODO:convert time type
             userTemperPrefer.setBeginTime(new Timestamp(Long.valueOf(temperPreferVO.getBeginTime())));
@@ -137,7 +146,7 @@ public class InvestAdvisorServiceImpl extends BaseFunctionServiceAdaptor impleme
     public boolean setFamilySpending(FamilySpendingVO familySpending) {
         try {
             UserFamilySpeeding userFamilySpeeding = new UserFamilySpeeding();
-            userFamilySpeeding.setId(getUserService().getID().intValue());
+            userFamilySpeeding.setId(getUserService().getID());
             userFamilySpeeding.setIfNeed(familySpending.isIfNeed() ? new Byte((byte)1) : new Byte((byte)0));
             userFamilySpeeding.setIsPrepare(familySpending.isIfPrepare() ? new Byte((byte)1) : new Byte((byte)0));
 
@@ -174,7 +183,7 @@ public class InvestAdvisorServiceImpl extends BaseFunctionServiceAdaptor impleme
     @Override
     public boolean ifIdentityIsSet() {
         try {
-            BaseDao DAO = getUserService().getUserDao();
+            UserDao DAO = getUserService().getUserDao();
             List list = DAO.find("SELECT id FROM UserInformation identity WHERE identity.id=" + getUserService().getID());
             return !(list == null || list.size() == 0);
         }
@@ -186,7 +195,7 @@ public class InvestAdvisorServiceImpl extends BaseFunctionServiceAdaptor impleme
     @Override
     public boolean ifPreferenceIsSet() {
         try {
-            BaseDao DAO = getUserService().getUserDao();
+            UserDao DAO = getUserService().getUserDao();
             List list = DAO.find("SELECT id FROM UserTemperPrefer preference WHERE preference.id=" + getUserService().getID());
             return !(list == null || list.size() == 0);
         }
@@ -198,7 +207,7 @@ public class InvestAdvisorServiceImpl extends BaseFunctionServiceAdaptor impleme
     @Override
     public boolean ifAllSet() {
         try {
-            BaseDao DAO = getUserService().getUserDao();
+            UserDao DAO = getUserService().getUserDao();
             List list = DAO.find("SELECT id FROM UserFamilySpending familySpending WHERE familySpending.id=" + getUserService().getID());
             return !(list == null || list.size() == 0);
         }
@@ -209,10 +218,24 @@ public class InvestAdvisorServiceImpl extends BaseFunctionServiceAdaptor impleme
 
     @Override
     public InvestmentPortFolio createInvestmentPortFolio() throws NotAllConfigurationSetException, NotLoginException {
-        BaseDao DAO = getUserService().getUserDao();
-        UserInformation identity = (UserInformation)DAO.find("FROM UserInformation identity WHERE identity.id=" + getUserService().getID()).get(0);
-        UserTemperPrefer preference = (UserTemperPrefer)DAO.find("FROM UserTemperPrefer preference WHERE preference.id=" + getUserService().getID()).get(0);
-        UserFamilySpeeding familyExpense = (UserFamilySpeeding) DAO.find("FROM UserFamilySpending familySpending WHERE familySpending.id=" + getUserService().getID()).get(0);
+        UserDao DAO = getUserService().getUserDao();
+        try {
+            UserInformation identity = (UserInformation) DAO.find("FROM UserInformation identity WHERE identity.id=" + getUserService().getID()).get(0);
+            UserTemperPrefer preference = (UserTemperPrefer) DAO.find("FROM UserTemperPrefer preference WHERE preference.id=" + getUserService().getID()).get(0);
+            UserFamilySpeeding familyExpense = (UserFamilySpeeding) DAO.find("FROM UserFamilySpending familySpending WHERE familySpending.id=" + getUserService().getID()).get(0);
+            return investStrategy.createInvestmentPortfolio(identity, preference, familyExpense, searchService);
+        }
+        catch (NullPointerException n) {
+            n.printStackTrace();
+            throw new NotAllConfigurationSetException();
+        }
+    }
+
+    @Override
+    public InvestmentPortFolio createInvestmentPortFolio(UserInformation identity, UserTemperPrefer preference, UserFamilySpeeding familyExpense) throws NotAllConfigurationSetException {
+        if (identity == null || preference == null || familyExpense == null) {
+            throw new NotAllConfigurationSetException();
+        }
 
         return investStrategy.createInvestmentPortfolio(identity, preference, familyExpense, searchService);
     }

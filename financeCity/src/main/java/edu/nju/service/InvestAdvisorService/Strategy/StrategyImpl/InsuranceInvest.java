@@ -1,9 +1,10 @@
 package edu.nju.service.InvestAdvisorService.Strategy.StrategyImpl;
 
 import edu.nju.model.ProductInsurance;
+import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.Exceptions.MissRequiredInfoException;
 import edu.nju.service.POJO.InvestResult;
-import edu.nju.service.POJO.Product;
+import edu.nju.service.CategoryAndProduct.Category;
 import edu.nju.service.SearchService.SearchService;
 import edu.nju.service.TradeService.TradeItem;
 
@@ -11,15 +12,16 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by Sun YuHao on 2016/8/20.
  */
 public class InsuranceInvest implements CategoryInvest {
-    static final String categoryName = "Insurance";
-    static final String paramCapital = "capital";
-    static final String paramTimeLimit = "timeLimit";
-    static final String paramProductAmount = "productAmount";
+    public static final String categoryName = "Insurance";
+    public static final String paramCapital = "capital";
+    public static final String paramTimeLimit = "timeLimit";
+    public static final String paramProductAmount = "productAmount";
 
     @Override
     public InvestResult invest(Map<String, Object> metaInfo, SearchService searchService) throws MissRequiredInfoException {
@@ -49,10 +51,14 @@ public class InsuranceInvest implements CategoryInvest {
 
             productList = expectationSortor.sortByShortTermExp();
             if (timeLimit == 5) {
-                productList = selectProductByDuration(productList, 5);
+                productList = productList.stream().
+                        filter(product -> (((ProductInsurance)product.getProduct()).getDateLimit() == 5)).
+                        collect(Collectors.toCollection(ArrayList::new));
             }
             else if(timeLimit == 10) {
-                productList = selectProductByDuration(productList, 10);
+                productList = productList.stream().
+                        filter(product -> (((ProductInsurance)product.getProduct()).getDateLimit() == 10)).
+                        collect(Collectors.toCollection(ArrayList::new));
             }
         }
         else if (timeLimit == 15 || timeLimit == 20 || timeLimit > 20) {
@@ -61,10 +67,14 @@ public class InsuranceInvest implements CategoryInvest {
 
             productList = expectationSortor.sortByLongTermExp();
             if (timeLimit == 15) {
-                productList = selectProductByDuration(productList, 15);
+                productList = productList.stream().
+                        filter(product -> (((ProductInsurance)product.getProduct()).getDateLimit() == 15)).
+                        collect(Collectors.toCollection(ArrayList::new));
             }
             else if(timeLimit == 20) {
-                productList = selectProductByDuration(productList, 20);
+                productList = productList.stream().
+                        filter(product -> (((ProductInsurance)product.getProduct()).getDateLimit() == 20)).
+                        collect(Collectors.toCollection(ArrayList::new));
             }
         }
 
@@ -76,30 +86,14 @@ public class InsuranceInvest implements CategoryInvest {
         return investResult;
     }
 
-    private List<Product> selectProductByDuration(List<Product> productList, int duration) {
-        List<Product> ret = new ArrayList<>();
-        for (Product product :productList) {
-            ProductInsurance productInsurance = (ProductInsurance)product.getProduct();
-
-            //TODO:??? if correct
-            int BuyTime = 0;
-            int DueTime = 0;
-            if (DueTime - BuyTime == duration) {
-                ret.add(product);
-            }
-        }
-
-        return ret;
-    }
-
-    class ExpectationSortor {
+    private class ExpectationSortor {
         List<Product> productList;
         List<Integer> unitCompensationOrder;
         List<Integer> yearRateOrder;
         List<Double> shortTermExp;
         List<Double> longTermExp;
 
-        public void setProductListWithYearRateOrder(List<Product> productList) {
+        private void setProductListWithYearRateOrder(List<Product> productList) {
             this.productList = productList;
             yearRateOrder = new ArrayList<>();
 
@@ -108,7 +102,7 @@ public class InsuranceInvest implements CategoryInvest {
             }
         }
 
-        public List<Product> sortByShortTermExp() {
+        private List<Product> sortByShortTermExp() {
             calcuUnitCompensationOrder();
 
             shortTermExp = new ArrayList<>(productList.size());
@@ -122,22 +116,12 @@ public class InsuranceInvest implements CategoryInvest {
                 list.add(new SimpleStruct(productList.get(i), shortTermExp.get(i)));
             }
 
-            list.sort(new Comparator<SimpleStruct>() {
-                @Override
-                public int compare(SimpleStruct o1, SimpleStruct o2) {
-                    return o2.score.compareTo(o1.score);
-                }
-            });
+            list.sort(((o1, o2) -> o2.score.compareTo(o1.score)));
 
-            List<Product> ret = new ArrayList<>();
-            for (SimpleStruct simpleStruct : list) {
-                ret.add(simpleStruct.product);
-            }
-
-            return ret;
+            return list.stream().map(simpleStruct -> simpleStruct.product).collect(Collectors.toCollection(ArrayList::new));
         }
 
-        public List<Product> sortByLongTermExp() {
+        private List<Product> sortByLongTermExp() {
             calcuUnitCompensationOrder();
 
             longTermExp = new ArrayList<>(productList.size());
@@ -151,19 +135,9 @@ public class InsuranceInvest implements CategoryInvest {
                 list.add(new SimpleStruct(productList.get(i), longTermExp.get(i)));
             }
 
-            list.sort(new Comparator<SimpleStruct>() {
-                @Override
-                public int compare(SimpleStruct o1, SimpleStruct o2) {
-                    return o2.score.compareTo(o1.score);
-                }
-            });
+            list.sort((o1, o2) -> o2.score.compareTo(o1.score));
 
-            List<Product> ret = new ArrayList<>();
-            for (SimpleStruct simpleStruct : list) {
-                ret.add(simpleStruct.product);
-            }
-
-            return ret;
+            return list.stream().map(simpleStruct -> simpleStruct.product).collect(Collectors.toCollection(ArrayList::new));
         }
 
 
@@ -179,16 +153,20 @@ public class InsuranceInvest implements CategoryInvest {
 
                 @Override
                 public int compare(Integer o1, Integer o2) {
-                    Integer unitCompensation1 = 0;
-                    Integer unitCompensation2 = 0;
+                    ProductInsurance productInsurance1 = (ProductInsurance)productList.get(o1).getProduct();
+                    ProductInsurance productInsurance2 = (ProductInsurance)productList.get(o2).getProduct();
+                    Integer unitCompensation1 = productInsurance1.getIndemnityPerUnit();
+                    Integer unitCompensation2 = productInsurance2.getIndemnityPerUnit();
                     return unitCompensation2.compareTo(unitCompensation1);
                 }
 
-                public Comparator<Integer> setProductList(List<Product> productList) {
+                private Comparator<Integer> setProductList(List<Product> productList) {
                     this.productList = productList;
                     return this;
                 }
             }.setProductList(productList);
+
+            noList.sort(comparator);
 
             unitCompensationOrder = new ArrayList<>(noList.size());
             for (int i = 0; i < noList.size(); ++i) {
@@ -197,13 +175,13 @@ public class InsuranceInvest implements CategoryInvest {
         }
 
         private class SimpleStruct {
-            public Product product;
-            public Double score;
+            private Product product;
+            private Double score;
 
-            public SimpleStruct(Product product, double score) {
+            private SimpleStruct(Product product, double score) {
                 this.product = product;
                 this.score = score;
             }
-        };
+        }
     }
 }

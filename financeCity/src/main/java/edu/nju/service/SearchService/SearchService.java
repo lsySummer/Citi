@@ -1,12 +1,10 @@
 package edu.nju.service.SearchService;
 
+import edu.nju.model.CategoryIndex;
 import edu.nju.service.BaseService.BaseService;
+import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.Exceptions.NoSuchProductException;
-import edu.nju.service.POJO.Filter;
-import edu.nju.service.POJO.Product;
-import edu.nju.service.POJO.ProductBaseInfo;
-import edu.nju.service.POJO.SearchConfig;
-import edu.nju.service.SearchService.ProductManager.ProductFilter;
+import edu.nju.service.CategoryAndProduct.Category;
 import edu.nju.vo.*;
 import org.springframework.stereotype.Service;
 
@@ -86,18 +84,16 @@ public interface SearchService extends BaseService{
     ProjectVO getProjectVO(Long projectID);
 
     /**
-     * generate product id
-     * @param product_type .
-     * @param itemId .
-     * @return product id
+     * search some object by min word
+     * @param type .
+     * @param word .
+     * @return min word.
      */
-    int generateProductID(String product_type, int itemId);
+    Object searchMin(String type, String word);
 
     /**
-     * search some object by min word
-     * @param PO .
-     * @param word .
-     * @return .
+     * get category index
+     * @return category index
      */
-    Object searchMin(String PO, String word);
+    CategoryIndex getCategoryIndex();
 }

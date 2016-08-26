@@ -1,7 +1,7 @@
 package edu.nju.service.TradeService;
 
-import edu.nju.service.POJO.Product;
-import edu.nju.service.SearchService.ProductManager.ProductCategoryManagerImpl;
+import edu.nju.service.CategoryAndProduct.Category;
+import edu.nju.service.CategoryAndProduct.Product;
 import org.springframework.util.DigestUtils;
 
 /**
@@ -13,11 +13,6 @@ public class TradeItem {
     private String type;
     private Product product;
     private String metaInfo;
-
-    //TODO:maybe unnecessary?
-    private int product_id;
-    private double price;
-    private String unit;
 
     public int getAmount() {
         return amount;
@@ -59,45 +54,6 @@ public class TradeItem {
         this.metaInfo = metaInfo;
     }
 
-    public int getProduct_id() {
-        return product_id;
-    }
-
-    public void setProduct_id(int product_id) {
-        this.product_id = product_id;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public String getUnit() {
-        return unit;
-    }
-
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
-
-    public TradeItem(int product_id, double price, String unit, int amount) {
-        this.product_id = product_id;
-        this.price = price;
-        this.unit = unit;
-        this.amount = amount;
-    }
-
-    public TradeItem(String product_type, int index, double price, String unit, int amount) {
-
-        this.product_id = ProductCategoryManagerImpl.getInstance().generateProductID(index, product_type);
-        this.price = price;
-        this.unit = unit;
-        this.amount = amount;
-    }
-
     public TradeItem(double tradingVolume, String type, Product product, String metaInfo) {
         this.tradingVolume = tradingVolume;
         this.type = type;
@@ -107,6 +63,6 @@ public class TradeItem {
 
     public String generateMD5(int id, String timestamp) {
         return DigestUtils.md5DigestAsHex((timestamp + id +
-                getProduct_id() + getAmount()).getBytes());
+                getProduct().getID() + getAmount()).getBytes());
     }
 }

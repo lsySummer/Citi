@@ -1,6 +1,8 @@
 package edu.nju.service.UserService;
 
 import edu.nju.dao.BaseDao;
+import edu.nju.dao.UserDao;
+import edu.nju.dao.impl.CommonDao;
 import edu.nju.service.BaseService.BaseService;
 import edu.nju.service.Exceptions.NotLoginException;
 import edu.nju.service.POJO.RegisterInfo;
@@ -56,7 +58,13 @@ public interface UserService extends BaseService {
 
     /**
      * get user dao
-     * @return dao .
+     * @return user dao .
      */
-    BaseDao getUserDao() throws NotLoginException;
+    UserDao getUserDao() throws NotLoginException;
+
+    /**
+     * get common dao
+     * @return common dao
+     */
+    CommonDao getCommonDao();
 }

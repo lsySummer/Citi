@@ -1,4 +1,4 @@
-package edu.nju.service.SearchService.ProductManager;
+package edu.nju.service.SearchService;
 
 import java.util.List;
 

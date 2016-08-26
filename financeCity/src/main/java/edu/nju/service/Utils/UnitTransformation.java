@@ -1,32 +1,49 @@
 package edu.nju.service.Utils;
 
+import edu.nju.model.ProductBank;
+import edu.nju.model.ProductBond;
+import edu.nju.model.ProductFund;
+import edu.nju.service.CategoryAndProduct.Product;
+import edu.nju.service.CategoryAndProduct.ProductCategoryManager;
 import edu.nju.service.POJO.AmountAndLeft;
-
-import java.util.Map;
+import edu.nju.service.CategoryAndProduct.Category;
 
 /**
  * Created by Sun YuHao on 2016/8/19.
  */
 public class UnitTransformation {
-    //int[0] ==> amount
-    //int[1] ==> left
-    static public AmountAndLeft getAmountAndLeft(double capital, String unit, int threshold, Map<String, Object> meta) {
+    static public AmountAndLeft getAmountAndLeft(double capital, Product product) {
         double amount = 0;
         double left = capital;
+        double tradingVolume;
         AmountAndLeft amountAndLeft = new AmountAndLeft();
-        if (unit.equals("Yuan")) {
-            int increasingAmount = (int)meta.get("increasingAmount");
+
+        if (product.getCategory().equals(ProductCategoryManager.categoryBank)) {
+            ProductBank productBank = (ProductBank)product.getProduct();
+            int increasingAmount = productBank.getIncreasingAmount();
+            int threshold = productBank.getThreshold();
             left = (capital - threshold) % increasingAmount;
             amount = capital - left;
-        }//Yuan
-        if (unit.equals("份")) {
-            double price = (double)meta.get("price");
+        }//ProductBank
+        if (product.getCategory().equals(ProductCategoryManager.categoryBond)) {
+            ProductBond productBond = (ProductBond)product.getProduct();
+            double price = productBond.getDenomination().doubleValue();
             amount = (int)(capital / price);
             left = capital - amount * price;
-        }//份
+        }//productBond
+        if(product.getCategory().equals(ProductCategoryManager.categoryFund)) {
+            ProductFund productFund = (ProductFund)product.getProduct();
+            double price = productFund.getNav().doubleValue();
+            amount = (int)(capital / price);
+            left = capital - amount * price;
+        }//productFund
+
+        tradingVolume = capital - left;
 
         amountAndLeft.setAmount(amount);
         amountAndLeft.setLeft(left);
+        amountAndLeft.setUnit(product.getUnit());
+        amountAndLeft.setTradingVolume(tradingVolume);
         return amountAndLeft;
     }
 }

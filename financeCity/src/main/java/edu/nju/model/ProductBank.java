@@ -5,48 +5,50 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
- * Created by Sun YuHao on 2016/8/20.
+ * Created by Sun YuHao on 2016/8/21.
  */
 @Entity
 @Table(name = "product_bank", schema = "citi", catalog = "")
 public class ProductBank {
-    private long id;
+    private int id;
     private String title;
-    private Long institution;
+    private Long institutionManage;
     private Byte type;
     private Integer threshold;
-    private BigDecimal increasingAmount;
+    private Integer increasingAmount;
     private Timestamp dateLimit;
     private Byte incomeType;
-    private BigDecimal yearRate;
     private BigDecimal netWorth;
     private Timestamp onSaleDate;
     private Timestamp offSaleDate;
-    private Timestamp releaseDate;
     private String salesTerritory;
     private String productCode;
     private String registerCode;
-    private String salesCode;
     private Byte currency;
-    private Integer investScope;
-    private Integer investRate;
-    private Integer obejctOriented;
-    private BigDecimal expenseSell;
-    private BigDecimal expenseManage;
-    private String descriptionIncomeSource;
-    private String descriptionRiskEvent;
-    private BigDecimal mockYearIncomeRate;
+    private String investScope;
+    private BigDecimal investRate;
     private Byte state;
     private Byte riskGrade;
-    private Integer duration;
+    private String productPeriod;
+    private String institutionTrusteeship;
+    private BigDecimal expectedYearRate;
+    private BigDecimal rateApplyBuy;
+    private BigDecimal rateRedemption;
+    private BigDecimal rateManage;
+    private Timestamp startInterestDate;
+    private Timestamp onRedemptionDate;
+    private Integer redemptionRate;
+    private String scopeUpper;
+    private String cashedWay;
+    private String objectOriented;
 
     @Id
     @Column(name = "id")
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -61,13 +63,13 @@ public class ProductBank {
     }
 
     @Basic
-    @Column(name = "institution")
-    public Long getInstitution() {
-        return institution;
+    @Column(name = "institution_manage")
+    public Long getInstitutionManage() {
+        return institutionManage;
     }
 
-    public void setInstitution(Long institution) {
-        this.institution = institution;
+    public void setInstitutionManage(Long institutionManage) {
+        this.institutionManage = institutionManage;
     }
 
     @Basic
@@ -92,11 +94,11 @@ public class ProductBank {
 
     @Basic
     @Column(name = "increasing_amount")
-    public BigDecimal getIncreasingAmount() {
+    public Integer getIncreasingAmount() {
         return increasingAmount;
     }
 
-    public void setIncreasingAmount(BigDecimal increasingAmount) {
+    public void setIncreasingAmount(Integer increasingAmount) {
         this.increasingAmount = increasingAmount;
     }
 
@@ -118,16 +120,6 @@ public class ProductBank {
 
     public void setIncomeType(Byte incomeType) {
         this.incomeType = incomeType;
-    }
-
-    @Basic
-    @Column(name = "year_rate")
-    public BigDecimal getYearRate() {
-        return yearRate;
-    }
-
-    public void setYearRate(BigDecimal yearRate) {
-        this.yearRate = yearRate;
     }
 
     @Basic
@@ -161,16 +153,6 @@ public class ProductBank {
     }
 
     @Basic
-    @Column(name = "release_date")
-    public Timestamp getReleaseDate() {
-        return releaseDate;
-    }
-
-    public void setReleaseDate(Timestamp releaseDate) {
-        this.releaseDate = releaseDate;
-    }
-
-    @Basic
     @Column(name = "sales_territory")
     public String getSalesTerritory() {
         return salesTerritory;
@@ -201,16 +183,6 @@ public class ProductBank {
     }
 
     @Basic
-    @Column(name = "sales_code")
-    public String getSalesCode() {
-        return salesCode;
-    }
-
-    public void setSalesCode(String salesCode) {
-        this.salesCode = salesCode;
-    }
-
-    @Basic
     @Column(name = "currency")
     public Byte getCurrency() {
         return currency;
@@ -222,82 +194,22 @@ public class ProductBank {
 
     @Basic
     @Column(name = "invest_scope")
-    public Integer getInvestScope() {
+    public String getInvestScope() {
         return investScope;
     }
 
-    public void setInvestScope(Integer investScope) {
+    public void setInvestScope(String investScope) {
         this.investScope = investScope;
     }
 
     @Basic
     @Column(name = "invest_rate")
-    public Integer getInvestRate() {
+    public BigDecimal getInvestRate() {
         return investRate;
     }
 
-    public void setInvestRate(Integer investRate) {
+    public void setInvestRate(BigDecimal investRate) {
         this.investRate = investRate;
-    }
-
-    @Basic
-    @Column(name = "obejct_oriented")
-    public Integer getObejctOriented() {
-        return obejctOriented;
-    }
-
-    public void setObejctOriented(Integer obejctOriented) {
-        this.obejctOriented = obejctOriented;
-    }
-
-    @Basic
-    @Column(name = "expense_sell")
-    public BigDecimal getExpenseSell() {
-        return expenseSell;
-    }
-
-    public void setExpenseSell(BigDecimal expenseSell) {
-        this.expenseSell = expenseSell;
-    }
-
-    @Basic
-    @Column(name = "expense_manage")
-    public BigDecimal getExpenseManage() {
-        return expenseManage;
-    }
-
-    public void setExpenseManage(BigDecimal expenseManage) {
-        this.expenseManage = expenseManage;
-    }
-
-    @Basic
-    @Column(name = "description_income_source")
-    public String getDescriptionIncomeSource() {
-        return descriptionIncomeSource;
-    }
-
-    public void setDescriptionIncomeSource(String descriptionIncomeSource) {
-        this.descriptionIncomeSource = descriptionIncomeSource;
-    }
-
-    @Basic
-    @Column(name = "description_risk_event")
-    public String getDescriptionRiskEvent() {
-        return descriptionRiskEvent;
-    }
-
-    public void setDescriptionRiskEvent(String descriptionRiskEvent) {
-        this.descriptionRiskEvent = descriptionRiskEvent;
-    }
-
-    @Basic
-    @Column(name = "mock_year_income_rate")
-    public BigDecimal getMockYearIncomeRate() {
-        return mockYearIncomeRate;
-    }
-
-    public void setMockYearIncomeRate(BigDecimal mockYearIncomeRate) {
-        this.mockYearIncomeRate = mockYearIncomeRate;
     }
 
     @Basic
@@ -321,13 +233,123 @@ public class ProductBank {
     }
 
     @Basic
-    @Column(name = "duration")
-    public Integer getDuration() {
-        return duration;
+    @Column(name = "product_period")
+    public String getProductPeriod() {
+        return productPeriod;
     }
 
-    public void setDuration(Integer duration) {
-        this.duration = duration;
+    public void setProductPeriod(String productPeriod) {
+        this.productPeriod = productPeriod;
+    }
+
+    @Basic
+    @Column(name = "institution_trusteeship")
+    public String getInstitutionTrusteeship() {
+        return institutionTrusteeship;
+    }
+
+    public void setInstitutionTrusteeship(String institutionTrusteeship) {
+        this.institutionTrusteeship = institutionTrusteeship;
+    }
+
+    @Basic
+    @Column(name = "expected_year_rate")
+    public BigDecimal getExpectedYearRate() {
+        return expectedYearRate;
+    }
+
+    public void setExpectedYearRate(BigDecimal expectedYearRate) {
+        this.expectedYearRate = expectedYearRate;
+    }
+
+    @Basic
+    @Column(name = "rate_apply_buy")
+    public BigDecimal getRateApplyBuy() {
+        return rateApplyBuy;
+    }
+
+    public void setRateApplyBuy(BigDecimal rateApplyBuy) {
+        this.rateApplyBuy = rateApplyBuy;
+    }
+
+    @Basic
+    @Column(name = "rate_redemption")
+    public BigDecimal getRateRedemption() {
+        return rateRedemption;
+    }
+
+    public void setRateRedemption(BigDecimal rateRedemption) {
+        this.rateRedemption = rateRedemption;
+    }
+
+    @Basic
+    @Column(name = "rate_manage")
+    public BigDecimal getRateManage() {
+        return rateManage;
+    }
+
+    public void setRateManage(BigDecimal rateManage) {
+        this.rateManage = rateManage;
+    }
+
+    @Basic
+    @Column(name = "start_interest_date")
+    public Timestamp getStartInterestDate() {
+        return startInterestDate;
+    }
+
+    public void setStartInterestDate(Timestamp startInterestDate) {
+        this.startInterestDate = startInterestDate;
+    }
+
+    @Basic
+    @Column(name = "on_redemption_date")
+    public Timestamp getOnRedemptionDate() {
+        return onRedemptionDate;
+    }
+
+    public void setOnRedemptionDate(Timestamp onRedemptionDate) {
+        this.onRedemptionDate = onRedemptionDate;
+    }
+
+    @Basic
+    @Column(name = "redemption_rate")
+    public Integer getRedemptionRate() {
+        return redemptionRate;
+    }
+
+    public void setRedemptionRate(Integer redemptionRate) {
+        this.redemptionRate = redemptionRate;
+    }
+
+    @Basic
+    @Column(name = "scope_upper")
+    public String getScopeUpper() {
+        return scopeUpper;
+    }
+
+    public void setScopeUpper(String scopeUpper) {
+        this.scopeUpper = scopeUpper;
+    }
+
+    @Basic
+    @Column(name = "cashed_way")
+    public String getCashedWay() {
+        return cashedWay;
+    }
+
+    public void setCashedWay(String cashedWay) {
+        this.cashedWay = cashedWay;
+    }
+
+    @Basic
+    @Column(name = "object_oriented")
+    public String getObjectOriented() {
+        return objectOriented;
+    }
+
+    public void setObjectOriented(String objectOriented) {
+        this.objectOriented = objectOriented;
     }
 
     @Override
@@ -339,75 +361,83 @@ public class ProductBank {
 
         if (id != that.id) return false;
         if (title != null ? !title.equals(that.title) : that.title != null) return false;
-        if (institution != null ? !institution.equals(that.institution) : that.institution != null) return false;
+        if (institutionManage != null ? !institutionManage.equals(that.institutionManage) : that.institutionManage != null)
+            return false;
         if (type != null ? !type.equals(that.type) : that.type != null) return false;
         if (threshold != null ? !threshold.equals(that.threshold) : that.threshold != null) return false;
         if (increasingAmount != null ? !increasingAmount.equals(that.increasingAmount) : that.increasingAmount != null)
             return false;
         if (dateLimit != null ? !dateLimit.equals(that.dateLimit) : that.dateLimit != null) return false;
         if (incomeType != null ? !incomeType.equals(that.incomeType) : that.incomeType != null) return false;
-        if (yearRate != null ? !yearRate.equals(that.yearRate) : that.yearRate != null) return false;
         if (netWorth != null ? !netWorth.equals(that.netWorth) : that.netWorth != null) return false;
         if (onSaleDate != null ? !onSaleDate.equals(that.onSaleDate) : that.onSaleDate != null) return false;
         if (offSaleDate != null ? !offSaleDate.equals(that.offSaleDate) : that.offSaleDate != null) return false;
-        if (releaseDate != null ? !releaseDate.equals(that.releaseDate) : that.releaseDate != null) return false;
         if (salesTerritory != null ? !salesTerritory.equals(that.salesTerritory) : that.salesTerritory != null)
             return false;
         if (productCode != null ? !productCode.equals(that.productCode) : that.productCode != null) return false;
         if (registerCode != null ? !registerCode.equals(that.registerCode) : that.registerCode != null) return false;
-        if (salesCode != null ? !salesCode.equals(that.salesCode) : that.salesCode != null) return false;
         if (currency != null ? !currency.equals(that.currency) : that.currency != null) return false;
         if (investScope != null ? !investScope.equals(that.investScope) : that.investScope != null) return false;
         if (investRate != null ? !investRate.equals(that.investRate) : that.investRate != null) return false;
-        if (obejctOriented != null ? !obejctOriented.equals(that.obejctOriented) : that.obejctOriented != null)
-            return false;
-        if (expenseSell != null ? !expenseSell.equals(that.expenseSell) : that.expenseSell != null) return false;
-        if (expenseManage != null ? !expenseManage.equals(that.expenseManage) : that.expenseManage != null)
-            return false;
-        if (descriptionIncomeSource != null ? !descriptionIncomeSource.equals(that.descriptionIncomeSource) : that.descriptionIncomeSource != null)
-            return false;
-        if (descriptionRiskEvent != null ? !descriptionRiskEvent.equals(that.descriptionRiskEvent) : that.descriptionRiskEvent != null)
-            return false;
-        if (mockYearIncomeRate != null ? !mockYearIncomeRate.equals(that.mockYearIncomeRate) : that.mockYearIncomeRate != null)
-            return false;
         if (state != null ? !state.equals(that.state) : that.state != null) return false;
         if (riskGrade != null ? !riskGrade.equals(that.riskGrade) : that.riskGrade != null) return false;
-        if (duration != null ? !duration.equals(that.duration) : that.duration != null) return false;
+        if (productPeriod != null ? !productPeriod.equals(that.productPeriod) : that.productPeriod != null)
+            return false;
+        if (institutionTrusteeship != null ? !institutionTrusteeship.equals(that.institutionTrusteeship) : that.institutionTrusteeship != null)
+            return false;
+        if (expectedYearRate != null ? !expectedYearRate.equals(that.expectedYearRate) : that.expectedYearRate != null)
+            return false;
+        if (rateApplyBuy != null ? !rateApplyBuy.equals(that.rateApplyBuy) : that.rateApplyBuy != null) return false;
+        if (rateRedemption != null ? !rateRedemption.equals(that.rateRedemption) : that.rateRedemption != null)
+            return false;
+        if (rateManage != null ? !rateManage.equals(that.rateManage) : that.rateManage != null) return false;
+        if (startInterestDate != null ? !startInterestDate.equals(that.startInterestDate) : that.startInterestDate != null)
+            return false;
+        if (onRedemptionDate != null ? !onRedemptionDate.equals(that.onRedemptionDate) : that.onRedemptionDate != null)
+            return false;
+        if (redemptionRate != null ? !redemptionRate.equals(that.redemptionRate) : that.redemptionRate != null)
+            return false;
+        if (scopeUpper != null ? !scopeUpper.equals(that.scopeUpper) : that.scopeUpper != null) return false;
+        if (cashedWay != null ? !cashedWay.equals(that.cashedWay) : that.cashedWay != null) return false;
+        if (objectOriented != null ? !objectOriented.equals(that.objectOriented) : that.objectOriented != null)
+            return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
+        int result = id;
         result = 31 * result + (title != null ? title.hashCode() : 0);
-        result = 31 * result + (institution != null ? institution.hashCode() : 0);
+        result = 31 * result + (institutionManage != null ? institutionManage.hashCode() : 0);
         result = 31 * result + (type != null ? type.hashCode() : 0);
         result = 31 * result + (threshold != null ? threshold.hashCode() : 0);
         result = 31 * result + (increasingAmount != null ? increasingAmount.hashCode() : 0);
         result = 31 * result + (dateLimit != null ? dateLimit.hashCode() : 0);
         result = 31 * result + (incomeType != null ? incomeType.hashCode() : 0);
-        result = 31 * result + (yearRate != null ? yearRate.hashCode() : 0);
         result = 31 * result + (netWorth != null ? netWorth.hashCode() : 0);
         result = 31 * result + (onSaleDate != null ? onSaleDate.hashCode() : 0);
         result = 31 * result + (offSaleDate != null ? offSaleDate.hashCode() : 0);
-        result = 31 * result + (releaseDate != null ? releaseDate.hashCode() : 0);
         result = 31 * result + (salesTerritory != null ? salesTerritory.hashCode() : 0);
         result = 31 * result + (productCode != null ? productCode.hashCode() : 0);
         result = 31 * result + (registerCode != null ? registerCode.hashCode() : 0);
-        result = 31 * result + (salesCode != null ? salesCode.hashCode() : 0);
         result = 31 * result + (currency != null ? currency.hashCode() : 0);
         result = 31 * result + (investScope != null ? investScope.hashCode() : 0);
         result = 31 * result + (investRate != null ? investRate.hashCode() : 0);
-        result = 31 * result + (obejctOriented != null ? obejctOriented.hashCode() : 0);
-        result = 31 * result + (expenseSell != null ? expenseSell.hashCode() : 0);
-        result = 31 * result + (expenseManage != null ? expenseManage.hashCode() : 0);
-        result = 31 * result + (descriptionIncomeSource != null ? descriptionIncomeSource.hashCode() : 0);
-        result = 31 * result + (descriptionRiskEvent != null ? descriptionRiskEvent.hashCode() : 0);
-        result = 31 * result + (mockYearIncomeRate != null ? mockYearIncomeRate.hashCode() : 0);
         result = 31 * result + (state != null ? state.hashCode() : 0);
         result = 31 * result + (riskGrade != null ? riskGrade.hashCode() : 0);
-        result = 31 * result + (duration != null ? duration.hashCode() : 0);
+        result = 31 * result + (productPeriod != null ? productPeriod.hashCode() : 0);
+        result = 31 * result + (institutionTrusteeship != null ? institutionTrusteeship.hashCode() : 0);
+        result = 31 * result + (expectedYearRate != null ? expectedYearRate.hashCode() : 0);
+        result = 31 * result + (rateApplyBuy != null ? rateApplyBuy.hashCode() : 0);
+        result = 31 * result + (rateRedemption != null ? rateRedemption.hashCode() : 0);
+        result = 31 * result + (rateManage != null ? rateManage.hashCode() : 0);
+        result = 31 * result + (startInterestDate != null ? startInterestDate.hashCode() : 0);
+        result = 31 * result + (onRedemptionDate != null ? onRedemptionDate.hashCode() : 0);
+        result = 31 * result + (redemptionRate != null ? redemptionRate.hashCode() : 0);
+        result = 31 * result + (scopeUpper != null ? scopeUpper.hashCode() : 0);
+        result = 31 * result + (cashedWay != null ? cashedWay.hashCode() : 0);
+        result = 31 * result + (objectOriented != null ? objectOriented.hashCode() : 0);
         return result;
     }
 }

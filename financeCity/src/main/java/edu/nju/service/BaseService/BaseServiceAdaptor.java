@@ -9,6 +9,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Sun YuHao on 2016/8/13.
@@ -18,7 +19,13 @@ public class BaseServiceAdaptor implements BaseService {
     protected List<String> apiList;
 
     @Override
+    public String getName() {
+        return getClass().getName().replace("Impl", "");
+    }
+
+    @Override
     public Object invokeAPI(String apiName, List<Object> param) throws InvalidAPINameException,InvalidParametersException {
+
         List<Class> paramType = new ArrayList<>();
         for (Object arg : param) {
             paramType.add(arg.getClass());

@@ -1,7 +1,9 @@
 package edu.nju.service.UserService;
 
 import edu.nju.dao.BaseDao;
+import edu.nju.dao.UserDao;
 import edu.nju.dao.impl.BaseDaoImpl;
+import edu.nju.dao.impl.CommonDao;
 import edu.nju.model.User;
 import edu.nju.model.UserLogin;
 import edu.nju.service.BaseService.BaseServiceAdaptor;
@@ -136,12 +138,12 @@ public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
     }
 
     @Override
-    public BaseDao getUserDao() throws NotLoginException {
+    public UserDao getUserDao() throws NotLoginException {
         if (!isLogin()) {
             throw new NotLoginException();
         }
         else {
-            return DAO;
+            return (UserDao)DAO;
         }
     }
 
@@ -151,5 +153,10 @@ public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
     private boolean validPassword(String password) {
         //TODO:add judge
         return false;
+    }
+
+    @Override
+    public CommonDao getCommonDao() {
+        return (CommonDao)DAO;
     }
 }

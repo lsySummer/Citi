@@ -1,11 +1,11 @@
 package edu.nju.service.InvestAdvisorService.Strategy.StrategyImpl;
 
 import edu.nju.model.ProductBank;
+import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.Exceptions.MissRequiredInfoException;
 import edu.nju.service.POJO.AmountAndLeft;
 import edu.nju.service.POJO.InvestResult;
-import edu.nju.service.POJO.Product;
-import edu.nju.service.SearchService.ProductManager.ProductFilter;
+import edu.nju.service.CategoryAndProduct.Category;
 import edu.nju.service.SearchService.SearchService;
 import edu.nju.service.TradeService.TradeItem;
 import edu.nju.service.Utils.UnitTransformation;
@@ -17,10 +17,10 @@ import java.util.*;
  */
 @SuppressWarnings("unchecked")
 public class BankInvest implements CategoryInvest {
-    static final String categoryName = "Bank";
-    static final String paramCapital = "capital";
-    static final String paramFlowAmount = "flowAmount";
-    static final String paramTimeLimit = "timeLimit";
+    public static final String categoryName = "Bank";
+    public static final String paramCapital = "capital";
+    public static final String paramFlowAmount = "flowAmount";
+    public static final String paramTimeLimit = "timeLimit";
 
     private int[] thresholdList = {
             50000, 100000, 200000,
@@ -51,7 +51,7 @@ public class BankInvest implements CategoryInvest {
     private Product findMaxYieldProduct(List<Product> products) {
         Product wanted = products.get(0);
         for (Product product : products) {
-            if (((ProductBank)product.getProduct()).getYearRate().compareTo(((ProductBank)wanted.getProduct()).getYearRate()) > 0) {
+            if (((ProductBank)product.getProduct()).getExpectedYearRate().compareTo(((ProductBank)wanted.getProduct()).getExpectedYearRate()) > 0) {
                 wanted = product;
             }
         }
@@ -60,7 +60,7 @@ public class BankInvest implements CategoryInvest {
     }
 
     private int findMinThreshold(SearchService searchService) {
-            return  (int)searchService.searchMin("Product" + categoryName, "threshold");
+            return  (int)searchService.searchMin(categoryName, "threshold");
     }
 
     private int findMaxThresholdIndex(int flowAmount) {
@@ -115,55 +115,29 @@ public class BankInvest implements CategoryInvest {
 
         //find candidate products by threshold and time limit
         List<Product> candidateList = null;
-        //TODO:make sure that products are selected
         while (max_threshold >= 0) {
-            ProductFilter productFilter = new ProductFilter() {
-                int leftAmount;
-                int floor_threshold;
+            candidateList = searchService.searchProductsByCondition(categoryName, "p.threshold BETWEEN " + thresholdList[max_threshold] +
+            " AND " + leftAmount);
 
-                @Override
-                public boolean isChosen(Object product) {
-                    int threshold = ((ProductBank)product).getThreshold();
-                    return threshold < leftAmount && threshold > floor_threshold;
-                }
+            if (candidateList != null) {
+                break;
+            }
 
-                @Override
-                public List<String> getSearchScope() {
-                    List<String> list = new ArrayList<>();
-                    list.add(categoryName);
-                    return list;
-                }
-
-                public ProductFilter setMetaInfo(int leftAmount, int floor_threshold) {
-                    this.leftAmount = leftAmount;
-                    this.floor_threshold = floor_threshold;
-                    return this;
-                }
-            }.setMetaInfo(leftAmount, thresholdList[max_threshold]);
-
-            candidateList = searchService.searchProductByFilter(productFilter);
+            max_threshold--;
         }
 
-        //TODO:the same
         if (max_threshold < 0) {
             throw new MissRequiredInfoException(categoryName);
         }
 
-        //buy product 1//cash category
-        //TODO:check left product
         Product product = findMaxYieldProduct(candidateList);
-        ProductBank productFinancingProducts = (ProductBank) product.getProduct();
 
-        Map map = new HashMap();
-        map.put("increasingAmount", productFinancingProducts.getIncreasingAmount());
-        AmountAndLeft amountAndLeft = UnitTransformation.getAmountAndLeft(leftAmount, "Yuan",
-                productFinancingProducts.getThreshold(), map);
+        AmountAndLeft amountAndLeft = UnitTransformation.getAmountAndLeft(leftAmount, product);
 
-        TradeItem tradeItem = new TradeItem((int)amountAndLeft.getAmount(), categoryName, product, null);
+        TradeItem tradeItem = new TradeItem(amountAndLeft.getTradingVolume(), categoryName, product, null);
 
         investResult.addTradItem(tradeItem);
-        investResult.addUnusedCapital(amountAndLeft.getLeft(), "leftAmount");
-
+        investResult.addUnusedCapital(amountAndLeft.getLeft(), categoryName + "leftAmount");
         return investResult;
     }
 
@@ -196,60 +170,35 @@ public class BankInvest implements CategoryInvest {
 
         //find candidate products by threshold and time limit
         List<Product> candidateList = null;
-        //TODO:make sure that products are selected
-        while (max_threshold >= 0) {
-            ProductFilter productFilter = new ProductFilter() {
-                int flowAmount;
-                int floor_threshold;
-                int timeLimit;
-                int floorDuration;
 
-                @Override
-                public boolean isChosen(Object product) {
-                    int threshold = ((ProductBank)product).getThreshold();
-                    int duration = ((ProductBank) product).getDuration();
-                    return threshold < flowAmount && threshold > floor_threshold &&
-                            timeLimit > duration && floorDuration < duration;
-                }
+        while (floorDuration >= 0) {
+            candidateList = searchService.searchProductsByCondition(categoryName, "p.threshold BETWEEN " + thresholdList[max_threshold] + " AND " +
+            flowAmount + " AND p.dateLimit BETWEEN " + durationList[floorDuration] + " AND " + timeLimit);
 
-                @Override
-                public List<String> getSearchScope() {
-                    List<String> list = new ArrayList<>();
-                    list.add(categoryName);
-                    return list;
-                }
+            if (candidateList != null) {
+                break;
+            }
 
-                public ProductFilter setMetaInfo(int flowAmount, int floor_threshold, int timeLimit, int floorDuration) {
-                    this.flowAmount = flowAmount;
-                    this.floor_threshold = floor_threshold;
-                    this.timeLimit = timeLimit;
-                    this.floorDuration = floorDuration;
-                    return this;
-                }
-            }.setMetaInfo(flowAmount, thresholdList[max_threshold], timeLimit, floorDuration);
-
-            candidateList = searchService.searchProductByFilter(productFilter);
+            if (max_threshold > 0) {
+                max_threshold--;
+            }
+            else {
+                floorDuration--;
+            }
         }
 
-        //TODO:the same
-        if (max_threshold < 0) {
+        if (floorDuration < 0) {
             throw new MissRequiredInfoException(categoryName);
         }
 
-        //buy product 1//cash category
-        //TODO:check left product
         Product product = findMaxYieldProduct(candidateList);
-        ProductBank productFinancingProducts = (ProductBank) product.getProduct();
 
-        Map map = new HashMap();
-        map.put("increasingAmount", productFinancingProducts.getIncreasingAmount());
-        AmountAndLeft amountAndLeft = UnitTransformation.getAmountAndLeft(flowAmount, "Yuan",
-                productFinancingProducts.getThreshold(), map);
+        AmountAndLeft amountAndLeft = UnitTransformation.getAmountAndLeft(flowAmount, product);
 
-        TradeItem tradeItem = new TradeItem((int)amountAndLeft.getAmount(), categoryName, product, null);
+        TradeItem tradeItem = new TradeItem(amountAndLeft.getTradingVolume(), categoryName, product, null);
 
         investResult.addTradItem(tradeItem);
-        investResult.addUnusedCapital(amountAndLeft.getLeft(), "flowAmount");
+        investResult.addUnusedCapital(amountAndLeft.getLeft(), categoryName + "flowAmount");
 
         return investResult;
     }

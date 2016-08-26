@@ -4,7 +4,6 @@ import edu.nju.model.UnpaidItem;
 import edu.nju.service.BaseService.BaseFunctionServiceAdaptor;
 import edu.nju.service.Exceptions.NotLoginException;
 import org.springframework.stereotype.Service;
-import org.springframework.util.DigestUtils;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -29,9 +28,9 @@ public class TradeServiceImpl extends BaseFunctionServiceAdaptor implements Trad
                 unpaidItem.setId(getUserService().getID());
                 unpaidItem.setExpirationTime(expiration_time);
                 unpaidItem.setAmount(tradeItem.getAmount());
-                unpaidItem.setUnit(tradeItem.getUnit());
-                unpaidItem.setPrice(new BigDecimal(tradeItem.getPrice()));
-                unpaidItem.setProductId(tradeItem.getProduct_id());
+                unpaidItem.setUnit(tradeItem.getProduct().getUnit());
+                unpaidItem.setTradingVolume(new BigDecimal(tradeItem.getTradingVolume()));
+                unpaidItem.setProductId(tradeItem.getProduct().getID());
                 //check code
                 String checkCode = tradeItem.generateMD5(getUserService().getID(), expiration_time.toString());
                 unpaidItem.setCheckCode(checkCode);
