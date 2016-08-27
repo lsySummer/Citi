@@ -1,4 +1,4 @@
-package nju.financecity_android.viewmodel;
+package nju.financecity_android.controller;
 
 import android.content.Context;
 import android.widget.SimpleAdapter;

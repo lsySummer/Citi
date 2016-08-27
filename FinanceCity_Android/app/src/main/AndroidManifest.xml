@@ -9,16 +9,11 @@
 			android:supportsRtl="true"
 			android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
-		<activity android:name=".activity.ProductsActivity">
-			<!--<intent-filter>
-		<activity android:name=".viewmodel.activity.ProductsActivity">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN"/>
-				<category android:name="android.intent.category.LAUNCHER"/>
-			</intent-filter>-->
+		<activity android:name=".controller.activity.Products">
+
 		</activity>
 
-		<activity android:name=".activity.MainActivity">
+		<activity android:name=".controller.activity.MainActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 				<category android:name="android.intent.category.LAUNCHER"/>

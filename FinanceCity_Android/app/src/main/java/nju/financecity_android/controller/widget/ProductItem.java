@@ -1,4 +1,4 @@
-package nju.financecity_android.viewmodel.widget;
+package nju.financecity_android.controller.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -20,6 +20,14 @@ public class ProductItem extends RelativeLayout {
     public ProductItem(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
+    }
+
+    public void setProductName(String productName) {
+        txtPdtName.setText(productName);
+    }
+
+    public void setIncreasingRate(double rate) {
+        String strRate = String.valueOf(rate * 100).substring(0, 3) + "%";
     }
 
     @Override

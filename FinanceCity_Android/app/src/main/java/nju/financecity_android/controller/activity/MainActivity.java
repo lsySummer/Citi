@@ -1,21 +1,24 @@
-package nju.financecity_android.viewmodel.activity;
+package nju.financecity_android.controller.activity;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
+import android.app.Fragment;
 import android.os.Bundle;
+
 import android.view.View;
 import nju.financecity_android.R;
-import nju.financecity_android.viewmodel.widget.Banner;
-import nju.financecity_android.viewmodel.widget.Footer;
+import nju.financecity_android.controller.widget.Banner;
+import nju.financecity_android.controller.widget.Footer;
 
-public class ProductsActivity extends AppCompatActivity {
+/**
+ * Created by Administrator on 2016/8/25.
+ */
+public class MainActivity extends Activity {
+    public Fragment assets;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_products);
-
-        initComponents();
+        setContentView(R.layout.main);
     }
 
     private void initComponents() {
