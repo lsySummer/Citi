@@ -11,6 +11,8 @@
 
 		<activity android:name=".activity.ProductsActivity">
 			<!--<intent-filter>
+		<activity android:name=".viewmodel.activity.ProductsActivity">
+			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 				<category android:name="android.intent.category.LAUNCHER"/>
 			</intent-filter>-->

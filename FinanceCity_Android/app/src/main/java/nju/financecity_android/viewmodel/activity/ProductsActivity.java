@@ -1,11 +1,11 @@
-package nju.financecity_android.activity;
+package nju.financecity_android.viewmodel.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import nju.financecity_android.R;
-import nju.financecity_android.widget.Banner;
-import nju.financecity_android.widget.Footer;
+import nju.financecity_android.viewmodel.widget.Banner;
+import nju.financecity_android.viewmodel.widget.Footer;
 
 public class ProductsActivity extends AppCompatActivity {
 
