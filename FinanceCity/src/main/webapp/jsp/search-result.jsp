@@ -114,7 +114,28 @@
         </div>
     </div>
     <div class="product-wrapper">
-        <div class="product bank-financing">
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            模态框
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        在这里添加一些文本
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+        <div class="product bank-financing" data-toggle="modal" data-target="#myModal">
             <div class="circle">
                 <h1>2.95</h1>
                 <h4>年化收益率</h4>
@@ -154,7 +175,7 @@
                 </div>
             </div>
         </div>
-        <div class="product fund">
+        <div class="product fund" data-toggle="modal" data-target="#myModal">
             <div class="circle">
                 <h1>2.95</h1>
                 <h4>收益率</h4>
@@ -190,7 +211,7 @@
                 </div>
             </div>
         </div>
-        <div class="product insurance">
+        <div class="product insurance" data-toggle="modal" data-target="#myModal">
             <div class="circle">
                 <h1>2.95</h1>
                 <h4>收益率</h4>
@@ -222,7 +243,7 @@
                 </div>
             </div>
         </div>
-        <div class="product bond">
+        <div class="product bond" data-toggle="modal" data-target="#myModal">
             <div class="circle">
                 <h1>2.95</h1>
                 <h4>收益率</h4>
@@ -254,7 +275,7 @@
                 </div>
             </div>
         </div>
-        <div class="product bank-financing">
+        <div class="product bank-financing" data-toggle="modal" data-target="#myModal">
             <div class="circle empty-circle">
                 <h1>2.95</h1>
                 <h4>年化收益率</h4>
@@ -294,7 +315,7 @@
                 </div>
             </div>
         </div>
-        <div class="product fund">
+        <div class="product fund" data-toggle="modal" data-target="#myModal">
             <div class="circle empty-circle">
                 <h1>2.95</h1>
                 <h4>收益率</h4>
@@ -330,7 +351,7 @@
                 </div>
             </div>
         </div>
-        <div class="product insurance">
+        <div class="product insurance" data-toggle="modal" data-target="#myModal">
             <div class="circle empty-circle">
                 <h1>2.95</h1>
                 <h4>收益率</h4>
@@ -362,7 +383,7 @@
                 </div>
             </div>
         </div>
-        <div class="product bond">
+        <div class="product bond" data-toggle="modal" data-target="#myModal">
             <div class="circle empty-circle">
                 <h1>2.95</h1>
                 <h4>收益率</h4>
