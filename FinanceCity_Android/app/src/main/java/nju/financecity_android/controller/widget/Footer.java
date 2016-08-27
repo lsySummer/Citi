@@ -1,4 +1,4 @@
-package nju.financecity_android.widget;
+package nju.financecity_android.controller.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
