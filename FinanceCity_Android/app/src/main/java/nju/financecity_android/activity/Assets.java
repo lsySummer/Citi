@@ -43,10 +43,16 @@ public class Assets extends Fragment {
         return view;
     }
 
-        @Override
+    @Override
     public void onStart() {
         super.onStart();
+        setChart();
+        setTimeline();
 
+    }
+
+    public void setChart()
+    {
         //资产变化曲线图
         chart = (LineChartView) getView().findViewById(R.id.chart);
         List<PointValue> mPointValues=new ArrayList<PointValue>();
@@ -80,7 +86,10 @@ public class Assets extends Fragment {
         chart.setContainerScrollEnabled(true, ContainerScrollType.HORIZONTAL);
         chart.setLineChartData(data);
         chart.setVisibility(View.VISIBLE);
+    }
 
+    public void setTimeline()
+    {
         //资产变化事迹
         timeline = (ListView) getView().findViewById(R.id.timeline);
         ArrayList<HashMap<String, Object>> listItem = new ArrayList<HashMap<String,Object>>();/*在数组中存放数据*/
