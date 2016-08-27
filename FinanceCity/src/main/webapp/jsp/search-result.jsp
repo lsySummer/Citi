@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>--%>
 
 <%
     String path = request.getContextPath();
@@ -20,15 +20,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <link type="text/css" rel="stylesheet" href="<c:url value="/plugins/bootstrap-3.3.5-dist/css/bootstrap.min.css"/>"/>
-    <link type="text/css" rel="stylesheet" href="<c:url value="/css/buttons.css"/>"/>
-    <link type="text/css" rel="stylesheet" href="<c:url value="/plugins/font-awesome-4.6.3/css/font-awesome.min.css"/>"/>
-    <link type="text/css" rel="stylesheet" href="<c:url value="/css/common.css"/>"/>
-    <link type="text/css" rel="stylesheet" href="<c:url value="/css/searchResult.css"/>"/>
+    <link type="text/css" rel="stylesheet" href="plugins/bootstrap-3.3.5-dist/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="css/buttons.css"/>
+    <link type="text/css" rel="stylesheet" href="plugins/font-awesome-4.6.3/css/font-awesome.min.css"/>
+    <link type="text/css" rel="stylesheet" href="css/common.css"/>
+    <link type="text/css" rel="stylesheet" href="css/searchResult.css"/>
 
-    <script type="text/javascript" rel="script" src="/js/jquery.min.js"></script>
-    <script type="text/javascript" rel="script" src="/plugins/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
-    <script type="text/javascript" rel="script" src="/js/searchResult.js"></script>
+    <script type="text/javascript" rel="script" src="js/jquery.min.js"></script>
+    <script type="text/javascript" rel="script" src="plugins/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" rel="script" src="js/searchResult.js"></script>
 
     <title>搜索结果</title>
 </head>
@@ -44,13 +44,13 @@
             <div class="quota-item">
                 <label>投资标的</label>
                 <select class="selector input-add-on-field">
-                    <option></option>
+                    <option class="display-none"></option>
                     <option>Mustard</option>
                     <option>Ketchup</option>
                     <option>Relish</option>
                 </select>
                 <select class="selector input-add-on-field">
-                    <option></option>
+                    <option class="display-none"></option>
                     <option>Mustard</option>
                     <option>Ketchup</option>
                     <option>Relish</option>
@@ -59,7 +59,7 @@
             <div class="quota-item">
                 <label>风险收益</label>
                 <select class="selector input-add-on-field">
-                    <option></option>
+                    <option class="display-none"></option>
                     <option>Mustard</option>
                     <option>Ketchup</option>
                     <option>Relish</option>
@@ -68,7 +68,7 @@
             <div class="quota-item">
                 <label>收益类型</label>
                 <select class="selector input-add-on-field">
-                    <option></option>
+                    <option class="display-none"></option>
                     <option>Mustard</option>
                     <option>Ketchup</option>
                     <option>Relish</option>
@@ -79,7 +79,7 @@
             <div class="quota-item">
                 <label>投资期限</label>
                 <select class="selector">
-                    <option></option>
+                    <option class="display-none"></option>
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
@@ -88,7 +88,7 @@
             <div class="quota-item">
                 <label>购买至生效时间</label>
                 <select class="selector">
-                    <option></option>
+                    <option class="display-none"></option>
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
@@ -97,7 +97,7 @@
             <div class="quota-item">
                 <label>申请赎回到账时间</label>
                 <select class="selector">
-                    <option></option>
+                    <option class="display-none"></option>
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>

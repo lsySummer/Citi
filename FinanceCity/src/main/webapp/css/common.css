@@ -65,3 +65,7 @@ select:focus {
 select::-ms-expand {
     display: none;
 }
+
+.display-none {
+    display: none;
+}
