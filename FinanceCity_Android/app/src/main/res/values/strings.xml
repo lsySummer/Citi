@@ -1,7 +1,7 @@
 <resources>
 	<string name="app_name">FinanceCity_Android</string>
-	<string name="footer_lbl1">text1</string>
-	<string name="footer_lbl2">text2</string>
-	<string name="footer_lbl3">text3</string>
-	<string name="footer_lbl4">text4</string>
+	<string name="footer_lbl1">产品</string>
+	<string name="footer_lbl2">投资</string>
+	<string name="footer_lbl3">资产</string>
+	<string name="footer_lbl4">个人</string>
 </resources>
