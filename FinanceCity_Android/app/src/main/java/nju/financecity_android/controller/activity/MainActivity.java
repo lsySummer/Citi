@@ -13,7 +13,6 @@ import nju.financecity_android.controller.widget.Footer;
  * Created by Administrator on 2016/8/25.
  */
 public class MainActivity extends Activity {
-    public Fragment assets;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
