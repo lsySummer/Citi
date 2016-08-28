@@ -40,6 +40,11 @@ public class CategoryImpl implements Category {
     }
 
     @Override
+    public boolean equals(Category category) {
+        return this.categoryName.equals(category.getCategoryName());
+    }
+
+    @Override
     public Integer getSubTypeIndex() {
         return subTypeIndex;
     }
@@ -47,5 +52,15 @@ public class CategoryImpl implements Category {
     @Override
     public String toString() {
         return categoryName;
+    }
+
+    @Override
+    public boolean belongTo(String category) {
+        return getBiggerCategory().equals(category);
+    }
+
+    @Override
+    public boolean belongTo(Category category) {
+        return getBiggerCategory().equals(category);
     }
 }

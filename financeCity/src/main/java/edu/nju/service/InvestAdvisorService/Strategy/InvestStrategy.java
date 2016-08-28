@@ -1,10 +1,7 @@
 package edu.nju.service.InvestAdvisorService.Strategy;
 
-
-import edu.nju.model.UserFamilySpeeding;
-import edu.nju.model.UserInformation;
 import edu.nju.model.UserTemperPrefer;
-import edu.nju.service.POJO.InvestmentPortFolio;
+import edu.nju.service.POJO.InvestResult;
 import edu.nju.service.SearchService.SearchService;
 import org.springframework.stereotype.Service;
 
@@ -13,5 +10,5 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public interface InvestStrategy {
-    InvestmentPortFolio createInvestmentPortfolio(UserInformation identity, UserTemperPrefer preference, UserFamilySpeeding familyExpense, SearchService searchService);
+    InvestResult createInvestmentPortfolio(UserTemperPrefer preference, SearchService searchService);
 }

@@ -7,6 +7,9 @@ public interface Category {
     Category getBiggerCategory();
     String getCategoryName();
     String getUnit();
+    boolean equals(Category category);
     boolean equals(String categoryName);
     Integer getSubTypeIndex();
+    boolean belongTo(String category);
+    boolean belongTo(Category category);
 }

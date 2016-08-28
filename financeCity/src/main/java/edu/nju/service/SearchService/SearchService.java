@@ -1,6 +1,8 @@
 package edu.nju.service.SearchService;
 
 import edu.nju.model.CategoryIndex;
+import edu.nju.model.User;
+import edu.nju.model.UserTemperPrefer;
 import edu.nju.service.BaseService.BaseService;
 import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.Exceptions.NoSuchProductException;
@@ -96,4 +98,16 @@ public interface SearchService extends BaseService{
      * @return category index
      */
     CategoryIndex getCategoryIndex();
+
+    /**
+     * get user info
+     * @return user info
+     */
+    User getUser();
+
+    /**
+     * get user prefer
+     * @return user prefer
+     */
+    UserTemperPrefer getUserTemperPrefer();
 }

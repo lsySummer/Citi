@@ -1,17 +1,19 @@
 package edu.nju.service.InvestAdvisorService.Strategy.StrategyImpl;
 
 import edu.nju.model.ProductInsurance;
+import edu.nju.model.UserTemperPrefer;
 import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.Exceptions.MissRequiredInfoException;
 import edu.nju.service.POJO.InvestResult;
 import edu.nju.service.CategoryAndProduct.Category;
 import edu.nju.service.SearchService.SearchService;
 import edu.nju.service.TradeService.TradeItem;
+import edu.nju.service.Utils.TimeTransformation;
+import edu.nju.service.Utils.UnitTransformation;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -24,25 +26,22 @@ public class InsuranceInvest implements CategoryInvest {
     public static final String paramProductAmount = "productAmount";
 
     @Override
-    public InvestResult invest(Map<String, Object> metaInfo, SearchService searchService) throws MissRequiredInfoException {
+    public InvestResult invest(UserTemperPrefer userInfo, SearchService searchService)  {
         double timeLimit;
         int productAmount;
         double capital;
         InvestResult investResult = new InvestResult();
 
-        try {
-            capital = (double)metaInfo.get(paramCapital);
-            timeLimit = (double)metaInfo.get(paramTimeLimit);
-            productAmount = (int)metaInfo.get(paramProductAmount);
-        }
-        catch (NullPointerException n) {
-            n.printStackTrace();
-            throw new MissRequiredInfoException(categoryName);
-        }
+        capital = userInfo.getExpectedCapital().doubleValue();
+        timeLimit = TimeTransformation.getTimeFromNow(userInfo.getEndDate(), 'y');
+        //TODO:ask if need insurance amount(number)
+        productAmount = userInfo.getInsuranceAmount().intValue();
 
         List<Product> productList = searchService.getProductListByOrder(categoryName, "p.yearRate DESC");
         if (productList == null) {
-            throw new MissRequiredInfoException(categoryName);
+            InvestResult investResult1 = new InvestResult();
+            investResult1.addUnusedCapital(capital, categoryName);
+            return investResult1;
         }
 
         if (timeLimit == 5 || timeLimit == 10 || timeLimit < 5) {
@@ -183,5 +182,10 @@ public class InsuranceInvest implements CategoryInvest {
                 this.score = score;
             }
         }
+    }
+
+    @Override
+    public String getCategoryName() {
+        return categoryName;
     }
 }

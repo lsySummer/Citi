@@ -1,6 +1,7 @@
 package edu.nju.service.InvestAdvisorService.Strategy.StrategyImpl;
 
 import edu.nju.model.ProductBond;
+import edu.nju.model.UserTemperPrefer;
 import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.Exceptions.MissRequiredInfoException;
 import edu.nju.service.POJO.AmountAndLeft;
@@ -9,6 +10,7 @@ import edu.nju.service.CategoryAndProduct.Category;
 import edu.nju.service.CategoryAndProduct.ProductCategoryManager;
 import edu.nju.service.SearchService.SearchService;
 import edu.nju.service.TradeService.TradeItem;
+import edu.nju.service.Utils.TimeTransformation;
 import edu.nju.service.Utils.UnitTransformation;
 
 import java.util.*;
@@ -24,22 +26,16 @@ public class BondInvest implements CategoryInvest{
     public static final String paramInterestRatio = "interestRatio";
 
     @Override
-    public InvestResult invest(Map<String, Object> metaInfo, SearchService searchService) throws MissRequiredInfoException {
+    public InvestResult invest(UserTemperPrefer userInfo, SearchService searchService) {
         boolean mayRedeem;
-        int investTime;
-        int capital;
+        double investTime;
+        double capital;
         double interestRatio;
 
-        try {
-            capital = (int)metaInfo.get(paramCapital);
-            mayRedeem = (boolean)metaInfo.get(paramMayRedeem);
-            investTime = (int)metaInfo.get(paramInvestTime);
-            interestRatio = (double)metaInfo.get(paramInterestRatio);
-        }
-        catch (NullPointerException n) {
-            n.printStackTrace();
-            throw new MissRequiredInfoException(categoryName);
-        }
+        capital = userInfo.getExpectedCapital().doubleValue();
+        mayRedeem = userInfo.getMayRedeemAmount().doubleValue() > 0;
+        investTime = TimeTransformation.getTimeFromNow(userInfo.getEndDate(), 'y');
+        interestRatio = searchService.getCategoryIndex().getRiskFreeInterest().doubleValue();
 
         if (mayRedeem) {
             return investMayRedeem(capital, investTime, searchService, interestRatio);
@@ -49,18 +45,18 @@ public class BondInvest implements CategoryInvest{
         }
     }
 
-    private InvestResult investMayRedeem(int capital, int investTime, SearchService searchService,
-                                         double interestRatio) throws MissRequiredInfoException {
+    private InvestResult investMayRedeem(double capital, double investTime, SearchService searchService,
+                                         double interestRatio) {
         return investModel(capital, investTime, searchService, "", interestRatio);
     }
 
-    private InvestResult investNoRedeem(int capital, int investTime, SearchService searchService,
-                                        double interestRatio) throws MissRequiredInfoException {
+    private InvestResult investNoRedeem(double capital, double investTime, SearchService searchService,
+                                        double interestRatio) {
         return investModel(capital, investTime, searchService, "p.type='固定收益债券'", interestRatio);
     }
 
-    private InvestResult investModel(int capital, int investTime, SearchService searchService, String typeLimit,
-                                     double interestRatio) throws MissRequiredInfoException {
+    private InvestResult investModel(double capital, double investTime, SearchService searchService, String typeLimit,
+                                     double interestRatio) {
         List<Product> productList = null;
         InvestResult investResult = new InvestResult();
 
@@ -186,5 +182,10 @@ public class BondInvest implements CategoryInvest{
         }
 
         return 0;
+    }
+
+    @Override
+    public String getCategoryName() {
+        return categoryName;
     }
 }

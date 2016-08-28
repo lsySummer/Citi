@@ -2,8 +2,6 @@ package edu.nju.service.InvestAdvisorService;
 
 import edu.nju.dao.UserDao;
 import edu.nju.model.User;
-import edu.nju.model.UserFamilySpeeding;
-import edu.nju.model.UserInformation;
 import edu.nju.model.UserTemperPrefer;
 import edu.nju.service.BaseService.BaseFunctionServiceAdaptor;
 import edu.nju.service.Exceptions.NotAllConfigurationSetException;
@@ -32,152 +30,38 @@ public class InvestAdvisorServiceImpl extends BaseFunctionServiceAdaptor impleme
     @Autowired
     private InvestStrategy investStrategy;
 
+    //TODO:...
     @Override
     public boolean setIdentity(IdentityVO identity) {
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-
-        try {
-            List list = getUserService().getUserDao().find("SELECT i.createAt FROM UserInformation i WHERE i.id=" + getUserService().getID());
-            Timestamp createAt;
-            if (list ==null || list.size() == 0) {
-                createAt = timestamp;
-            }
-            else {
-                createAt = (Timestamp) list.get(0);
-            }
-
-            //TODO:check vo
-            UserInformation userInformation = new UserInformation();
-            userInformation.setId(getUserService().getID());
-            userInformation.setCreatedAt(createAt);
-            userInformation.setExperience(Byte.valueOf(identity.getExperience()));
-            userInformation.setId(getUserService().getID());
-            userInformation.setUpdateAt(timestamp);
-            userInformation.setIntention(new Byte((identity.getRiskPrefer())));
-            userInformation.setJob(new Byte(identity.getJob()));
-            userInformation.setMarriageStatus(new Byte(identity.getMarriage()));
-            userInformation.setSalary((int)identity.getIncome());
-
-            getUserService().getUserDao().saveOrUpdate(userInformation);
-
-            return true;
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+       return false;
     }
 
+    //TODO:...
     @Override
     public IdentityVO getIdentity() {
-        try {
-            UserInformation userInformation = (UserInformation) getUserService().getUserDao().
-                    find("FROM UserInformation userInformation where userInformation.id=" + getUserService().getID()).get(0);
-
-            IdentityVO identityVO = new IdentityVO();
-
-            /* set property*/
-            identityVO.setIncome(userInformation.getSalary());
-            //TODO:convert experience to string
-            identityVO.setExperience(userInformation.getExperience().toString());
-            //TODO:convert byte to job
-            identityVO.setJob("");
-            identityVO.setRiskPrefer("");
-            identityVO.setMarriage(userInformation.getMarriageStatus() == 1 ? "是" : "否");
-            identityVO.setTarget("");
-
-            return identityVO;
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        return null;
     }
 
+    //TODO:...
     @Override
     public boolean setTemperPrefer(TemperPreferVO temperPreferVO) {
-        try {
-            UserTemperPrefer userTemperPrefer = new UserTemperPrefer();
-            userTemperPrefer.setId(getUserService().getID());
-            userTemperPrefer.setBearLoss(new BigDecimal(temperPreferVO.getBearLoss()));
-            //TODO:convert time type
-            userTemperPrefer.setBeginTime(new Timestamp(Long.valueOf(temperPreferVO.getBeginTime())));
-            userTemperPrefer.setEndTime(new Timestamp(Long.valueOf(temperPreferVO.getEndTime())));
-            userTemperPrefer.setMoney(new BigDecimal(temperPreferVO.getMoney()));
-            userTemperPrefer.setStopProfit(new BigDecimal(temperPreferVO.getStopProfit()));
-            //TODO:add project array
-
-            getUserService().getUserDao().saveOrUpdate(userTemperPrefer);
-
-            return true;
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+        return false;
     }
 
+    //TODO:...
     @Override
     public TemperPreferVO getTemperPreferVO() {
-        try {
-            UserTemperPrefer userTemperPrefer = (UserTemperPrefer) getUserService().getUserDao().
-                    find("FROM UserTemperPrefer userTemperPrefer where userTemperPrefer.id=" + getUserService().getID()).get(0);
-
-            TemperPreferVO temperPreferVO = new TemperPreferVO();
-
-            /* set property*/
-            temperPreferVO.setBearLoss(userTemperPrefer.getBearLoss().toString());
-            temperPreferVO.setBeginTime(userTemperPrefer.getBeginTime().toString());
-            temperPreferVO.setEndTime(userTemperPrefer.getEndTime().toString());
-            temperPreferVO.setMoney(userTemperPrefer.getMoney().doubleValue());
-            //TODO:add project array
-            //temperPreferVO.setProjectArr(userTemperPrefer.g);
-            temperPreferVO.setStopProfit(userTemperPrefer.getStopProfit().doubleValue());
-
-            return temperPreferVO;
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        return null;
     }
 
     @Override
     public boolean setFamilySpending(FamilySpendingVO familySpending) {
-        try {
-            UserFamilySpeeding userFamilySpeeding = new UserFamilySpeeding();
-            userFamilySpeeding.setId(getUserService().getID());
-            userFamilySpeeding.setIfNeed(familySpending.isIfNeed() ? new Byte((byte)1) : new Byte((byte)0));
-            userFamilySpeeding.setIsPrepare(familySpending.isIfPrepare() ? new Byte((byte)1) : new Byte((byte)0));
-
-            getUserService().getUserDao().saveOrUpdate(userFamilySpeeding);
-
-            return true;
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+        return false;
     }
 
     @Override
     public FamilySpendingVO getFamilySpendingVO() {
-        try {
-            UserFamilySpeeding userFamilySpeeding = (UserFamilySpeeding)getUserService().getUserDao().
-                    find("FROM UserFamilySpending userFamilySpending where userFamilySpending.id=" + getUserService().getID()).get(0);
-
-            FamilySpendingVO familySpendingVO = new FamilySpendingVO();
-
-            /* set property*/
-            familySpendingVO.setIfNeed(userFamilySpeeding.getIfNeed() == 1);
-            familySpendingVO.setIfPrepare(userFamilySpeeding.getIsPrepare() == 1);
-
-            return familySpendingVO;
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        return null;
     }
 
     @Override
@@ -217,13 +101,11 @@ public class InvestAdvisorServiceImpl extends BaseFunctionServiceAdaptor impleme
     }
 
     @Override
-    public InvestmentPortFolio createInvestmentPortFolio() throws NotAllConfigurationSetException, NotLoginException {
+    public InvestResult createInvestmentPortFolio() throws NotAllConfigurationSetException, NotLoginException {
         UserDao DAO = getUserService().getUserDao();
         try {
-            UserInformation identity = (UserInformation) DAO.find("FROM UserInformation identity WHERE identity.id=" + getUserService().getID()).get(0);
             UserTemperPrefer preference = (UserTemperPrefer) DAO.find("FROM UserTemperPrefer preference WHERE preference.id=" + getUserService().getID()).get(0);
-            UserFamilySpeeding familyExpense = (UserFamilySpeeding) DAO.find("FROM UserFamilySpending familySpending WHERE familySpending.id=" + getUserService().getID()).get(0);
-            return investStrategy.createInvestmentPortfolio(identity, preference, familyExpense, searchService);
+            return investStrategy.createInvestmentPortfolio(preference, searchService);
         }
         catch (NullPointerException n) {
             n.printStackTrace();
@@ -232,12 +114,12 @@ public class InvestAdvisorServiceImpl extends BaseFunctionServiceAdaptor impleme
     }
 
     @Override
-    public InvestmentPortFolio createInvestmentPortFolio(UserInformation identity, UserTemperPrefer preference, UserFamilySpeeding familyExpense) throws NotAllConfigurationSetException {
-        if (identity == null || preference == null || familyExpense == null) {
+    public InvestResult createInvestmentPortFolio(UserTemperPrefer preference) throws NotAllConfigurationSetException {
+        if (preference == null) {
             throw new NotAllConfigurationSetException();
         }
 
-        return investStrategy.createInvestmentPortfolio(identity, preference, familyExpense, searchService);
+        return investStrategy.createInvestmentPortfolio(preference, searchService);
     }
 
     @Override

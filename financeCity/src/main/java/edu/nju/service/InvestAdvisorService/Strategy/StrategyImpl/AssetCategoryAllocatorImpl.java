@@ -2,6 +2,7 @@ package edu.nju.service.InvestAdvisorService.Strategy.StrategyImpl;
 
 import Jama.Matrix;
 import edu.nju.model.CategoryIndex;
+import edu.nju.model.UserTemperPrefer;
 import edu.nju.service.POJO.AssetCategoryAllocation;
 import edu.nju.service.SearchService.SearchService;
 import edu.nju.service.Utils.ARIMA;
@@ -81,9 +82,6 @@ public class AssetCategoryAllocatorImpl implements AssetCategoryAllocator {
         for (int i = 0; i < k; ++i) {
             Wmkt[i] = categoryInfos[i].W / sumW;
         }
-
-        Matrix matrix = new Matrix(dM);
-        matrix = matrix.transpose();
     }
 
     private CategoryInfo[] getCategoriesInfo(SearchService searchService, Map<String, Boolean> sign) {
@@ -101,26 +99,35 @@ public class AssetCategoryAllocatorImpl implements AssetCategoryAllocator {
         int k = getK(sign);
         CategoryInfo[] categoryInfo = new CategoryInfo[k];
         CategoryIndex categoryIndex = searchService.getCategoryIndex();
-        //TODO:set Min insurance
-        double Min_Inurance = 0;
-        //TODO:add ret rate sequence
+        UserTemperPrefer temperPrefer = searchService.getUserTemperPrefer();
+        double Min_Inurance = temperPrefer.getInsuranceAmount().doubleValue();
 
         Iterator iterator = sign.keySet().iterator();
         int i = 0;
         while (iterator.hasNext()) {
             String key = (String)iterator.next();
             if (sign.get(key)) {
+                //category
+                categoryInfo[i].category = key;
+
+                //return rate sequence
+                categoryInfo[i].E = getHistoryRetrunRateSequence(key);
+                if (categoryInfo[i].E.length == 0) {
+                    return new CategoryInfo[0];
+                }
+
+                //LC
+                categoryInfo[i].LC = 0.5;
+
                 //Market value
                 try {
                     categoryInfo[i].W = getMarketValue(key, categoryIndex);
                 }
                 catch (NullPointerException n) {
+                    n.printStackTrace();
                     categoryInfo[i].W = 0;
                 }
-                //category
-                categoryInfo[i].category = key;
-                //LC
-                categoryInfo[i].LC = 0.5;
+
                 //Min Amount
                 if (key.equals(ProductCategoryManager.categoryInsurance)) {
                     categoryInfo[i].MinAmount = Min_Inurance;
@@ -147,8 +154,14 @@ public class AssetCategoryAllocatorImpl implements AssetCategoryAllocator {
         }
     }
 
+    //TODO:sequence
+    private double[] getHistoryRetrunRateSequence(String category) {
+        return new double[0];
+    }
+
     private class CategoryInfo {
         static final int historyNum = 30;
+
         String category;  //资产类型
         double E[];      //资产的历史收益率序列
         double Er;        //预期年化收益率

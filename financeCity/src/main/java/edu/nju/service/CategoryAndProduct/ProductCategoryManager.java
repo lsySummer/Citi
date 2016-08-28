@@ -56,6 +56,10 @@ public class ProductCategoryManager {
         }
     }
 
+    static public List<Category> getCategoryList() {
+        return categoryList;
+    }
+
     static public Category getCategoryByID(Integer ID) {
         int index = ID / serialNumberSize;
         if (index >= 0 && index < categoryList.size()) {

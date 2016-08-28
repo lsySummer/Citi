@@ -1,4 +1,5 @@
 import numpy as np
+import math
 import os,sys
 from mle import var, Normal
 
@@ -49,14 +50,15 @@ def sfa():
 	param_list = param_reader()
 	return sfa_wrapper(param_list)
 
-#p1 = np.linspace(0, 2, 20)
-#p2 = 0.5 * p1 + 0.3 + np.random.normal(0, 0.1, 20)
-#p3 = np.linspace(0, 1, 20)
-#p4 = p3 * 0
-#p5 = p3
-#p6 = p3
+def score_fund(rpt, csi300, treasury_bond_index, SBInvestRatio, fundScale, ALRatio, institutionRatio):
+	lnrpt = math.log(rpt)
+	lnrmt = 0.8 * csi300 + 0.2 * treasury_bond_index
 
-#res = sfa_inner(p2, p1, p3, p4, p5, p6)
+	return sfa_inner(lnrpt, lnmpt, SBInvestRatio, fundScale, ALRatio, institutionRatio)
+
+
+
+
 res = sfa()
 fileHandler = open(sys.path[0] + os.sep + "PythonResult.txt", 'w')
 ret = str(res)

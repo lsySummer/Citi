@@ -1,12 +1,15 @@
 package edu.nju.service.SearchService;
 
 import edu.nju.model.CategoryIndex;
+import edu.nju.model.User;
+import edu.nju.model.UserTemperPrefer;
 import edu.nju.service.BaseService.BaseFunctionServiceAdaptor;
 import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.CategoryAndProduct.ProductFactory;
 import edu.nju.service.Exceptions.NoSuchProductException;
 import edu.nju.service.CategoryAndProduct.Category;
 import edu.nju.service.CategoryAndProduct.ProductCategoryManager;
+import edu.nju.service.Exceptions.NotLoginException;
 import edu.nju.vo.*;
 import org.springframework.stereotype.Service;
 
@@ -165,5 +168,37 @@ public class SearchServiceImpl extends BaseFunctionServiceAdaptor implements Sea
         }
 
         return (CategoryIndex)list.get(0);
+    }
+
+    @Override
+    public User getUser() {
+        try {
+            List list = getUserService().getUserDao().find("FROM User u WHERE u.userId=" + getUserService().getID());
+            if (list == null || list.size() == 0) {
+                return null;
+            }
+
+            return (User)list.get(0);
+        }
+        catch (NotLoginException n) {
+            n.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public UserTemperPrefer getUserTemperPrefer() {
+        try {
+            List list = getUserService().getUserDao().find("FROM UserTemperPrefer u WHERE u.userId=" + getUserService().getID());
+            if (list == null || list.size() == 0) {
+                return null;
+            }
+
+            return (UserTemperPrefer) list.get(0);
+        }
+        catch (NotLoginException n) {
+            n.printStackTrace();
+            return null;
+        }
     }
 }

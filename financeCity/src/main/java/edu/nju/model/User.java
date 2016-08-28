@@ -1,13 +1,15 @@
 package edu.nju.model;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.sql.Timestamp;
 
 /**
- * Created by Sun YuHao on 2016/8/26.
+ * Created by Sun YuHao on 2016/8/27.
  */
 @Entity
-@Table(name = "user", schema = "citi", catalog = "")
 public class User {
     private int id;
     private String account;
@@ -17,9 +19,14 @@ public class User {
     private String password;
     private String phone;
     private String secureAnswer;
-    private Integer state;
+    private Byte state;
     private Timestamp updateAt;
     private String username;
+    private String city;
+    private Byte ifCity;
+    private Timestamp birthday;
+    private Integer monthlyExpense;
+    private Integer monothlySalary;
 
     @Id
     @Column(name = "id")
@@ -103,11 +110,11 @@ public class User {
 
     @Basic
     @Column(name = "state")
-    public Integer getState() {
+    public Byte getState() {
         return state;
     }
 
-    public void setState(Integer state) {
+    public void setState(Byte state) {
         this.state = state;
     }
 
@@ -131,6 +138,56 @@ public class User {
         this.username = username;
     }
 
+    @Basic
+    @Column(name = "city")
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    @Basic
+    @Column(name = "if_city")
+    public Byte getIfCity() {
+        return ifCity;
+    }
+
+    public void setIfCity(Byte ifCity) {
+        this.ifCity = ifCity;
+    }
+
+    @Basic
+    @Column(name = "birthday")
+    public Timestamp getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Timestamp birthday) {
+        this.birthday = birthday;
+    }
+
+    @Basic
+    @Column(name = "monthly_expense")
+    public Integer getMonthlyExpense() {
+        return monthlyExpense;
+    }
+
+    public void setMonthlyExpense(Integer monthlyExpense) {
+        this.monthlyExpense = monthlyExpense;
+    }
+
+    @Basic
+    @Column(name = "monothly_salary")
+    public Integer getMonothlySalary() {
+        return monothlySalary;
+    }
+
+    public void setMonothlySalary(Integer monothlySalary) {
+        this.monothlySalary = monothlySalary;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -150,6 +207,13 @@ public class User {
         if (state != null ? !state.equals(user.state) : user.state != null) return false;
         if (updateAt != null ? !updateAt.equals(user.updateAt) : user.updateAt != null) return false;
         if (username != null ? !username.equals(user.username) : user.username != null) return false;
+        if (city != null ? !city.equals(user.city) : user.city != null) return false;
+        if (ifCity != null ? !ifCity.equals(user.ifCity) : user.ifCity != null) return false;
+        if (birthday != null ? !birthday.equals(user.birthday) : user.birthday != null) return false;
+        if (monthlyExpense != null ? !monthlyExpense.equals(user.monthlyExpense) : user.monthlyExpense != null)
+            return false;
+        if (monothlySalary != null ? !monothlySalary.equals(user.monothlySalary) : user.monothlySalary != null)
+            return false;
 
         return true;
     }
@@ -167,6 +231,11 @@ public class User {
         result = 31 * result + (state != null ? state.hashCode() : 0);
         result = 31 * result + (updateAt != null ? updateAt.hashCode() : 0);
         result = 31 * result + (username != null ? username.hashCode() : 0);
+        result = 31 * result + (city != null ? city.hashCode() : 0);
+        result = 31 * result + (ifCity != null ? ifCity.hashCode() : 0);
+        result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
+        result = 31 * result + (monthlyExpense != null ? monthlyExpense.hashCode() : 0);
+        result = 31 * result + (monothlySalary != null ? monothlySalary.hashCode() : 0);
         return result;
     }
 }

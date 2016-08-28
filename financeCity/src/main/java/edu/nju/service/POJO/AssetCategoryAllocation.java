@@ -4,13 +4,13 @@ package edu.nju.service.POJO;
  * Created by Sun YuHao on 2016/8/18.
  */
 public class AssetCategoryAllocation {
-    private double ration;
+    private double capital;
 
-    public double getRation() {
-        return ration;
+    public double getCapital() {
+        return capital;
     }
 
-    public void setRation(double ration) {
-        this.ration = ration;
+    public void setCapital(double capital) {
+        this.capital = capital;
     }
 }

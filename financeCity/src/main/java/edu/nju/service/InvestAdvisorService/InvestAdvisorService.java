@@ -1,15 +1,11 @@
 package edu.nju.service.InvestAdvisorService;
 
-import edu.nju.model.UserFamilySpeeding;
-import edu.nju.model.UserInformation;
 import edu.nju.model.UserTemperPrefer;
 import edu.nju.service.BaseService.BaseService;
 import edu.nju.service.Exceptions.NotAllConfigurationSetException;
 import edu.nju.service.Exceptions.NotLoginException;
-import edu.nju.service.POJO.InvestmentPortFolio;
-import edu.nju.service.POJO.Preference;
+import edu.nju.service.POJO.InvestResult;
 import edu.nju.service.SearchService.SearchService;
-import edu.nju.service.TradeService.TradeService;
 import edu.nju.vo.FamilySpendingVO;
 import edu.nju.vo.IdentityVO;
 import edu.nju.vo.TemperPreferVO;
@@ -72,7 +68,7 @@ public interface InvestAdvisorService extends BaseService {
     boolean ifIdentityIsSet();
 
     /**
-     * if Preference is set, if yes return true, else return false
+     * if prefer is set, if yes return true, else return false
      *
      * @return is preference is set
      */
@@ -89,9 +85,9 @@ public interface InvestAdvisorService extends BaseService {
      * get investment portfolio
      * @return investment portfolio
      */
-    InvestmentPortFolio createInvestmentPortFolio() throws NotAllConfigurationSetException, NotLoginException;
+    InvestResult createInvestmentPortFolio() throws NotAllConfigurationSetException, NotLoginException;
 
-    InvestmentPortFolio createInvestmentPortFolio(UserInformation identity, UserTemperPrefer preference, UserFamilySpeeding familyExpense) throws NotAllConfigurationSetException;
+    InvestResult createInvestmentPortFolio(UserTemperPrefer preference) throws NotAllConfigurationSetException;
 
     /**
      * get user vo

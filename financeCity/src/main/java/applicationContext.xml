@@ -69,7 +69,7 @@
 	</bean>
 
 	<bean id="testServiceImpl"
-		  class="edu.nju.service.impl.TestServiceImpl">
+		  class="edu.nju.service.Impl">
 	</bean>
 
 	<!--services-->

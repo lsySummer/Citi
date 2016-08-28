@@ -1,6 +1,7 @@
 package edu.nju.service.InvestAdvisorService.Strategy.StrategyImpl;
 
 import edu.nju.model.ProductBank;
+import edu.nju.model.UserTemperPrefer;
 import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.Exceptions.MissRequiredInfoException;
 import edu.nju.service.POJO.AmountAndLeft;
@@ -8,6 +9,7 @@ import edu.nju.service.POJO.InvestResult;
 import edu.nju.service.CategoryAndProduct.Category;
 import edu.nju.service.SearchService.SearchService;
 import edu.nju.service.TradeService.TradeItem;
+import edu.nju.service.Utils.TimeTransformation;
 import edu.nju.service.Utils.UnitTransformation;
 
 import java.util.*;
@@ -32,15 +34,14 @@ public class BankInvest implements CategoryInvest {
     };
 
     @Override
-    public InvestResult invest(Map<String, Object> metaInfo, SearchService searchService) throws MissRequiredInfoException {
+    public InvestResult invest(UserTemperPrefer userInfo, SearchService searchService) {
         InvestResult investResult = new InvestResult();
 
         int threshold = findMinThreshold(searchService);
-        metaInfo.put("minThreshold", threshold);
 
         //invest
-        InvestResult flowInvestResult = investFlowAmount(metaInfo, searchService);
-        InvestResult leftInvestResult = investLeftAmount(metaInfo, searchService);
+        InvestResult flowInvestResult = investFlowAmount(userInfo, searchService, threshold);
+        InvestResult leftInvestResult = investLeftAmount(userInfo, searchService, threshold);
 
         investResult.addInvestResult(flowInvestResult);
         investResult.addInvestResult(leftInvestResult);
@@ -63,15 +64,15 @@ public class BankInvest implements CategoryInvest {
             return  (int)searchService.searchMin(categoryName, "threshold");
     }
 
-    private int findMaxThresholdIndex(int flowAmount) {
+    private int findMaxThresholdIndex(double flowAmount) {
         return findFloorIndex(flowAmount, thresholdList);
     }
 
-    private int findMaxDurationIndex(int timeLimit) {
+    private int findMaxDurationIndex(double timeLimit) {
         return findFloorIndex(timeLimit, durationList);
     }
 
-    private int findFloorIndex(int target, int[] list) {
+    private int findFloorIndex(double target, int[] list) {
         int index = 0;
         for (int i = 0; i < list.length; ++i) {
             if (list[i] > target) {
@@ -84,23 +85,14 @@ public class BankInvest implements CategoryInvest {
         return index;
     }
 
-    private InvestResult investLeftAmount(Map<String, Object> metaInfo, SearchService searchService) throws MissRequiredInfoException {
-        int threshold;
-        int flowAmount;
-        int capital;
-        int leftAmount;
+    private InvestResult investLeftAmount(UserTemperPrefer userInfo, SearchService searchService, int threshold) {
+        double flowAmount;
+        double capital;
+        double leftAmount;
         InvestResult investResult = new InvestResult();
 
-        //get meta info
-        try {
-            capital = (int)metaInfo.get(paramCapital);
-            flowAmount = (int)metaInfo.get(paramFlowAmount);
-            threshold = (int)metaInfo.get("minThreshold");
-        }
-        catch (NullPointerException n) {
-            n.printStackTrace();
-            throw new MissRequiredInfoException(categoryName);
-        }
+        capital = userInfo.getExpectedCapital().doubleValue();
+        flowAmount = capital - userInfo.getMayRedeemAmount().doubleValue();
 
         leftAmount = capital - flowAmount;
 
@@ -127,7 +119,9 @@ public class BankInvest implements CategoryInvest {
         }
 
         if (max_threshold < 0) {
-            throw new MissRequiredInfoException(categoryName);
+            InvestResult investResult1 = new InvestResult();
+            investResult.addUnusedCapital(capital, categoryName);
+            return investResult;
         }
 
         Product product = findMaxYieldProduct(candidateList);
@@ -141,22 +135,15 @@ public class BankInvest implements CategoryInvest {
         return investResult;
     }
 
-    private InvestResult investFlowAmount(Map<String, Object> metaInfo, SearchService searchService) throws MissRequiredInfoException {
-        int threshold;
-        int flowAmount;
-        int timeLimit;
+    private InvestResult investFlowAmount(UserTemperPrefer userInfo, SearchService searchService, int threshold) {
+        double flowAmount;
+        double timeLimit;
         InvestResult investResult = new InvestResult();
 
         //get meta info
-        try {
-            flowAmount = (int)metaInfo.get(paramFlowAmount);
-            threshold = (int)metaInfo.get("minThreshold");
-            timeLimit = (int)metaInfo.get(paramTimeLimit);
-        }
-        catch (NullPointerException n) {
-            n.printStackTrace();
-            throw new MissRequiredInfoException(categoryName);
-        }
+        double capital = userInfo.getExpectedCapital().doubleValue();
+        flowAmount = userInfo.getExpectedCapital().doubleValue() - userInfo.getMayRedeemAmount().doubleValue();
+        timeLimit = TimeTransformation.getTimeFromNow(userInfo.getEndDate(), 'y');
 
         //if can invest (threshold)
         if (threshold > flowAmount) {
@@ -188,7 +175,9 @@ public class BankInvest implements CategoryInvest {
         }
 
         if (floorDuration < 0) {
-            throw new MissRequiredInfoException(categoryName);
+            InvestResult investResult1 = new InvestResult();
+            investResult.addUnusedCapital(capital, categoryName);
+            return investResult;
         }
 
         Product product = findMaxYieldProduct(candidateList);
@@ -201,5 +190,10 @@ public class BankInvest implements CategoryInvest {
         investResult.addUnusedCapital(amountAndLeft.getLeft(), categoryName + "flowAmount");
 
         return investResult;
+    }
+
+    @Override
+    public String getCategoryName() {
+        return categoryName;
     }
 }

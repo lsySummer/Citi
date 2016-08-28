@@ -1,5 +1,6 @@
 package edu.nju.service.InvestAdvisorService.Strategy.StrategyImpl;
 
+import edu.nju.model.UserTemperPrefer;
 import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.Exceptions.MissRequiredInfoException;
 import edu.nju.service.POJO.AmountAndLeft;
@@ -24,18 +25,12 @@ public class FundInvest implements CategoryInvest {
     private static final int historyNum = 30;
 
     @Override
-    public InvestResult invest(Map<String, Object> metaInfo, SearchService searchService) throws MissRequiredInfoException {
+    public InvestResult invest(UserTemperPrefer userInfo, SearchService searchService) {
         double capital;
 
         InvestResult investResult = new InvestResult();
 
-        try {
-            capital = (double)metaInfo.get(paramCapital);
-        }
-        catch (NullPointerException n) {
-            n.printStackTrace();
-            throw new MissRequiredInfoException(categoryName);
-        }
+        capital = userInfo.getExpectedCapital().doubleValue();
 
         List<Product> productList = searchService.getProductListByOrder(categoryName, "p.fundScore");
         if (productList == null || productList.size() == 0) {
@@ -48,5 +43,10 @@ public class FundInvest implements CategoryInvest {
         investResult.addUnusedCapital(amountAndLeft.getLeft(), categoryName);
 
         return investResult;
+    }
+
+    @Override
+    public String getCategoryName() {
+        return categoryName;
     }
 }
