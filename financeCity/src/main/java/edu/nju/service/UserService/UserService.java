@@ -1,12 +1,10 @@
 package edu.nju.service.UserService;
 
-import edu.nju.dao.BaseDao;
 import edu.nju.dao.UserDao;
 import edu.nju.dao.impl.CommonDao;
 import edu.nju.service.BaseService.BaseService;
-import edu.nju.service.Exceptions.NotLoginException;
+import edu.nju.service.ExceptionsAndError.NotLoginException;
 import edu.nju.service.POJO.RegisterInfo;
-import edu.nju.service.POJO.UserInfo;
 import edu.nju.vo.UserVO;
 import org.springframework.stereotype.Service;
 
@@ -67,4 +65,6 @@ public interface UserService extends BaseService {
      * @return common dao
      */
     CommonDao getCommonDao();
+
+    UserVO getUserVO() throws NotLoginException;
 }

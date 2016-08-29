@@ -3,10 +3,8 @@ package edu.nju.service.InvestAdvisorService.Strategy.StrategyImpl;
 import edu.nju.model.ProductBank;
 import edu.nju.model.UserTemperPrefer;
 import edu.nju.service.CategoryAndProduct.Product;
-import edu.nju.service.Exceptions.MissRequiredInfoException;
 import edu.nju.service.POJO.AmountAndLeft;
 import edu.nju.service.POJO.InvestResult;
-import edu.nju.service.CategoryAndProduct.Category;
 import edu.nju.service.SearchService.SearchService;
 import edu.nju.service.TradeService.TradeItem;
 import edu.nju.service.Utils.TimeTransformation;
@@ -52,7 +50,7 @@ public class BankInvest implements CategoryInvest {
     private Product findMaxYieldProduct(List<Product> products) {
         Product wanted = products.get(0);
         for (Product product : products) {
-            if (((ProductBank)product.getProduct()).getExpectedYearRate().compareTo(((ProductBank)wanted.getProduct()).getExpectedYearRate()) > 0) {
+            if (((ProductBank)product.getProduct()).getExpectedRate().compareTo(((ProductBank)wanted.getProduct()).getExpectedRate()) > 0) {
                 wanted = product;
             }
         }

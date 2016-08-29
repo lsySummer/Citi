@@ -1,14 +1,10 @@
 package edu.nju.service;
 
-import edu.nju.service.Exceptions.InvalidAPINameException;
-import edu.nju.service.Exceptions.InvalidParametersException;
-import edu.nju.service.Exceptions.InvalidServiceNameException;
-import edu.nju.service.Exceptions.NotLoginException;
-import edu.nju.service.POJO.RegisterInfo;
-import edu.nju.service.POJO.UserInfo;
+import edu.nju.service.ExceptionsAndError.InvalidAPINameException;
+import edu.nju.service.ExceptionsAndError.InvalidParametersException;
+import edu.nju.service.ExceptionsAndError.InvalidServiceNameException;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Sun YuHao on 2016/7/25.

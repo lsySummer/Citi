@@ -1,15 +1,13 @@
 package edu.nju.service.BaseService;
 
-import edu.nju.service.Exceptions.InvalidAPINameException;
-import edu.nju.service.Exceptions.InvalidParametersException;
+import edu.nju.service.ExceptionsAndError.InvalidAPINameException;
+import edu.nju.service.ExceptionsAndError.InvalidParametersException;
 import org.springframework.stereotype.Service;
-import sun.plugin.dom.exception.InvalidAccessException;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by Sun YuHao on 2016/8/13.

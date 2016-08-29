@@ -7,7 +7,6 @@ import java.sql.Timestamp;
  * Created by Sun YuHao on 2016/8/26.
  */
 @Entity
-@Table(name = "institution", schema = "citi", catalog = "")
 public class Institution {
     private int id;
     private Timestamp createdAt;

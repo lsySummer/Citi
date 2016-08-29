@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
- * Created by Sun YuHao on 2016/8/17.
+ * Created by Sun YuHao on 2016/8/29.
  */
 @Entity
 @Table(name = "trade_history", schema = "citi", catalog = "")
@@ -14,10 +14,10 @@ public class TradeHistory {
     private int productId;
     private String tradingUnit;
     private int amount;
-    private BigDecimal price;
     private String checkCode;
     private Timestamp tradeAt;
     private String tradeType;
+    private BigDecimal tradingVolume;
 
     @Id
     @Column(name = "user_id")
@@ -60,16 +60,6 @@ public class TradeHistory {
     }
 
     @Basic
-    @Column(name = "price")
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    @Basic
     @Column(name = "check_code")
     public String getCheckCode() {
         return checkCode;
@@ -99,6 +89,16 @@ public class TradeHistory {
         this.tradeType = tradeType;
     }
 
+    @Basic
+    @Column(name = "trading_volume")
+    public BigDecimal getTradingVolume() {
+        return tradingVolume;
+    }
+
+    public void setTradingVolume(BigDecimal tradingVolume) {
+        this.tradingVolume = tradingVolume;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -110,10 +110,11 @@ public class TradeHistory {
         if (productId != that.productId) return false;
         if (amount != that.amount) return false;
         if (tradingUnit != null ? !tradingUnit.equals(that.tradingUnit) : that.tradingUnit != null) return false;
-        if (price != null ? !price.equals(that.price) : that.price != null) return false;
         if (checkCode != null ? !checkCode.equals(that.checkCode) : that.checkCode != null) return false;
         if (tradeAt != null ? !tradeAt.equals(that.tradeAt) : that.tradeAt != null) return false;
         if (tradeType != null ? !tradeType.equals(that.tradeType) : that.tradeType != null) return false;
+        if (tradingVolume != null ? !tradingVolume.equals(that.tradingVolume) : that.tradingVolume != null)
+            return false;
 
         return true;
     }
@@ -124,10 +125,10 @@ public class TradeHistory {
         result = 31 * result + productId;
         result = 31 * result + (tradingUnit != null ? tradingUnit.hashCode() : 0);
         result = 31 * result + amount;
-        result = 31 * result + (price != null ? price.hashCode() : 0);
         result = 31 * result + (checkCode != null ? checkCode.hashCode() : 0);
         result = 31 * result + (tradeAt != null ? tradeAt.hashCode() : 0);
         result = 31 * result + (tradeType != null ? tradeType.hashCode() : 0);
+        result = 31 * result + (tradingVolume != null ? tradingVolume.hashCode() : 0);
         return result;
     }
 }

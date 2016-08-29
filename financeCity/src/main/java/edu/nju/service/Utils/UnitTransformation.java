@@ -20,8 +20,8 @@ public class UnitTransformation {
 
         if (product.getCategory().equals(ProductCategoryManager.categoryBank)) {
             ProductBank productBank = (ProductBank)product.getProduct();
-            int increasingAmount = productBank.getIncreasingAmount();
-            int threshold = productBank.getThreshold();
+            int increasingAmount = productBank.getIncreasingUnit();
+            int threshold = productBank.getPurchaseThreshold();
             left = (capital - threshold) % increasingAmount;
             amount = capital - left;
         }//ProductBank

@@ -4,8 +4,8 @@ import edu.nju.dao.UserDao;
 import edu.nju.model.User;
 import edu.nju.model.UserTemperPrefer;
 import edu.nju.service.BaseService.BaseFunctionServiceAdaptor;
-import edu.nju.service.Exceptions.NotAllConfigurationSetException;
-import edu.nju.service.Exceptions.NotLoginException;
+import edu.nju.service.ExceptionsAndError.NotAllConfigurationSetException;
+import edu.nju.service.ExceptionsAndError.NotLoginException;
 import edu.nju.service.InvestAdvisorService.Strategy.InvestStrategy;
 import edu.nju.service.POJO.*;
 import edu.nju.service.SearchService.SearchService;
@@ -16,8 +16,6 @@ import edu.nju.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -122,30 +120,10 @@ public class InvestAdvisorServiceImpl extends BaseFunctionServiceAdaptor impleme
         return investStrategy.createInvestmentPortfolio(preference, searchService);
     }
 
+    //TODO:set user VO
     @Override
     public UserVO getUserVO() {
-         UserVO userVO = new UserVO();
-
-        try {
-            User user = (User)getUserService().getUserDao().
-                    find("FROM User user where user.id=" + getUserService().getID()).get(0);
-
-            userVO.setAnswer(user.getSecureAnswer());
-            userVO.setEmail(user.getEmail());
-            //TODO:add birthday\card number\city\if city
-            userVO.setBirthday("");
-            userVO.setCardNumber("");
-            userVO.setCity("");
-            userVO.setExpense("");
-            userVO.setIfCity(false);
-
-            return userVO;
-
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        return null;
     }
 
     @Override

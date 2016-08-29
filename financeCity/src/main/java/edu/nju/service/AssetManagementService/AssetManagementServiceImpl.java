@@ -3,10 +3,14 @@ package edu.nju.service.AssetManagementService;
 import edu.nju.model.InvestStatus;
 import edu.nju.model.TradeHistory;
 import edu.nju.service.BaseService.BaseFunctionServiceAdaptor;
-import edu.nju.service.Exceptions.NotLoginException;
+import edu.nju.service.CategoryAndProduct.Product;
+import edu.nju.service.CategoryAndProduct.ProductCategoryManager;
+import edu.nju.service.ExceptionsAndError.ErrorManager;
+import edu.nju.service.ExceptionsAndError.NoSuchProductException;
+import edu.nju.service.ExceptionsAndError.NotLoginException;
 import edu.nju.service.POJO.Event;
-import edu.nju.vo.InvestProductVO;
-import edu.nju.vo.TimeLineVO;
+import edu.nju.service.SearchService.SearchService;
+import edu.nju.vo.*;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,10 +21,13 @@ import java.util.List;
  */
 @Service
 public class AssetManagementServiceImpl extends BaseFunctionServiceAdaptor implements AssetManagementService {
+    private SearchService searchService;
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<InvestProductVO> getInvestProductVOList() {
+    public CurrentInvestmentVO getInvestProductVOList() {
+        CurrentInvestmentVO currentInvestmentVO = new CurrentInvestmentVO();
+
         try {
             List<InvestStatus> list = getUserService().getUserDao().
                     find("FROM InvestStatus investStatus WHERE investHistory.id=" + getUserService().getID());
@@ -28,27 +35,43 @@ public class AssetManagementServiceImpl extends BaseFunctionServiceAdaptor imple
                 return null;
             }
             else {
-                List investList = new ArrayList();
-                InvestProductVO investProductVO = new InvestProductVO();
+                List<ProductVO> investList = new ArrayList<>();
                 for (InvestStatus investStatus : list) {
-                    investProductVO.setCurrentValue(investStatus.getCurrentPrice().doubleValue());
-                    investProductVO.setInitMoney(investStatus.getCurrentPrice().doubleValue());
-                    //TODO:set profit rate
-                    investProductVO.setProfitRate(0);
-                    //TODO:set due time
-                    investProductVO.setDueTime("");
-                    //TODO:set invest time
-                    investProductVO.setInvestTime("");
+                    try {
+                        Product product = searchService.getProductByID(investStatus.getProductId());
+                        ProductVO productVO = new ProductVO();
+                        productVO.setBuyingDate(investStatus.getDate().toString());
+                        productVO.setBuyingValue(investStatus.getTotalValue().doubleValue());
+                        productVO.setName(product.getName());
+                        productVO.setCurrentValue(getCurrentValue(investStatus.getAmount(), product));
+                        productVO.setType(ProductCategoryManager.getChineseName(product.getCategory().getCategoryName()));
+                        productVO.setError(0);
+                        productVO.setMessage("");
+                        //TODO:set redeem date
+                        productVO.setCanRedeemDate("");
+                        //TODO:set end date
+                        productVO.setEndDate("");
+
+                        investList.add(productVO);
+                    }
+                    catch (NoSuchProductException n) {
+                        n.printStackTrace();
+                    }
                 }
 
-                return investList;
+                currentInvestmentVO.setProductVOList(investList);
+                currentInvestmentVO.setError(ErrorManager.errorNormal);
+                currentInvestmentVO.setMessage(ErrorManager.getDescreption(ErrorManager.errorNormal));
             }
 
         }
-        catch (Exception e) {
+        catch (NotLoginException e) {
             e.printStackTrace();
-            return null;
+            currentInvestmentVO.setError(ErrorManager.errorNotLogin);
+            currentInvestmentVO.setMessage(ErrorManager.getDescreption(ErrorManager.errorNotLogin));
         }
+
+        return currentInvestmentVO;
     }
 
     @Override
@@ -56,18 +79,60 @@ public class AssetManagementServiceImpl extends BaseFunctionServiceAdaptor imple
         return null;
     }
 
+    @Override
+    public void bindSearchService(SearchService searchService) {
+        this.searchService = searchService;
+    }
+
+    //TODO:get current value
+    private double getCurrentValue(int amount, Product product) {
+        return 0;
+    }
+
     @SuppressWarnings("unchecked")
     @Override
-    public TimeLineVO getTimeLineVO() {
-        try {
-            List<TradeHistory> list = (List<TradeHistory>)getUserService().getUserDao().find(
-                    "FROM TradeHistory tradHistory WHERE tradeHistory.userId=" + getUserService().getID());
+    public TradeHistoryListVO getTradeHistory() throws NotLoginException{
+        TradeHistoryListVO tradeHistoryListVO = new TradeHistoryListVO();
 
-            //TODO:create timelineVO
+        try {
+            List<TradeHistoryVO> tradeHistoryVOList = new ArrayList<>();
+            List list = getUserService().getUserDao().find("FROM TradHistory t WHERE t.userId=" + getUserService().getID());
+
+            if (list == null || list.size() == 0) {
+                tradeHistoryListVO.setError(ErrorManager.errorDateNotFound);
+                tradeHistoryListVO.setMessage(ErrorManager.getDescreption(ErrorManager.errorDateNotFound));
+            }
+
+            List<TradeHistory> tradeHistoryList = (List<TradeHistory>) list;
+            for (TradeHistory tradeHistory : tradeHistoryList) {
+                try {
+                    TradeHistoryVO tradeHistoryVO = new TradeHistoryVO();
+                    Product product = searchService.getProductByID(tradeHistory.getProductId());
+
+                    tradeHistoryVO.setAmount(tradeHistory.getAmount());
+                    tradeHistoryVO.setDate(tradeHistory.getTradeAt().toString());
+                    tradeHistoryVO.setProductId(product.getID());
+                    tradeHistoryVO.setProductName(product.getName());
+                    tradeHistoryVO.setTradingType(tradeHistory.getTradeType());
+                    tradeHistoryVO.setUnit(product.getCategory().getUnit());
+                    tradeHistoryVO.setTradingVolume(tradeHistory.getTradingVolume().doubleValue());
+
+                    tradeHistoryVOList.add(tradeHistoryVO);
+                } catch (NoSuchProductException n) {
+                    n.printStackTrace();
+                }
+            }
+
+            tradeHistoryListVO.setTradeHistoryVOList(tradeHistoryVOList);
+            tradeHistoryListVO.setError(ErrorManager.errorNormal);
+            tradeHistoryListVO.setMessage(ErrorManager.getDescreption(ErrorManager.errorNormal));
         }
         catch (NotLoginException n) {
             n.printStackTrace();
+            tradeHistoryListVO.setError(ErrorManager.errorNotLogin);
+            tradeHistoryListVO.setMessage(ErrorManager.getDescreption(ErrorManager.errorNotLogin));
         }
-        return null;
+
+        return tradeHistoryListVO;
     }
 }

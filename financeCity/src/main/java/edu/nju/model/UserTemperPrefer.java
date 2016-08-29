@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
- * Created by Sun YuHao on 2016/8/27.
+ * Created by Sun YuHao on 2016/8/28.
  */
 @Entity
 @Table(name = "user_temper_prefer", schema = "citi", catalog = "")
@@ -22,6 +22,12 @@ public class UserTemperPrefer {
     private BigDecimal riskViolence;
     private BigDecimal expectedRetrunRate;
     private Byte ifConfigBigExpense;
+    private int id;
+    private BigDecimal bearLoss;
+    private Timestamp beginTime;
+    private Timestamp endTime;
+    private BigDecimal money;
+    private String chosenProducts;
 
     @Id
     @Column(name = "user_id")
@@ -143,6 +149,66 @@ public class UserTemperPrefer {
         this.ifConfigBigExpense = ifConfigBigExpense;
     }
 
+    @Basic
+    @Column(name = "id")
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Basic
+    @Column(name = "bear_loss")
+    public BigDecimal getBearLoss() {
+        return bearLoss;
+    }
+
+    public void setBearLoss(BigDecimal bearLoss) {
+        this.bearLoss = bearLoss;
+    }
+
+    @Basic
+    @Column(name = "begin_time")
+    public Timestamp getBeginTime() {
+        return beginTime;
+    }
+
+    public void setBeginTime(Timestamp beginTime) {
+        this.beginTime = beginTime;
+    }
+
+    @Basic
+    @Column(name = "end_time")
+    public Timestamp getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Timestamp endTime) {
+        this.endTime = endTime;
+    }
+
+    @Basic
+    @Column(name = "money")
+    public BigDecimal getMoney() {
+        return money;
+    }
+
+    public void setMoney(BigDecimal money) {
+        this.money = money;
+    }
+
+    @Basic
+    @Column(name = "chosen_products")
+    public String getChosenProducts() {
+        return chosenProducts;
+    }
+
+    public void setChosenProducts(String chosenProducts) {
+        this.chosenProducts = chosenProducts;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -151,6 +217,7 @@ public class UserTemperPrefer {
         UserTemperPrefer that = (UserTemperPrefer) o;
 
         if (userId != that.userId) return false;
+        if (id != that.id) return false;
         if (expectedCapital != null ? !expectedCapital.equals(that.expectedCapital) : that.expectedCapital != null)
             return false;
         if (endDate != null ? !endDate.equals(that.endDate) : that.endDate != null) return false;
@@ -166,6 +233,12 @@ public class UserTemperPrefer {
         if (expectedRetrunRate != null ? !expectedRetrunRate.equals(that.expectedRetrunRate) : that.expectedRetrunRate != null)
             return false;
         if (ifConfigBigExpense != null ? !ifConfigBigExpense.equals(that.ifConfigBigExpense) : that.ifConfigBigExpense != null)
+            return false;
+        if (bearLoss != null ? !bearLoss.equals(that.bearLoss) : that.bearLoss != null) return false;
+        if (beginTime != null ? !beginTime.equals(that.beginTime) : that.beginTime != null) return false;
+        if (endTime != null ? !endTime.equals(that.endTime) : that.endTime != null) return false;
+        if (money != null ? !money.equals(that.money) : that.money != null) return false;
+        if (chosenProducts != null ? !chosenProducts.equals(that.chosenProducts) : that.chosenProducts != null)
             return false;
 
         return true;
@@ -185,6 +258,12 @@ public class UserTemperPrefer {
         result = 31 * result + (riskViolence != null ? riskViolence.hashCode() : 0);
         result = 31 * result + (expectedRetrunRate != null ? expectedRetrunRate.hashCode() : 0);
         result = 31 * result + (ifConfigBigExpense != null ? ifConfigBigExpense.hashCode() : 0);
+        result = 31 * result + id;
+        result = 31 * result + (bearLoss != null ? bearLoss.hashCode() : 0);
+        result = 31 * result + (beginTime != null ? beginTime.hashCode() : 0);
+        result = 31 * result + (endTime != null ? endTime.hashCode() : 0);
+        result = 31 * result + (money != null ? money.hashCode() : 0);
+        result = 31 * result + (chosenProducts != null ? chosenProducts.hashCode() : 0);
         return result;
     }
 }

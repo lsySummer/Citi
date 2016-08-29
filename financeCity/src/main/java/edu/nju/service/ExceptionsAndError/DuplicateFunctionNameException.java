@@ -1,4 +1,4 @@
-package edu.nju.service.Exceptions;
+package edu.nju.service.ExceptionsAndError;
 
 /**
  * Created by dell on 2016/8/13.

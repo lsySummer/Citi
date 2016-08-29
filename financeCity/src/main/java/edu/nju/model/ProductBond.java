@@ -5,45 +5,46 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
- * Created by Sun YuHao on 2016/8/21.
+ * Created by Sun YuHao on 2016/8/28.
  */
 @Entity
 @Table(name = "product_bond", schema = "citi", catalog = "")
 public class ProductBond {
     private int id;
     private String title;
-    private String institution;
+    private String institutionIssue;
     private String productCode;
-    private String abbreviation;
-    private Timestamp onSaleDate;
-    private Timestamp offSaleDate;
-    private Timestamp startInterestDate;
-    private Integer dateLimit;
+    private String abbrName;
+    private Timestamp onIssueDate;
+    private Timestamp offIssueDate;
+    private Timestamp firstAccrDate;
+    private Integer length;
     private Integer releaseAmount;
-    private Timestamp releaseDate;
-    private String whereIntoMarket;
+    private Timestamp publishDate;
+    private String exchange;
     private Byte creditGrade;
     private String institutionUnderwriter;
     private Byte type;
     private BigDecimal denomination;
-    private BigDecimal releasePrice;
+    private BigDecimal issuePrice;
     private BigDecimal currenctValue;
     private BigDecimal yearRate;
     private Byte releaseObject;
-    private Byte interestCalculate;
-    private Byte paymentFrequency;
-    private Timestamp dueDate;
-    private Timestamp onCurrencyDate;
+    private Byte couponType;
+    private Byte couponFreq;
+    private Timestamp maturityDate;
+    private Timestamp listDate;
     private Integer paymentPrice;
     private String objectApplyBuy;
     private Byte riskGrade;
     private String releaseWay;
     private String objectOriented;
     private Byte taxState;
-    private Integer nominalRate;
+    private Integer coupon;
     private Integer advanceRedeemDate;
     private Integer advanceRedeemInterestDate;
     private Byte state;
+    private BigDecimal adjustYearlyRate;
 
     @Id
     @Column(name = "id")
@@ -66,13 +67,13 @@ public class ProductBond {
     }
 
     @Basic
-    @Column(name = "institution")
-    public String getInstitution() {
-        return institution;
+    @Column(name = "institution_issue")
+    public String getInstitutionIssue() {
+        return institutionIssue;
     }
 
-    public void setInstitution(String institution) {
-        this.institution = institution;
+    public void setInstitutionIssue(String institutionIssue) {
+        this.institutionIssue = institutionIssue;
     }
 
     @Basic
@@ -86,53 +87,53 @@ public class ProductBond {
     }
 
     @Basic
-    @Column(name = "abbreviation")
-    public String getAbbreviation() {
-        return abbreviation;
+    @Column(name = "abbr_name")
+    public String getAbbrName() {
+        return abbrName;
     }
 
-    public void setAbbreviation(String abbreviation) {
-        this.abbreviation = abbreviation;
-    }
-
-    @Basic
-    @Column(name = "on_sale_date")
-    public Timestamp getOnSaleDate() {
-        return onSaleDate;
-    }
-
-    public void setOnSaleDate(Timestamp onSaleDate) {
-        this.onSaleDate = onSaleDate;
+    public void setAbbrName(String abbrName) {
+        this.abbrName = abbrName;
     }
 
     @Basic
-    @Column(name = "off_sale_date")
-    public Timestamp getOffSaleDate() {
-        return offSaleDate;
+    @Column(name = "on_issue_date")
+    public Timestamp getOnIssueDate() {
+        return onIssueDate;
     }
 
-    public void setOffSaleDate(Timestamp offSaleDate) {
-        this.offSaleDate = offSaleDate;
-    }
-
-    @Basic
-    @Column(name = "start_interest_date")
-    public Timestamp getStartInterestDate() {
-        return startInterestDate;
-    }
-
-    public void setStartInterestDate(Timestamp startInterestDate) {
-        this.startInterestDate = startInterestDate;
+    public void setOnIssueDate(Timestamp onIssueDate) {
+        this.onIssueDate = onIssueDate;
     }
 
     @Basic
-    @Column(name = "date_limit")
-    public Integer getDateLimit() {
-        return dateLimit;
+    @Column(name = "off_issue_date")
+    public Timestamp getOffIssueDate() {
+        return offIssueDate;
     }
 
-    public void setDateLimit(Integer dateLimit) {
-        this.dateLimit = dateLimit;
+    public void setOffIssueDate(Timestamp offIssueDate) {
+        this.offIssueDate = offIssueDate;
+    }
+
+    @Basic
+    @Column(name = "first_accr_date")
+    public Timestamp getFirstAccrDate() {
+        return firstAccrDate;
+    }
+
+    public void setFirstAccrDate(Timestamp firstAccrDate) {
+        this.firstAccrDate = firstAccrDate;
+    }
+
+    @Basic
+    @Column(name = "length")
+    public Integer getLength() {
+        return length;
+    }
+
+    public void setLength(Integer length) {
+        this.length = length;
     }
 
     @Basic
@@ -146,23 +147,23 @@ public class ProductBond {
     }
 
     @Basic
-    @Column(name = "release_date")
-    public Timestamp getReleaseDate() {
-        return releaseDate;
+    @Column(name = "publish_date")
+    public Timestamp getPublishDate() {
+        return publishDate;
     }
 
-    public void setReleaseDate(Timestamp releaseDate) {
-        this.releaseDate = releaseDate;
+    public void setPublishDate(Timestamp publishDate) {
+        this.publishDate = publishDate;
     }
 
     @Basic
-    @Column(name = "where_into_market")
-    public String getWhereIntoMarket() {
-        return whereIntoMarket;
+    @Column(name = "exchange")
+    public String getExchange() {
+        return exchange;
     }
 
-    public void setWhereIntoMarket(String whereIntoMarket) {
-        this.whereIntoMarket = whereIntoMarket;
+    public void setExchange(String exchange) {
+        this.exchange = exchange;
     }
 
     @Basic
@@ -206,13 +207,13 @@ public class ProductBond {
     }
 
     @Basic
-    @Column(name = "release_price")
-    public BigDecimal getReleasePrice() {
-        return releasePrice;
+    @Column(name = "issue_price")
+    public BigDecimal getIssuePrice() {
+        return issuePrice;
     }
 
-    public void setReleasePrice(BigDecimal releasePrice) {
-        this.releasePrice = releasePrice;
+    public void setIssuePrice(BigDecimal issuePrice) {
+        this.issuePrice = issuePrice;
     }
 
     @Basic
@@ -246,43 +247,43 @@ public class ProductBond {
     }
 
     @Basic
-    @Column(name = "interest_calculate")
-    public Byte getInterestCalculate() {
-        return interestCalculate;
+    @Column(name = "coupon_type")
+    public Byte getCouponType() {
+        return couponType;
     }
 
-    public void setInterestCalculate(Byte interestCalculate) {
-        this.interestCalculate = interestCalculate;
-    }
-
-    @Basic
-    @Column(name = "payment_frequency")
-    public Byte getPaymentFrequency() {
-        return paymentFrequency;
-    }
-
-    public void setPaymentFrequency(Byte paymentFrequency) {
-        this.paymentFrequency = paymentFrequency;
+    public void setCouponType(Byte couponType) {
+        this.couponType = couponType;
     }
 
     @Basic
-    @Column(name = "due_date")
-    public Timestamp getDueDate() {
-        return dueDate;
+    @Column(name = "coupon_freq")
+    public Byte getCouponFreq() {
+        return couponFreq;
     }
 
-    public void setDueDate(Timestamp dueDate) {
-        this.dueDate = dueDate;
+    public void setCouponFreq(Byte couponFreq) {
+        this.couponFreq = couponFreq;
     }
 
     @Basic
-    @Column(name = "on_currency_date")
-    public Timestamp getOnCurrencyDate() {
-        return onCurrencyDate;
+    @Column(name = "maturity_date")
+    public Timestamp getMaturityDate() {
+        return maturityDate;
     }
 
-    public void setOnCurrencyDate(Timestamp onCurrencyDate) {
-        this.onCurrencyDate = onCurrencyDate;
+    public void setMaturityDate(Timestamp maturityDate) {
+        this.maturityDate = maturityDate;
+    }
+
+    @Basic
+    @Column(name = "list_date")
+    public Timestamp getListDate() {
+        return listDate;
+    }
+
+    public void setListDate(Timestamp listDate) {
+        this.listDate = listDate;
     }
 
     @Basic
@@ -346,13 +347,13 @@ public class ProductBond {
     }
 
     @Basic
-    @Column(name = "nominal_rate")
-    public Integer getNominalRate() {
-        return nominalRate;
+    @Column(name = "coupon")
+    public Integer getCoupon() {
+        return coupon;
     }
 
-    public void setNominalRate(Integer nominalRate) {
-        this.nominalRate = nominalRate;
+    public void setCoupon(Integer coupon) {
+        this.coupon = coupon;
     }
 
     @Basic
@@ -385,6 +386,16 @@ public class ProductBond {
         this.state = state;
     }
 
+    @Basic
+    @Column(name = "adjust_yearly_rate")
+    public BigDecimal getAdjustYearlyRate() {
+        return adjustYearlyRate;
+    }
+
+    public void setAdjustYearlyRate(BigDecimal adjustYearlyRate) {
+        this.adjustYearlyRate = adjustYearlyRate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -394,37 +405,34 @@ public class ProductBond {
 
         if (id != that.id) return false;
         if (title != null ? !title.equals(that.title) : that.title != null) return false;
-        if (institution != null ? !institution.equals(that.institution) : that.institution != null) return false;
-        if (productCode != null ? !productCode.equals(that.productCode) : that.productCode != null) return false;
-        if (abbreviation != null ? !abbreviation.equals(that.abbreviation) : that.abbreviation != null) return false;
-        if (onSaleDate != null ? !onSaleDate.equals(that.onSaleDate) : that.onSaleDate != null) return false;
-        if (offSaleDate != null ? !offSaleDate.equals(that.offSaleDate) : that.offSaleDate != null) return false;
-        if (startInterestDate != null ? !startInterestDate.equals(that.startInterestDate) : that.startInterestDate != null)
+        if (institutionIssue != null ? !institutionIssue.equals(that.institutionIssue) : that.institutionIssue != null)
             return false;
-        if (dateLimit != null ? !dateLimit.equals(that.dateLimit) : that.dateLimit != null) return false;
+        if (productCode != null ? !productCode.equals(that.productCode) : that.productCode != null) return false;
+        if (abbrName != null ? !abbrName.equals(that.abbrName) : that.abbrName != null) return false;
+        if (onIssueDate != null ? !onIssueDate.equals(that.onIssueDate) : that.onIssueDate != null) return false;
+        if (offIssueDate != null ? !offIssueDate.equals(that.offIssueDate) : that.offIssueDate != null) return false;
+        if (firstAccrDate != null ? !firstAccrDate.equals(that.firstAccrDate) : that.firstAccrDate != null)
+            return false;
+        if (length != null ? !length.equals(that.length) : that.length != null) return false;
         if (releaseAmount != null ? !releaseAmount.equals(that.releaseAmount) : that.releaseAmount != null)
             return false;
-        if (releaseDate != null ? !releaseDate.equals(that.releaseDate) : that.releaseDate != null) return false;
-        if (whereIntoMarket != null ? !whereIntoMarket.equals(that.whereIntoMarket) : that.whereIntoMarket != null)
-            return false;
+        if (publishDate != null ? !publishDate.equals(that.publishDate) : that.publishDate != null) return false;
+        if (exchange != null ? !exchange.equals(that.exchange) : that.exchange != null) return false;
         if (creditGrade != null ? !creditGrade.equals(that.creditGrade) : that.creditGrade != null) return false;
         if (institutionUnderwriter != null ? !institutionUnderwriter.equals(that.institutionUnderwriter) : that.institutionUnderwriter != null)
             return false;
         if (type != null ? !type.equals(that.type) : that.type != null) return false;
         if (denomination != null ? !denomination.equals(that.denomination) : that.denomination != null) return false;
-        if (releasePrice != null ? !releasePrice.equals(that.releasePrice) : that.releasePrice != null) return false;
+        if (issuePrice != null ? !issuePrice.equals(that.issuePrice) : that.issuePrice != null) return false;
         if (currenctValue != null ? !currenctValue.equals(that.currenctValue) : that.currenctValue != null)
             return false;
         if (yearRate != null ? !yearRate.equals(that.yearRate) : that.yearRate != null) return false;
         if (releaseObject != null ? !releaseObject.equals(that.releaseObject) : that.releaseObject != null)
             return false;
-        if (interestCalculate != null ? !interestCalculate.equals(that.interestCalculate) : that.interestCalculate != null)
-            return false;
-        if (paymentFrequency != null ? !paymentFrequency.equals(that.paymentFrequency) : that.paymentFrequency != null)
-            return false;
-        if (dueDate != null ? !dueDate.equals(that.dueDate) : that.dueDate != null) return false;
-        if (onCurrencyDate != null ? !onCurrencyDate.equals(that.onCurrencyDate) : that.onCurrencyDate != null)
-            return false;
+        if (couponType != null ? !couponType.equals(that.couponType) : that.couponType != null) return false;
+        if (couponFreq != null ? !couponFreq.equals(that.couponFreq) : that.couponFreq != null) return false;
+        if (maturityDate != null ? !maturityDate.equals(that.maturityDate) : that.maturityDate != null) return false;
+        if (listDate != null ? !listDate.equals(that.listDate) : that.listDate != null) return false;
         if (paymentPrice != null ? !paymentPrice.equals(that.paymentPrice) : that.paymentPrice != null) return false;
         if (objectApplyBuy != null ? !objectApplyBuy.equals(that.objectApplyBuy) : that.objectApplyBuy != null)
             return false;
@@ -433,12 +441,14 @@ public class ProductBond {
         if (objectOriented != null ? !objectOriented.equals(that.objectOriented) : that.objectOriented != null)
             return false;
         if (taxState != null ? !taxState.equals(that.taxState) : that.taxState != null) return false;
-        if (nominalRate != null ? !nominalRate.equals(that.nominalRate) : that.nominalRate != null) return false;
+        if (coupon != null ? !coupon.equals(that.coupon) : that.coupon != null) return false;
         if (advanceRedeemDate != null ? !advanceRedeemDate.equals(that.advanceRedeemDate) : that.advanceRedeemDate != null)
             return false;
         if (advanceRedeemInterestDate != null ? !advanceRedeemInterestDate.equals(that.advanceRedeemInterestDate) : that.advanceRedeemInterestDate != null)
             return false;
         if (state != null ? !state.equals(that.state) : that.state != null) return false;
+        if (adjustYearlyRate != null ? !adjustYearlyRate.equals(that.adjustYearlyRate) : that.adjustYearlyRate != null)
+            return false;
 
         return true;
     }
@@ -447,38 +457,39 @@ public class ProductBond {
     public int hashCode() {
         int result = id;
         result = 31 * result + (title != null ? title.hashCode() : 0);
-        result = 31 * result + (institution != null ? institution.hashCode() : 0);
+        result = 31 * result + (institutionIssue != null ? institutionIssue.hashCode() : 0);
         result = 31 * result + (productCode != null ? productCode.hashCode() : 0);
-        result = 31 * result + (abbreviation != null ? abbreviation.hashCode() : 0);
-        result = 31 * result + (onSaleDate != null ? onSaleDate.hashCode() : 0);
-        result = 31 * result + (offSaleDate != null ? offSaleDate.hashCode() : 0);
-        result = 31 * result + (startInterestDate != null ? startInterestDate.hashCode() : 0);
-        result = 31 * result + (dateLimit != null ? dateLimit.hashCode() : 0);
+        result = 31 * result + (abbrName != null ? abbrName.hashCode() : 0);
+        result = 31 * result + (onIssueDate != null ? onIssueDate.hashCode() : 0);
+        result = 31 * result + (offIssueDate != null ? offIssueDate.hashCode() : 0);
+        result = 31 * result + (firstAccrDate != null ? firstAccrDate.hashCode() : 0);
+        result = 31 * result + (length != null ? length.hashCode() : 0);
         result = 31 * result + (releaseAmount != null ? releaseAmount.hashCode() : 0);
-        result = 31 * result + (releaseDate != null ? releaseDate.hashCode() : 0);
-        result = 31 * result + (whereIntoMarket != null ? whereIntoMarket.hashCode() : 0);
+        result = 31 * result + (publishDate != null ? publishDate.hashCode() : 0);
+        result = 31 * result + (exchange != null ? exchange.hashCode() : 0);
         result = 31 * result + (creditGrade != null ? creditGrade.hashCode() : 0);
         result = 31 * result + (institutionUnderwriter != null ? institutionUnderwriter.hashCode() : 0);
         result = 31 * result + (type != null ? type.hashCode() : 0);
         result = 31 * result + (denomination != null ? denomination.hashCode() : 0);
-        result = 31 * result + (releasePrice != null ? releasePrice.hashCode() : 0);
+        result = 31 * result + (issuePrice != null ? issuePrice.hashCode() : 0);
         result = 31 * result + (currenctValue != null ? currenctValue.hashCode() : 0);
         result = 31 * result + (yearRate != null ? yearRate.hashCode() : 0);
         result = 31 * result + (releaseObject != null ? releaseObject.hashCode() : 0);
-        result = 31 * result + (interestCalculate != null ? interestCalculate.hashCode() : 0);
-        result = 31 * result + (paymentFrequency != null ? paymentFrequency.hashCode() : 0);
-        result = 31 * result + (dueDate != null ? dueDate.hashCode() : 0);
-        result = 31 * result + (onCurrencyDate != null ? onCurrencyDate.hashCode() : 0);
+        result = 31 * result + (couponType != null ? couponType.hashCode() : 0);
+        result = 31 * result + (couponFreq != null ? couponFreq.hashCode() : 0);
+        result = 31 * result + (maturityDate != null ? maturityDate.hashCode() : 0);
+        result = 31 * result + (listDate != null ? listDate.hashCode() : 0);
         result = 31 * result + (paymentPrice != null ? paymentPrice.hashCode() : 0);
         result = 31 * result + (objectApplyBuy != null ? objectApplyBuy.hashCode() : 0);
         result = 31 * result + (riskGrade != null ? riskGrade.hashCode() : 0);
         result = 31 * result + (releaseWay != null ? releaseWay.hashCode() : 0);
         result = 31 * result + (objectOriented != null ? objectOriented.hashCode() : 0);
         result = 31 * result + (taxState != null ? taxState.hashCode() : 0);
-        result = 31 * result + (nominalRate != null ? nominalRate.hashCode() : 0);
+        result = 31 * result + (coupon != null ? coupon.hashCode() : 0);
         result = 31 * result + (advanceRedeemDate != null ? advanceRedeemDate.hashCode() : 0);
         result = 31 * result + (advanceRedeemInterestDate != null ? advanceRedeemInterestDate.hashCode() : 0);
         result = 31 * result + (state != null ? state.hashCode() : 0);
+        result = 31 * result + (adjustYearlyRate != null ? adjustYearlyRate.hashCode() : 0);
         return result;
     }
 }

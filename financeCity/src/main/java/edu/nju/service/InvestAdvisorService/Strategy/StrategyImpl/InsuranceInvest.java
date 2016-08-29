@@ -3,13 +3,10 @@ package edu.nju.service.InvestAdvisorService.Strategy.StrategyImpl;
 import edu.nju.model.ProductInsurance;
 import edu.nju.model.UserTemperPrefer;
 import edu.nju.service.CategoryAndProduct.Product;
-import edu.nju.service.Exceptions.MissRequiredInfoException;
 import edu.nju.service.POJO.InvestResult;
-import edu.nju.service.CategoryAndProduct.Category;
 import edu.nju.service.SearchService.SearchService;
 import edu.nju.service.TradeService.TradeItem;
 import edu.nju.service.Utils.TimeTransformation;
-import edu.nju.service.Utils.UnitTransformation;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -51,12 +48,12 @@ public class InsuranceInvest implements CategoryInvest {
             productList = expectationSortor.sortByShortTermExp();
             if (timeLimit == 5) {
                 productList = productList.stream().
-                        filter(product -> (((ProductInsurance)product.getProduct()).getDateLimit() == 5)).
+                        filter(product -> (((ProductInsurance)product.getProduct()).getWarrantyPeriod() == 5)).
                         collect(Collectors.toCollection(ArrayList::new));
             }
             else if(timeLimit == 10) {
                 productList = productList.stream().
-                        filter(product -> (((ProductInsurance)product.getProduct()).getDateLimit() == 10)).
+                        filter(product -> (((ProductInsurance)product.getProduct()).getWarrantyPeriod() == 10)).
                         collect(Collectors.toCollection(ArrayList::new));
             }
         }
@@ -67,12 +64,12 @@ public class InsuranceInvest implements CategoryInvest {
             productList = expectationSortor.sortByLongTermExp();
             if (timeLimit == 15) {
                 productList = productList.stream().
-                        filter(product -> (((ProductInsurance)product.getProduct()).getDateLimit() == 15)).
+                        filter(product -> (((ProductInsurance)product.getProduct()).getWarrantyPeriod() == 15)).
                         collect(Collectors.toCollection(ArrayList::new));
             }
             else if(timeLimit == 20) {
                 productList = productList.stream().
-                        filter(product -> (((ProductInsurance)product.getProduct()).getDateLimit() == 20)).
+                        filter(product -> (((ProductInsurance)product.getProduct()).getWarrantyPeriod() == 20)).
                         collect(Collectors.toCollection(ArrayList::new));
             }
         }

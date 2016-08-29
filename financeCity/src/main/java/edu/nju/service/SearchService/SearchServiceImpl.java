@@ -6,10 +6,10 @@ import edu.nju.model.UserTemperPrefer;
 import edu.nju.service.BaseService.BaseFunctionServiceAdaptor;
 import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.CategoryAndProduct.ProductFactory;
-import edu.nju.service.Exceptions.NoSuchProductException;
+import edu.nju.service.ExceptionsAndError.NoSuchProductException;
 import edu.nju.service.CategoryAndProduct.Category;
 import edu.nju.service.CategoryAndProduct.ProductCategoryManager;
-import edu.nju.service.Exceptions.NotLoginException;
+import edu.nju.service.ExceptionsAndError.NotLoginException;
 import edu.nju.vo.*;
 import org.springframework.stereotype.Service;
 
@@ -88,17 +88,17 @@ public class SearchServiceImpl extends BaseFunctionServiceAdaptor implements Sea
     }
 
     @Override
-    public HistoryDataVO getHistoryDataVO(Long productId) {
+    public HistoryDataVO getHistoryDataVO(Integer productId) {
         return null;
     }
 
     @Override
-    public ProductDetailVO getProductDetailVO(Long productID) {
+    public ProductDetailVO getProductDetailVO(Integer productID) {
         return null;
     }
 
     @Override
-    public ProjectVO getProjectVO(Long projectID) {
+    public ProjectVO getProjectVO(Integer projectID) {
         return null;
     }
 
@@ -199,6 +199,17 @@ public class SearchServiceImpl extends BaseFunctionServiceAdaptor implements Sea
         catch (NotLoginException n) {
             n.printStackTrace();
             return null;
+        }
+    }
+
+    @Override
+    public String getProductName(Integer productId) {
+        List list = getUserService().getCommonDao().find("SELECT name FROM NameToId nti WHERE nti.id=" + productId);
+        if (list == null || list.size() == 0) {
+            return null;
+        }
+        else {
+            return (String)list.get(0);
         }
     }
 }

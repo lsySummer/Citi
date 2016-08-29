@@ -2,17 +2,16 @@ package edu.nju.model;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 
 /**
- * Created by Sun YuHao on 2016/8/21.
+ * Created by Sun YuHao on 2016/8/28.
  */
 @Entity
 @Table(name = "product_insurance", schema = "citi", catalog = "")
 public class ProductInsurance {
     private int id;
-    private String title;
-    private Long institution;
+    private String name;
+    private Long institutionManage;
     private String riskDesctiption;
     private Integer warrantyPeriod;
     private Integer denomination;
@@ -20,14 +19,11 @@ public class ProductInsurance {
     private Integer indemnity;
     private BigDecimal dayRate;
     private BigDecimal yearRate;
-    private Integer dateLimit;
+    private Integer length;
     private Byte payType;
-    private Timestamp dayBuy;
-    private Timestamp dayDue;
     private BigDecimal expectedRate;
     private BigDecimal guaranteedRate;
     private Integer productPeriod;
-    private String abbreviation;
 
     @Id
     @Column(name = "id")
@@ -40,23 +36,23 @@ public class ProductInsurance {
     }
 
     @Basic
-    @Column(name = "title")
-    public String getTitle() {
-        return title;
+    @Column(name = "name")
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Basic
-    @Column(name = "institution")
-    public Long getInstitution() {
-        return institution;
+    @Column(name = "institution_manage")
+    public Long getInstitutionManage() {
+        return institutionManage;
     }
 
-    public void setInstitution(Long institution) {
-        this.institution = institution;
+    public void setInstitutionManage(Long institutionManage) {
+        this.institutionManage = institutionManage;
     }
 
     @Basic
@@ -130,13 +126,13 @@ public class ProductInsurance {
     }
 
     @Basic
-    @Column(name = "date_limit")
-    public Integer getDateLimit() {
-        return dateLimit;
+    @Column(name = "length")
+    public Integer getLength() {
+        return length;
     }
 
-    public void setDateLimit(Integer dateLimit) {
-        this.dateLimit = dateLimit;
+    public void setLength(Integer length) {
+        this.length = length;
     }
 
     @Basic
@@ -147,26 +143,6 @@ public class ProductInsurance {
 
     public void setPayType(Byte payType) {
         this.payType = payType;
-    }
-
-    @Basic
-    @Column(name = "day_buy")
-    public Timestamp getDayBuy() {
-        return dayBuy;
-    }
-
-    public void setDayBuy(Timestamp dayBuy) {
-        this.dayBuy = dayBuy;
-    }
-
-    @Basic
-    @Column(name = "day_due")
-    public Timestamp getDayDue() {
-        return dayDue;
-    }
-
-    public void setDayDue(Timestamp dayDue) {
-        this.dayDue = dayDue;
     }
 
     @Basic
@@ -199,16 +175,6 @@ public class ProductInsurance {
         this.productPeriod = productPeriod;
     }
 
-    @Basic
-    @Column(name = "abbreviation")
-    public String getAbbreviation() {
-        return abbreviation;
-    }
-
-    public void setAbbreviation(String abbreviation) {
-        this.abbreviation = abbreviation;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -217,8 +183,9 @@ public class ProductInsurance {
         ProductInsurance that = (ProductInsurance) o;
 
         if (id != that.id) return false;
-        if (title != null ? !title.equals(that.title) : that.title != null) return false;
-        if (institution != null ? !institution.equals(that.institution) : that.institution != null) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (institutionManage != null ? !institutionManage.equals(that.institutionManage) : that.institutionManage != null)
+            return false;
         if (riskDesctiption != null ? !riskDesctiption.equals(that.riskDesctiption) : that.riskDesctiption != null)
             return false;
         if (warrantyPeriod != null ? !warrantyPeriod.equals(that.warrantyPeriod) : that.warrantyPeriod != null)
@@ -229,16 +196,13 @@ public class ProductInsurance {
         if (indemnity != null ? !indemnity.equals(that.indemnity) : that.indemnity != null) return false;
         if (dayRate != null ? !dayRate.equals(that.dayRate) : that.dayRate != null) return false;
         if (yearRate != null ? !yearRate.equals(that.yearRate) : that.yearRate != null) return false;
-        if (dateLimit != null ? !dateLimit.equals(that.dateLimit) : that.dateLimit != null) return false;
+        if (length != null ? !length.equals(that.length) : that.length != null) return false;
         if (payType != null ? !payType.equals(that.payType) : that.payType != null) return false;
-        if (dayBuy != null ? !dayBuy.equals(that.dayBuy) : that.dayBuy != null) return false;
-        if (dayDue != null ? !dayDue.equals(that.dayDue) : that.dayDue != null) return false;
         if (expectedRate != null ? !expectedRate.equals(that.expectedRate) : that.expectedRate != null) return false;
         if (guaranteedRate != null ? !guaranteedRate.equals(that.guaranteedRate) : that.guaranteedRate != null)
             return false;
         if (productPeriod != null ? !productPeriod.equals(that.productPeriod) : that.productPeriod != null)
             return false;
-        if (abbreviation != null ? !abbreviation.equals(that.abbreviation) : that.abbreviation != null) return false;
 
         return true;
     }
@@ -246,8 +210,8 @@ public class ProductInsurance {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (title != null ? title.hashCode() : 0);
-        result = 31 * result + (institution != null ? institution.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (institutionManage != null ? institutionManage.hashCode() : 0);
         result = 31 * result + (riskDesctiption != null ? riskDesctiption.hashCode() : 0);
         result = 31 * result + (warrantyPeriod != null ? warrantyPeriod.hashCode() : 0);
         result = 31 * result + (denomination != null ? denomination.hashCode() : 0);
@@ -255,14 +219,11 @@ public class ProductInsurance {
         result = 31 * result + (indemnity != null ? indemnity.hashCode() : 0);
         result = 31 * result + (dayRate != null ? dayRate.hashCode() : 0);
         result = 31 * result + (yearRate != null ? yearRate.hashCode() : 0);
-        result = 31 * result + (dateLimit != null ? dateLimit.hashCode() : 0);
+        result = 31 * result + (length != null ? length.hashCode() : 0);
         result = 31 * result + (payType != null ? payType.hashCode() : 0);
-        result = 31 * result + (dayBuy != null ? dayBuy.hashCode() : 0);
-        result = 31 * result + (dayDue != null ? dayDue.hashCode() : 0);
         result = 31 * result + (expectedRate != null ? expectedRate.hashCode() : 0);
         result = 31 * result + (guaranteedRate != null ? guaranteedRate.hashCode() : 0);
         result = 31 * result + (productPeriod != null ? productPeriod.hashCode() : 0);
-        result = 31 * result + (abbreviation != null ? abbreviation.hashCode() : 0);
         return result;
     }
 }

@@ -3,6 +3,7 @@ package edu.nju.service.CategoryAndProduct;
 import edu.nju.model.ProductBank;
 import edu.nju.model.ProductBond;
 import edu.nju.model.ProductFund;
+import org.python.antlr.ast.Str;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
@@ -18,6 +19,7 @@ public class ProductCategoryManager {
     static public final String categoryBond = "Bond";
     static public final String categoryInsurance = "Insurance";
     static public final String categoryBank = "Bank";
+    static public final int categoryNum = 13;
     static private List<Category> categoryList;
     static private final int serialNumberSize = 10000000;
     static private final String[] bondTypes = {
@@ -121,7 +123,7 @@ public class ProductCategoryManager {
         }
 
         ProductBond productBond = (ProductBond) product.getProduct();
-        return bondInterestType[productBond.getInterestCalculate()];
+        return bondInterestType[productBond.getCouponType()];
     }
 
     static public String getBondType(ProductBond productBond) {
@@ -129,7 +131,7 @@ public class ProductCategoryManager {
     }
 
     static public String getBondInterestType(ProductBond productBond) {
-        return bondInterestType[productBond.getInterestCalculate()];
+        return bondInterestType[productBond.getCouponType()];
     }
 
     static public String getUnit(String category) {
@@ -175,6 +177,23 @@ public class ProductCategoryManager {
             }
         }
 
+        return null;
+    }
+
+    static public boolean subCategoryOf(Category category1, String category2) {
+        return category1.getCategoryName().endsWith(category2) && !(category1.equals(category2));
+    }
+
+    static public boolean subCategoryOf(Category category1, Category category2) {
+        return category1.getCategoryName().endsWith(category2.getCategoryName()) && !category1.equals(category2);
+    }
+
+    static public boolean belongTo(String category1, String category2) {
+        return category1.endsWith(category2);
+    }
+
+    //TODO:set chinese name
+    static public String getChineseName(String category) {
         return null;
     }
 }

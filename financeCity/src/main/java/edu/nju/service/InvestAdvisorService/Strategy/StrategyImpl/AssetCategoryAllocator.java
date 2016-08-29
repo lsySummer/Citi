@@ -1,5 +1,6 @@
 package edu.nju.service.InvestAdvisorService.Strategy.StrategyImpl;
 
+import edu.nju.model.UserTemperPrefer;
 import edu.nju.service.POJO.AssetCategoryAllocation;
 import edu.nju.service.SearchService.SearchService;
 
@@ -11,9 +12,9 @@ import java.util.Map;
 public interface AssetCategoryAllocator {
     /**
      * create allocation
-     * @param param .
+     * @param userInfo , .
      */
-    void createAllocation(Map<String, Object> param, SearchService searchService);
+    void createAllocation(UserTemperPrefer userInfo, SearchService searchService);
 
     /**
      * get category allocation

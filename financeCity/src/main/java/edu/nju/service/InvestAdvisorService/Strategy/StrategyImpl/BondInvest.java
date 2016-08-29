@@ -3,10 +3,8 @@ package edu.nju.service.InvestAdvisorService.Strategy.StrategyImpl;
 import edu.nju.model.ProductBond;
 import edu.nju.model.UserTemperPrefer;
 import edu.nju.service.CategoryAndProduct.Product;
-import edu.nju.service.Exceptions.MissRequiredInfoException;
 import edu.nju.service.POJO.AmountAndLeft;
 import edu.nju.service.POJO.InvestResult;
-import edu.nju.service.CategoryAndProduct.Category;
 import edu.nju.service.CategoryAndProduct.ProductCategoryManager;
 import edu.nju.service.SearchService.SearchService;
 import edu.nju.service.TradeService.TradeItem;
@@ -158,11 +156,11 @@ public class BondInvest implements CategoryInvest{
     private double calcuInterestCurrentValue(ProductBond productBond, double interestRatio) {
         boolean ifPayInterest = ProductCategoryManager.getBondInterestType(productBond).equals("附息债");
         boolean ifZeroInterest = ProductCategoryManager.getBondInterestType(productBond).equals("零息债");
-        int payFrequency = productBond.getPaymentFrequency();
-        double yearRate = productBond.getNominalRate();
+        int payFrequency = productBond.getCouponFreq();
+        double yearRate = productBond.getAdjustYearlyRate().doubleValue();
         double faceValue = productBond.getDenomination().doubleValue();
-        double issuePrice = productBond.getReleasePrice().doubleValue();
-        int investTime = productBond.getDateLimit();
+        double issuePrice = productBond.getIssuePrice().doubleValue();
+        int investTime = productBond.getLength();
 
         if (ifPayInterest) {
             if (payFrequency == 1) {

@@ -1,10 +1,13 @@
 package edu.nju.service.AssetManagementService;
 
 import java.util.List;
+
+import edu.nju.service.ExceptionsAndError.NotLoginException;
 import edu.nju.service.POJO.*;
 import edu.nju.service.BaseService.BaseService;
-import edu.nju.vo.InvestProductVO;
-import edu.nju.vo.TimeLineVO;
+import edu.nju.service.SearchService.SearchService;
+import edu.nju.vo.CurrentInvestmentVO;
+import edu.nju.vo.TradeHistoryListVO;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,7 +20,7 @@ public interface AssetManagementService extends BaseService{
      * get InvestProductVOList
      * @return investProduct
      */
-    List<InvestProductVO> getInvestProductVOList();
+    CurrentInvestmentVO getInvestProductVOList() throws NotLoginException;
 
     /**
      * get events in chronological order
@@ -25,5 +28,7 @@ public interface AssetManagementService extends BaseService{
      */
     List<Event> getEvents();
 
-    TimeLineVO getTimeLineVO();
+    void bindSearchService(SearchService searchService);
+
+    TradeHistoryListVO getTradeHistory() throws NotLoginException;
 }

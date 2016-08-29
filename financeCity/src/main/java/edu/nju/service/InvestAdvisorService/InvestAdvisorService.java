@@ -2,8 +2,8 @@ package edu.nju.service.InvestAdvisorService;
 
 import edu.nju.model.UserTemperPrefer;
 import edu.nju.service.BaseService.BaseService;
-import edu.nju.service.Exceptions.NotAllConfigurationSetException;
-import edu.nju.service.Exceptions.NotLoginException;
+import edu.nju.service.ExceptionsAndError.NotAllConfigurationSetException;
+import edu.nju.service.ExceptionsAndError.NotLoginException;
 import edu.nju.service.POJO.InvestResult;
 import edu.nju.service.SearchService.SearchService;
 import edu.nju.vo.FamilySpendingVO;

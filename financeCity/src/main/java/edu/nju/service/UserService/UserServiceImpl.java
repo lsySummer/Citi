@@ -2,14 +2,13 @@ package edu.nju.service.UserService;
 
 import edu.nju.dao.BaseDao;
 import edu.nju.dao.UserDao;
-import edu.nju.dao.impl.BaseDaoImpl;
 import edu.nju.dao.impl.CommonDao;
 import edu.nju.model.User;
 import edu.nju.model.UserLogin;
 import edu.nju.service.BaseService.BaseServiceAdaptor;
-import edu.nju.service.Exceptions.NotLoginException;
+import edu.nju.service.ExceptionsAndError.ErrorManager;
+import edu.nju.service.ExceptionsAndError.NotLoginException;
 import edu.nju.service.POJO.RegisterInfo;
-import edu.nju.service.POJO.UserInfo;
 import edu.nju.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -99,33 +98,35 @@ public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
     }
 
     @Override
-    public boolean modifyUserInfo(UserVO userVO) {
+    public UserVO getUserVO() throws NotLoginException{
+        UserVO userVO = new UserVO();
+
         try {
-            List list = getUserDao().find("FROM User user WHERE user.id=" + ID);
-            if (list == null || list.size() == 0) {
-                return false;
-            }
+            List list = DAO.find("FROM User u WHERE u.id=" + getID());
+            User user = (User) list.get(0);
 
-            User user = (User)list.get(0);
+            userVO.setIfCity(user.getIfCity() == 1);
+            userVO.setName(user.getName());
+            userVO.setBirthday(user.getBirthday().toString());
+            userVO.setCityName(user.getCity());
+            userVO.setMonthlyExpense(user.getMonthlyExpense());
+            userVO.setError(ErrorManager.errorNormal);
+            userVO.setMessage(ErrorManager.getDescreption(ErrorManager.errorNormal));
 
-            if (validPassword(userVO.getPassword())) {
-                user.setPassword(userVO.getPassword());
-            }
-            user.setEmail(userVO.getEmail());
-            user.setSecureAnswer(userVO.getAnswer());
-            user.setPhone(userVO.getPhone());
-            user.setUpdateAt(new Timestamp(System.currentTimeMillis()));
-            //TODO:set account
-            user.setAccount("");
-            //TODO:set chosen question
-            user.setChoosedQuestions(0);
-
-            return true;
+            return userVO;
         }
-        catch (NotLoginException n) {
-            n.printStackTrace();
-            return false;
+        catch (NotLoginException e) {
+            userVO.setError(ErrorManager.errorNotLogin);
+            userVO.setMessage(ErrorManager.getDescreption(ErrorManager.errorNotLogin));
+            e.printStackTrace();
+            throw e;
         }
+    }
+
+    //TODO:...
+    @Override
+    public boolean modifyUserInfo(UserVO userVO) {
+        return false;
     }
 
     @Override

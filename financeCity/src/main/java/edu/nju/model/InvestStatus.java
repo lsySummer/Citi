@@ -2,67 +2,79 @@ package edu.nju.model;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 
 /**
- * Created by Sun YuHao on 2016/8/17.
+ * Created by Sun YuHao on 2016/8/28.
  */
 @Entity
 @Table(name = "invest_status", schema = "citi", catalog = "")
 public class InvestStatus {
-    private long userId;
-    private Integer investmentAmount;
-    private BigDecimal initialPrice;
-    private BigDecimal currentPrice;
-    private BigDecimal futurePrice;
+    private int userId;
+    private Integer amount;
+    private BigDecimal buyingPrice;
+    private int productId;
+    private BigDecimal totalValue;
+    private Timestamp date;
 
     @Id
     @Column(name = "user_id")
-    public long getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
     @Basic
-    @Column(name = "investment_amount")
-    public Integer getInvestmentAmount() {
-        return investmentAmount;
+    @Column(name = "amount")
+    public Integer getAmount() {
+        return amount;
     }
 
-    public void setInvestmentAmount(Integer investmentAmount) {
-        this.investmentAmount = investmentAmount;
-    }
-
-    @Basic
-    @Column(name = "initial_price")
-    public BigDecimal getInitialPrice() {
-        return initialPrice;
-    }
-
-    public void setInitialPrice(BigDecimal initialPrice) {
-        this.initialPrice = initialPrice;
+    public void setAmount(Integer amount) {
+        this.amount = amount;
     }
 
     @Basic
-    @Column(name = "current_price")
-    public BigDecimal getCurrentPrice() {
-        return currentPrice;
+    @Column(name = "buying_price")
+    public BigDecimal getBuyingPrice() {
+        return buyingPrice;
     }
 
-    public void setCurrentPrice(BigDecimal currentPrice) {
-        this.currentPrice = currentPrice;
+    public void setBuyingPrice(BigDecimal buyingPrice) {
+        this.buyingPrice = buyingPrice;
     }
 
     @Basic
-    @Column(name = "future_price")
-    public BigDecimal getFuturePrice() {
-        return futurePrice;
+    @Column(name = "product_id")
+    public int getProductId() {
+        return productId;
     }
 
-    public void setFuturePrice(BigDecimal futurePrice) {
-        this.futurePrice = futurePrice;
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
+
+    @Basic
+    @Column(name = "total_value")
+    public BigDecimal getTotalValue() {
+        return totalValue;
+    }
+
+    public void setTotalValue(BigDecimal totalValue) {
+        this.totalValue = totalValue;
+    }
+
+    @Basic
+    @Column(name = "date")
+    public Timestamp getDate() {
+        return date;
+    }
+
+    public void setDate(Timestamp date) {
+        this.date = date;
     }
 
     @Override
@@ -73,22 +85,23 @@ public class InvestStatus {
         InvestStatus that = (InvestStatus) o;
 
         if (userId != that.userId) return false;
-        if (investmentAmount != null ? !investmentAmount.equals(that.investmentAmount) : that.investmentAmount != null)
-            return false;
-        if (initialPrice != null ? !initialPrice.equals(that.initialPrice) : that.initialPrice != null) return false;
-        if (currentPrice != null ? !currentPrice.equals(that.currentPrice) : that.currentPrice != null) return false;
-        if (futurePrice != null ? !futurePrice.equals(that.futurePrice) : that.futurePrice != null) return false;
+        if (productId != that.productId) return false;
+        if (amount != null ? !amount.equals(that.amount) : that.amount != null) return false;
+        if (buyingPrice != null ? !buyingPrice.equals(that.buyingPrice) : that.buyingPrice != null) return false;
+        if (totalValue != null ? !totalValue.equals(that.totalValue) : that.totalValue != null) return false;
+        if (date != null ? !date.equals(that.date) : that.date != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (userId ^ (userId >>> 32));
-        result = 31 * result + (investmentAmount != null ? investmentAmount.hashCode() : 0);
-        result = 31 * result + (initialPrice != null ? initialPrice.hashCode() : 0);
-        result = 31 * result + (currentPrice != null ? currentPrice.hashCode() : 0);
-        result = 31 * result + (futurePrice != null ? futurePrice.hashCode() : 0);
+        int result = userId;
+        result = 31 * result + (amount != null ? amount.hashCode() : 0);
+        result = 31 * result + (buyingPrice != null ? buyingPrice.hashCode() : 0);
+        result = 31 * result + productId;
+        result = 31 * result + (totalValue != null ? totalValue.hashCode() : 0);
+        result = 31 * result + (date != null ? date.hashCode() : 0);
         return result;
     }
 }

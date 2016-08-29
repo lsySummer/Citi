@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
- * Created by Sun YuHao on 2016/8/25.
+ * Created by Sun YuHao on 2016/8/28.
  */
 @Entity
 @Table(name = "product_fund", schema = "citi", catalog = "")
@@ -43,7 +43,6 @@ public class ProductFund {
     private BigDecimal adjustNav;
     private BigDecimal accumNav;
     private Byte operationMode;
-    private BigDecimal monthRate;
     private BigDecimal assetLiabilityRatio;
     private BigDecimal institutionNetworthRatio;
     private BigDecimal stockBondProportion;
@@ -380,16 +379,6 @@ public class ProductFund {
     }
 
     @Basic
-    @Column(name = "month_rate")
-    public BigDecimal getMonthRate() {
-        return monthRate;
-    }
-
-    public void setMonthRate(BigDecimal monthRate) {
-        this.monthRate = monthRate;
-    }
-
-    @Basic
     @Column(name = "asset_liability_ratio")
     public BigDecimal getAssetLiabilityRatio() {
         return assetLiabilityRatio;
@@ -483,7 +472,6 @@ public class ProductFund {
         if (accumNav != null ? !accumNav.equals(that.accumNav) : that.accumNav != null) return false;
         if (operationMode != null ? !operationMode.equals(that.operationMode) : that.operationMode != null)
             return false;
-        if (monthRate != null ? !monthRate.equals(that.monthRate) : that.monthRate != null) return false;
         if (assetLiabilityRatio != null ? !assetLiabilityRatio.equals(that.assetLiabilityRatio) : that.assetLiabilityRatio != null)
             return false;
         if (institutionNetworthRatio != null ? !institutionNetworthRatio.equals(that.institutionNetworthRatio) : that.institutionNetworthRatio != null)
@@ -530,7 +518,6 @@ public class ProductFund {
         result = 31 * result + (adjustNav != null ? adjustNav.hashCode() : 0);
         result = 31 * result + (accumNav != null ? accumNav.hashCode() : 0);
         result = 31 * result + (operationMode != null ? operationMode.hashCode() : 0);
-        result = 31 * result + (monthRate != null ? monthRate.hashCode() : 0);
         result = 31 * result + (assetLiabilityRatio != null ? assetLiabilityRatio.hashCode() : 0);
         result = 31 * result + (institutionNetworthRatio != null ? institutionNetworthRatio.hashCode() : 0);
         result = 31 * result + (stockBondProportion != null ? stockBondProportion.hashCode() : 0);

@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import java.sql.Timestamp;
 
 /**
- * Created by Sun YuHao on 2016/8/27.
+ * Created by Sun YuHao on 2016/8/29.
  */
 @Entity
 public class User {
@@ -19,14 +19,14 @@ public class User {
     private String password;
     private String phone;
     private String secureAnswer;
-    private Byte state;
+    private Integer state;
     private Timestamp updateAt;
     private String username;
-    private String city;
+    private String name;
     private Byte ifCity;
+    private String city;
     private Timestamp birthday;
     private Integer monthlyExpense;
-    private Integer monothlySalary;
 
     @Id
     @Column(name = "id")
@@ -110,11 +110,11 @@ public class User {
 
     @Basic
     @Column(name = "state")
-    public Byte getState() {
+    public Integer getState() {
         return state;
     }
 
-    public void setState(Byte state) {
+    public void setState(Integer state) {
         this.state = state;
     }
 
@@ -139,13 +139,13 @@ public class User {
     }
 
     @Basic
-    @Column(name = "city")
-    public String getCity() {
-        return city;
+    @Column(name = "name")
+    public String getName() {
+        return name;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Basic
@@ -156,6 +156,16 @@ public class User {
 
     public void setIfCity(Byte ifCity) {
         this.ifCity = ifCity;
+    }
+
+    @Basic
+    @Column(name = "city")
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     @Basic
@@ -178,16 +188,6 @@ public class User {
         this.monthlyExpense = monthlyExpense;
     }
 
-    @Basic
-    @Column(name = "monothly_salary")
-    public Integer getMonothlySalary() {
-        return monothlySalary;
-    }
-
-    public void setMonothlySalary(Integer monothlySalary) {
-        this.monothlySalary = monothlySalary;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -207,12 +207,11 @@ public class User {
         if (state != null ? !state.equals(user.state) : user.state != null) return false;
         if (updateAt != null ? !updateAt.equals(user.updateAt) : user.updateAt != null) return false;
         if (username != null ? !username.equals(user.username) : user.username != null) return false;
-        if (city != null ? !city.equals(user.city) : user.city != null) return false;
+        if (name != null ? !name.equals(user.name) : user.name != null) return false;
         if (ifCity != null ? !ifCity.equals(user.ifCity) : user.ifCity != null) return false;
+        if (city != null ? !city.equals(user.city) : user.city != null) return false;
         if (birthday != null ? !birthday.equals(user.birthday) : user.birthday != null) return false;
         if (monthlyExpense != null ? !monthlyExpense.equals(user.monthlyExpense) : user.monthlyExpense != null)
-            return false;
-        if (monothlySalary != null ? !monothlySalary.equals(user.monothlySalary) : user.monothlySalary != null)
             return false;
 
         return true;
@@ -231,11 +230,11 @@ public class User {
         result = 31 * result + (state != null ? state.hashCode() : 0);
         result = 31 * result + (updateAt != null ? updateAt.hashCode() : 0);
         result = 31 * result + (username != null ? username.hashCode() : 0);
-        result = 31 * result + (city != null ? city.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (ifCity != null ? ifCity.hashCode() : 0);
+        result = 31 * result + (city != null ? city.hashCode() : 0);
         result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
         result = 31 * result + (monthlyExpense != null ? monthlyExpense.hashCode() : 0);
-        result = 31 * result + (monothlySalary != null ? monothlySalary.hashCode() : 0);
         return result;
     }
 }

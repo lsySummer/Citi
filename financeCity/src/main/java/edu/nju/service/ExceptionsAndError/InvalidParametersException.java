@@ -1,4 +1,4 @@
-package edu.nju.service.Exceptions;
+package edu.nju.service.ExceptionsAndError;
 
 /**
  * Created by Sun YuHao on 2016/8/18.

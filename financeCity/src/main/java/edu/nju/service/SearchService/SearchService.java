@@ -5,8 +5,7 @@ import edu.nju.model.User;
 import edu.nju.model.UserTemperPrefer;
 import edu.nju.service.BaseService.BaseService;
 import edu.nju.service.CategoryAndProduct.Product;
-import edu.nju.service.Exceptions.NoSuchProductException;
-import edu.nju.service.CategoryAndProduct.Category;
+import edu.nju.service.ExceptionsAndError.NoSuchProductException;
 import edu.nju.vo.*;
 import org.springframework.stereotype.Service;
 
@@ -69,21 +68,21 @@ public interface SearchService extends BaseService{
      * @param productId .
      * @return history data
      */
-    HistoryDataVO getHistoryDataVO(Long productId);
+    HistoryDataVO getHistoryDataVO(Integer productId);
 
     /**
      * get product detail
      * @param productID .
      * @return product detail
      */
-    ProductDetailVO getProductDetailVO(Long productID);
+    ProductDetailVO getProductDetailVO(Integer productID);
 
     /**
      * get project
      * @param projectID .
      * @return project
      */
-    ProjectVO getProjectVO(Long projectID);
+    ProjectVO getProjectVO(Integer projectID);
 
     /**
      * search some object by min word
@@ -110,4 +109,6 @@ public interface SearchService extends BaseService{
      * @return user prefer
      */
     UserTemperPrefer getUserTemperPrefer();
+
+    String getProductName(Integer productId);
 }

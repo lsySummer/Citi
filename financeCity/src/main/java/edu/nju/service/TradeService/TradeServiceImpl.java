@@ -2,7 +2,7 @@ package edu.nju.service.TradeService;
 
 import edu.nju.model.UnpaidItem;
 import edu.nju.service.BaseService.BaseFunctionServiceAdaptor;
-import edu.nju.service.Exceptions.NotLoginException;
+import edu.nju.service.ExceptionsAndError.NotLoginException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;

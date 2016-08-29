@@ -25,7 +25,7 @@ public class InvestStrategyImpl implements InvestStrategy {
 
     @Override
     public InvestResult createInvestmentPortfolio(UserTemperPrefer preference, SearchService searchService) {
-        assetCategoryAllocator.createAllocation(null, searchService);
+        assetCategoryAllocator.createAllocation(preference, searchService);
 
         InvestResult investResult = new InvestResult();
 

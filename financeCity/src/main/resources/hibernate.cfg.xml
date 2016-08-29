@@ -9,23 +9,23 @@
     <mapping class="edu.nju.model.DeletedCommodity"/>
     <mapping class="edu.nju.model.DeletedProduct"/>
       <mapping class="edu.nju.model.InvestHistory"/>
-    <mapping class="edu.nju.model.InvestStatus"/>
-    <mapping class="edu.nju.model.MarketStatus"/>
+      <mapping class="edu.nju.model.MarketStatus"/>
     <mapping class="edu.nju.model.NameToId"/>
       <mapping class="edu.nju.model.PushCache"/>
     <mapping class="edu.nju.model.UserAsset"/>
     <mapping class="edu.nju.model.UserLogin"/>
-    <mapping class="edu.nju.model.TradeHistory"/>
-      <mapping class="edu.nju.model.ProductBank"/>
-    <mapping class="edu.nju.model.ProductBond"/>
-      <mapping class="edu.nju.model.ProductInsurance"/>
-    <mapping class="edu.nju.model.ProductFund"/>
-    <mapping class="edu.nju.model.History"/>
+      <mapping class="edu.nju.model.History"/>
       <mapping class="edu.nju.model.Institution"/>
     <mapping class="edu.nju.model.CategoryIndex"/>
     <mapping class="edu.nju.model.UnpaidItem"/>
+      <mapping class="edu.nju.model.UserTemperPrefer"/>
+    <mapping class="edu.nju.model.ProductBond"/>
+    <mapping class="edu.nju.model.ProductFund"/>
+    <mapping class="edu.nju.model.ProductBank"/>
+    <mapping class="edu.nju.model.ProductInsurance"/>
+    <mapping class="edu.nju.model.InvestStatus"/>
     <mapping class="edu.nju.model.User"/>
-    <mapping class="edu.nju.model.UserTemperPrefer"/>
+    <mapping class="edu.nju.model.TradeHistory"/>
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hbm2ddl.auto">update</property> -->
   </session-factory>
