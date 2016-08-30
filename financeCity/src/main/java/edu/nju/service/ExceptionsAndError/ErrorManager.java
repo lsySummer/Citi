@@ -16,7 +16,7 @@ public class ErrorManager {
         errorDescreption = new String[] {
                 "Normal",
                 "Not Login",
-                "No Date Found"
+                "No Data Found"
         };
     }
 

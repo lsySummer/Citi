@@ -6,6 +6,7 @@ package edu.nju.service.CategoryAndProduct;
 public interface Category {
     Category getBiggerCategory();
     String getCategoryName();
+    String getChineseName();
     String getUnit();
     boolean equals(Category category);
     boolean equals(String categoryName);

@@ -15,10 +15,6 @@ import java.util.List;
  */
 public class FundInvest implements CategoryInvest {
     static final String categoryName = "Fund";
-    public static final String paramBasePeriod = "basePeriod";
-    public static final String paramBaseDayIndex = "baseDayIndex";
-    public static final String paramCapital = "capital";
-    private static final int fundTypeNum = 11;
     private static final int historyNum = 30;
 
     @Override

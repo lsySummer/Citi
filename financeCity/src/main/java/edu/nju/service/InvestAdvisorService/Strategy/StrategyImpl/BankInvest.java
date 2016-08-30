@@ -18,9 +18,6 @@ import java.util.*;
 @SuppressWarnings("unchecked")
 public class BankInvest implements CategoryInvest {
     public static final String categoryName = "Bank";
-    public static final String paramCapital = "capital";
-    public static final String paramFlowAmount = "flowAmount";
-    public static final String paramTimeLimit = "timeLimit";
 
     private int[] thresholdList = {
             50000, 100000, 200000,
@@ -118,8 +115,8 @@ public class BankInvest implements CategoryInvest {
 
         if (max_threshold < 0) {
             InvestResult investResult1 = new InvestResult();
-            investResult.addUnusedCapital(capital, categoryName);
-            return investResult;
+            investResult1.addUnusedCapital(capital, categoryName);
+            return investResult1;
         }
 
         Product product = findMaxYieldProduct(candidateList);
@@ -174,8 +171,8 @@ public class BankInvest implements CategoryInvest {
 
         if (floorDuration < 0) {
             InvestResult investResult1 = new InvestResult();
-            investResult.addUnusedCapital(capital, categoryName);
-            return investResult;
+            investResult1.addUnusedCapital(capital, categoryName);
+            return investResult1;
         }
 
         Product product = findMaxYieldProduct(candidateList);

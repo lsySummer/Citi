@@ -201,15 +201,4 @@ public class SearchServiceImpl extends BaseFunctionServiceAdaptor implements Sea
             return null;
         }
     }
-
-    @Override
-    public String getProductName(Integer productId) {
-        List list = getUserService().getCommonDao().find("SELECT name FROM NameToId nti WHERE nti.id=" + productId);
-        if (list == null || list.size() == 0) {
-            return null;
-        }
-        else {
-            return (String)list.get(0);
-        }
-    }
 }

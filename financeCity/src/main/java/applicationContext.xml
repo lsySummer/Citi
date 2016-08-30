@@ -86,7 +86,7 @@
 		</constructor-arg>
 		<constructor-arg name="searchService" ref="searchService">
 		</constructor-arg>
-		<constructor-arg name="tradeService" ref="tradService">
+		<constructor-arg name="tradeService" ref="tradeService">
 		</constructor-arg>
 		<constructor-arg name="userService" ref="userService">
 		</constructor-arg>
@@ -111,10 +111,13 @@
 	<bean id="searchService" class="edu.nju.service.SearchService.SearchServiceImpl">
 	</bean>
 
-	<bean id="tradService" class="edu.nju.service.TradeService.TradeServiceImpl">
+	<bean id="tradeService" class="edu.nju.service.TradeService.TradeServiceImpl">
 	</bean>
 
 	<bean id="userService" class="edu.nju.service.UserService.UserServiceImpl">
+	</bean>
+
+	<bean id="investStrategy" class="edu.nju.service.InvestAdvisorService.Strategy.InvestStrategyImpl">
 	</bean>
 
 

@@ -6,12 +6,14 @@ package edu.nju.service.CategoryAndProduct;
 public class CategoryImpl implements Category {
     private Category biggerCategory;
     private String categoryName;
+    private String ChineseName;
     private Integer subTypeIndex;
 
-    public CategoryImpl(String categoryName, Category biggerCategory, Integer subTypeIndex) {
+    public CategoryImpl(String categoryName, Category biggerCategory, Integer subTypeIndex, String chineseName) {
         this.biggerCategory = biggerCategory;
         this.categoryName = categoryName;
         this.subTypeIndex = subTypeIndex;
+        this.ChineseName = chineseName;
     }
 
     @Override
@@ -62,5 +64,10 @@ public class CategoryImpl implements Category {
     @Override
     public boolean belongTo(Category category) {
         return getBiggerCategory().equals(category);
+    }
+
+    @Override
+    public String getChineseName() {
+        return ChineseName;
     }
 }

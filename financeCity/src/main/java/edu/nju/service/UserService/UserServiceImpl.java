@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -103,11 +105,12 @@ public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
 
         try {
             List list = DAO.find("FROM User u WHERE u.id=" + getID());
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             User user = (User) list.get(0);
 
             userVO.setIfCity(user.getIfCity() == 1);
             userVO.setName(user.getName());
-            userVO.setBirthday(user.getBirthday().toString());
+            userVO.setBirthday(dateFormat.format(user.getBirthday()));
             userVO.setCityName(user.getCity());
             userVO.setMonthlyExpense(user.getMonthlyExpense());
             userVO.setError(ErrorManager.errorNormal);
@@ -123,10 +126,27 @@ public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
         }
     }
 
-    //TODO:...
     @Override
     public boolean modifyUserInfo(UserVO userVO) {
-        return false;
+        try {
+            List list = getUserDao().find("FROM User u WHERE u.id=" + getID());
+            User user = (User) list.get(0);
+
+            user.setUpdateAt(new Timestamp(System.currentTimeMillis()));
+            user.setBirthday(Timestamp.valueOf(userVO.getBirthday()));
+            user.setCity(userVO.getCityName());
+            user.setIfCity(userVO.isIfCity() ? (byte) 1 : 0);
+            user.setName(userVO.getName());
+            user.setMonthlyExpense(userVO.getMonthlyExpense());
+
+            getUserDao().save(user);
+
+            return true;
+        }
+        catch (NotLoginException n) {
+            n.printStackTrace();
+            return false;
+        }
     }
 
     @Override

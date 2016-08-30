@@ -19,81 +19,26 @@ import org.springframework.stereotype.Service;
 @Service
 public interface InvestAdvisorService extends BaseService {
     /**
-     * set identity
-     *
-     * @return if it's successful
-     */
-    boolean setIdentity(IdentityVO identity);
-
-    /**
-     * get identity
-     * @return identity
-     */
-    IdentityVO getIdentity();
-
-    /**
      * set preference
      *
      * @param temperPreferVO preference .
      * @return if it's successful
      */
-    boolean setTemperPrefer(TemperPreferVO temperPreferVO);
+    boolean setTemperPrefer(TemperPreferVO temperPreferVO) throws NotLoginException;
 
     /**
      * get temper preference
      * @return temper preference
      */
-    TemperPreferVO getTemperPreferVO();
+    TemperPreferVO getTemperPreferVO() throws NotLoginException;
 
     /**
-     * set family spending
-     *
-     * @param familySpending .
-     * @return if it's successful
+     * create investment portfolio
+     * @param preference
+     * @return invest result
+     * @throws NotAllConfigurationSetException
      */
-    boolean setFamilySpending(FamilySpendingVO familySpending);
-
-    /**
-     * get family spending
-     *
-     * @return family spending
-     */
-    FamilySpendingVO getFamilySpendingVO();
-
-    /**
-     * if identity is set, if yes return true, else return false
-     *
-     * @return if identity is set
-     */
-    boolean ifIdentityIsSet();
-
-    /**
-     * if prefer is set, if yes return true, else return false
-     *
-     * @return is preference is set
-     */
-    boolean ifPreferenceIsSet();
-
-    /**
-     * if all configuration is set
-     *
-     * @return if all configuration is set
-     */
-    boolean ifAllSet();
-
-    /**
-     * get investment portfolio
-     * @return investment portfolio
-     */
-    InvestResult createInvestmentPortFolio() throws NotAllConfigurationSetException, NotLoginException;
-
     InvestResult createInvestmentPortFolio(UserTemperPrefer preference) throws NotAllConfigurationSetException;
-
-    /**
-     * get user vo
-     * @return user vo
-     */
-    UserVO getUserVO();
 
     /**
      * bind search service

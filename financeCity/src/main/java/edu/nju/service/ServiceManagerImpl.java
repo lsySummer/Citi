@@ -92,6 +92,8 @@ public class ServiceManagerImpl implements ServiceManager {
 
             /** bind search service to invest advisor */
             investAdvisorService.bindSearchService(searchService);
+            /** bind search service to asset manager */
+            assetManagementService.bindSearchService(searchService);
 
             System.out.println("Service Manager Init Successfully");
         }

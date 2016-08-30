@@ -13,6 +13,8 @@ import edu.nju.service.SearchService.SearchService;
 import edu.nju.vo.*;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,11 +38,12 @@ public class AssetManagementServiceImpl extends BaseFunctionServiceAdaptor imple
             }
             else {
                 List<ProductVO> investList = new ArrayList<>();
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 for (InvestStatus investStatus : list) {
                     try {
                         Product product = searchService.getProductByID(investStatus.getProductId());
                         ProductVO productVO = new ProductVO();
-                        productVO.setBuyingDate(investStatus.getDate().toString());
+                        productVO.setBuyingDate(dateFormat.format(investStatus.getDate()));
                         productVO.setBuyingValue(investStatus.getTotalValue().doubleValue());
                         productVO.setName(product.getName());
                         productVO.setCurrentValue(getCurrentValue(investStatus.getAmount(), product));
@@ -75,11 +78,6 @@ public class AssetManagementServiceImpl extends BaseFunctionServiceAdaptor imple
     }
 
     @Override
-    public List<Event> getEvents() {
-        return null;
-    }
-
-    @Override
     public void bindSearchService(SearchService searchService) {
         this.searchService = searchService;
     }
@@ -104,13 +102,14 @@ public class AssetManagementServiceImpl extends BaseFunctionServiceAdaptor imple
             }
 
             List<TradeHistory> tradeHistoryList = (List<TradeHistory>) list;
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             for (TradeHistory tradeHistory : tradeHistoryList) {
                 try {
                     TradeHistoryVO tradeHistoryVO = new TradeHistoryVO();
                     Product product = searchService.getProductByID(tradeHistory.getProductId());
 
                     tradeHistoryVO.setAmount(tradeHistory.getAmount());
-                    tradeHistoryVO.setDate(tradeHistory.getTradeAt().toString());
+                    tradeHistoryVO.setDate(dateFormat.format(tradeHistory.getTradeAt()));
                     tradeHistoryVO.setProductId(product.getID());
                     tradeHistoryVO.setProductName(product.getName());
                     tradeHistoryVO.setTradingType(tradeHistory.getTradeType());
