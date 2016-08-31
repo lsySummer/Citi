@@ -3,6 +3,7 @@ package edu.nju.service.TradeService;
 import edu.nju.model.UnpaidItem;
 import edu.nju.service.BaseService.BaseFunctionServiceAdaptor;
 import edu.nju.service.ExceptionsAndError.NotLoginException;
+import edu.nju.service.Sessions.FinanceCityUser;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -19,23 +20,23 @@ public class TradeServiceImpl extends BaseFunctionServiceAdaptor implements Trad
     private final long expiration = 10 * 60 * 1000;
 
     @Override
-    public List<String> buyProduct(List<TradeItem> tradeItemList) {
+    public List<String> buyProduct(List<TradeItem> tradeItemList, FinanceCityUser financeCityUser) {
         List<String> checkCodeList = new ArrayList<>();
         Timestamp expiration_time = new Timestamp(System.currentTimeMillis() + expiration);
         try {
             for (TradeItem tradeItem : tradeItemList) {
                 UnpaidItem unpaidItem = new UnpaidItem();
-                unpaidItem.setId(getUserService().getID());
+                unpaidItem.setId(financeCityUser.getID());
                 unpaidItem.setExpirationTime(expiration_time);
                 unpaidItem.setAmount(tradeItem.getAmount());
                 unpaidItem.setUnit(tradeItem.getProduct().getUnit());
                 unpaidItem.setTradingVolume(new BigDecimal(tradeItem.getTradingVolume()));
                 unpaidItem.setProductId(tradeItem.getProduct().getID());
                 //check code
-                String checkCode = tradeItem.generateMD5(getUserService().getID(), expiration_time.toString());
+                String checkCode = tradeItem.generateMD5(financeCityUser.getID(), expiration_time.toString());
                 unpaidItem.setCheckCode(checkCode);
 
-                getUserService().getUserDao().save(unpaidItem);
+                getUserService().getUserDao(financeCityUser).save(unpaidItem);
                 checkCodeList.add(checkCode);
             }
 
@@ -43,20 +44,20 @@ public class TradeServiceImpl extends BaseFunctionServiceAdaptor implements Trad
         }
         catch (NotLoginException n) {
             n.printStackTrace();
-            cancelAllUnpaid();
+            cancelAllUnpaid(financeCityUser);
             return null;
         }
     }
 
     @Override
-    public boolean cancelUnpaid(String checkCode) {
+    public boolean cancelUnpaid(String checkCode, FinanceCityUser financeCityUser) {
         try {
-            List list = getUserService().getUserDao().find("FROM UnpaidItem unpaidItem WHERE unpaidItem.checkCode=" +
-            checkCode + " AND unpaidItem.userId=" + getUserService().getID());
+            List list = getUserService().getUserDao(financeCityUser).find("FROM UnpaidItem unpaidItem WHERE unpaidItem.checkCode=" +
+            checkCode + " AND unpaidItem.userId=" + financeCityUser.getID());
 
             if (!(list == null || list.size() == 0)) {
                 UnpaidItem unpaidItem = (UnpaidItem)list.get(0);
-                getUserService().getUserDao().delete(unpaidItem);
+                getUserService().getUserDao(financeCityUser).delete(unpaidItem);
             }
 
             return true;
@@ -68,9 +69,9 @@ public class TradeServiceImpl extends BaseFunctionServiceAdaptor implements Trad
     }
 
     @Override
-    public boolean cancelAllUnpaid() {
+    public boolean cancelAllUnpaid(FinanceCityUser financeCityUser) {
         try {
-            getUserService().getUserDao().query("DELETE UnpaidItem u WHERE u.userId=" + getUserService().getID());
+            getUserService().getUserDao(financeCityUser).query("DELETE UnpaidItem u WHERE u.userId=" + financeCityUser.getID());
             return true;
         }
         catch (NotLoginException n) {
@@ -80,7 +81,7 @@ public class TradeServiceImpl extends BaseFunctionServiceAdaptor implements Trad
     }
 
     @Override
-    public boolean redeemProduct(Integer ProductID) {
+    public boolean redeemProduct(Integer ProductID, FinanceCityUser financeCityUser) {
         return false;
     }
 

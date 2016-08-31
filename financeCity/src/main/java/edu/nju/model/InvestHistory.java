@@ -5,20 +5,20 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
- * Created by Sun YuHao on 2016/8/17.
+ * Created by Sun YuHao on 2016/8/31.
  */
 @Entity
 @Table(name = "invest_history", schema = "citi", catalog = "")
-@IdClass(InvestHistoryPK.class)
 public class InvestHistory {
     private int userId;
     private int productId;
     private BigDecimal price;
-    private Integer amount;
+    private int amount;
     private Timestamp createdAt;
     private Timestamp updateAt;
+    private int id;
 
-    @Id
+    @Basic
     @Column(name = "user_id")
     public int getUserId() {
         return userId;
@@ -28,7 +28,7 @@ public class InvestHistory {
         this.userId = userId;
     }
 
-    @Id
+    @Basic
     @Column(name = "product_id")
     public int getProductId() {
         return productId;
@@ -50,15 +50,15 @@ public class InvestHistory {
 
     @Basic
     @Column(name = "amount")
-    public Integer getAmount() {
+    public int getAmount() {
         return amount;
     }
 
-    public void setAmount(Integer amount) {
+    public void setAmount(int amount) {
         this.amount = amount;
     }
 
-    @Id
+    @Basic
     @Column(name = "created_at")
     public Timestamp getCreatedAt() {
         return createdAt;
@@ -78,6 +78,16 @@ public class InvestHistory {
         this.updateAt = updateAt;
     }
 
+    @Id
+    @Column(name = "id")
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -87,8 +97,9 @@ public class InvestHistory {
 
         if (userId != that.userId) return false;
         if (productId != that.productId) return false;
+        if (amount != that.amount) return false;
+        if (id != that.id) return false;
         if (price != null ? !price.equals(that.price) : that.price != null) return false;
-        if (amount != null ? !amount.equals(that.amount) : that.amount != null) return false;
         if (createdAt != null ? !createdAt.equals(that.createdAt) : that.createdAt != null) return false;
         if (updateAt != null ? !updateAt.equals(that.updateAt) : that.updateAt != null) return false;
 
@@ -100,9 +111,10 @@ public class InvestHistory {
         int result = userId;
         result = 31 * result + productId;
         result = 31 * result + (price != null ? price.hashCode() : 0);
-        result = 31 * result + (amount != null ? amount.hashCode() : 0);
+        result = 31 * result + amount;
         result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
         result = 31 * result + (updateAt != null ? updateAt.hashCode() : 0);
+        result = 31 * result + id;
         return result;
     }
 }

@@ -5,6 +5,7 @@ import edu.nju.dao.impl.CommonDao;
 import edu.nju.service.BaseService.BaseService;
 import edu.nju.service.ExceptionsAndError.NotLoginException;
 import edu.nju.service.POJO.RegisterInfo;
+import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.vo.UserVO;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,7 @@ public interface UserService extends BaseService {
      * @param regInfo .
      * @return user id
      */
-    Integer register(RegisterInfo regInfo);
+    FinanceCityUser register(RegisterInfo regInfo);
 
     /**
      * user login
@@ -27,38 +28,32 @@ public interface UserService extends BaseService {
      * @param password .
      * @return user id
      */
-    Integer login(String userName, String password);
+    FinanceCityUser login(String userName, String password);
 
     /**
      * user logout
      * @return if it's successful
      */
-    boolean logout();
+    boolean logout(FinanceCityUser financeCityUser);
 
     /**
      * if user login
      * @return if user login
      */
-    boolean isLogin();
+    boolean isLogin(FinanceCityUser financeCityUser);
 
     /**
      * modify user info
      * @param userVO .
      * @return if it's successful
      */
-    boolean modifyUserInfo(UserVO userVO);
-
-    /**
-     * get user id
-     * @return user id .
-     */
-    Integer getID() throws NotLoginException;
+    boolean modifyUserInfo(UserVO userVO, FinanceCityUser financeCityUser);
 
     /**
      * get user dao
      * @return user dao .
      */
-    UserDao getUserDao() throws NotLoginException;
+    UserDao getUserDao(FinanceCityUser financeCityUser) throws NotLoginException;
 
     /**
      * get common dao
@@ -66,5 +61,5 @@ public interface UserService extends BaseService {
      */
     CommonDao getCommonDao();
 
-    UserVO getUserVO() throws NotLoginException;
+    UserVO getUserVO(FinanceCityUser financeCityUser);
 }

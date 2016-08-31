@@ -6,6 +6,7 @@ import edu.nju.service.ExceptionsAndError.NotAllConfigurationSetException;
 import edu.nju.service.ExceptionsAndError.NotLoginException;
 import edu.nju.service.POJO.InvestResult;
 import edu.nju.service.SearchService.SearchService;
+import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.vo.FamilySpendingVO;
 import edu.nju.vo.IdentityVO;
 import edu.nju.vo.TemperPreferVO;
@@ -24,13 +25,13 @@ public interface InvestAdvisorService extends BaseService {
      * @param temperPreferVO preference .
      * @return if it's successful
      */
-    boolean setTemperPrefer(TemperPreferVO temperPreferVO) throws NotLoginException;
+    boolean setTemperPrefer(TemperPreferVO temperPreferVO, FinanceCityUser financeCityUser) throws NotLoginException;
 
     /**
      * get temper preference
      * @return temper preference
      */
-    TemperPreferVO getTemperPreferVO() throws NotLoginException;
+    TemperPreferVO getTemperPreferVO(FinanceCityUser financeCityUser) throws NotLoginException;
 
     /**
      * create investment portfolio

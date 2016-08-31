@@ -9,6 +9,7 @@ import edu.nju.service.BaseService.BaseServiceAdaptor;
 import edu.nju.service.ExceptionsAndError.ErrorManager;
 import edu.nju.service.ExceptionsAndError.NotLoginException;
 import edu.nju.service.POJO.RegisterInfo;
+import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,20 +25,16 @@ import java.util.List;
  */
 @Service
 public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
-    private Integer ID;
-    private String loginID;
-    private boolean loginState;
-
     @Autowired
     private BaseDao DAO;
 
     @Override
-    public Integer register(RegisterInfo regInfo) {
+    public FinanceCityUser register(RegisterInfo regInfo) {
         return null;
     }
 
     @Override
-    public Integer login(String userName, String password) {
+    public FinanceCityUser login(String userName, String password) {
         /** match username and password */
         List list = DAO.login("SELECT id FROM User user WHERE user.username=? AND user.password=?", userName, password);
 
@@ -47,30 +44,31 @@ public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
         }
         /** if succeed */
         else {
-            ID = (Integer)list.get(0);
+            FinanceCityUser financeCityUser = new FinanceCityUser();
+            financeCityUser.setID((Integer)list.get(0));
             /** online */
             UserLogin userLogin = new UserLogin();
-            userLogin.setUserId(ID);
+            userLogin.setUserId(financeCityUser.getID());
             userLogin.setDate(new Timestamp(System.currentTimeMillis()));
-            loginID = MD5_32(new Timestamp(System.currentTimeMillis()).toString() + ID);
-            userLogin.setLoginId(loginID);
-            DAO.save(userLogin);
-            loginState = true;
 
-            return ID;
+            String session = MD5_32(userName + userLogin.getDate().toString());
+            financeCityUser.setLoginSession(session);
+            userLogin.setSession(session);
+            DAO.saveOrUpdate(userLogin);
+
+            return financeCityUser;
         }
     }
 
     @Override
-    public boolean logout() {
+    public boolean logout(FinanceCityUser financeCityUser) {
         /** not online */
         try {
-            UserLogin userLogin = (UserLogin)DAO.find("FROM UserLogin userLogin WHERE userLogin.id=" + ID +
-            " AND userLogin.loginID=" + loginID).get(0);
+            UserLogin userLogin = (UserLogin)DAO.find("FROM UserLogin userLogin WHERE userLogin.id=" + financeCityUser.getID() +
+            " AND userLogin.session=" + financeCityUser.getLoginSession()).get(0);
             if (userLogin != null) {
-                getUserDao().delete(userLogin);
-                ID = null;
-                loginState = false;
+                getUserDao(financeCityUser).delete(userLogin);
+                financeCityUser.setID(null);
             }
             else {
                 return false;
@@ -84,27 +82,24 @@ public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
     }
 
     @Override
-    public boolean isLogin() {
-        if (!loginState) {
-            return false;
-        }
-
+    public boolean isLogin(FinanceCityUser financeCityUser) {
         try {
-            List list = DAO.find("SELECT loginID FROM UserLogin userLogin WHERE userLogin.id=" + getID());
+            List list = DAO.find("SELECT loginID FROM UserLogin userLogin WHERE userLogin.id=" + financeCityUser.getID());
             /** weather login id is the same as the one in database*/
-            return (loginID.equals((String) list.get(0)));
+            return (financeCityUser.getLoginSession().equals(list.get(0)));
         }
-        catch (NotLoginException n) {
+        catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
 
     @Override
-    public UserVO getUserVO() throws NotLoginException{
+    public UserVO getUserVO(FinanceCityUser financeCityUser){
         UserVO userVO = new UserVO();
 
         try {
-            List list = DAO.find("FROM User u WHERE u.id=" + getID());
+            List list = getUserDao(financeCityUser).find("FROM User u WHERE u.id=" + financeCityUser.getID());
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             User user = (User) list.get(0);
 
@@ -115,21 +110,20 @@ public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
             userVO.setMonthlyExpense(user.getMonthlyExpense());
             userVO.setError(ErrorManager.errorNormal);
             userVO.setMessage(ErrorManager.getDescreption(ErrorManager.errorNormal));
-
-            return userVO;
         }
         catch (NotLoginException e) {
             userVO.setError(ErrorManager.errorNotLogin);
             userVO.setMessage(ErrorManager.getDescreption(ErrorManager.errorNotLogin));
             e.printStackTrace();
-            throw e;
         }
+
+        return userVO;
     }
 
     @Override
-    public boolean modifyUserInfo(UserVO userVO) {
+    public boolean modifyUserInfo(UserVO userVO, FinanceCityUser financeCityUser) {
         try {
-            List list = getUserDao().find("FROM User u WHERE u.id=" + getID());
+            List list = getUserDao(financeCityUser).find("FROM User u WHERE u.id=" + financeCityUser.getID());
             User user = (User) list.get(0);
 
             user.setUpdateAt(new Timestamp(System.currentTimeMillis()));
@@ -139,7 +133,7 @@ public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
             user.setName(userVO.getName());
             user.setMonthlyExpense(userVO.getMonthlyExpense());
 
-            getUserDao().save(user);
+            getUserDao(financeCityUser).save(user);
 
             return true;
         }
@@ -150,17 +144,8 @@ public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
     }
 
     @Override
-    public Integer getID() throws NotLoginException {
-        if (ID == null) {
-            throw new NotLoginException();
-        }
-
-        return ID;
-    }
-
-    @Override
-    public UserDao getUserDao() throws NotLoginException {
-        if (!isLogin()) {
+    public UserDao getUserDao(FinanceCityUser financeCityUser) throws NotLoginException {
+        if (!isLogin(financeCityUser)) {
             throw new NotLoginException();
         }
         else {

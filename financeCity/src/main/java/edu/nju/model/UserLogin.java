@@ -4,13 +4,13 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
- * Created by Sun YuHao on 2016/8/17.
+ * Created by Sun YuHao on 2016/8/31.
  */
 @Entity
 @Table(name = "user_login", schema = "citi", catalog = "")
 public class UserLogin {
     private int userId;
-    private String loginId;
+    private String session;
     private Timestamp date;
 
     @Id
@@ -24,13 +24,13 @@ public class UserLogin {
     }
 
     @Basic
-    @Column(name = "login_id")
-    public String getLoginId() {
-        return loginId;
+    @Column(name = "session")
+    public String getSession() {
+        return session;
     }
 
-    public void setLoginId(String loginId) {
-        this.loginId = loginId;
+    public void setSession(String session) {
+        this.session = session;
     }
 
     @Basic
@@ -51,7 +51,7 @@ public class UserLogin {
         UserLogin userLogin = (UserLogin) o;
 
         if (userId != userLogin.userId) return false;
-        if (loginId != null ? !loginId.equals(userLogin.loginId) : userLogin.loginId != null) return false;
+        if (session != null ? !session.equals(userLogin.session) : userLogin.session != null) return false;
         if (date != null ? !date.equals(userLogin.date) : userLogin.date != null) return false;
 
         return true;
@@ -60,7 +60,7 @@ public class UserLogin {
     @Override
     public int hashCode() {
         int result = userId;
-        result = 31 * result + (loginId != null ? loginId.hashCode() : 0);
+        result = 31 * result + (session != null ? session.hashCode() : 0);
         result = 31 * result + (date != null ? date.hashCode() : 0);
         return result;
     }

@@ -9,6 +9,7 @@ import edu.nju.service.ExceptionsAndError.NotLoginException;
 import edu.nju.service.InvestAdvisorService.Strategy.InvestStrategy;
 import edu.nju.service.POJO.*;
 import edu.nju.service.SearchService.SearchService;
+import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.vo.FamilySpendingVO;
 import edu.nju.vo.IdentityVO;
 import edu.nju.vo.TemperPreferVO;
@@ -29,15 +30,15 @@ public class InvestAdvisorServiceImpl extends BaseFunctionServiceAdaptor impleme
     private InvestStrategy investStrategy;
 
     @Override
-    public boolean setTemperPrefer(TemperPreferVO temperPreferVO) throws NotLoginException {
+    public boolean setTemperPrefer(TemperPreferVO temperPreferVO, FinanceCityUser financeCityUser) throws NotLoginException {
         //TODO:check if valid
-        getUserService().getUserDao().save(temperPreferVO);
+        getUserService().getUserDao(financeCityUser).save(temperPreferVO);
         return false;
     }
 
     //TODO:...
     @Override
-    public TemperPreferVO getTemperPreferVO() throws NotLoginException {
+    public TemperPreferVO getTemperPreferVO(FinanceCityUser financeCityUser) throws NotLoginException {
         return null;
     }
 

@@ -1,6 +1,7 @@
 package edu.nju.service.TradeService;
 
 import edu.nju.service.BaseService.BaseService;
+import edu.nju.service.Sessions.FinanceCityUser;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,25 +16,25 @@ public interface TradeService extends BaseService {
      * @param tradeItemList .
      * @return if success
      */
-    List<String> buyProduct(List<TradeItem> tradeItemList);
+    List<String> buyProduct(List<TradeItem> tradeItemList, FinanceCityUser financeCityUser);
 
     /**
      * cancel unpaid product
      * @param checkCode .
      */
-    boolean cancelUnpaid(String checkCode);
+    boolean cancelUnpaid(String checkCode, FinanceCityUser financeCityUser);
 
     /**
      * cancel all unpaid product
      */
-    boolean cancelAllUnpaid();
+    boolean cancelAllUnpaid(FinanceCityUser financeCityUser);
 
     /**
      * redeem/sell product
      * @param ProductID .
      * @return if success
      */
-    boolean redeemProduct(Integer ProductID);
+    boolean redeemProduct(Integer ProductID, FinanceCityUser financeCityUser);
 
     /**
      * enforce investment plan

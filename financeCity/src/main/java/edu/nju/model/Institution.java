@@ -1,10 +1,13 @@
 package edu.nju.model;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.sql.Timestamp;
 
 /**
- * Created by Sun YuHao on 2016/8/26.
+ * Created by Sun YuHao on 2016/8/31.
  */
 @Entity
 public class Institution {

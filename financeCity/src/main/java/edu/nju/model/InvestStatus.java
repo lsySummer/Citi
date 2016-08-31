@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
- * Created by Sun YuHao on 2016/8/28.
+ * Created by Sun YuHao on 2016/8/31.
  */
 @Entity
 @Table(name = "invest_status", schema = "citi", catalog = "")

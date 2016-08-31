@@ -1,8 +1,16 @@
 package edu.nju.service;
 
+import edu.nju.service.AssetManagementService.AssetManagementService;
+import edu.nju.service.BaseService.BaseService;
 import edu.nju.service.ExceptionsAndError.InvalidAPINameException;
 import edu.nju.service.ExceptionsAndError.InvalidParametersException;
 import edu.nju.service.ExceptionsAndError.InvalidServiceNameException;
+import edu.nju.service.InvestAdvisorService.InvestAdvisorService;
+import edu.nju.service.PayService.PayService;
+import edu.nju.service.PushService.PushService;
+import edu.nju.service.SearchService.SearchService;
+import edu.nju.service.TradeService.TradeService;
+import edu.nju.service.UserService.UserService;
 
 import java.util.List;
 
@@ -28,4 +36,18 @@ public interface ServiceManager {
      * Note: use the first api found in services
      */
     Object invokeAPI(String apiName, List<Object> param) throws InvalidAPINameException, InvalidParametersException;
+
+    public AssetManagementService getAssetManagementService();
+
+    public InvestAdvisorService getInvestAdvisorService();
+
+    public PayService getPayService();
+
+    public PushService getPushService();
+
+    public SearchService getSearchService();
+
+    public TradeService getTradeService();
+
+    public UserService getUserService();
 }

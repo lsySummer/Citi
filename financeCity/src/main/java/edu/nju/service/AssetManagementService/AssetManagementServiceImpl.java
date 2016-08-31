@@ -10,6 +10,7 @@ import edu.nju.service.ExceptionsAndError.NoSuchProductException;
 import edu.nju.service.ExceptionsAndError.NotLoginException;
 import edu.nju.service.POJO.Event;
 import edu.nju.service.SearchService.SearchService;
+import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.vo.*;
 import org.springframework.stereotype.Service;
 
@@ -27,12 +28,12 @@ public class AssetManagementServiceImpl extends BaseFunctionServiceAdaptor imple
 
     @SuppressWarnings("unchecked")
     @Override
-    public CurrentInvestmentVO getInvestProductVOList() {
+    public CurrentInvestmentVO getInvestProductVOList(FinanceCityUser financeCityUser) {
         CurrentInvestmentVO currentInvestmentVO = new CurrentInvestmentVO();
 
         try {
-            List<InvestStatus> list = getUserService().getUserDao().
-                    find("FROM InvestStatus investStatus WHERE investHistory.id=" + getUserService().getID());
+            List<InvestStatus> list = getUserService().getUserDao(financeCityUser).
+                    find("FROM InvestStatus investStatus WHERE investHistory.id=" + financeCityUser.getID());
             if (list == null || list.size() == 0) {
                 return null;
             }
@@ -89,12 +90,12 @@ public class AssetManagementServiceImpl extends BaseFunctionServiceAdaptor imple
 
     @SuppressWarnings("unchecked")
     @Override
-    public TradeHistoryListVO getTradeHistory() throws NotLoginException{
+    public TradeHistoryListVO getTradeHistory(FinanceCityUser financeCityUser){
         TradeHistoryListVO tradeHistoryListVO = new TradeHistoryListVO();
 
         try {
             List<TradeHistoryVO> tradeHistoryVOList = new ArrayList<>();
-            List list = getUserService().getUserDao().find("FROM TradHistory t WHERE t.userId=" + getUserService().getID());
+            List list = getUserService().getUserDao(financeCityUser).find("FROM TradHistory t WHERE t.userId=" + financeCityUser.getID());
 
             if (list == null || list.size() == 0) {
                 tradeHistoryListVO.setError(ErrorManager.errorDateNotFound);

@@ -6,6 +6,7 @@ import edu.nju.service.ExceptionsAndError.NotLoginException;
 import edu.nju.service.POJO.*;
 import edu.nju.service.BaseService.BaseService;
 import edu.nju.service.SearchService.SearchService;
+import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.vo.CurrentInvestmentVO;
 import edu.nju.vo.TradeHistoryListVO;
 import org.springframework.stereotype.Service;
@@ -20,14 +21,14 @@ public interface AssetManagementService extends BaseService{
      * get InvestProductVOList
      * @return investProduct
      */
-    CurrentInvestmentVO getInvestProductVOList() throws NotLoginException;
+    CurrentInvestmentVO getInvestProductVOList(FinanceCityUser financeCityUser);
 
     /**
      * get trad history
      * @return trad history
      * @throws NotLoginException
      */
-    TradeHistoryListVO getTradeHistory() throws NotLoginException;
+    TradeHistoryListVO getTradeHistory(FinanceCityUser financeCityUser);
 
     /**
      * bind search service

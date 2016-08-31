@@ -41,7 +41,7 @@ public class TestDaoImpl implements TestDao{
 		UserLogin userLogin = new UserLogin();
 
 		userLogin.setDate(new Timestamp(100000));
-		userLogin.setLoginId("???");
+		userLogin.setSession("???");
 		userLogin.setUserId(0);
 		testDao.delete(userLogin);
 	}

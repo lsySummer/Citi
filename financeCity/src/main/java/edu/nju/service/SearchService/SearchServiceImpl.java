@@ -169,36 +169,4 @@ public class SearchServiceImpl extends BaseFunctionServiceAdaptor implements Sea
 
         return (CategoryIndex)list.get(0);
     }
-
-    @Override
-    public User getUser() {
-        try {
-            List list = getUserService().getUserDao().find("FROM User u WHERE u.userId=" + getUserService().getID());
-            if (list == null || list.size() == 0) {
-                return null;
-            }
-
-            return (User)list.get(0);
-        }
-        catch (NotLoginException n) {
-            n.printStackTrace();
-            return null;
-        }
-    }
-
-    @Override
-    public UserTemperPrefer getUserTemperPrefer() {
-        try {
-            List list = getUserService().getUserDao().find("FROM UserTemperPrefer u WHERE u.userId=" + getUserService().getID());
-            if (list == null || list.size() == 0) {
-                return null;
-            }
-
-            return (UserTemperPrefer) list.get(0);
-        }
-        catch (NotLoginException n) {
-            n.printStackTrace();
-            return null;
-        }
-    }
 }

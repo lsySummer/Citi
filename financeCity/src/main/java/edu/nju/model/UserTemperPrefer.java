@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
- * Created by Sun YuHao on 2016/8/29.
+ * Created by Sun YuHao on 2016/8/31.
  */
 @Entity
 @Table(name = "user_temper_prefer", schema = "citi", catalog = "")
@@ -25,6 +25,9 @@ public class UserTemperPrefer {
     private Timestamp beginTime;
     private Timestamp endTime;
     private String chosenProducts;
+    private BigDecimal bearLoss;
+    private Integer id;
+    private BigDecimal money;
 
     @Id
     @Column(name = "user_id")
@@ -176,6 +179,36 @@ public class UserTemperPrefer {
         this.chosenProducts = chosenProducts;
     }
 
+    @Basic
+    @Column(name = "bear_loss")
+    public BigDecimal getBearLoss() {
+        return bearLoss;
+    }
+
+    public void setBearLoss(BigDecimal bearLoss) {
+        this.bearLoss = bearLoss;
+    }
+
+    @Basic
+    @Column(name = "id")
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    @Basic
+    @Column(name = "money")
+    public BigDecimal getMoney() {
+        return money;
+    }
+
+    public void setMoney(BigDecimal money) {
+        this.money = money;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -204,6 +237,9 @@ public class UserTemperPrefer {
         if (endTime != null ? !endTime.equals(that.endTime) : that.endTime != null) return false;
         if (chosenProducts != null ? !chosenProducts.equals(that.chosenProducts) : that.chosenProducts != null)
             return false;
+        if (bearLoss != null ? !bearLoss.equals(that.bearLoss) : that.bearLoss != null) return false;
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (money != null ? !money.equals(that.money) : that.money != null) return false;
 
         return true;
     }
@@ -225,6 +261,9 @@ public class UserTemperPrefer {
         result = 31 * result + (beginTime != null ? beginTime.hashCode() : 0);
         result = 31 * result + (endTime != null ? endTime.hashCode() : 0);
         result = 31 * result + (chosenProducts != null ? chosenProducts.hashCode() : 0);
+        result = 31 * result + (bearLoss != null ? bearLoss.hashCode() : 0);
+        result = 31 * result + (id != null ? id.hashCode() : 0);
+        result = 31 * result + (money != null ? money.hashCode() : 0);
         return result;
     }
 }

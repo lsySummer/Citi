@@ -1,20 +1,21 @@
 package edu.nju.model;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
- * Created by Sun YuHao on 2016/8/26.
+ * Created by Sun YuHao on 2016/8/31.
  */
 @Entity
-@IdClass(HistoryPK.class)
-@Table(name = "history", schema = "citi", catalog = "")
 public class History {
     private int commodityId;
-    private int productId;
     private Timestamp date;
     private BigDecimal price;
+    private int productId;
 
     @Id
     @Column(name = "commodity_id")
@@ -24,16 +25,6 @@ public class History {
 
     public void setCommodityId(int commodityId) {
         this.commodityId = commodityId;
-    }
-
-    @Id
-    @Column(name = "product_id")
-    public int getProductId() {
-        return productId;
-    }
-
-    public void setProductId(int productId) {
-        this.productId = productId;
     }
 
     @Basic
@@ -56,6 +47,16 @@ public class History {
         this.price = price;
     }
 
+    @Basic
+    @Column(name = "product_id")
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -74,9 +75,9 @@ public class History {
     @Override
     public int hashCode() {
         int result = commodityId;
-        result = 31 * result + productId;
         result = 31 * result + (date != null ? date.hashCode() : 0);
         result = 31 * result + (price != null ? price.hashCode() : 0);
+        result = 31 * result + productId;
         return result;
     }
 }

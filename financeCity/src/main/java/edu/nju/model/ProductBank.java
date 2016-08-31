@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
- * Created by Sun YuHao on 2016/8/28.
+ * Created by Sun YuHao on 2016/8/31.
  */
 @Entity
 @Table(name = "product_bank", schema = "citi", catalog = "")
@@ -25,7 +25,7 @@ public class ProductBank {
     private String registerCode;
     private Byte currency;
     private String investField;
-    private BigDecimal investRatio;
+    private String investRatio;
     private Byte state;
     private Byte riskLevel;
     private String session;
@@ -40,6 +40,7 @@ public class ProductBank {
     private String payType;
     private String objectOriented;
     private Integer sizeUpperLimit;
+    private Byte incomeType;
 
     @Id
     @Column(name = "id")
@@ -193,11 +194,11 @@ public class ProductBank {
 
     @Basic
     @Column(name = "invest_ratio")
-    public BigDecimal getInvestRatio() {
+    public String getInvestRatio() {
         return investRatio;
     }
 
-    public void setInvestRatio(BigDecimal investRatio) {
+    public void setInvestRatio(String investRatio) {
         this.investRatio = investRatio;
     }
 
@@ -341,6 +342,16 @@ public class ProductBank {
         this.sizeUpperLimit = sizeUpperLimit;
     }
 
+    @Basic
+    @Column(name = "income_type")
+    public Byte getIncomeType() {
+        return incomeType;
+    }
+
+    public void setIncomeType(Byte incomeType) {
+        this.incomeType = incomeType;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -387,6 +398,7 @@ public class ProductBank {
             return false;
         if (sizeUpperLimit != null ? !sizeUpperLimit.equals(that.sizeUpperLimit) : that.sizeUpperLimit != null)
             return false;
+        if (incomeType != null ? !incomeType.equals(that.incomeType) : that.incomeType != null) return false;
 
         return true;
     }
@@ -423,6 +435,7 @@ public class ProductBank {
         result = 31 * result + (payType != null ? payType.hashCode() : 0);
         result = 31 * result + (objectOriented != null ? objectOriented.hashCode() : 0);
         result = 31 * result + (sizeUpperLimit != null ? sizeUpperLimit.hashCode() : 0);
+        result = 31 * result + (incomeType != null ? incomeType.hashCode() : 0);
         return result;
     }
 }

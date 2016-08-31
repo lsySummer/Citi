@@ -97,16 +97,4 @@ public interface SearchService extends BaseService{
      * @return category index
      */
     CategoryIndex getCategoryIndex();
-
-    /**
-     * get user info
-     * @return user info
-     */
-    User getUser();
-
-    /**
-     * get user prefer
-     * @return user prefer
-     */
-    UserTemperPrefer getUserTemperPrefer();
 }

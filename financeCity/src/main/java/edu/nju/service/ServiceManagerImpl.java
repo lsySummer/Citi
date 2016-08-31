@@ -18,6 +18,7 @@ import edu.nju.service.TradeService.TradeService;
 import edu.nju.service.UserService.UserService;
 import edu.nju.service.UserService.UserServiceAPIFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -25,11 +26,13 @@ import java.util.*;
 /**
  * Created by Sun YuHao on 2016/7/25.
  */
-@Service
+@Component
 public class ServiceManagerImpl implements ServiceManager {
     private BaseService[] services;
     private List<String> serviceList;
     private Map<String, BaseService> serviceMap;
+
+    static ServiceManager serviceManager;
 
     @Autowired
     InvokerManager invokerManager;
@@ -100,6 +103,12 @@ public class ServiceManagerImpl implements ServiceManager {
         catch (DuplicateFunctionNameException d) {
             d.printStackTrace();
         }
+
+        serviceManager = this;
+    }
+
+    public static ServiceManager getInstance() {
+        return serviceManager;
     }
 
     @Override
@@ -132,5 +141,33 @@ public class ServiceManagerImpl implements ServiceManager {
 
     private BaseService getService(String serviceName) throws InvalidServiceNameException {
         return serviceMap.get(serviceName);
+    }
+
+    public AssetManagementService getAssetManagementService() {
+        return assetManagementService;
+    }
+
+    public InvestAdvisorService getInvestAdvisorService() {
+        return investAdvisorService;
+    }
+
+    public PayService getPayService() {
+        return payService;
+    }
+
+    public PushService getPushService() {
+        return pushService;
+    }
+
+    public SearchService getSearchService() {
+        return searchService;
+    }
+
+    public TradeService getTradeService() {
+        return tradeService;
+    }
+
+    public UserService getUserService() {
+        return userService;
     }
 }

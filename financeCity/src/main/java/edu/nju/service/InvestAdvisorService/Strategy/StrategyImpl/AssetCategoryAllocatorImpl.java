@@ -115,8 +115,7 @@ public class AssetCategoryAllocatorImpl implements AssetCategoryAllocator {
     private CategoryInfo[] initCategoryInfo(UserTemperPrefer userInfo, SearchService searchService) {
         CategoryInfo[] categoryInfo = new CategoryInfo[ProductCategoryManager.categoryNum];
         CategoryIndex categoryIndex = searchService.getCategoryIndex();
-        UserTemperPrefer temperPrefer = searchService.getUserTemperPrefer();
-        double Min_Inurance = temperPrefer.getInsuranceAmount().doubleValue();
+        double Min_Inurance = userInfo.getInsuranceAmount().doubleValue();
         List<Category> categoryList = ProductCategoryManager.getCategoryList();
         String sign = userInfo.getChosenProducts();
 
