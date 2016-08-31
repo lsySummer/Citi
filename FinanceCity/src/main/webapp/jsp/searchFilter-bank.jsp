@@ -21,20 +21,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
     <link type="text/css" rel="stylesheet" href="plugins/bootstrap-3.3.5-dist/css/bootstrap.min.css"/>
-    <link type="text/css" rel="stylesheet" href="plugins/jquery-slider/css/bootstrap-slider.min.css"/>
     <link type="text/css" rel="stylesheet" href="plugins/bootstrap-toggle-master/css/bootstrap-toggle.min.css"/>
+    <link type="text/css" rel="stylesheet" href="plugins/ion.rangeSlider-master/css/ion.rangeSlider.css"/>
+    <link type="text/css" rel="stylesheet" href="plugins/ion.rangeSlider-master/css/ion.rangeSlider.skinFlat.css"/>
     <link type="text/css" rel="stylesheet" href="css/buttons.css"/>
     <link type="text/css" rel="stylesheet" href="css/common.css"/>
     <link type="text/css" rel="stylesheet" href="css/searchFilter.css"/>
 
     <script type="text/javascript" rel="script" src="js/jquery-2.2.3.min.js"></script>
-    <script type="text/javascript" rel="script" src="plugins/jquery-slider/js/bootstrap-slider.min.js"></script>
     <script type="text/javascript" rel="script" src="plugins/bootstrap-toggle-master/js/bootstrap-toggle.min.js"></script>
+    <script type="text/javascript" rel="script" src="../plugins/ion.rangeSlider-master/js/ion.rangeSlider.min.js"></script>
     <script type="text/javascript" rel="script" src="js/searchFilter-bank.js"></script>
 
     <title>InvestGO</title>
 </head>
 <body>
+<jsp:include page="header.jsp"></jsp:include>
 <div class="main-content">
     <div class="filter-container">
         <div class="input-add-on search-wrapper">
@@ -64,40 +66,41 @@
         </div>
         <div class="income-wrapper">
             <div class="input-add-on income-item">
-                <label>预计年利率</label>
+                <span class="tag">预计年利率</span>
                 <div class="slider-wrapper input-add-on-field">
-                    <b class="slider-start">0</b><input id="annualized_return" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[250,450]"/><b class="slider-end">1000</b>
+                    <input type="text" id="annualized_return" name="annualized_return" value="" class="input-add-on-field"/>
                 </div>
             </div>
             <div class="input-add-on income-item">
-                <label>起购金额</label>
+                <span class="tag">起购金额</span>
                 <div class="slider-wrapper input-add-on-field">
-                    <b class="slider-start">0</b><input id="purchase_amount" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[250,450]"/><b class="slider-end">1000</b>
+                    <input type="text" id="purchase_amount" name="purchase_amount" value="" class="input-add-on-field"/>
                 </div>
             </div>
             <div class="input-add-on income-item">
-                <label>期限</label>
+                <span class="tag">期限</span>
                 <div class="slider-wrapper input-add-on-field">
-                    <b class="slider-start">0</b><input id="range" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[250,450]"/><b class="slider-end">1000</b>
+                    <input type="text" id="range" name="range" value="" class="input-add-on-field"/>
                 </div>
             </div>
         </div>
         <div class="income-wrapper">
             <div class="input-add-on income-item">
-                <label>管理机构&nbsp;&nbsp;</label>
+                <span class="tag">管理机构&nbsp;&nbsp;</span>
                 <select class="input-add-on-field"></select>
             </div>
             <div class="input-add-on income-item">
-                <label>收益类型</label>
+                <span class="tag">收益类型</span>
                 <select class="input-add-on-field"></select>
             </div>
             <div class="input-add-on income-item">
-                <label>是否封闭</label>
-                &nbsp;
-                <input type="checkbox" checked data-toggle="toggle" data-size="small" data-height="30px" data-on="是" data-off="否">
+                <span class="tag">是否封闭</span>
+                &nbsp;&nbsp;
+                <input type="checkbox" checked data-toggle="toggle" data-size="small" data-height="30px" data-on="是" data-off="否" data-onstyle="info">
             </div>
         </div>
     </div>
 </div>
+<jsp:include page="footer.jsp"></jsp:include>
 </body>
 </html>
