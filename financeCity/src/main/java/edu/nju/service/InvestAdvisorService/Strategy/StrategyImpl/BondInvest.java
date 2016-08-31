@@ -18,10 +18,6 @@ import java.util.*;
  */
 public class BondInvest implements CategoryInvest{
     public static final String categoryName = "Bond";
-    public static final String paramMayRedeem = "MayRedeem";
-    public static final String paramInvestTime = "investTime";
-    public static final String paramCapital = "capital";
-    public static final String paramInterestRatio = "interestRatio";
 
     @Override
     public InvestResult invest(UserTemperPrefer userInfo, SearchService searchService) {

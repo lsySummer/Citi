@@ -28,87 +28,17 @@ public class InvestAdvisorServiceImpl extends BaseFunctionServiceAdaptor impleme
     @Autowired
     private InvestStrategy investStrategy;
 
-    //TODO:...
     @Override
-    public boolean setIdentity(IdentityVO identity) {
-       return false;
-    }
-
-    //TODO:...
-    @Override
-    public IdentityVO getIdentity() {
-        return null;
-    }
-
-    //TODO:...
-    @Override
-    public boolean setTemperPrefer(TemperPreferVO temperPreferVO) {
+    public boolean setTemperPrefer(TemperPreferVO temperPreferVO) throws NotLoginException {
+        //TODO:check if valid
+        getUserService().getUserDao().save(temperPreferVO);
         return false;
     }
 
     //TODO:...
     @Override
-    public TemperPreferVO getTemperPreferVO() {
+    public TemperPreferVO getTemperPreferVO() throws NotLoginException {
         return null;
-    }
-
-    @Override
-    public boolean setFamilySpending(FamilySpendingVO familySpending) {
-        return false;
-    }
-
-    @Override
-    public FamilySpendingVO getFamilySpendingVO() {
-        return null;
-    }
-
-    @Override
-    public boolean ifIdentityIsSet() {
-        try {
-            UserDao DAO = getUserService().getUserDao();
-            List list = DAO.find("SELECT id FROM UserInformation identity WHERE identity.id=" + getUserService().getID());
-            return !(list == null || list.size() == 0);
-        }
-        catch (NotLoginException n) {
-            return false;
-        }
-    }
-
-    @Override
-    public boolean ifPreferenceIsSet() {
-        try {
-            UserDao DAO = getUserService().getUserDao();
-            List list = DAO.find("SELECT id FROM UserTemperPrefer preference WHERE preference.id=" + getUserService().getID());
-            return !(list == null || list.size() == 0);
-        }
-        catch (NotLoginException n) {
-            return false;
-        }
-    }
-
-    @Override
-    public boolean ifAllSet() {
-        try {
-            UserDao DAO = getUserService().getUserDao();
-            List list = DAO.find("SELECT id FROM UserFamilySpending familySpending WHERE familySpending.id=" + getUserService().getID());
-            return !(list == null || list.size() == 0);
-        }
-        catch (NotLoginException n) {
-            return false;
-        }
-    }
-
-    @Override
-    public InvestResult createInvestmentPortFolio() throws NotAllConfigurationSetException, NotLoginException {
-        UserDao DAO = getUserService().getUserDao();
-        try {
-            UserTemperPrefer preference = (UserTemperPrefer) DAO.find("FROM UserTemperPrefer preference WHERE preference.id=" + getUserService().getID()).get(0);
-            return investStrategy.createInvestmentPortfolio(preference, searchService);
-        }
-        catch (NullPointerException n) {
-            n.printStackTrace();
-            throw new NotAllConfigurationSetException();
-        }
     }
 
     @Override
@@ -118,12 +48,6 @@ public class InvestAdvisorServiceImpl extends BaseFunctionServiceAdaptor impleme
         }
 
         return investStrategy.createInvestmentPortfolio(preference, searchService);
-    }
-
-    //TODO:set user VO
-    @Override
-    public UserVO getUserVO() {
-        return null;
     }
 
     @Override

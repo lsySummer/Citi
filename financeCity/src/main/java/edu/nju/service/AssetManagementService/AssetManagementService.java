@@ -23,12 +23,17 @@ public interface AssetManagementService extends BaseService{
     CurrentInvestmentVO getInvestProductVOList() throws NotLoginException;
 
     /**
-     * get events in chronological order
-     * @return events
+     * get trad history
+     * @return trad history
+     * @throws NotLoginException
      */
-    List<Event> getEvents();
+    TradeHistoryListVO getTradeHistory() throws NotLoginException;
 
+    /**
+     * bind search service
+     * @param searchService .
+     */
     void bindSearchService(SearchService searchService);
 
-    TradeHistoryListVO getTradeHistory() throws NotLoginException;
+
 }

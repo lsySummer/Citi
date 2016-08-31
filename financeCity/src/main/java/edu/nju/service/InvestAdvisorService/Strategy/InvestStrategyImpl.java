@@ -16,12 +16,16 @@ import java.util.List;
  */
 public class InvestStrategyImpl implements InvestStrategy {
     @Autowired
-    AssetCategoryAllocator assetCategoryAllocator;
+    private AssetCategoryAllocator assetCategoryAllocator;
 
-    CategoryInvest[] categoryInvest = {
-        new BankInvest(), new BondInvest(),
-            new FundInvest(), new InsuranceInvest()
-    };
+    private CategoryInvest[] categoryInvest;
+
+    public InvestStrategyImpl() {
+        categoryInvest = new CategoryInvest[] {
+                new BankInvest(), new BondInvest(),
+                new FundInvest(), new InsuranceInvest()
+        };
+    }
 
     @Override
     public InvestResult createInvestmentPortfolio(UserTemperPrefer preference, SearchService searchService) {

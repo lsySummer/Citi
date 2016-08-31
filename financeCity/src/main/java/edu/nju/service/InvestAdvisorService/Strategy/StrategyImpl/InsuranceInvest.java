@@ -18,9 +18,6 @@ import java.util.stream.Collectors;
  */
 public class InsuranceInvest implements CategoryInvest {
     public static final String categoryName = "Insurance";
-    public static final String paramCapital = "capital";
-    public static final String paramTimeLimit = "timeLimit";
-    public static final String paramProductAmount = "productAmount";
 
     @Override
     public InvestResult invest(UserTemperPrefer userInfo, SearchService searchService)  {

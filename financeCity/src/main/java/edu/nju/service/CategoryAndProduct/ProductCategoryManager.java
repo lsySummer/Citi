@@ -42,6 +42,18 @@ public class ProductCategoryManager {
             "index",
             "guaranteed"
     };
+    static private final String[] fundTypeCH = {
+            "股票型",
+            "债券型",
+            "货币型",
+            "混合型",
+            "ETF",
+            "LOF",
+            "FOF",
+            "QDll",
+            "指数型",
+            "保本型"
+    };
     static private final String[] bondInterestType = {
         "附息债", "零息债", "贴现债"
     };
@@ -49,12 +61,12 @@ public class ProductCategoryManager {
     static {
         //init
         categoryList = new ArrayList<>();
-        categoryList.add(new CategoryImpl("Bond", null, null));
-        categoryList.add(new CategoryImpl("Bank", null, null));
-        categoryList.add(new CategoryImpl("Insurance", null, null));
-        categoryList.add(new CategoryImpl("Fund", null, null));
+        categoryList.add(new CategoryImpl("Bond", null, null, "债券"));
+        categoryList.add(new CategoryImpl("Bank", null, null, "理财产品"));
+        categoryList.add(new CategoryImpl("Insurance", null, null, "保险"));
+        categoryList.add(new CategoryImpl("Fund", null, null, "基金"));
         for (int i = 0; i < fundTypEn.length; ++i) {
-            categoryList.add(new CategoryImpl(fundTypEn[i] + "Fund", categoryList.get(3), i));
+            categoryList.add(new CategoryImpl(fundTypEn[i] + "Fund", categoryList.get(3), i, fundTypeCH[i] + "基金"));
         }
     }
 
@@ -135,16 +147,16 @@ public class ProductCategoryManager {
     }
 
     static public String getUnit(String category) {
-        if (category.equals(ProductCategoryManager.categoryBank)) {
+        if (belongTo(category, ProductCategoryManager.categoryBank)) {
             return "元";
         }
-        else if (category.equals(ProductCategoryManager.categoryBond)) {
+        else if (belongTo(category, ProductCategoryManager.categoryBond)) {
             return "手";
         }
-        else if (category.equals(ProductCategoryManager.categoryFund)) {
+        else if (belongTo(category, ProductCategoryManager.categoryFund)) {
             return "份";
         }
-        else if (category.equals(ProductCategoryManager.categoryInsurance)) {
+        else if (belongTo(category, ProductCategoryManager.categoryInsurance)) {
             return "份";
         }
 
@@ -192,8 +204,7 @@ public class ProductCategoryManager {
         return category1.endsWith(category2);
     }
 
-    //TODO:set chinese name
     static public String getChineseName(String category) {
-        return null;
+        return getCategoryByName(category).getChineseName();
     }
 }

@@ -10,7 +10,8 @@ import org.springframework.stereotype.Service;
 public class BaseFunctionAPIFilter implements APIFilter {
     @Override
     public boolean isAvailable(String apiName) {
-        if (apiName.equals("bindUserService") || apiName.equals("invokeAPI") || apiName.equals("getAPIList")) {
+        if (apiName.equals("bindUserService") || apiName.equals("invokeAPI") || apiName.equals("getAPIList") || apiName.equals("bindSearchService")
+                || apiName.equals("getName")) {
             return false;
         }
         else {

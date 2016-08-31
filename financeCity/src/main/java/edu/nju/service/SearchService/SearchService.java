@@ -109,6 +109,4 @@ public interface SearchService extends BaseService{
      * @return user prefer
      */
     UserTemperPrefer getUserTemperPrefer();
-
-    String getProductName(Integer productId);
 }
