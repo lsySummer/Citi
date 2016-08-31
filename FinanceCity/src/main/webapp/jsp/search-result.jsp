@@ -35,6 +35,7 @@
     <title>搜索结果</title>
 </head>
 <body>
+<jsp:include page="header.jsp"></jsp:include>
 <div class="main-content">
     <div class="selection-wrapper">
         <div class="keyword-wrapper">
@@ -559,5 +560,6 @@
         <span class="paging-item">最后一页 <i class="fa fa-long-arrow-right"></i></span>
     </div>
 </div>
+<jsp:include page="footer.jsp"></jsp:include>
 </body>
 </html>
