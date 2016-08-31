@@ -14,6 +14,7 @@ import edu.nju.vo.*;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -39,7 +40,12 @@ public class SearchServiceImpl extends BaseFunctionServiceAdaptor implements Sea
         int index = ProductCategoryManager.getProductItemIndex(ID);
 
         List list = getUserService().getCommonDao().find("FROM Product" + category + " product WHERE product.id=" + index);
-        return ProductFactory.createProduct(list.get(0), category.getCategoryName());
+        if (list == null || list.size() == 0) {
+            return null;
+        }
+        else {
+            return ProductFactory.createProduct(list.get(0), category.getCategoryName());
+        }
     }
 
     @Override
@@ -168,5 +174,28 @@ public class SearchServiceImpl extends BaseFunctionServiceAdaptor implements Sea
         }
 
         return (CategoryIndex)list.get(0);
+    }
+
+    @Override
+    public Product[] getProductsByIds(int[] ids) {
+        List<Product> list = new ArrayList<>();
+
+        for (int id :ids) {
+            try {
+                Product product = getProductByID(id);
+                if (product != null) {
+                    list.add(product);
+                }
+            }
+            catch (NoSuchProductException n) {
+                n.printStackTrace();
+            }
+        }
+        if (list.size() == 0) {
+            return new Product[0];
+        }
+        else {
+            return (Product[]) list.toArray();
+        }
     }
 }

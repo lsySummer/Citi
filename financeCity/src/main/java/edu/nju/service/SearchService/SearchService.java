@@ -97,4 +97,11 @@ public interface SearchService extends BaseService{
      * @return category index
      */
     CategoryIndex getCategoryIndex();
+
+    /**
+     * get products by ids
+     * @param ids .
+     * @return products
+     */
+    Product[] getProductsByIds(int[] ids);
 }

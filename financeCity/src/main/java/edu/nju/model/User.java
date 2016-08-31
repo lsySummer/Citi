@@ -27,6 +27,7 @@ public class User {
     private String city;
     private Timestamp birthday;
     private Integer monthlyExpense;
+    private Integer income;
 
     @Id
     @Column(name = "id")
@@ -188,6 +189,16 @@ public class User {
         this.monthlyExpense = monthlyExpense;
     }
 
+    @Basic
+    @Column(name = "income")
+    public Integer getIncome() {
+        return income;
+    }
+
+    public void setIncome(Integer income) {
+        this.income = income;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -213,6 +224,7 @@ public class User {
         if (birthday != null ? !birthday.equals(user.birthday) : user.birthday != null) return false;
         if (monthlyExpense != null ? !monthlyExpense.equals(user.monthlyExpense) : user.monthlyExpense != null)
             return false;
+        if (income != null ? !income.equals(user.income) : user.income != null) return false;
 
         return true;
     }
@@ -235,6 +247,7 @@ public class User {
         result = 31 * result + (city != null ? city.hashCode() : 0);
         result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
         result = 31 * result + (monthlyExpense != null ? monthlyExpense.hashCode() : 0);
+        result = 31 * result + (income != null ? income.hashCode() : 0);
         return result;
     }
 }

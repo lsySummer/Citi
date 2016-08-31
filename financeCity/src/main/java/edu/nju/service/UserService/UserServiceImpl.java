@@ -6,8 +6,7 @@ import edu.nju.dao.impl.CommonDao;
 import edu.nju.model.User;
 import edu.nju.model.UserLogin;
 import edu.nju.service.BaseService.BaseServiceAdaptor;
-import edu.nju.service.ExceptionsAndError.ErrorManager;
-import edu.nju.service.ExceptionsAndError.NotLoginException;
+import edu.nju.service.ExceptionsAndError.*;
 import edu.nju.service.POJO.RegisterInfo;
 import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.vo.UserVO;
@@ -103,17 +102,16 @@ public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             User user = (User) list.get(0);
 
-            userVO.setIfCity(user.getIfCity() == 1);
-            userVO.setName(user.getName());
+            userVO.setUrben(user.getIfCity() == 1);
+            userVO.setId(user.getId());
+            userVO.setMobile(user.getPhone());
+            userVO.setIncome(user.getIncome());
             userVO.setBirthday(dateFormat.format(user.getBirthday()));
-            userVO.setCityName(user.getCity());
-            userVO.setMonthlyExpense(user.getMonthlyExpense());
-            userVO.setError(ErrorManager.errorNormal);
-            userVO.setMessage(ErrorManager.getDescreption(ErrorManager.errorNormal));
+            userVO.setExpense(user.getMonthlyExpense());
+            ErrorManager.setError(userVO, ErrorManager.errorNormal);
         }
         catch (NotLoginException e) {
-            userVO.setError(ErrorManager.errorNotLogin);
-            userVO.setMessage(ErrorManager.getDescreption(ErrorManager.errorNotLogin));
+            ErrorManager.setError(userVO, ErrorManager.errorNotLogin);
             e.printStackTrace();
         }
 
@@ -128,10 +126,10 @@ public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
 
             user.setUpdateAt(new Timestamp(System.currentTimeMillis()));
             user.setBirthday(Timestamp.valueOf(userVO.getBirthday()));
-            user.setCity(userVO.getCityName());
-            user.setIfCity(userVO.isIfCity() ? (byte) 1 : 0);
-            user.setName(userVO.getName());
-            user.setMonthlyExpense(userVO.getMonthlyExpense());
+            user.setIfCity(userVO.isUrben() ? (byte) 1 : 0);
+            user.setMonthlyExpense(userVO.getExpense());
+            user.setIncome(userVO.getIncome());
+            user.setPhone(userVO.getMobile());
 
             getUserDao(financeCityUser).save(user);
 
@@ -156,13 +154,88 @@ public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
     private String MD5_32(String message) {
         return DigestUtils.md5DigestAsHex(message.getBytes());
     }
-    private boolean validPassword(String password) {
-        //TODO:add judge
-        return false;
+
+    private boolean ifUserExist(String mobile) {
+        List list = getCommonDao().find("FROM User u WHERE u.phone=" + mobile);
+        return  (list.size() > 0);
     }
+
+    private Integer getIDByMobile(String mobile) {
+        List list = getCommonDao().find("SELECT id FROM User u WHERE u.phone=" + mobile);
+        if (list == null || list.size() == 0) {
+            return null;
+        }
+        else {
+            return (Integer)list.get(0);
+        }
+    }
+
 
     @Override
     public CommonDao getCommonDao() {
         return (CommonDao)DAO;
+    }
+
+    @Override
+    public FinanceCityUser register(String mobile, String password, String session) throws InvalidPasswordException, InvalidMobileException, UserAlreadyExistException {
+        if (!validMobile(mobile)){
+            throw new InvalidMobileException();
+        }
+        else if (!validPassword(password)) {
+            throw new InvalidPasswordException();
+        }
+        else if (ifUserExist(mobile)) {
+            throw new UserAlreadyExistException();
+        }
+        else {
+            User user = new User();
+            user.setPhone(mobile);
+            user.setPassword(password);
+            DAO.save(user);
+
+            return login(mobile, password);
+        }
+    }
+
+    @Override
+    public boolean modifyUserInfo(String birthday, int income, boolean isUrben, int expense, FinanceCityUser financeCityUser) {
+        try {
+            List list = getUserDao(financeCityUser).find("From User u WHERE u.id=" + financeCityUser.getID());
+            if (list == null || list.size() == 0) {
+                return false;
+            }
+
+            User user = (User)list.get(0);
+            user.setBirthday(Timestamp.valueOf(birthday));
+            user.setIncome(income);
+            user.setIfCity(isUrben ? (byte)1 : 0);
+            user.setMonthlyExpense(expense);
+
+            getUserDao(financeCityUser).update(user);
+
+            return true;
+        }
+        catch (NotLoginException n) {
+            n.printStackTrace();
+            return false;
+        }
+    }
+
+    private boolean validPassword(String password) {
+        return password.length() >= 8 && password.length() <= 30;
+    }
+
+    private boolean validMobile(String mobile) {
+        return  (mobile.length() == 13 && isNumeric(mobile));
+    }
+
+    private boolean isNumeric(String str) {
+        for (int i = 0; i < str.length(); ++i) {
+            if (!Character.isDigit(str.charAt(i))) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

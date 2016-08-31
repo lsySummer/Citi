@@ -3,7 +3,10 @@ package edu.nju.service.UserService;
 import edu.nju.dao.UserDao;
 import edu.nju.dao.impl.CommonDao;
 import edu.nju.service.BaseService.BaseService;
+import edu.nju.service.ExceptionsAndError.InvalidMobileException;
+import edu.nju.service.ExceptionsAndError.InvalidPasswordException;
 import edu.nju.service.ExceptionsAndError.NotLoginException;
+import edu.nju.service.ExceptionsAndError.UserAlreadyExistException;
 import edu.nju.service.POJO.RegisterInfo;
 import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.vo.UserVO;
@@ -18,9 +21,17 @@ public interface UserService extends BaseService {
     /**
      * register
      * @param regInfo .
-     * @return user id
+     * @return user info
      */
     FinanceCityUser register(RegisterInfo regInfo);
+
+    /**
+     * register
+     * @param mobile .
+     * @param password .
+     * @return user info
+     */
+    FinanceCityUser register(String mobile, String password, String session) throws InvalidPasswordException, InvalidMobileException, UserAlreadyExistException;
 
     /**
      * user login
@@ -48,6 +59,8 @@ public interface UserService extends BaseService {
      * @return if it's successful
      */
     boolean modifyUserInfo(UserVO userVO, FinanceCityUser financeCityUser);
+
+    boolean modifyUserInfo(String birthday, int income, boolean isUrben, int expense, FinanceCityUser financeCityUser);
 
     /**
      * get user dao

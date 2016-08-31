@@ -64,15 +64,13 @@ public class AssetManagementServiceImpl extends BaseFunctionServiceAdaptor imple
                 }
 
                 currentInvestmentVO.setProductVOList(investList);
-                currentInvestmentVO.setError(ErrorManager.errorNormal);
-                currentInvestmentVO.setMessage(ErrorManager.getDescreption(ErrorManager.errorNormal));
+                ErrorManager.setError(currentInvestmentVO, ErrorManager.errorNormal);
             }
 
         }
         catch (NotLoginException e) {
             e.printStackTrace();
-            currentInvestmentVO.setError(ErrorManager.errorNotLogin);
-            currentInvestmentVO.setMessage(ErrorManager.getDescreption(ErrorManager.errorNotLogin));
+            ErrorManager.setError(currentInvestmentVO, ErrorManager.errorNotLogin);
         }
 
         return currentInvestmentVO;
@@ -98,8 +96,7 @@ public class AssetManagementServiceImpl extends BaseFunctionServiceAdaptor imple
             List list = getUserService().getUserDao(financeCityUser).find("FROM TradHistory t WHERE t.userId=" + financeCityUser.getID());
 
             if (list == null || list.size() == 0) {
-                tradeHistoryListVO.setError(ErrorManager.errorDateNotFound);
-                tradeHistoryListVO.setMessage(ErrorManager.getDescreption(ErrorManager.errorDateNotFound));
+                ErrorManager.setError(tradeHistoryListVO, ErrorManager.errorDateNotFound);
             }
 
             List<TradeHistory> tradeHistoryList = (List<TradeHistory>) list;
@@ -124,13 +121,11 @@ public class AssetManagementServiceImpl extends BaseFunctionServiceAdaptor imple
             }
 
             tradeHistoryListVO.setTradeHistoryVOList(tradeHistoryVOList);
-            tradeHistoryListVO.setError(ErrorManager.errorNormal);
-            tradeHistoryListVO.setMessage(ErrorManager.getDescreption(ErrorManager.errorNormal));
+            ErrorManager.setError(tradeHistoryListVO, ErrorManager.errorNormal);
         }
         catch (NotLoginException n) {
             n.printStackTrace();
-            tradeHistoryListVO.setError(ErrorManager.errorNotLogin);
-            tradeHistoryListVO.setMessage(ErrorManager.getDescreption(ErrorManager.errorNotLogin));
+            ErrorManager.setError(tradeHistoryListVO, ErrorManager.errorNotLogin);
         }
 
         return tradeHistoryListVO;

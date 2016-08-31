@@ -73,18 +73,18 @@ public class ServiceManagerImpl implements ServiceManager {
                 tradeService,
                 userService
         };
-        try {
+        //try {
             APIFilter BFAPIFilter = new BaseFunctionAPIFilter();
             for (BaseService service : services) {
                 System.out.println(service);
                 if (service instanceof BaseFunctionService) {
                     ((BaseFunctionService) service).bindUserService(userService);
 
-                    invokerManager.loadService(service, BFAPIFilter);
+                    //invokerManager.loadService(service, BFAPIFilter);
                 }
                 else {
                     /** filter user service's APIs */
-                    invokerManager.loadService(service, new UserServiceAPIFilter());
+                    //invokerManager.loadService(service, new UserServiceAPIFilter());
                 }
 
                 /** build service list */
@@ -99,10 +99,11 @@ public class ServiceManagerImpl implements ServiceManager {
             assetManagementService.bindSearchService(searchService);
 
             System.out.println("Service Manager Init Successfully");
-        }
-        catch (DuplicateFunctionNameException d) {
-            d.printStackTrace();
-        }
+        //}
+        //catch (DuplicateFunctionNameException d) {
+        //    d.printStackTrace();
+        //}
+
 
         serviceManager = this;
     }

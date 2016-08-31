@@ -5,54 +5,68 @@ package edu.nju.vo;
  * 用户
  */
 public class UserVO extends BaseVO {
-	/**姓名*/
-	private String Name;
+	/**ID*/
+	private int id;
+	/**电话*/
+	private String mobile;
 	/**生日*/
-	private String Birthday;
-	/**城市名*/
-	private String CityName;
+	private String birthday;
+	/**收入*/
+	private int income;
 	/**是否是城市*/
-	private boolean IfCity;
+	private boolean isUrben;
 	/**月支出*/
-	private int MonthlyExpense;
+	private int expense;
 
-	public String getName() {
-		return Name;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setName(String name) {
-		Name = name;
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
 	}
 
 	public String getBirthday() {
-		return Birthday;
+		return birthday;
 	}
 
 	public void setBirthday(String birthday) {
-		Birthday = birthday;
+		this.birthday = birthday;
 	}
 
-	public String getCityName() {
-		return CityName;
+	public int getIncome() {
+		return income;
 	}
 
-	public void setCityName(String cityName) {
-		CityName = cityName;
+	public void setIncome(int income) {
+		this.income = income;
 	}
 
-	public boolean isIfCity() {
-		return IfCity;
+	public boolean isUrben() {
+		return isUrben;
 	}
 
-	public void setIfCity(boolean ifCity) {
-		IfCity = ifCity;
+	public void setUrben(boolean urben) {
+		isUrben = urben;
 	}
 
-	public int getMonthlyExpense() {
-		return MonthlyExpense;
+	public int getExpense() {
+		return expense;
 	}
 
-	public void setMonthlyExpense(int monthlyExpense) {
-		MonthlyExpense = monthlyExpense;
+	public void setExpense(int expense) {
+		this.expense = expense;
 	}
 }
