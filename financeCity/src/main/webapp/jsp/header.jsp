@@ -2,11 +2,14 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
-
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+            + path + "/";
+    String url = request.getScheme()+"://"+ request.getServerName()+request.getRequestURI()+"?"+request.getQueryString();
+    request.setAttribute("basePath", basePath);
+%>
 <html>
-<head>
-  <link href="../css/order.css" rel="stylesheet">
-</head>
 <body style="margin: 0">
 <div class="header shadow">
     <div class="container">

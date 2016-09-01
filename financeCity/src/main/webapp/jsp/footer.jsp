@@ -3,9 +3,6 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
 <html>
-<head>
- <link href="../css/order.css" rel="stylesheet">
-</head>
 <body style="margin: 0;">
 <div class="footer shadow">
     <div class="container">
