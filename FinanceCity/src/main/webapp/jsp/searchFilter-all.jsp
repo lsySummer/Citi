@@ -29,7 +29,7 @@
     <link type="text/css" rel="stylesheet" href="css/searchFilter.css"/>
 
     <script type="text/javascript" rel="script" src="js/jquery-2.2.3.min.js"></script>
-    <script type="text/javascript" rel="script" src="../plugins/ion.rangeSlider-master/js/ion.rangeSlider.min.js"></script>
+    <script type="text/javascript" rel="script" src="plugins/ion.rangeSlider-master/js/ion.rangeSlider.min.js"></script>
     <script type="text/javascript" rel="script" src="plugins/bootstrap-toggle-master/js/bootstrap-toggle.min.js"></script>
     <script type="text/javascript" rel="script" src="js/searchFilter-all.js"></script>
 
