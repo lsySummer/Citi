@@ -2,18 +2,18 @@ package edu.nju.control;
 
 import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.ExceptionsAndError.ErrorManager;
-import edu.nju.service.ExceptionsAndError.NoSuchProductException;
+import edu.nju.service.ExceptionsAndError.InvalidParametersException;
+import edu.nju.service.POJO.ProductVOFactory;
 import edu.nju.service.POJO.SearchFilterFactory;
+import edu.nju.service.SearchService.ProductFilter;
 import edu.nju.service.SearchService.SearchService;
 import edu.nju.service.ServiceManagerImpl;
 import edu.nju.vo.ProductDetailVO;
 import edu.nju.vo.ProductsDetailVO;
-import edu.nju.vo.SearchResult;
+import edu.nju.vo.SearchResultVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -87,13 +87,31 @@ public class SearchController {
 
     @RequestMapping(value = "product/s", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public @ResponseBody
-    SearchResult searchProduct(@RequestBody Map map) {
+    SearchResultVO searchProduct(@RequestBody Map map) {
+        SearchService searchService = ServiceManagerImpl.getInstance().getSearchService();
         String key = (String)map.get("keyword");
         String type = (String)map.get("type");
+        SearchResultVO searchResult = new SearchResultVO();
 
-        SearchFilterFactory.createFilter(type, map);
+        try {
+            ProductFilter productFilter = SearchFilterFactory.createFilter(type, map);
+            List<Product> productList = searchService.searchProductsByKey(key);
 
-        return null;
+            ProductVOFactory productVOFactory = new ProductVOFactory();
+            for (Product product : productList) {
+                if (productFilter.isChosen(product.getProduct())) {
+                    productVOFactory.addProduct(product);
+                }
+            }
+
+            searchResult.setData(productVOFactory.getResultList());
+            return searchResult;
+        }
+        catch (InvalidParametersException i) {
+            i.printStackTrace();
+            ErrorManager.setError(searchResult,ErrorManager.errorInvalidParameter);
+            return searchResult;
+        }
     }
 
 }

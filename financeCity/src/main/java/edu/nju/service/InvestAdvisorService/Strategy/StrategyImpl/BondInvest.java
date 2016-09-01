@@ -82,7 +82,7 @@ public class BondInvest implements CategoryInvest{
     private Product findHighestYieldBond(List<Product> productList) {
         Product wanted = productList.get(0);
         for (Product product : productList) {
-            if (((ProductBond)product.getProduct()).getYearRate().doubleValue() > ((ProductBond)wanted.getProduct()).getYearRate().doubleValue()) {
+            if (((ProductBond)product.getProduct()).getAdjustYearlyRate().doubleValue() > ((ProductBond)wanted.getProduct()).getAdjustYearlyRate().doubleValue()) {
                 wanted = product;
             }
         }

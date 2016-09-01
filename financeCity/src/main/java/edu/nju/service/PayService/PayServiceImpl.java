@@ -1,7 +1,12 @@
 package edu.nju.service.PayService;
 
+import edu.nju.model.PayWay;
 import edu.nju.service.BaseService.BaseFunctionServiceAdaptor;
+import edu.nju.service.ExceptionsAndError.NotLoginException;
 import edu.nju.service.POJO.Payment;
+import edu.nju.service.POJO.SimplePayWay;
+import edu.nju.service.Sessions.FinanceCityUser;
+import org.aspectj.weaver.ast.Not;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,5 +25,26 @@ public class PayServiceImpl extends BaseFunctionServiceAdaptor implements PaySer
     @Override
     public boolean payForProducts(List<Payment> payments) {
         return false;
+    }
+
+    @Override
+    public void bindPayWay(SimplePayWay simplePayWay, FinanceCityUser financeCityUser) throws NotLoginException {
+        PayWay payWay = new PayWay();
+        payWay.setPayWay(simplePayWay.getPayment_mode());
+        payWay.setUserId(financeCityUser.getID());
+
+        getUserService().getUserDao(financeCityUser).save(payWay);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<PayWay> getPayWayList(FinanceCityUser financeCityUser) throws NotLoginException {
+        List<PayWay> list = (List<PayWay>)getUserService().getUserDao(financeCityUser).find("FROM PayWay p WHERE p.userId=" + financeCityUser.getID());
+
+        if (list == null || list.size() == 0) {
+            return null;
+        }
+
+        return list;
     }
 }
