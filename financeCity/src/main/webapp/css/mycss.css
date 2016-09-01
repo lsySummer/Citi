@@ -50,3 +50,48 @@
 	width:500px;float:left;margin-top:2%;
 }
 
+.signupContent{
+    width:80%;height:60%;margin-left:10%;margin-top:5%;text-align:center
+}
+
+.inputSize{
+	height:30px;width:250px
+}
+
+.platButton {
+    padding: 5px 30px;
+    border: none;
+    outline: 0;
+    cursor: pointer;
+    color: #fff;
+    background-color: #11b7f3;
+    font-size: 16px;
+}
+
+.wideButton {
+    padding: 5px 150px;
+    border: none;
+    outline: 0;
+    cursor: pointer;
+    color: #fff;
+    background-color: #11b7f3;
+    font-size: 20px;
+}
+
+.signup2Content{
+    width:50%;height:60%;margin-left:30%;margin-top:2%;text-align:left
+}
+
+.signSelector {
+	margin-top:5px;
+    width: 110px;
+    height:26px;
+    font-size: 16px;
+}
+
+.signLongSelector {
+	margin-top:5px;
+    width: 340px;
+     height:26px;
+    font-size: 16px;
+}

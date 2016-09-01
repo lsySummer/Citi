@@ -21,7 +21,7 @@
 			data-target="#mycModal">储蓄式债券</button>
 
 		<button class="btn btn-primary" data-toggle="modal"
-			data-target="#myjModal">记账式债券</button>
+		data-target="#myjModal">记账式债券</button>
 
 		<button class="btn btn-primary" data-toggle="modal"
 			data-target="#mymModal">基金</button>
