@@ -22,13 +22,13 @@
     <mapping class="edu.nju.model.UnpaidItem"/>
     <mapping class="edu.nju.model.TradeHistory"/>
     <mapping class="edu.nju.model.ProductBank"/>
-    <mapping class="edu.nju.model.ProductInsurance"/>
-    <mapping class="edu.nju.model.DeletedPortfolio"/>
+      <mapping class="edu.nju.model.DeletedPortfolio"/>
     <mapping class="edu.nju.model.CategoryIndex"/>
     <mapping class="edu.nju.model.UserFamilySpeeding"/>
     <mapping class="edu.nju.model.UserInformation"/>
     <mapping class="edu.nju.model.Institution"/>
     <mapping class="edu.nju.model.User"/>
+    <mapping class="edu.nju.model.ProductInsurance"/>
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hbm2ddl.auto">update</property> -->
   </session-factory>

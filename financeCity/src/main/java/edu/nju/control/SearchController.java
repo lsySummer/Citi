@@ -3,16 +3,19 @@ package edu.nju.control;
 import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.ExceptionsAndError.ErrorManager;
 import edu.nju.service.ExceptionsAndError.NoSuchProductException;
+import edu.nju.service.POJO.SearchFilterFactory;
 import edu.nju.service.SearchService.SearchService;
 import edu.nju.service.ServiceManagerImpl;
 import edu.nju.vo.ProductDetailVO;
 import edu.nju.vo.ProductsDetailVO;
+import edu.nju.vo.SearchResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Sun YuHao on 2016/8/30.
@@ -80,6 +83,17 @@ public class SearchController {
         productsDetailVO.setData(new Object[0]);
         ErrorManager.setError(productsDetailVO, ErrorManager.errorNormal);
         return productsDetailVO;
+    }
+
+    @RequestMapping(value = "product/s", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public @ResponseBody
+    SearchResult searchProduct(@RequestBody Map map) {
+        String key = (String)map.get("keyword");
+        String type = (String)map.get("type");
+
+        SearchFilterFactory.createFilter(type, map);
+
+        return null;
     }
 
 }

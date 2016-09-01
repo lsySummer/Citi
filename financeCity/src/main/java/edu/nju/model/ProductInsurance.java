@@ -4,14 +4,14 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 /**
- * Created by Sun YuHao on 2016/8/31.
+ * Created by Sun YuHao on 2016/9/1.
  */
 @Entity
 @Table(name = "product_insurance", schema = "citi", catalog = "")
 public class ProductInsurance {
     private int id;
     private String name;
-    private Long institutionManage;
+    private String institutionManage;
     private String riskDesctiption;
     private Integer warrantyPeriod;
     private Integer denomination;
@@ -47,11 +47,11 @@ public class ProductInsurance {
 
     @Basic
     @Column(name = "institution_manage")
-    public Long getInstitutionManage() {
+    public String getInstitutionManage() {
         return institutionManage;
     }
 
-    public void setInstitutionManage(Long institutionManage) {
+    public void setInstitutionManage(String institutionManage) {
         this.institutionManage = institutionManage;
     }
 
