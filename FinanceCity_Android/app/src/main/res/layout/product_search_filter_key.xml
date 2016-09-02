@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/search_filter_key"
+	android:orientation="horizontal"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+
+	<ImageView
+		android:src="@mipmap/side_sign"
+		android:layout_width="10dp"
+		android:layout_height="30dp"
+		android:layout_marginLeft="10dp"
+		android:layout_marginTop="10dp"
+		android:gravity="left"
+		android:id="@+id/side_sign" />
+
+	<TextView
+		android:text="关键字"
+		android:textColor="@color/lightBlue"
+		android:textSize="24sp"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="5dp"
+		android:id="@+id/key_text"/>
+
+	<EditText
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:id="@+id/key_put_in"
+		android:layout_weight="1"
+		android:layout_marginTop="10dp" />
+
+	<Button
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:background="@color/lightBlue"
+		android:text="搜索"
+		android:textColor="@color/white"
+		android:id="@+id/search_button"/>
+
+</LinearLayout>
+
