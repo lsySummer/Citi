@@ -54,7 +54,9 @@
                             <div class="clear"></div>
                         </td>
                         <td>￥300</td>
-                        <td>1</td>
+                        <td>
+                            <input type="text" id="quantity1" name="quantity" value="1"/>
+                        </td>
                         <td class="product-sum">￥300</td>
                         <td><button>删除</button></td>
                     </tr>
@@ -69,7 +71,9 @@
                             <div class="clear"></div>
                         </td>
                         <td>￥300</td>
-                        <td>1</td>
+                        <td>
+                            <input type="text" id="quantity2" name="quantity" value="1"/>
+                        </td>
                         <td class="product-sum">￥300</td>
                         <td><button>删除</button></td>
                     </tr>
@@ -84,7 +88,9 @@
                             <div class="clear"></div>
                         </td>
                         <td>￥300</td>
-                        <td>1</td>
+                        <td>
+                            <input type="text" id="quantity3" name="quantity" value="1"/>
+                        </td>
                         <td class="product-sum">￥300</td>
                         <td><button>删除</button></td>
                     </tr>
@@ -99,11 +105,12 @@
                             <div class="clear"></div>
                         </td>
                         <td>￥300</td>
-                        <td>1</td>
+                        <td>
+                            <input type="text" id="quantity4" name="quantity" value="1"/>
+                        </td>
                         <td class="product-sum">￥300</td>
                         <td><button>删除</button></td>
                     </tr>
-
                 </table>
             </div>
             <div class="clear"></div>

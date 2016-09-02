@@ -15,6 +15,7 @@
     <div class="container">
         <div class="header-square"></div>
         <h1 class="header-title">Invest Go</h1>
+        <input class="search" type="text" placeholder="输入关键词搜索产品" id="search" name="search">
         <div class="header-button">
             <button class="button-style">注册</button>
             <button class="button-style">登录</button>

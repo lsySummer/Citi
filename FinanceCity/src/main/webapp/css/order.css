@@ -69,6 +69,19 @@ p {
     color: #434343;
     outline: 0;
 }
+.header input[type=text] {
+    width: 300px;
+    height: 36px;
+    margin: 10px 100px;
+    padding: 0 20px;
+    border-radius: 18px;
+    border-width: 0;
+    background-color: #eaeaea;
+    color: #707070;
+    font-size: 1rem;
+    font-family: "Microsoft YaHei";
+    outline: 0;
+}
 
 /* main */
 
@@ -173,6 +186,16 @@ table button {
     cursor: pointer;
     background-color: #fff;
     border-radius: 3px;
+}
+
+input[type=text]{
+    width: 40px;
+    height: 20px;
+    padding: 2px;
+    color: #707070;
+    font-size: 0.75rem;
+    font-family: "Microsoft YaHei";
+    outline: 0;
 }
 
 .order-info-confirm tr .product-section {
