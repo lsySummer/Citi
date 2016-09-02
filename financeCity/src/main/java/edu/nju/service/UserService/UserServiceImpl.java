@@ -203,7 +203,7 @@ public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
     }
 
     @Override
-    public FinanceCityUser register(String mobile, String password) throws InvalidPasswordException, InvalidMobileException, UserAlreadyExistException {
+    public FinanceCityUser register(String mobile, String password, String username) throws InvalidPasswordException, InvalidMobileException, UserAlreadyExistException {
         if (!validMobile(mobile)){
             throw new InvalidMobileException();
         }
@@ -217,6 +217,7 @@ public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
             User user = new User();
             user.setPhone(mobile);
             user.setPassword(password);
+            user.setUsername(username);
             DAO.save(user);
 
             return login(mobile, password);

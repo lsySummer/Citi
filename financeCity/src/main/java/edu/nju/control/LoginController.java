@@ -33,15 +33,8 @@ public class LoginController {
             return ret;
         }
 
-        FinanceCityUser financeCityUser = null;
-        try {
-            financeCityUser = userService.login(username, password);
-        }
-        catch (UserNotExistException e) {
-            e.printStackTrace();
-        }
+        FinanceCityUser financeCityUser = userService.login(username, password);
         if (financeCityUser == null) {
-            //TODO:..
             ErrorManager.setError(ret, ErrorManager.errorInvalidPassword);
 
             return ret;

@@ -4,6 +4,7 @@ import edu.nju.service.ExceptionsAndError.*;
 import edu.nju.service.ServiceManagerImpl;
 import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.service.UserService.UserService;
+import edu.nju.vo.UserVO;
 import org.springframework.stereotype.Controller;
 
 /**
@@ -16,13 +17,14 @@ public class UserAction extends BaseAction {
     public String register() {
         String mobile = request.getParameter("mobile");
         String password = request.getParameter("password");
+        String username = request.getParameter("username");
 
-        if (mobile == null || password == null) {
+        if (mobile == null || password == null || username == null) {
             return ERROR;
         }
         UserService userService = ServiceManagerImpl.getInstance().getUserService();
         try {
-            FinanceCityUser financeCityUser = userService.register(mobile, password);
+            FinanceCityUser financeCityUser = userService.register(mobile, password, username);
             session.put("user", financeCityUser);
             ErrorManager.setError(request, ErrorManager.errorNormal);
             return SUCCESS;
@@ -53,20 +55,30 @@ public class UserAction extends BaseAction {
             return ERROR;
         }
 
-        try {
-            UserService userService = ServiceManagerImpl.getInstance().getUserService();
-            FinanceCityUser financeCityUser = userService.login(username, password);
-            session.put("user", financeCityUser);
-            return SUCCESS;
-        }
-        catch (UserNotExistException e) {
-            e.printStackTrace();
-            ErrorManager.setError(request, ErrorManager.errorUserNotExist);
+        UserService userService = ServiceManagerImpl.getInstance().getUserService();
+        FinanceCityUser financeCityUser = userService.login(username, password);
+        if (financeCityUser == null) {
+            ErrorManager.setError(request, ErrorManager.errorLoginFailed);
             return ERROR;
         }
+
+        session.put("user", financeCityUser);
+        ErrorManager.setError(request, ErrorManager.errorNormal);
+        return SUCCESS;
     }
 
     public String getUserVO() {
-        return null;
+        UserService userService = ServiceManagerImpl.getInstance().getUserService();
+
+        FinanceCityUser financeCityUser = (FinanceCityUser) session.get("user");
+        if (financeCityUser == null) {
+            ErrorManager.setError(request, ErrorManager.errorNotLogin);
+            return ERROR;
+        }
+
+        UserVO userVO = userService.getUserVO(financeCityUser);
+        request.setAttribute("userVO", userVO);
+
+        return SUCCESS;
     }
 }
