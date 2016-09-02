@@ -1,7 +1,6 @@
 package edu.nju.action;
 
 import edu.nju.service.ExceptionsAndError.*;
-import edu.nju.service.ServiceManager;
 import edu.nju.service.ServiceManagerImpl;
 import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.service.UserService.UserService;

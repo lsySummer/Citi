@@ -26,7 +26,7 @@ public class ErrorManager {
 
     static {
         errorDescreption = new String[] {
-                "Normal",
+                "",
                 "Not Login",
                 "No Data Found",
                 "Invalid Password",

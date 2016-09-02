@@ -19,6 +19,10 @@ public class CategoryIndex {
     private BigDecimal insuranceMarketValue;
     private BigDecimal bondMarketValue;
     private BigDecimal riskFreeInterest;
+    private Integer baseDayIndex;
+    private Integer basePeriodIndex;
+    private BigDecimal csi300;
+    private BigDecimal baseRate;
 
     @Id
     @Column(name = "id")
@@ -120,6 +124,46 @@ public class CategoryIndex {
         this.riskFreeInterest = riskFreeInterest;
     }
 
+    @Basic
+    @Column(name = "base_day_index")
+    public Integer getBaseDayIndex() {
+        return baseDayIndex;
+    }
+
+    public void setBaseDayIndex(Integer baseDayIndex) {
+        this.baseDayIndex = baseDayIndex;
+    }
+
+    @Basic
+    @Column(name = "base_period_index")
+    public Integer getBasePeriodIndex() {
+        return basePeriodIndex;
+    }
+
+    public void setBasePeriodIndex(Integer basePeriodIndex) {
+        this.basePeriodIndex = basePeriodIndex;
+    }
+
+    @Basic
+    @Column(name = "csi_300")
+    public BigDecimal getCsi300() {
+        return csi300;
+    }
+
+    public void setCsi300(BigDecimal csi300) {
+        this.csi300 = csi300;
+    }
+
+    @Basic
+    @Column(name = "base_rate")
+    public BigDecimal getBaseRate() {
+        return baseRate;
+    }
+
+    public void setBaseRate(BigDecimal baseRate) {
+        this.baseRate = baseRate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -146,6 +190,11 @@ public class CategoryIndex {
             return false;
         if (riskFreeInterest != null ? !riskFreeInterest.equals(that.riskFreeInterest) : that.riskFreeInterest != null)
             return false;
+        if (baseDayIndex != null ? !baseDayIndex.equals(that.baseDayIndex) : that.baseDayIndex != null) return false;
+        if (basePeriodIndex != null ? !basePeriodIndex.equals(that.basePeriodIndex) : that.basePeriodIndex != null)
+            return false;
+        if (csi300 != null ? !csi300.equals(that.csi300) : that.csi300 != null) return false;
+        if (baseRate != null ? !baseRate.equals(that.baseRate) : that.baseRate != null) return false;
 
         return true;
     }
@@ -162,6 +211,10 @@ public class CategoryIndex {
         result = 31 * result + (insuranceMarketValue != null ? insuranceMarketValue.hashCode() : 0);
         result = 31 * result + (bondMarketValue != null ? bondMarketValue.hashCode() : 0);
         result = 31 * result + (riskFreeInterest != null ? riskFreeInterest.hashCode() : 0);
+        result = 31 * result + (baseDayIndex != null ? baseDayIndex.hashCode() : 0);
+        result = 31 * result + (basePeriodIndex != null ? basePeriodIndex.hashCode() : 0);
+        result = 31 * result + (csi300 != null ? csi300.hashCode() : 0);
+        result = 31 * result + (baseRate != null ? baseRate.hashCode() : 0);
         return result;
     }
 }
