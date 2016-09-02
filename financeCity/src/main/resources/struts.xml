@@ -9,6 +9,10 @@
 		<action name="test" class="TestAction">
 		<result name="success">/new.jsp</result>
 		</action>
+		
+		<action name="register" class="RegisterAction">
+			<result name="success">/jsp/signup_step2.jsp</result>
+		</action>
 	</package>
 
 </struts>

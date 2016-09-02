@@ -15,6 +15,11 @@
  <base href="<%=basePath%>">
 <link href="${basePath}css/order.css" rel="stylesheet">
 <link href="${basePath}css/mycss.css" rel="stylesheet">
+<script type="text/javascript">
+var msg = "${requestScope.info}";
+if (msg != "") {
+}
+</script>
  <title>InvestGO</title>
 </head>
 <body>
