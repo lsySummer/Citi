@@ -11,5 +11,7 @@
 		</action>
 	</package>
 
+	<constant name="struts.action.extension" value="action" />
+
 </struts>
 
