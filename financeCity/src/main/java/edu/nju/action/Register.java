@@ -26,7 +26,7 @@ public class Register extends BaseAction{
 		RegisterInfo regInfo = new RegisterInfo();
 		regInfo.setUserName(mobile);
 		regInfo.setPassword(password);
-		userService.register(mobile,password);
+		userService.register(mobile,password,nickname);
 		request.setAttribute("info", "success");
 		return "success";
 	}
