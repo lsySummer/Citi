@@ -12,6 +12,7 @@
 		
 		<action name="register" class="edu.nju.action.UserAction" method="register">
 			<result name="success">/jsp/signup_step2.jsp</result>
+			<result name="error">/jsp/signup_step1.jsp</result>
 		</action>
 	</package>
 

@@ -27,18 +27,17 @@ public class Register extends BaseAction {
 		regInfo.setUserName(mobile);
 		regInfo.setPassword(password);
 		try {
-				userService.register(mobile, password);
+				userService.register(mobile, password,nickname);
 			} catch (InvalidMobileException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				request.setAttribute("failReason", "手机号码不正确");
+				return "fail";
 			} catch (UserAlreadyExistException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				request.setAttribute("failReason", "该手机号已被注册");
+				return "fail";
 			} catch (InvalidPasswordException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				request.setAttribute("failReason", "密码至少为8位");
+				return "fail";
 			}
-		request.setAttribute("info", "success");
 		return "success";
 	}
 }

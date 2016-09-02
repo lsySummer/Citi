@@ -17,7 +17,7 @@ public class UserAction extends BaseAction {
     public String register() {
         String mobile = request.getParameter("mobile");
         String password = request.getParameter("password");
-        String username = request.getParameter("username");
+        String username = request.getParameter("nickname");
 
         if (mobile == null || password == null || username == null) {
             return ERROR;
