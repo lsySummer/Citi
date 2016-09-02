@@ -26,6 +26,7 @@
 			<div class="smallBlock"></div>
 			<span class="blueFont">支付绑定</span>
 			<div class="signup2Content" style="width:350px">
+			<s:form action="signup3" method="post">
 			 <span style="font-size:15px;">支付类型</span><br/><br/>
 				  <input id="radio1" type="radio" name="way" value="1" checked="checked">
                   <label for="radio1" style="font-size:18px;"><span><span></span></span><img src="${basePath}img/card.png" height="25" width="40"></img>&nbsp&nbsp&nbsp银行卡</label>
@@ -36,8 +37,9 @@
                 <br/><br/>
                 <span style="font-size:15px;">支付绑定</span><br/><br/>
                 <span style="font-size:15px;margin-left:30px">具体信息</span><br/><br/>
-                <span style="font-size:15px;color:red">提示信息</span><br/><br/>
+                <span style="font-size:15px;color:red"></span><br/><br/>
                 <button class="wideButton">确定</button>
+                </s:form>
 			</div>
 
 		</div>
