@@ -14,19 +14,30 @@ import edu.nju.service.POJO.RegisterInfo;
 import edu.nju.service.UserService.UserService;
 
 @Controller
-public class Register extends BaseAction{
+public class Register extends BaseAction {
 	@Autowired
 	private UserService userService;
-	
-	public String execute() throws ServletException,IOException, InvalidPasswordException, InvalidMobileException, UserAlreadyExistException{
-		String mobile=request.getParameter("mobile");
-		String verify=request.getParameter("verify");
-		String nickname=request.getParameter("nickname");
-		String password=request.getParameter("password");
+
+	public String execute() throws ServletException, IOException {
+		String mobile = request.getParameter("mobile");
+		String verify = request.getParameter("verify");
+		String nickname = request.getParameter("nickname");
+		String password = request.getParameter("password");
 		RegisterInfo regInfo = new RegisterInfo();
 		regInfo.setUserName(mobile);
 		regInfo.setPassword(password);
-		userService.register(mobile,password);
+		try {
+				userService.register(mobile, password);
+			} catch (InvalidMobileException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (UserAlreadyExistException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvalidPasswordException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		request.setAttribute("info", "success");
 		return "success";
 	}
