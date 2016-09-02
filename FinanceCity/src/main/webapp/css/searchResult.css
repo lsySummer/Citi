@@ -61,7 +61,7 @@ input[type="text"].num-range {
     font-size: 14px;
 }
 
-.line {
+label.line {
     width: 20px;
     height: 1px;
     margin-left: 11px;

@@ -13,6 +13,7 @@
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
             + path + "/";
     String url = request.getScheme()+"://"+ request.getServerName()+request.getRequestURI()+"?"+request.getQueryString();
+    request.setAttribute("basePath", basePath);
 %>
 <html>
 <head>
@@ -20,13 +21,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <link type="text/css" rel="stylesheet" href="plugins/bootstrap-3.3.5-dist/css/bootstrap.min.css"/>
-    <link type="text/css" rel="stylesheet" href="css/buttons.css"/>
-    <link type="text/css" rel="stylesheet" href="plugins/font-awesome-4.6.3/css/font-awesome.min.css"/>
-    <link type="text/css" rel="stylesheet" href="css/common.css"/>
-    <link type="text/css" rel="stylesheet" href="css/searchResult.css"/>
-    <link type="text/css" rel="stylesheet" href="css/order.css"/>
-    <link type="text/css" rel="stylesheet" href="css/mycss.css"/>   
+    <link type="text/css" rel="stylesheet" href="${basePath}plugins/bootstrap-3.3.5-dist/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="${basePath}css/buttons.css"/>
+    <link type="text/css" rel="stylesheet" href="${basePath}plugins/font-awesome-4.6.3/css/font-awesome.min.css"/>
+    <link type="text/css" rel="stylesheet" href="${basePath}css/common.css"/>
+    <link type="text/css" rel="stylesheet" href="${basePath}css/searchResult.css"/>
+    <link type="text/css" rel="stylesheet" href="${basePath}css/order.css"/>
+    <link type="text/css" rel="stylesheet" href="${basePath}css/mycss.css"/>
 
     <script type="text/javascript" rel="script" src="js/jquery.min.js"></script>
     <script type="text/javascript" rel="script" src="plugins/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>

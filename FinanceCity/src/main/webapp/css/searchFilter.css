@@ -1,7 +1,6 @@
 .filter-container {
-    height: 230px;
     margin: 0px auto auto auto;
-    /*padding: 20px 0px;*/
+    padding-bottom: 20px;
     background-color: white;
     box-sizing: border-box;
 }
