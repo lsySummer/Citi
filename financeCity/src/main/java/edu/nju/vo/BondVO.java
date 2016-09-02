@@ -4,19 +4,19 @@ package edu.nju.vo;
  * Created by Sun YuHao on 2016/8/31.
  */
 public class BondVO {
-    int pid;
-    String name;
-    double yearly_interest_rate;
-    double nominal_interest_rate;
-    int life;
-    String type;
-    String code;
+    private Integer pid;
+    private String name;
+    private Double yearly_interest_rate;
+    private Double nominal_interest_rate;
+    private Integer life;
+    private String type;
+    private String code;
 
-    public int getPid() {
+    public Integer getPid() {
         return pid;
     }
 
-    public void setPid(int pid) {
+    public void setPid(Integer pid) {
         this.pid = pid;
     }
 
@@ -28,27 +28,27 @@ public class BondVO {
         this.name = name;
     }
 
-    public double getYearly_interest_rate() {
+    public Double getYearly_interest_rate() {
         return yearly_interest_rate;
     }
 
-    public void setYearly_interest_rate(double yearly_interest_rate) {
+    public void setYearly_interest_rate(Double yearly_interest_rate) {
         this.yearly_interest_rate = yearly_interest_rate;
     }
 
-    public double getNominal_interest_rate() {
+    public Double getNominal_interest_rate() {
         return nominal_interest_rate;
     }
 
-    public void setNominal_interest_rate(double nominal_interest_rate) {
+    public void setNominal_interest_rate(Double nominal_interest_rate) {
         this.nominal_interest_rate = nominal_interest_rate;
     }
 
-    public int getLife() {
+    public Integer getLife() {
         return life;
     }
 
-    public void setLife(int life) {
+    public void setLife(Integer life) {
         this.life = life;
     }
 

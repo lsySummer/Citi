@@ -6,27 +6,23 @@ package edu.nju.vo;
  */
 public class UserVO extends BaseVO {
 	/**ID*/
-	private int id;
+	private Integer id;
 	/**电话*/
 	private String mobile;
 	/**生日*/
 	private String birthday;
 	/**收入*/
-	private int income;
+	private Integer income;
 	/**是否是城市*/
-	private boolean isUrben;
+	private Boolean isUrben;
 	/**月支出*/
-	private int expense;
+	private Integer expense;
 
 	public Integer getId() {
 		return id;
 	}
 
 	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -46,27 +42,27 @@ public class UserVO extends BaseVO {
 		this.birthday = birthday;
 	}
 
-	public int getIncome() {
+	public Integer getIncome() {
 		return income;
 	}
 
-	public void setIncome(int income) {
+	public void setIncome(Integer income) {
 		this.income = income;
 	}
 
-	public boolean isUrben() {
+	public Boolean getUrben() {
 		return isUrben;
 	}
 
-	public void setUrben(boolean urben) {
+	public void setUrben(Boolean urben) {
 		isUrben = urben;
 	}
 
-	public int getExpense() {
+	public Integer getExpense() {
 		return expense;
 	}
 
-	public void setExpense(int expense) {
+	public void setExpense(Integer expense) {
 		this.expense = expense;
 	}
 }

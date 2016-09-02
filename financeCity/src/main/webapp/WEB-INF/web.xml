@@ -42,6 +42,14 @@
     <listener>
 	    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+    
+    <listener>
+        <listener-class>edu.nju.service.Sessions.OnlineUserListener</listener-class>
+    </listener>
+
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
 
 
 	<context-param>

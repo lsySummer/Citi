@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
- * Created by Sun YuHao on 2016/8/31.
+ * Created by Sun YuHao on 2016/9/2.
  */
 @Entity
 @Table(name = "product_fund", schema = "citi", catalog = "")
@@ -13,7 +13,6 @@ public class ProductFund {
     private int id;
     private String name;
     private String productCode;
-    private BigDecimal dayRate;
     private BigDecimal yearlyRtnRate;
     private Byte category;
     private Byte state;
@@ -43,9 +42,6 @@ public class ProductFund {
     private BigDecimal adjustNav;
     private BigDecimal accumNav;
     private Byte operationMode;
-    private BigDecimal assetLiabilityRatio;
-    private BigDecimal institutionNetworthRatio;
-    private BigDecimal stockBondProportion;
     private BigDecimal fundScore;
 
     @Id
@@ -76,16 +72,6 @@ public class ProductFund {
 
     public void setProductCode(String productCode) {
         this.productCode = productCode;
-    }
-
-    @Basic
-    @Column(name = "day_rate")
-    public BigDecimal getDayRate() {
-        return dayRate;
-    }
-
-    public void setDayRate(BigDecimal dayRate) {
-        this.dayRate = dayRate;
     }
 
     @Basic
@@ -379,36 +365,6 @@ public class ProductFund {
     }
 
     @Basic
-    @Column(name = "asset_liability_ratio")
-    public BigDecimal getAssetLiabilityRatio() {
-        return assetLiabilityRatio;
-    }
-
-    public void setAssetLiabilityRatio(BigDecimal assetLiabilityRatio) {
-        this.assetLiabilityRatio = assetLiabilityRatio;
-    }
-
-    @Basic
-    @Column(name = "institution_networth_ratio")
-    public BigDecimal getInstitutionNetworthRatio() {
-        return institutionNetworthRatio;
-    }
-
-    public void setInstitutionNetworthRatio(BigDecimal institutionNetworthRatio) {
-        this.institutionNetworthRatio = institutionNetworthRatio;
-    }
-
-    @Basic
-    @Column(name = "stock_bond_proportion")
-    public BigDecimal getStockBondProportion() {
-        return stockBondProportion;
-    }
-
-    public void setStockBondProportion(BigDecimal stockBondProportion) {
-        this.stockBondProportion = stockBondProportion;
-    }
-
-    @Basic
     @Column(name = "fund_score")
     public BigDecimal getFundScore() {
         return fundScore;
@@ -428,7 +384,6 @@ public class ProductFund {
         if (id != that.id) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (productCode != null ? !productCode.equals(that.productCode) : that.productCode != null) return false;
-        if (dayRate != null ? !dayRate.equals(that.dayRate) : that.dayRate != null) return false;
         if (yearlyRtnRate != null ? !yearlyRtnRate.equals(that.yearlyRtnRate) : that.yearlyRtnRate != null)
             return false;
         if (category != null ? !category.equals(that.category) : that.category != null) return false;
@@ -472,12 +427,6 @@ public class ProductFund {
         if (accumNav != null ? !accumNav.equals(that.accumNav) : that.accumNav != null) return false;
         if (operationMode != null ? !operationMode.equals(that.operationMode) : that.operationMode != null)
             return false;
-        if (assetLiabilityRatio != null ? !assetLiabilityRatio.equals(that.assetLiabilityRatio) : that.assetLiabilityRatio != null)
-            return false;
-        if (institutionNetworthRatio != null ? !institutionNetworthRatio.equals(that.institutionNetworthRatio) : that.institutionNetworthRatio != null)
-            return false;
-        if (stockBondProportion != null ? !stockBondProportion.equals(that.stockBondProportion) : that.stockBondProportion != null)
-            return false;
         if (fundScore != null ? !fundScore.equals(that.fundScore) : that.fundScore != null) return false;
 
         return true;
@@ -488,7 +437,6 @@ public class ProductFund {
         int result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (productCode != null ? productCode.hashCode() : 0);
-        result = 31 * result + (dayRate != null ? dayRate.hashCode() : 0);
         result = 31 * result + (yearlyRtnRate != null ? yearlyRtnRate.hashCode() : 0);
         result = 31 * result + (category != null ? category.hashCode() : 0);
         result = 31 * result + (state != null ? state.hashCode() : 0);
@@ -518,9 +466,6 @@ public class ProductFund {
         result = 31 * result + (adjustNav != null ? adjustNav.hashCode() : 0);
         result = 31 * result + (accumNav != null ? accumNav.hashCode() : 0);
         result = 31 * result + (operationMode != null ? operationMode.hashCode() : 0);
-        result = 31 * result + (assetLiabilityRatio != null ? assetLiabilityRatio.hashCode() : 0);
-        result = 31 * result + (institutionNetworthRatio != null ? institutionNetworthRatio.hashCode() : 0);
-        result = 31 * result + (stockBondProportion != null ? stockBondProportion.hashCode() : 0);
         result = 31 * result + (fundScore != null ? fundScore.hashCode() : 0);
         return result;
     }

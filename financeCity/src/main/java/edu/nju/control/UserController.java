@@ -1,6 +1,7 @@
 package edu.nju.control;
 
 import edu.nju.service.ExceptionsAndError.ErrorManager;
+import edu.nju.service.ExceptionsAndError.NotLoginException;
 import edu.nju.service.ServiceManagerImpl;
 import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.service.UserService.UserService;
@@ -18,12 +19,12 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "/")
 public class UserController {
-    @RequestMapping(value = "api/user", produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "api/user", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     public @ResponseBody
     UserVO getUserVO_android(HttpServletRequest request) {
         UserService userService = ServiceManagerImpl.getInstance().getUserService();
 
-        return userService.getUserVO((FinanceCityUser) request.getSession().getAttribute("user"));
+        return userService.getUserVO((FinanceCityUser) request.getSession(false).getAttribute("user"));
     }
 
     @RequestMapping(value = "user", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
@@ -31,17 +32,31 @@ public class UserController {
     UserVO getUserVO(HttpServletRequest request) {
         UserService userService = ServiceManagerImpl.getInstance().getUserService();
 
-        return userService.getUserVO((FinanceCityUser) request.getSession().getAttribute("user"));
+        try {
+            FinanceCityUser financeCityUser = (FinanceCityUser)request.getSession(false).getAttribute("user");
+            if (financeCityUser == null) {
+                throw new NotLoginException();
+            }
+            return userService.getUserVO(financeCityUser);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            UserVO userVO = new UserVO();
+            ErrorManager.setError(userVO, ErrorManager.errorNotLogin);
+
+            return userVO;
+        }
     }
 
     @RequestMapping(value = "user", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
-    public BaseVO updateUserVO(HttpServletRequest request, @RequestBody Map map) {
+    public @ResponseBody
+    BaseVO updateUserVO(HttpServletRequest request, @RequestBody Map map) {
         UserService userService = ServiceManagerImpl.getInstance().getUserService();
         BaseVO baseVO = new BaseVO();
         try {
             boolean ifSuccess = userService.modifyUserInfo((String)map.get("birthday"), (Integer)map.get("income"),
-                    (Integer)map.get("isUrben") == 1 ? true : false, (Integer)map.get("expense"),
-                    (FinanceCityUser)request.getSession().getAttribute("user"));
+                    (Integer)map.get("isUrben") == 1, (Integer)map.get("expense"),
+                    (FinanceCityUser)request.getSession(false).getAttribute("user"));
 
             if (ifSuccess) {
                 ErrorManager.setError(baseVO, ErrorManager.errorNormal);
@@ -63,7 +78,7 @@ public class UserController {
         BaseVO baseVO = new BaseVO();
 
         try {
-            FinanceCityUser financeCityUser = userService.register((String) map.get("mobile"), (String) map.get("password"), request.getSession().getId());
+            FinanceCityUser financeCityUser = userService.register((String) map.get("mobile"), (String) map.get("password"));
 
             if (financeCityUser != null) {
                 request.getSession(true).setAttribute("user", financeCityUser);

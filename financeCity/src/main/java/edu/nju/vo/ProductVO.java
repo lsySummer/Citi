@@ -20,11 +20,11 @@ public class ProductVO extends BaseVO{
 	/**
 	 * 初始金额
 	 */
-	private double BuyingValue;
+	private Double BuyingValue;
 	/**
 	 * 当前价值
 	 */
-	private double CurrentValue;
+	private Double CurrentValue;
 	/**
 	 * 到期时间
 	 */
@@ -33,6 +33,14 @@ public class ProductVO extends BaseVO{
 	 * 可取时间
 	 */
 	private String CanRedeemDate;
+
+	public String getCanRedeemDate() {
+		return CanRedeemDate;
+	}
+
+	public void setCanRedeemDate(String canRedeemDate) {
+		CanRedeemDate = canRedeemDate;
+	}
 
 	public String getName() {
 		return Name;
@@ -58,19 +66,19 @@ public class ProductVO extends BaseVO{
 		BuyingDate = buyingDate;
 	}
 
-	public double getBuyingValue() {
+	public Double getBuyingValue() {
 		return BuyingValue;
 	}
 
-	public void setBuyingValue(double buyingValue) {
+	public void setBuyingValue(Double buyingValue) {
 		BuyingValue = buyingValue;
 	}
 
-	public double getCurrentValue() {
+	public Double getCurrentValue() {
 		return CurrentValue;
 	}
 
-	public void setCurrentValue(double currentValue) {
+	public void setCurrentValue(Double currentValue) {
 		CurrentValue = currentValue;
 	}
 
@@ -80,13 +88,5 @@ public class ProductVO extends BaseVO{
 
 	public void setEndDate(String endDate) {
 		EndDate = endDate;
-	}
-
-	public String getCanRedeemDate() {
-		return CanRedeemDate;
-	}
-
-	public void setCanRedeemDate(String canRedeemDate) {
-		CanRedeemDate = canRedeemDate;
 	}
 }
