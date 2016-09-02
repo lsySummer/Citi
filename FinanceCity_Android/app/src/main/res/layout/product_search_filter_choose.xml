@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/search_filter_choose"
+	android:orientation="horizontal"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+
+	<ImageView
+		android:src="@mipmap/side_sign"
+		android:layout_width="10dp"
+		android:layout_height="30dp"
+		android:layout_marginLeft="10dp"
+		android:layout_marginTop="10dp"
+		android:gravity="left"
+		android:id="@+id/side_sign" />
+	<TextView
+		android:text="筛 选"
+		android:textColor="@color/lightBlue"
+		android:textSize="24sp"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="5dp"
+		android:id="@+id/key_text"/>
+
+	<Spinner
+		android:layout_width="100dp"
+		android:layout_height="45dp"
+		android:layout_marginTop="0dp"
+		android:id="@+id/destination_master_spinner"
+		android:spinnerMode="dialog" />
+
+	<Spinner
+		android:layout_width="100dp"
+		android:layout_height="45dp"
+		android:layout_marginTop="0dp"
+		android:layout_marginLeft="10dp"
+		android:id="@+id/destination_slaver_spinner"
+		android:spinnerMode="dialog" />
+
+	<Button
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:background="@color/lightBlue"
+		android:text="筛选"
+		android:textColor="@color/white"
+		android:layout_marginLeft="10dp"
+		android:id="@+id/choose_button"/>
+
+</LinearLayout>
+

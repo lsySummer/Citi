@@ -31,14 +31,14 @@ public class PayController {
         return baseVO;
     }
 
-    @RequestMapping(value = "payment/mode", method = RequestMethod.GET, produces = "application/json;cahrset=UTF-8")
+    @RequestMapping(value = "payment/mode", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     public @ResponseBody
     PayWayVO getPayWayList(HttpServletRequest request) {
         PayWayVO payWayVO = new PayWayVO();
 
         try {
             PayService payService = ServiceManagerImpl.getInstance().getPayService();
-            List<PayWay> payWayList = payService.getPayWayList((FinanceCityUser) request.getSession().getAttribute("user"));
+            List<PayWay> payWayList = payService.getPayWayList((FinanceCityUser) request.getSession(false).getAttribute("user"));
 
             if (payWayList == null) {
                 ErrorManager.setError(payWayVO, ErrorManager.errorDateNotFound);

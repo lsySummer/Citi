@@ -4,9 +4,19 @@
 
 <html>
 <head>
-<script src="../js/jquery.min.js"></script>
-<link href="../css/order.css" rel="stylesheet">
-<link href="../css/mycss.css" rel="stylesheet">
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+            + path + "/";
+    String url = request.getScheme()+"://"+ request.getServerName()+request.getRequestURI()+"?"+request.getQueryString();
+    request.setAttribute("basePath", basePath);
+%>
+  <title>InvestGO</title>
+ <base href="<%=basePath%>">
+<link href="${basePath}css/order.css" rel="stylesheet">
+<link href="${basePath}css/mycss.css" rel="stylesheet">
+
+ <title>InvestGO</title>
 </head>
 <body>
 <s:include value="header.jsp"></s:include>

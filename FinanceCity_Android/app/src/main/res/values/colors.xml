@@ -7,4 +7,6 @@
 	<color name="increasingRed">#c23535</color>
 	<color name="decreasingGreen">#56b354</color>
 	<color name="plainText">#232323</color>
+	<color name="lightBlue">#11b7f3</color>
+	<color name="grey">#bbbab0</color>
 </resources>

@@ -4,29 +4,21 @@ package edu.nju.vo;
  * Created by Sun YuHao on 2016/8/31.
  */
 public class FundVO {
-    private int pid;
+    private Integer pid;
     private String name;
-    private double expected_income_rate;
+    private Double expected_income_rate;
     private String state;
-    private int net_value;
+    private Integer net_value;
     private String type;
     private String sid;
-    private double mng_charge_rate;
+    private Double mng_charge_rate;
     private String est_date;
 
-    public String getSid() {
-        return sid;
-    }
-
-    public void setSid(String sid) {
-        this.sid = sid;
-    }
-
-    public int getPid() {
+    public Integer getPid() {
         return pid;
     }
 
-    public void setPid(int pid) {
+    public void setPid(Integer pid) {
         this.pid = pid;
     }
 
@@ -38,11 +30,11 @@ public class FundVO {
         this.name = name;
     }
 
-    public double getExpected_income_rate() {
+    public Double getExpected_income_rate() {
         return expected_income_rate;
     }
 
-    public void setExpected_income_rate(double expected_income_rate) {
+    public void setExpected_income_rate(Double expected_income_rate) {
         this.expected_income_rate = expected_income_rate;
     }
 
@@ -54,11 +46,11 @@ public class FundVO {
         this.state = state;
     }
 
-    public int getNet_value() {
+    public Integer getNet_value() {
         return net_value;
     }
 
-    public void setNet_value(int net_value) {
+    public void setNet_value(Integer net_value) {
         this.net_value = net_value;
     }
 
@@ -70,11 +62,19 @@ public class FundVO {
         this.type = type;
     }
 
-    public double getMng_charge_rate() {
+    public String getSid() {
+        return sid;
+    }
+
+    public void setSid(String sid) {
+        this.sid = sid;
+    }
+
+    public Double getMng_charge_rate() {
         return mng_charge_rate;
     }
 
-    public void setMng_charge_rate(double mng_charge_rate) {
+    public void setMng_charge_rate(Double mng_charge_rate) {
         this.mng_charge_rate = mng_charge_rate;
     }
 

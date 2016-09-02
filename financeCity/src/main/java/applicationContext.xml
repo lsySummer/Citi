@@ -71,6 +71,10 @@
 	<bean id="testServiceImpl"
 		  class="edu.nju.service.Impl">
 	</bean>
+	
+	<bean id="RegisterAction"
+		  class="edu.nju.action.Register">
+	</bean>
 
 	<!--services-->
 	<bean id="serviceManager" class="edu.nju.service.ServiceManagerImpl">
