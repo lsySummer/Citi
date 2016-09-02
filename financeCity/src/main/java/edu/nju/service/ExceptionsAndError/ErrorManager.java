@@ -20,6 +20,7 @@ public class ErrorManager {
     static public final int errorUserNotExist = 8;
     static public final int errorInvalidMobile = 9;
     static public final int errorLoginFailed = 10;
+    static public final int errorInnerDataError = 11;
 
     static private String[] errorDescreption;
 
@@ -35,7 +36,8 @@ public class ErrorManager {
                 "User Already Exist",
                 "User Not Exist",
                 "Invalid Phone Number",
-                "Login Failed"
+                "Login Failed",
+                "Inner Data Error"
         };
     }
 

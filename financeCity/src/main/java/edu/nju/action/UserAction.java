@@ -1,6 +1,7 @@
 package edu.nju.action;
 
 import edu.nju.service.ExceptionsAndError.*;
+import edu.nju.service.ServiceManager;
 import edu.nju.service.ServiceManagerImpl;
 import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.service.UserService.UserService;
@@ -17,7 +18,7 @@ public class UserAction extends BaseAction {
     public String register() {
         String mobile = request.getParameter("mobile");
         String password = request.getParameter("password");
-        String username = request.getParameter("username");
+        String username = request.getParameter("nickname");
 
         if (mobile == null || password == null || username == null) {
             return ERROR;
@@ -80,5 +81,44 @@ public class UserAction extends BaseAction {
         request.setAttribute("userVO", userVO);
 
         return SUCCESS;
+    }
+
+    public String setUserInfoInStep2() {
+        String birthday = request.getParameter("birthday");
+        String isUrben = request.getParameter("isUrben");
+        String income = request.getParameter("income");
+        String expense = request.getParameter("expense");
+
+        if (birthday == null || isUrben == null || income == null || expense == null) {
+            ErrorManager.setError(request, ErrorManager.errorInvalidParameter);
+            return ERROR;
+        }
+
+        UserService userService = ServiceManagerImpl.getInstance().getUserService();
+        try {
+            int income_i = Integer.valueOf(income);
+            int expense_i = Integer.valueOf(expense);
+            boolean isUrben_b = Boolean.valueOf(isUrben);
+
+            FinanceCityUser financeCityUser = (FinanceCityUser)session.get("user");
+            if (financeCityUser == null) {
+                ErrorManager.setError(request, ErrorManager.errorNotLogin);
+                return ERROR;
+            }
+
+            if (userService.modifyUserInfo(birthday, income_i, isUrben_b, expense_i, financeCityUser)) {
+                ErrorManager.setError(request, ErrorManager.errorNormal);
+                return SUCCESS;
+            }
+            else {
+                ErrorManager.setError(request, ErrorManager.errorInnerDataError);
+                return ERROR;
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            ErrorManager.setError(request, ErrorManager.errorInvalidParameter);
+            return ERROR;
+        }
     }
 }
