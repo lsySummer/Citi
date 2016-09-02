@@ -102,31 +102,38 @@
 			<div class="smallBlock"></div>
 			<span class="blueFont">投资偏好</span>
 			<div class="signup2Content">
+			<s:form action="signup4" method="post">
 				<span style="font-size:15px">请输入您想投资的金额(单位：元)</span><br/>
-				<input type="text" style="height:26px;width:340px">
+				<input type="text" style="height:26px;width:340px" name="amount">
                   <br/><br/>
                  	<span style="font-size:15px">请再次输入您想投资的金额(单位：元)</span><br/>
-				<input type="text" style="height:26px;width:340px">
+				<input type="text" style="height:26px;width:340px" name="amount">
                   <br/><br/>
                   <span style="font-size:15px">请选择您的投资期限</span><br/>
-				 <select class="signSelector">
-                    <option>2016</option>
-                    <option>2017</option>
-                    <option>2018</option>
+				 <select class="signSelector" name="year">
+                    <%
+				 	for(int i=2016;i<2026;i++){
+				 %>
+                    <option value=<%=i %>><%=i %></option>
+                    <%} %>
                 </select>
-                <select class="signSelector">
-                    <option>1月</option>
-                    <option>2月</option>
-                    <option>3月</option>
+                <select class="signSelector" name="month">
+                     <%
+				 	for(int i=1;i<13;i++){
+				 %>
+                    <option value=<%=i %>><%=i+"月" %></option>
+                    <%} %>
                 </select>
-                <select class="signSelector">
-                    <option>1日</option>
-                    <option>2日</option>
-                    <option>3日</option>
+                <select class="signSelector" name="day">
+                    <%
+				 	for(int i=1;i<32;i++){
+				 %>
+                    <option value=<%=i %>><%=i+"日" %></option>
+                    <%} %>
                 </select>
                 <br/><br/>
                 <span style="font-size:15px">在此期间是否做好意外大额支出准备</span><br/>
-                <select id="select1" class="signLongSelector" onchange="jump1()">
+                <select id="select1" class="signLongSelector" onchange="jump1()" name="ifPrepare">
                     <option value="1">是</option>
                       	<option value="0">否</option>
                 </select>
@@ -134,7 +141,7 @@
                   
                   <div id="div2" style="display:none">
                   	<span style="font-size:15px">您在此投资期间是否需要专门配置大额支出准备</span><br/>
-                	<select id="select2" class="signLongSelector" onchange="jump2()">
+                	<select id="select2" class="signLongSelector" onchange="jump2()" name="ifBigPre">
                     	<option value="1">不需要</option>
                      	<option value="0">需要</option>
                		 </select>
@@ -143,7 +150,7 @@
                   
                    <div id="div3" style="display:none">
                   	<span style="font-size:15px">请选择专门配置大额支出准备的类型</span><br/>
-                	<select id="select3" class="signLongSelector" onchange="jump3()">
+                	<select id="select3" class="signLongSelector" onchange="jump3()" name="type">
                     	<option value="1">大额资金中途赎回</option>
                      	<option value="0">保险</option>
                		 </select>
@@ -152,33 +159,39 @@
                   
                   <div id="div4" style="display:none">
                   	<span style="font-size:15px">请输入您对预期赎回准备的金额</span><br/>
-                	<input type="text" style="height:26px;width:340px">
+                	<input type="text" style="height:26px;width:340px" name="backAmount">
                   	<br/><br/>
                   </div>
                   
                   <div id="div5" style="display:none">
                     <span style="font-size:15px">请选择您预期赎回时间</span><br/>
-					 <select class="signSelector">
-	                    <option>2016</option>
-	                    <option>2017</option>
-	                    <option>2018</option>
+					 <select class="signSelector" name="backYear">
+	                    <%
+				 	for(int i=2016;i<2026;i++){
+				 %>
+                    <option value=<%=i %>><%=i %></option>
+                    <%} %>
 	                </select>
-	                <select class="signSelector">
-	                    <option>1月</option>
-	                    <option>2月</option>
-	                    <option>3月</option>
+	                <select class="signSelector" name="backMonth">
+	                        <%
+				 	for(int i=1;i<13;i++){
+				 %>
+                    <option value=<%=i %>><%=i+"月" %></option>
+                    <%} %>
 	                </select>
-	                <select class="signSelector">
-	                    <option>1日</option>
-	                    <option>2日</option>
-	                    <option>3日</option>
+	                <select class="signSelector" name="backDay">
+	                     <%
+				 	for(int i=1;i<32;i++){
+				 %>
+                    <option value=<%=i %>><%=i+"日" %></option>
+                    <%} %>
 	                </select>
 	                <br/><br/>
                   </div>
                   
                   <div id="div6" style="display:none">
                   	<span style="font-size:15px">请输入您购买保险金额</span><br/>
-                	<input type="text" style="height:26px;width:340px">
+                	<input type="text" style="height:26px;width:340px" name="asMount">
                   	<br/><br/>
                   </div>
                   
@@ -195,19 +208,26 @@
                   </div>
                   <div>
                    <span style="font-size:15px">请选择您偏好的投资品种</span><br/>
-                <select class="signLongSelector">
-                    <option>保险</option>
-                    <option>基金</option>
+                <select class="signLongSelector" name="preferType">
+                    <option value="insurance">保险</option>
+                    <option value="fund">基金</option>
                 </select>
                   <br/><br/>
                   </div>
                 
-                <span style="font-size:15px;color:red">提示信息</span><br/>
+                <span style="font-size:15px;color:red" id="error"></span><br/>
                 <button class="wideButton">确定</button>
+                </s:form>
 			</div>
 
 		</div>
 	</div>
+	<script type="text/javascript">
+	var msg = "${requestScope.message}";
+	if (msg != "") {
+		document.getElementById('error').innerHTML=msg;
+	}
+</script>
 
 	<s:include value="footer.jsp"></s:include>
 </body>
