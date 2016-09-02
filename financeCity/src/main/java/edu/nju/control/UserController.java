@@ -78,7 +78,7 @@ public class UserController {
         BaseVO baseVO = new BaseVO();
 
         try {
-            FinanceCityUser financeCityUser = userService.register((String) map.get("mobile"), (String) map.get("password"));
+            FinanceCityUser financeCityUser = userService.register((String) map.get("mobile"), (String) map.get("password"), (String)map.get("username"));
 
             if (financeCityUser != null) {
                 request.getSession(true).setAttribute("user", financeCityUser);

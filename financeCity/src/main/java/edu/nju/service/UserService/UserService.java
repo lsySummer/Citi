@@ -28,7 +28,7 @@ public interface UserService extends BaseService {
      * @param password .
      * @return user info
      */
-    FinanceCityUser register(String mobile, String password) throws InvalidPasswordException, InvalidMobileException, UserAlreadyExistException;
+    FinanceCityUser register(String mobile, String password, String username) throws InvalidPasswordException, InvalidMobileException, UserAlreadyExistException;
 
     /**
      * user login
@@ -36,7 +36,7 @@ public interface UserService extends BaseService {
      * @param password .
      * @return user id
      */
-    FinanceCityUser login(String userName, String password) throws UserNotExistException;
+    FinanceCityUser login(String userName, String password);
 
     /**
      * user logout
