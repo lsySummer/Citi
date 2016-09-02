@@ -4,18 +4,49 @@
 
 <html>
 <head>
-<link href="../css/bootstrap.min.css" rel="stylesheet">
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+            + path + "/";
+    String url = request.getScheme()+"://"+ request.getServerName()+request.getRequestURI()+"?"+request.getQueryString();
+    request.setAttribute("basePath", basePath);
+%>
+  <title>InvestGO</title>
+ <base href="<%=basePath%>">
 
-<script src="../js/jquery.min.js"></script>
-<script src="../js/bootstrap.min.js"></script>
-<link href="../css/order.css" rel="stylesheet">
-<link href="../css/mycss.css" rel="stylesheet">
+
+    <link type="text/css" rel="stylesheet" href="${basePath}plugins/bootstrap-3.3.5-dist/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="${basePath}plugins/bootstrap-toggle-master/css/bootstrap-toggle.min.css"/>
+    <link type="text/css" rel="stylesheet" href="${basePath}plugins/ion.rangeSlider-master/css/ion.rangeSlider.css"/>
+    <link type="text/css" rel="stylesheet" href="${basePath}plugins/ion.rangeSlider-master/css/ion.rangeSlider.skinFlat.css"/>
+    <link type="text/css" rel="stylesheet" href="${basePath}css/order.css"/>
+  <link type="text/css" rel="stylesheet" href="${basePath}css/mycss.css"/>
+    <script type="text/javascript" rel="script" src="js/jquery.min.js"></script>
+    <script type="text/javascript" rel="script" src="plugins/bootstrap-toggle-master/js/bootstrap-toggle.min.js"></script>
+    <script type="text/javascript" rel="script" src="plugins/ion.rangeSlider-master/js/ion.rangeSlider.min.js"></script>
+    <script type="text/javascript" rel="script" src="js/signup-step.js"></script>
 
 <script type="text/javascript">
   function jump1(){
 	  if(document.getElementById('select1').value=="0"){
 		  var showDiv=document.getElementById('div2');
 		  showDiv.style.display="";
+	  }else{
+		  if(document.getElementById('div2')!=null){
+			  document.getElementById('div2').style.display="none";
+		  }
+		  if(document.getElementById('div3')!=null){
+			  document.getElementById('div3').style.display="none";
+		  }
+		  if(document.getElementById('div4')!=null){
+			  document.getElementById('div4').style.display="none";
+		  }
+		  if(document.getElementById('div5')!=null){
+			  document.getElementById('div5').style.display="none";
+		  }
+		  if(document.getElementById('div6')!=null){
+			  document.getElementById('div6').style.display="none";
+		  }
 	  }
   }
   
@@ -27,6 +58,19 @@
 		  showDiv2.style.display="";
 		  var showDiv3=document.getElementById('div5');
 		  showDiv3.style.display="";
+	  }else{
+		  if(document.getElementById('div3')!=null){
+			  document.getElementById('div3').style.display="none";
+		  }
+		  if(document.getElementById('div4')!=null){
+			  document.getElementById('div4').style.display="none";
+		  }
+		  if(document.getElementById('div5')!=null){
+			  document.getElementById('div5').style.display="none";
+		  }
+		  if(document.getElementById('div6')!=null){
+			  document.getElementById('div6').style.display="none";
+		  }
 	  }
   }
   
@@ -37,7 +81,14 @@
 		  var showDiv2=document.getElementById('div5');
 		  showDiv2.style.display="none";
 		  var showDiv3=document.getElementById('div6');
+		  showDiv3.style.display="";
+	  }else{
+		  var showDiv=document.getElementById('div4');
 		  showDiv.style.display="";
+		  var showDiv2=document.getElementById('div5');
+		  showDiv2.style.display="";
+		  var showDiv3=document.getElementById('div6');
+		  showDiv3.style.display="none";
 	  }
   }
 </script>
@@ -131,15 +182,15 @@
                   	<br/><br/>
                   </div>
                   
-                  <div>
+                  <div style="width:340px">
                   	<span style="font-size:15px">您愿意承受多大的风险</span><br/>
-                	<input type="text" style="height:26px;width:340px">
+                    <input type="text" id="risk" name="risk" value="" class="input-add-on-field"/>
                   	<br/><br/>
                   </div>
                   
-                   <div>
+                   <div style="width:340px">
                    	<span style="font-size:15px">您预期的收益率是多少</span><br/>
-                	<input type="text" style="height:26px;width:340px">
+                	 <input type="text" id="income" name="income" value="" class="input-add-on-field"/>
                   	<br/><br/>
                   </div>
                   <div>
