@@ -5,18 +5,30 @@ import edu.nju.service.ExceptionsAndError.*;
 import edu.nju.service.ServiceManagerImpl;
 import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.service.UserService.UserService;
+import edu.nju.service.Utils.JsonUtil;
+import edu.nju.vo.BaseVO;
 import edu.nju.vo.UserVO;
+import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.Map;
 
 /**
  * Created by Sun YuHao on 2016/9/2.
  */
 @Controller
 public class UserAction extends BaseAction {
+    private final String default_after_login = "/jsp/search-result.jsp";
+    private BaseVO message;
+
+    public BaseVO getMessage() {
+        return message;
+    }
+
     @SuppressWarnings("unchecked")
     public String register() {
         String mobile = request.getParameter("mobile");
@@ -71,6 +83,7 @@ public class UserAction extends BaseAction {
         setReferURL(financeCityUser);
         ErrorManager.setError(request, ErrorManager.errorNormal);
         return SUCCESS;
+
     }
 
     @SuppressWarnings("unchecked")
@@ -247,16 +260,8 @@ public class UserAction extends BaseAction {
 
     private String getRefererURL(HttpServletRequest request) {
         String url = request.getHeader("Referer");
-        url = url.replace("http://localhost:8080", "");
+        url = toNeededURI(url);
         return url;
-        /*
-       String url = request.getRequestURL().toString();
-        if (url.endsWith("action")) {
-            url = url.substring(0, url.length() - "action".length()) + "jsp";
-        }
-
-        return url;
-        */
     }
 
     public String getRefer_url() {
@@ -265,14 +270,25 @@ public class UserAction extends BaseAction {
 
     @SuppressWarnings("unchecked")
     private void setReferURL(FinanceCityUser financeCityUser) {
-        session.putIfAbsent("refer_url", "/jsp/search_result.jsp");
+        if ((!session.containsKey("refer_url")) || ((String)session.get("refer_url")).contains("signup")) {
+            session.put("refer_url", default_after_login);
+        }
+    }
 
     
     @SuppressWarnings("unchecked")
 	public String loginURL() {
     	 String refer_url = request.getHeader("Referer");
+         refer_url = toNeededURI(refer_url);
     	 session.put("refer_url", refer_url);
     	 System.out.println(refer_url);
     	 return SUCCESS;
+    }
+
+    private String toNeededURI(String url) {
+        if (url == null) {
+            return null;
+        }
+        return url.replace("http://localhost:8080", "");
     }
 }

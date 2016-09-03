@@ -21,6 +21,7 @@ public class ErrorManager {
     static public final int errorInvalidMobile = 9;
     static public final int errorLoginFailed = 10;
     static public final int errorInnerDataError = 11;
+    static public final int errorUnhandledMethod = 12;
 
     static private String[] errorDescreption;
     static private String[] errorDescreptionCH;
@@ -38,7 +39,8 @@ public class ErrorManager {
                 "User Not Exist",
                 "Invalid Phone Number",
                 "Login Failed",
-                "Inner Data Error"
+                "Inner Data Error",
+                "Unhandled Method"
         };
         errorDescreptionCH = new String[] {
                 "",
@@ -52,7 +54,8 @@ public class ErrorManager {
                 "该用户不存在",
                 "无效的手机号",
                 "登录失败",
-                "内部数据错误"
+                "内部数据错误",
+                "未处理的提交方式"
         };
     }
 

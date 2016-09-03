@@ -13,7 +13,6 @@ public class ProductBank {
     private int id;
     private String name;
     private String institutionManage;
-    private Byte type;
     private Integer purchaseThreshold;
     private Integer increasingUnit;
     private Integer length;
@@ -41,6 +40,8 @@ public class ProductBank {
     private String objectOriented;
     private Integer sizeUpperLimit;
     private Byte incomeType;
+    private Byte ifNavType;
+    private Byte ifClose;
 
     @Id
     @Column(name = "id")
@@ -70,16 +71,6 @@ public class ProductBank {
 
     public void setInstitutionManage(String institutionManage) {
         this.institutionManage = institutionManage;
-    }
-
-    @Basic
-    @Column(name = "type")
-    public Byte getType() {
-        return type;
-    }
-
-    public void setType(Byte type) {
-        this.type = type;
     }
 
     @Basic
@@ -352,6 +343,26 @@ public class ProductBank {
         this.incomeType = incomeType;
     }
 
+    @Basic
+    @Column(name = "if_NAV_type")
+    public Byte getIfNavType() {
+        return ifNavType;
+    }
+
+    public void setIfNavType(Byte ifNavType) {
+        this.ifNavType = ifNavType;
+    }
+
+    @Basic
+    @Column(name = "if_close")
+    public Byte getIfClose() {
+        return ifClose;
+    }
+
+    public void setIfClose(Byte ifClose) {
+        this.ifClose = ifClose;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -363,7 +374,6 @@ public class ProductBank {
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (institutionManage != null ? !institutionManage.equals(that.institutionManage) : that.institutionManage != null)
             return false;
-        if (type != null ? !type.equals(that.type) : that.type != null) return false;
         if (purchaseThreshold != null ? !purchaseThreshold.equals(that.purchaseThreshold) : that.purchaseThreshold != null)
             return false;
         if (increasingUnit != null ? !increasingUnit.equals(that.increasingUnit) : that.increasingUnit != null)
@@ -399,6 +409,8 @@ public class ProductBank {
         if (sizeUpperLimit != null ? !sizeUpperLimit.equals(that.sizeUpperLimit) : that.sizeUpperLimit != null)
             return false;
         if (incomeType != null ? !incomeType.equals(that.incomeType) : that.incomeType != null) return false;
+        if (ifNavType != null ? !ifNavType.equals(that.ifNavType) : that.ifNavType != null) return false;
+        if (ifClose != null ? !ifClose.equals(that.ifClose) : that.ifClose != null) return false;
 
         return true;
     }
@@ -408,7 +420,6 @@ public class ProductBank {
         int result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (institutionManage != null ? institutionManage.hashCode() : 0);
-        result = 31 * result + (type != null ? type.hashCode() : 0);
         result = 31 * result + (purchaseThreshold != null ? purchaseThreshold.hashCode() : 0);
         result = 31 * result + (increasingUnit != null ? increasingUnit.hashCode() : 0);
         result = 31 * result + (length != null ? length.hashCode() : 0);
@@ -436,6 +447,8 @@ public class ProductBank {
         result = 31 * result + (objectOriented != null ? objectOriented.hashCode() : 0);
         result = 31 * result + (sizeUpperLimit != null ? sizeUpperLimit.hashCode() : 0);
         result = 31 * result + (incomeType != null ? incomeType.hashCode() : 0);
+        result = 31 * result + (ifNavType != null ? ifNavType.hashCode() : 0);
+        result = 31 * result + (ifClose != null ? ifClose.hashCode() : 0);
         return result;
     }
 }

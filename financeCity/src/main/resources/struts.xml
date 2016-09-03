@@ -42,6 +42,64 @@
 			<result name="login">/jsp/login.jsp</result>
 		</action>
 	</package>
+	
+	<package name="android" extends="json-default">
+		<action name="user" class="edu.nju.action.AndroidUserAction" method="api_User">
+			<result name="success" type="json">
+				<param name="root">result</param>
+				<param name="ignoreHierarchy">false</param>
+            </result>
+		</action>
+
+		<action name="login" class="edu.nju.action.AndroidUserAction" method="login">
+			<result name="success" type="json">
+				<param name="root">result</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+
+		<action name="product/infos" class="edu.nju.action.AndroidSearchAction" method="getProductsByIds">
+			<result name="success" type="json">
+				<param name="root">result</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+
+		<action name="product/info" class="edu.nju.action.AndroidSearchAction" method="findProductById">
+			<result name="success" type="json">
+				<param name="root">result</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+
+		<action name="product/s" class="edu.nju.action.AndroidSearchAction" method="searchProducts">
+			<result name="success" type="json">
+				<param name="root">result</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+
+		<action name="payment/mode" class="edu.nju.action.AndroidPayAction" method="payMode">
+			<result name="success" type="json">
+				<param name="root">result</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+
+		<action name="asset/history" class="edu.nju.action.AndroidAssetAction" method="getHistoryVO">
+			<result name="success" type="json">
+				<param name="root">result</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+
+		<action name="investment" class="edu.nju.action.AndroidAssetAction" method="getCurrentInvestmentVO">
+			<result name="success" type="json">
+				<param name="root">result</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+	</package>
 
 	<constant name="struts.action.extension" value="action" />
 

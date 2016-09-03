@@ -1,30 +1,24 @@
-package edu.nju.control;
+package edu.nju.action;
 
 import edu.nju.service.SearchService.SearchService;
 import edu.nju.service.ServiceManagerImpl;
-import edu.nju.service.Utils.UnitTransformation;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Sun YuHao on 2016/9/1.
+ * Created by Sun YuHao on 2016/9/3.
  */
-@Controller
-@RequestMapping(value = "/")
-public class BuyController {
-    @SuppressWarnings("unchecked")
-    @RequestMapping(value = "order", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
-    public @ResponseBody
-    String getOrderPrice(@RequestBody Map map) {
+public class AndroidBuyAction extends AndroidAction {
+    public String getOrderPrice() {
+        Map map = getRequestMap();
+
         SearchService searchService = ServiceManagerImpl.getInstance().getSearchService();
 
         try {
             List<Map> productList = (List<Map>)map.get("product_list");
             if (productList.size() == 0) {
-                return "Error:产品列表为空";
+                setTextResult("Error:产品列表为空");
             }
 
             double count;
@@ -42,15 +36,17 @@ public class BuyController {
 
             count = searchService.getCost(id, amount);
             if (count < 0) {
-                return "Error:参数错误";
+                setTextResult("Error:参数错误");
             }
             else {
-                return String.valueOf(count);
+                setTextResult(String.valueOf(count));
             }
         }
         catch (Exception e) {
             e.printStackTrace();
-            return "Error:计算总价时发生异常";
+            setTextResult("Error:计算总价时发生异常");
         }
+
+        return SUCCESS;
     }
 }

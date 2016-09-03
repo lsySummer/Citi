@@ -182,13 +182,11 @@ public class ProductCategoryManager {
     }
 
     static public boolean ifNetBankProduct(ProductBank bank) {
-        byte word = bank.getType();
-        return  (((word >> 1) & 1) == 1);
+        return bank.getIfNavType() == 1;
     }
 
     static public boolean ifClosedBankProduct(ProductBank bank) {
-        byte word = bank.getType();
-        return (word & 1) == 1;
+        return bank.getIfClose() == 1;
     }
 
     static private String getFundType(Product product) {
