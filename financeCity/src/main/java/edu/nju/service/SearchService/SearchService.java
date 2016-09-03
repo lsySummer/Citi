@@ -104,4 +104,12 @@ public interface SearchService extends BaseService{
      * @return products
      */
     Product[] getProductsByIds(int[] ids);
+
+    /**
+     * get cost of products
+     * @param id .
+     * @param amount .
+     * @return cost
+     */
+    double getCost(int[] id, int[] amount);
 }

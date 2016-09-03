@@ -20,9 +20,28 @@ import java.util.Map;
  * Created by Sun YuHao on 2016/8/31.
  */
 public class SearchFilterFactory {
-    static public ProductFilter createFilter(String type, Map map) {
-        return null;
+    static public ProductFilter createFilter(String type, Map map) throws InvalidParametersException {
+        if (type.equals("bond")) {
+            return createBondFilter(map);
+        }
+        else if (type.equals("bank")) {
+            return createBankFilter(map);
+        }
+        else if (type.equals("fund")) {
+            return createFundFilter(map);
+        }
+        else if (type.equals("insurance")) {
+            return createInsurance(map);
+        }
+        else if (type.equals("all")) {
+            return createAllFilter(map);
+        }
+        else {
+            throw new InvalidParametersException("createFilter(" + type + ")");
+        }
     }
+
+    //TODO:check interest rate票面利率 实际利率 or something
 
     @SuppressWarnings("unchecked")
     static private ProductFilter createAllFilter(Map map) throws InvalidParametersException {
@@ -68,7 +87,7 @@ public class SearchFilterFactory {
                 else if (product instanceof ProductBond) {
                     //TODO:if close
                     ProductBond productBond = (ProductBond)product;
-                    return  (productBond.getYearRate().doubleValue() >= year_rate[0] && productBond.getYearRate().doubleValue() <= year_rate[1] &&
+                    return  (productBond.getAdjustYearlyRate().doubleValue() >= year_rate[0] && productBond.getAdjustYearlyRate().doubleValue() <= year_rate[1] &&
                             productBond.getLength() >= expiration[0] && productBond.getLength() <= expiration[1] &&
                             (is_closed_ended == null || false));
                 }
@@ -154,7 +173,7 @@ public class SearchFilterFactory {
                 ProductBond productBond = (ProductBond)product;
 
                 //TODO:judge date
-                return (productBond.getYearRate().doubleValue() >= year_rate[0] && productBond.getYearRate().doubleValue() <=  year_rate[1] &&
+                return (productBond.getAdjustYearlyRate().doubleValue() >= year_rate[0] && productBond.getAdjustYearlyRate().doubleValue() <=  year_rate[1] &&
                 productBond.getLength() >= expiration[0] && productBond.getLength() <= expiration[1] &&
                         (expiration_date == null || expiration_date.after(productBond.getMaturityDate())) &&
                         (state == null || state.equals(productBond.getState())));

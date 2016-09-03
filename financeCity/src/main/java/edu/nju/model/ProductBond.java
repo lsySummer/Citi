@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
- * Created by Sun YuHao on 2016/8/31.
+ * Created by Sun YuHao on 2016/9/1.
  */
 @Entity
 @Table(name = "product_bond", schema = "citi", catalog = "")
@@ -28,7 +28,6 @@ public class ProductBond {
     private BigDecimal denomination;
     private BigDecimal issuePrice;
     private BigDecimal currenctValue;
-    private BigDecimal yearRate;
     private Byte releaseObject;
     private Byte couponType;
     private Byte couponFreq;
@@ -227,16 +226,6 @@ public class ProductBond {
     }
 
     @Basic
-    @Column(name = "year_rate")
-    public BigDecimal getYearRate() {
-        return yearRate;
-    }
-
-    public void setYearRate(BigDecimal yearRate) {
-        this.yearRate = yearRate;
-    }
-
-    @Basic
     @Column(name = "release_object")
     public Byte getReleaseObject() {
         return releaseObject;
@@ -426,7 +415,6 @@ public class ProductBond {
         if (issuePrice != null ? !issuePrice.equals(that.issuePrice) : that.issuePrice != null) return false;
         if (currenctValue != null ? !currenctValue.equals(that.currenctValue) : that.currenctValue != null)
             return false;
-        if (yearRate != null ? !yearRate.equals(that.yearRate) : that.yearRate != null) return false;
         if (releaseObject != null ? !releaseObject.equals(that.releaseObject) : that.releaseObject != null)
             return false;
         if (couponType != null ? !couponType.equals(that.couponType) : that.couponType != null) return false;
@@ -473,7 +461,6 @@ public class ProductBond {
         result = 31 * result + (denomination != null ? denomination.hashCode() : 0);
         result = 31 * result + (issuePrice != null ? issuePrice.hashCode() : 0);
         result = 31 * result + (currenctValue != null ? currenctValue.hashCode() : 0);
-        result = 31 * result + (yearRate != null ? yearRate.hashCode() : 0);
         result = 31 * result + (releaseObject != null ? releaseObject.hashCode() : 0);
         result = 31 * result + (couponType != null ? couponType.hashCode() : 0);
         result = 31 * result + (couponFreq != null ? couponFreq.hashCode() : 0);

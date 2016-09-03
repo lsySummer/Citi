@@ -3,6 +3,7 @@ package edu.nju.service.CategoryAndProduct;
 import edu.nju.model.ProductBank;
 import edu.nju.model.ProductBond;
 import edu.nju.model.ProductFund;
+import edu.nju.model.ProductInsurance;
 import org.python.antlr.ast.Str;
 import org.springframework.stereotype.Service;
 
@@ -154,13 +155,30 @@ public class ProductCategoryManager {
             return "手";
         }
         else if (belongTo(category, ProductCategoryManager.categoryFund)) {
-            return "份";
+            return "元";
         }
         else if (belongTo(category, ProductCategoryManager.categoryInsurance)) {
             return "份";
         }
 
         return null;
+    }
+
+    static public String getBankIncomeTypeInChinese(ProductBank bank) {
+        switch (bank.getIncomeType()) {
+            case 0:
+                return "保本收益型";
+            case 1:
+                return "保本浮动收益型";
+            case 2:
+                return "非保本浮动收益型";
+            default:
+                return "";
+        }
+    }
+
+    static public String getBankType(ProductBank bank) {
+        return (ifClosedBankProduct(bank) ? "封闭式" : "开放式") + (ifNetBankProduct(bank) ? "净值型" : "非净值型");
     }
 
     static public boolean ifNetBankProduct(ProductBank bank) {
@@ -190,6 +208,30 @@ public class ProductCategoryManager {
         }
 
         return null;
+    }
+
+    static public String getFundState(ProductFund productFund) {
+        switch (productFund.getState()) {
+            case 0:
+                return "申购中";
+            case 1:
+                return "认购中";
+            case 2:
+                return "已关闭";
+            default:
+                return "";
+        }
+    }
+
+    static public String getInsurancePayType(ProductInsurance productInsurance) {
+        switch (productInsurance.getPayType()) {
+            case 0:
+                return "一次缴清";
+            case 1:
+                return "分期缴清";
+            default:
+                return "";
+        }
     }
 
     static public boolean subCategoryOf(Category category1, String category2) {

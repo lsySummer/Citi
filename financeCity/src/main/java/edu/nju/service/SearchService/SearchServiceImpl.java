@@ -10,6 +10,7 @@ import edu.nju.service.ExceptionsAndError.NoSuchProductException;
 import edu.nju.service.CategoryAndProduct.Category;
 import edu.nju.service.CategoryAndProduct.ProductCategoryManager;
 import edu.nju.service.ExceptionsAndError.NotLoginException;
+import edu.nju.service.Utils.UnitTransformation;
 import edu.nju.vo.*;
 import org.springframework.stereotype.Service;
 
@@ -196,6 +197,32 @@ public class SearchServiceImpl extends BaseFunctionServiceAdaptor implements Sea
         }
         else {
             return (Product[]) list.toArray();
+        }
+    }
+
+    @Override
+    public double getCost(int[] id, int[] amount) {
+        if (id.length == 0 || id.length != amount.length) {
+            return -1;
+        }
+
+        try {
+            double cost = 0;
+            Product[] products = getProductsByIds(id);
+
+            for (int i = 0; i < products.length; ++i) {
+
+                double one_cost = UnitTransformation.calcuCost(products[i], amount[i]);
+                if (one_cost < 0) {
+                    return -1;
+                }
+            }
+
+            return cost;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return -1;
         }
     }
 }
