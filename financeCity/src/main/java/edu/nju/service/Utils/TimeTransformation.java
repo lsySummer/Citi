@@ -1,5 +1,6 @@
 package edu.nju.service.Utils;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 /**
@@ -26,5 +27,12 @@ public class TimeTransformation {
         }
 
         return ((double)timestamp.getTime() - System.currentTimeMillis()) / castType;
+    }
+
+    static public double getTimeFromNow(Date date, char type) {
+        String time = date.toString() + " 00:00:00";
+        Timestamp timestamp = Timestamp.valueOf(time);
+
+        return getTimeFromNow(timestamp, type);
     }
 }

@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -39,10 +40,10 @@ public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
         /** match username and password */
         List list;
         if (validMobile(userName)) {
-            list = DAO.login("SELECT user.username FROM User user WHERE user.phone=? AND user.password=?", userName, password);
+            list = DAO.login("FROM User user WHERE user.phone=? AND user.password=?", userName, password);
         }
         else {
-            list = DAO.login("SELECT user.username FROM User user WHERE user.username=? AND user.password=?", userName, password);
+            list = DAO.login("FROM User user WHERE user.username=? AND user.password=?", userName, password);
         }
 
         /** if login failed */
@@ -51,8 +52,9 @@ public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
         }
         /** if succeed */
         else {
+            User user = (User)list.get(0);
             FinanceCityUser financeCityUser = new FinanceCityUser();
-            financeCityUser.setID((Integer)list.get(0));
+            financeCityUser.setID(user.getId());
             /** online */
             UserLogin userLogin = new UserLogin();
             userLogin.setUserId(financeCityUser.getID());
@@ -63,7 +65,7 @@ public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
             userLogin.setSession(session);
             DAO.saveOrUpdate(userLogin);
 
-            String nickname = (String)list.get(0);
+            String nickname = user.getUsername();
             financeCityUser.setUserName(nickname);
 
             return financeCityUser;
@@ -150,7 +152,7 @@ public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
         User user = (User) list.get(0);
 
         user.setUpdateAt(new Timestamp(System.currentTimeMillis()));
-        user.setBirthday(Timestamp.valueOf(userVO.getBirthday()));
+        user.setBirthday(Date.valueOf(userVO.getBirthday()));
         if (userVO.getUrben() == null) {
             user.setIfCity(null);
         }
@@ -230,7 +232,7 @@ public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
         }
 
         User user = (User)list.get(0);
-        user.setBirthday(Timestamp.valueOf(birthday));
+        user.setBirthday(Date.valueOf(birthday));
         user.setIncome(income);
         user.setIfCity(isUrben ? (byte)1 : 0);
         user.setMonthlyExpense(expense);
@@ -240,6 +242,7 @@ public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
 
     @Override
     public void setUserTemperPrefer(UserTemperPrefer userTemperPrefer, FinanceCityUser financeCityUser) throws NotLoginException {
+        userTemperPrefer.setUserId(financeCityUser.getID());
         getUserDao(financeCityUser).save(userTemperPrefer);
     }
 

@@ -2,7 +2,7 @@ package edu.nju.model;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.sql.Date;
 
 /**
  * Created by Sun YuHao on 2016/9/3.
@@ -12,18 +12,18 @@ import java.sql.Timestamp;
 public class UserTemperPrefer {
     private int userId;
     private BigDecimal expectedCapital;
-    private Timestamp endDate;
+    private Date endDate;
     private BigDecimal expectedProfitMin;
     private Byte ifBigExpense;
     private BigDecimal mayRedeemAmount;
-    private Timestamp redeemTime;
+    private Date redeemTime;
     private BigDecimal insuranceAmount;
     private Byte expenseType;
     private BigDecimal riskToleranceMin;
     private BigDecimal expectedRetrunRate;
     private Byte ifConfigBigExpense;
-    private Timestamp beginTime;
-    private Timestamp endTime;
+    private Date beginTime;
+    private Date endTime;
     private String chosenProducts;
     private BigDecimal bearLoss;
     private Integer id;
@@ -52,11 +52,11 @@ public class UserTemperPrefer {
 
     @Basic
     @Column(name = "end_date")
-    public Timestamp getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Timestamp endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 
@@ -92,11 +92,11 @@ public class UserTemperPrefer {
 
     @Basic
     @Column(name = "redeem_time")
-    public Timestamp getRedeemTime() {
+    public Date getRedeemTime() {
         return redeemTime;
     }
 
-    public void setRedeemTime(Timestamp redeemTime) {
+    public void setRedeemTime(Date redeemTime) {
         this.redeemTime = redeemTime;
     }
 
@@ -152,21 +152,21 @@ public class UserTemperPrefer {
 
     @Basic
     @Column(name = "begin_time")
-    public Timestamp getBeginTime() {
+    public Date getBeginTime() {
         return beginTime;
     }
 
-    public void setBeginTime(Timestamp beginTime) {
+    public void setBeginTime(Date beginTime) {
         this.beginTime = beginTime;
     }
 
     @Basic
     @Column(name = "end_time")
-    public Timestamp getEndTime() {
+    public Date getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Timestamp endTime) {
+    public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
 

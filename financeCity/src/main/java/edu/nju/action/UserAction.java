@@ -9,9 +9,8 @@ import edu.nju.vo.UserVO;
 import org.springframework.stereotype.Controller;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 /**
  * Created by Sun YuHao on 2016/9/2.
@@ -117,7 +116,7 @@ public class UserAction extends BaseAction {
                 throw new NotLoginException();
             }
 
-            userService.modifyUserInfo(birthday_y + "-" + birthday_m + "-" + birthday_d, income_i, isUrben_b, expense_i, financeCityUser);
+            userService.modifyUserInfo(toDateFormat(birthday_y, birthday_m, birthday_d), income_i, isUrben_b, expense_i, financeCityUser);
             ErrorManager.setError(request, ErrorManager.errorNormal);
             return SUCCESS;
         }
@@ -163,8 +162,8 @@ public class UserAction extends BaseAction {
 
         try {
             int amount_i = Integer.valueOf(amount);
-            String data = year + "-" + month + "-" + day;
-            boolean ifPrepare_b = Integer.valueOf(ifPrepare) == 0;
+            String data = toDateFormat(year, month, day);
+            boolean ifPrepare_b = Integer.valueOf(ifPrepare) == 1;
             boolean ifBifPre_b = false;
             byte type_b = 0;
             int backAmount_i = 0;
@@ -181,10 +180,10 @@ public class UserAction extends BaseAction {
             income_rate[1] = Integer.valueOf(incomes[1]);
 
             String preferType_En = "";
-            if (preferType.equals("基金")) {
+            if (preferType.equals("fund")) {
                 preferType_En = "fund";
             }
-            else if (preferType.equals("保险")) {
+            else if (preferType.equals("insurance")) {
                 preferType_En = "insurance";
             }
             else {
@@ -192,16 +191,16 @@ public class UserAction extends BaseAction {
             }
 
             if (!ifPrepare_b) {
-                ifBifPre_b = Integer.valueOf(ifBifPre) == 1;
+                ifBifPre_b = Integer.valueOf(ifBifPre) == 0;
                 if (ifBifPre_b) {
                     if (type.equals("0")) {
                         type_b = 0;
-                        backAmount_i = Integer.valueOf(backAmount);
-                        back_date = backYear + "-" + backMonth + "-" + backDay;
+                        insurance_amount = Integer.valueOf(asMount);
                     }
                     else if (type.equals("1")) {
                         type_b = 1;
-                        insurance_amount = Integer.valueOf(asMount);
+                        backAmount_i = Integer.valueOf(backAmount);
+                        back_date = toDateFormat(backYear, backMonth, backDay);
                     }
                     else {
                         throw new InvalidParametersException("setTemperPrefer");
@@ -211,11 +210,11 @@ public class UserAction extends BaseAction {
 
             UserTemperPrefer userTemperPrefer = new UserTemperPrefer();
             userTemperPrefer.setExpectedCapital(new BigDecimal(amount_i));
-            userTemperPrefer.setEndTime(Timestamp.valueOf(data));
+            userTemperPrefer.setEndTime(Date.valueOf(data));
             userTemperPrefer.setIfBigExpense(ifPrepare_b ? (byte)1 : 0);
             userTemperPrefer.setIfConfigBigExpense(ifBifPre_b ? (byte)1 : 0);
             userTemperPrefer.setExpenseType(type_b);
-            userTemperPrefer.setRedeemTime(Timestamp.valueOf(back_date));
+            userTemperPrefer.setRedeemTime(Date.valueOf(back_date));
             userTemperPrefer.setMayRedeemAmount(new BigDecimal(backAmount_i));
             userTemperPrefer.setInsuranceAmount(new BigDecimal(insurance_amount));
             userTemperPrefer.setRiskToleranceMin(new BigDecimal(risks[0]));
@@ -240,5 +239,9 @@ public class UserAction extends BaseAction {
             ErrorManager.setError(request, ErrorManager.errorInvalidParameter);
             return ERROR;
         }
+    }
+
+    private String toDateFormat(String year, String month, String day) {
+        return year + "-" + month + "-" + day;
     }
 }
