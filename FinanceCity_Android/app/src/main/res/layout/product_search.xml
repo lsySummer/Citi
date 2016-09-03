@@ -51,8 +51,8 @@
                 android:layout_gravity="right"/>
         </LinearLayout>
         <!--产品搜索筛选器列表-->
-        <ListView
-            android:id="@+id/product_search_filter_listview"
+        <TableRow
+            android:id="@+id/product_search_filter_list_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
