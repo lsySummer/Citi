@@ -2,10 +2,10 @@ package edu.nju.model;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.sql.Date;
 
 /**
- * Created by Sun YuHao on 2016/8/31.
+ * Created by Sun YuHao on 2016/9/3.
  */
 @Entity
 @Table(name = "product_bank", schema = "citi", catalog = "")
@@ -18,8 +18,8 @@ public class ProductBank {
     private Integer increasingUnit;
     private Integer length;
     private BigDecimal nav;
-    private Timestamp onPurchaseDate;
-    private Timestamp offPurchaseDate;
+    private Date onPurchaseDate;
+    private Date offPurchaseDate;
     private String salesRegion;
     private String productCode;
     private String registerCode;
@@ -34,8 +34,8 @@ public class ProductBank {
     private BigDecimal ratePurchase;
     private BigDecimal rateRedem;
     private BigDecimal rateManage;
-    private Timestamp firstAccrDate;
-    private Timestamp onRedemptionDate;
+    private Date firstAccrDate;
+    private Date onRedemptionDate;
     private Integer redemSpeed;
     private String payType;
     private String objectOriented;
@@ -124,21 +124,21 @@ public class ProductBank {
 
     @Basic
     @Column(name = "on_purchase_date")
-    public Timestamp getOnPurchaseDate() {
+    public Date getOnPurchaseDate() {
         return onPurchaseDate;
     }
 
-    public void setOnPurchaseDate(Timestamp onPurchaseDate) {
+    public void setOnPurchaseDate(Date onPurchaseDate) {
         this.onPurchaseDate = onPurchaseDate;
     }
 
     @Basic
     @Column(name = "off_purchase_date")
-    public Timestamp getOffPurchaseDate() {
+    public Date getOffPurchaseDate() {
         return offPurchaseDate;
     }
 
-    public void setOffPurchaseDate(Timestamp offPurchaseDate) {
+    public void setOffPurchaseDate(Date offPurchaseDate) {
         this.offPurchaseDate = offPurchaseDate;
     }
 
@@ -284,21 +284,21 @@ public class ProductBank {
 
     @Basic
     @Column(name = "first_accr_date")
-    public Timestamp getFirstAccrDate() {
+    public Date getFirstAccrDate() {
         return firstAccrDate;
     }
 
-    public void setFirstAccrDate(Timestamp firstAccrDate) {
+    public void setFirstAccrDate(Date firstAccrDate) {
         this.firstAccrDate = firstAccrDate;
     }
 
     @Basic
     @Column(name = "on_redemption_date")
-    public Timestamp getOnRedemptionDate() {
+    public Date getOnRedemptionDate() {
         return onRedemptionDate;
     }
 
-    public void setOnRedemptionDate(Timestamp onRedemptionDate) {
+    public void setOnRedemptionDate(Date onRedemptionDate) {
         this.onRedemptionDate = onRedemptionDate;
     }
 
