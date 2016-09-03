@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/search_result"
+	android:orientation="vertical"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"><!--总布局-->
+
+	<LinearLayout
+		android:orientation="vertical"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"><!--搜索布局-->
+
+		<LinearLayout
+			android:orientation="horizontal"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"><!--关键字和筛选按钮-->
+			
+			<TextView
+				android:text="关键字"
+				android:textColor="@color/grey"
+				android:textSize="24sp"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"/>
+			<EditText
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"/>
+			<Button
+				android:text="筛选"
+				android:textColor="@color/white"
+				android:textSize="24sp"
+				android:background="@color/lightBlue"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"/>
+			
+		</LinearLayout>	
+		
+		
+		
+	</LinearLayout>
+	
+	<LinearLayout
+		android:orientation="horizontal"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"><!--结果布局-->
+		
+	</LinearLayout>
+
+</LinearLayout>
+
