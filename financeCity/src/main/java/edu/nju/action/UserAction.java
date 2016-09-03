@@ -74,6 +74,7 @@ public class UserAction extends BaseAction {
             refer_url = ERROR;
         }
         ErrorManager.setError(request, ErrorManager.errorNormal);
+        System.out.println(refer_url);
         return refer_url;
     }
 
@@ -243,5 +244,13 @@ public class UserAction extends BaseAction {
 
     private String toDateFormat(String year, String month, String day) {
         return year + "-" + month + "-" + day;
+    }
+    
+    @SuppressWarnings("unchecked")
+	public String loginURL() {
+    	 String refer_url = request.getHeader("Referer");
+    	 session.put("refer_url", refer_url);
+    	 System.out.println(refer_url);
+    	 return SUCCESS;
     }
 }

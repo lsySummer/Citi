@@ -20,6 +20,10 @@
 			<result name="error">/jsp/login.jsp</result>
 		</action>
 		
+		<action name="loginURL" class="edu.nju.action.UserAction" method="loginURL">
+			<result name="success">/jsp/login.jsp</result> <!-- 跳转到登录前页面 -->
+		</action>
+		
 		<action name="signup2" class="userAction" method="setUserInfoInStep2">
 			<result name="success">/jsp/signup_step3.jsp</result>
 			<result name="error">/jsp/signup_step2.jsp</result>
