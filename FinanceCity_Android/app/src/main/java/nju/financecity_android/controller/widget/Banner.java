@@ -47,5 +47,6 @@ public class Banner extends LinearLayout {
         LayoutInflater.from(context).inflate(R.layout.banner, this, true);
     }
     private TextView lblText;
+
     private LinearLayout mainPane;
 }
