@@ -15,6 +15,7 @@ function initSlider() {
         to: 80,
         postfix: "%"
     });
+    
     $("#risk").ionRangeSlider({
         type: "double",
         grid: true,
@@ -24,4 +25,5 @@ function initSlider() {
         to: 80,
         postfix: "%"
     });
+    
 }

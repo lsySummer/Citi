@@ -53,7 +53,7 @@ public class UserAction extends BaseAction {
 
     @SuppressWarnings("unchecked")
     public String login() {
-        String username = request.getParameter("username");
+        String username = request.getParameter("mobile");
         String password = request.getParameter("password");
 
         if (username == null || password == null) {
