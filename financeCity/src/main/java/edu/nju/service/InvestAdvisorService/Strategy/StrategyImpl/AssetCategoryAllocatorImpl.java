@@ -60,7 +60,9 @@ public class AssetCategoryAllocatorImpl implements AssetCategoryAllocator {
         double[][] LC = new double[1][categoryNum];
         double rf = searchService.getCategoryIndex().getRiskFreeInterest().doubleValue();
         double money_start = capital;
-        double volatility = userTemperPrefer.getRiskViolence().doubleValue();
+        double volatility_min = userTemperPrefer.getRiskToleranceMin().doubleValue();
+        double volatility_max = userTemperPrefer.getRiskToleranceMax().doubleValue();
+        double volatility = (volatility_max + volatility_min) / 2;
         double min_insurance = userTemperPrefer.getInsuranceAmount().doubleValue();
         int k = 0;
 
@@ -129,7 +131,7 @@ public class AssetCategoryAllocatorImpl implements AssetCategoryAllocator {
 
             if (categoryInfo[i].chosen) {
                 //return rate sequence
-                categoryInfo[i].E = getHistoryRetrunRateSequence(categoryInfo[i].category);
+                categoryInfo[i].E = getHistoryReturnRateSequence(categoryInfo[i].category);
                 if (categoryInfo[i].E.length == 0) {
                     return new CategoryInfo[0];
                 }
@@ -173,7 +175,7 @@ public class AssetCategoryAllocatorImpl implements AssetCategoryAllocator {
     }
 
     //TODO:sequence
-    private double[] getHistoryRetrunRateSequence(String category) {
+    private double[] getHistoryReturnRateSequence(String category) {
         return new double[0];
     }
 

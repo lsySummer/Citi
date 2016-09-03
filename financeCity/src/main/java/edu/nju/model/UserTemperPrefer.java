@@ -2,32 +2,33 @@ package edu.nju.model;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.sql.Date;
 
 /**
- * Created by Sun YuHao on 2016/8/31.
+ * Created by Sun YuHao on 2016/9/3.
  */
 @Entity
 @Table(name = "user_temper_prefer", schema = "citi", catalog = "")
 public class UserTemperPrefer {
     private int userId;
     private BigDecimal expectedCapital;
-    private Timestamp endDate;
-    private BigDecimal stopProfit;
+    private Date endDate;
+    private BigDecimal expectedProfitMin;
     private Byte ifBigExpense;
     private BigDecimal mayRedeemAmount;
-    private Timestamp redeemTime;
+    private Date redeemTime;
     private BigDecimal insuranceAmount;
     private Byte expenseType;
-    private BigDecimal riskViolence;
+    private BigDecimal riskToleranceMin;
     private BigDecimal expectedRetrunRate;
     private Byte ifConfigBigExpense;
-    private Timestamp beginTime;
-    private Timestamp endTime;
+    private Date beginTime;
+    private Date endTime;
     private String chosenProducts;
     private BigDecimal bearLoss;
     private Integer id;
-    private BigDecimal money;
+    private BigDecimal riskToleranceMax;
+    private BigDecimal expectedProfitMax;
 
     @Id
     @Column(name = "user_id")
@@ -51,22 +52,22 @@ public class UserTemperPrefer {
 
     @Basic
     @Column(name = "end_date")
-    public Timestamp getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Timestamp endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 
     @Basic
-    @Column(name = "stop_profit")
-    public BigDecimal getStopProfit() {
-        return stopProfit;
+    @Column(name = "expected_profit_min")
+    public BigDecimal getExpectedProfitMin() {
+        return expectedProfitMin;
     }
 
-    public void setStopProfit(BigDecimal stopProfit) {
-        this.stopProfit = stopProfit;
+    public void setExpectedProfitMin(BigDecimal expectedProfitMin) {
+        this.expectedProfitMin = expectedProfitMin;
     }
 
     @Basic
@@ -91,11 +92,11 @@ public class UserTemperPrefer {
 
     @Basic
     @Column(name = "redeem_time")
-    public Timestamp getRedeemTime() {
+    public Date getRedeemTime() {
         return redeemTime;
     }
 
-    public void setRedeemTime(Timestamp redeemTime) {
+    public void setRedeemTime(Date redeemTime) {
         this.redeemTime = redeemTime;
     }
 
@@ -120,13 +121,13 @@ public class UserTemperPrefer {
     }
 
     @Basic
-    @Column(name = "risk_violence")
-    public BigDecimal getRiskViolence() {
-        return riskViolence;
+    @Column(name = "risk_tolerance_min")
+    public BigDecimal getRiskToleranceMin() {
+        return riskToleranceMin;
     }
 
-    public void setRiskViolence(BigDecimal riskViolence) {
-        this.riskViolence = riskViolence;
+    public void setRiskToleranceMin(BigDecimal riskToleranceMin) {
+        this.riskToleranceMin = riskToleranceMin;
     }
 
     @Basic
@@ -151,21 +152,21 @@ public class UserTemperPrefer {
 
     @Basic
     @Column(name = "begin_time")
-    public Timestamp getBeginTime() {
+    public Date getBeginTime() {
         return beginTime;
     }
 
-    public void setBeginTime(Timestamp beginTime) {
+    public void setBeginTime(Date beginTime) {
         this.beginTime = beginTime;
     }
 
     @Basic
     @Column(name = "end_time")
-    public Timestamp getEndTime() {
+    public Date getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Timestamp endTime) {
+    public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
 
@@ -200,13 +201,23 @@ public class UserTemperPrefer {
     }
 
     @Basic
-    @Column(name = "money")
-    public BigDecimal getMoney() {
-        return money;
+    @Column(name = "risk_tolerance_max")
+    public BigDecimal getRiskToleranceMax() {
+        return riskToleranceMax;
     }
 
-    public void setMoney(BigDecimal money) {
-        this.money = money;
+    public void setRiskToleranceMax(BigDecimal riskToleranceMax) {
+        this.riskToleranceMax = riskToleranceMax;
+    }
+
+    @Basic
+    @Column(name = "expected_profit_max")
+    public BigDecimal getExpectedProfitMax() {
+        return expectedProfitMax;
+    }
+
+    public void setExpectedProfitMax(BigDecimal expectedProfitMax) {
+        this.expectedProfitMax = expectedProfitMax;
     }
 
     @Override
@@ -220,7 +231,8 @@ public class UserTemperPrefer {
         if (expectedCapital != null ? !expectedCapital.equals(that.expectedCapital) : that.expectedCapital != null)
             return false;
         if (endDate != null ? !endDate.equals(that.endDate) : that.endDate != null) return false;
-        if (stopProfit != null ? !stopProfit.equals(that.stopProfit) : that.stopProfit != null) return false;
+        if (expectedProfitMin != null ? !expectedProfitMin.equals(that.expectedProfitMin) : that.expectedProfitMin != null)
+            return false;
         if (ifBigExpense != null ? !ifBigExpense.equals(that.ifBigExpense) : that.ifBigExpense != null) return false;
         if (mayRedeemAmount != null ? !mayRedeemAmount.equals(that.mayRedeemAmount) : that.mayRedeemAmount != null)
             return false;
@@ -228,7 +240,8 @@ public class UserTemperPrefer {
         if (insuranceAmount != null ? !insuranceAmount.equals(that.insuranceAmount) : that.insuranceAmount != null)
             return false;
         if (expenseType != null ? !expenseType.equals(that.expenseType) : that.expenseType != null) return false;
-        if (riskViolence != null ? !riskViolence.equals(that.riskViolence) : that.riskViolence != null) return false;
+        if (riskToleranceMin != null ? !riskToleranceMin.equals(that.riskToleranceMin) : that.riskToleranceMin != null)
+            return false;
         if (expectedRetrunRate != null ? !expectedRetrunRate.equals(that.expectedRetrunRate) : that.expectedRetrunRate != null)
             return false;
         if (ifConfigBigExpense != null ? !ifConfigBigExpense.equals(that.ifConfigBigExpense) : that.ifConfigBigExpense != null)
@@ -239,7 +252,10 @@ public class UserTemperPrefer {
             return false;
         if (bearLoss != null ? !bearLoss.equals(that.bearLoss) : that.bearLoss != null) return false;
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (money != null ? !money.equals(that.money) : that.money != null) return false;
+        if (riskToleranceMax != null ? !riskToleranceMax.equals(that.riskToleranceMax) : that.riskToleranceMax != null)
+            return false;
+        if (expectedProfitMax != null ? !expectedProfitMax.equals(that.expectedProfitMax) : that.expectedProfitMax != null)
+            return false;
 
         return true;
     }
@@ -249,13 +265,13 @@ public class UserTemperPrefer {
         int result = userId;
         result = 31 * result + (expectedCapital != null ? expectedCapital.hashCode() : 0);
         result = 31 * result + (endDate != null ? endDate.hashCode() : 0);
-        result = 31 * result + (stopProfit != null ? stopProfit.hashCode() : 0);
+        result = 31 * result + (expectedProfitMin != null ? expectedProfitMin.hashCode() : 0);
         result = 31 * result + (ifBigExpense != null ? ifBigExpense.hashCode() : 0);
         result = 31 * result + (mayRedeemAmount != null ? mayRedeemAmount.hashCode() : 0);
         result = 31 * result + (redeemTime != null ? redeemTime.hashCode() : 0);
         result = 31 * result + (insuranceAmount != null ? insuranceAmount.hashCode() : 0);
         result = 31 * result + (expenseType != null ? expenseType.hashCode() : 0);
-        result = 31 * result + (riskViolence != null ? riskViolence.hashCode() : 0);
+        result = 31 * result + (riskToleranceMin != null ? riskToleranceMin.hashCode() : 0);
         result = 31 * result + (expectedRetrunRate != null ? expectedRetrunRate.hashCode() : 0);
         result = 31 * result + (ifConfigBigExpense != null ? ifConfigBigExpense.hashCode() : 0);
         result = 31 * result + (beginTime != null ? beginTime.hashCode() : 0);
@@ -263,7 +279,8 @@ public class UserTemperPrefer {
         result = 31 * result + (chosenProducts != null ? chosenProducts.hashCode() : 0);
         result = 31 * result + (bearLoss != null ? bearLoss.hashCode() : 0);
         result = 31 * result + (id != null ? id.hashCode() : 0);
-        result = 31 * result + (money != null ? money.hashCode() : 0);
+        result = 31 * result + (riskToleranceMax != null ? riskToleranceMax.hashCode() : 0);
+        result = 31 * result + (expectedProfitMax != null ? expectedProfitMax.hashCode() : 0);
         return result;
     }
 }

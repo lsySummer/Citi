@@ -2,6 +2,7 @@ package edu.nju.service.UserService;
 
 import edu.nju.dao.UserDao;
 import edu.nju.dao.impl.CommonDao;
+import edu.nju.model.UserTemperPrefer;
 import edu.nju.service.BaseService.BaseService;
 import edu.nju.service.ExceptionsAndError.*;
 import edu.nju.service.POJO.RegisterInfo;
@@ -55,10 +56,11 @@ public interface UserService extends BaseService {
      * @param userVO .
      * @return if it's successful
      */
-    boolean modifyUserInfo(UserVO userVO, FinanceCityUser financeCityUser);
+    void modifyUserInfo(UserVO userVO, FinanceCityUser financeCityUser) throws NotLoginException;
 
-    boolean modifyUserInfo(String birthday, int income, boolean isUrben, int expense, FinanceCityUser financeCityUser);
+    void modifyUserInfo(String birthday, int income, boolean isUrben, int expense, FinanceCityUser financeCityUser) throws  NotLoginException;
 
+    void setUserTemperPrefer(UserTemperPrefer userTemperPrefer, FinanceCityUser financeCityUser) throws NotLoginException;
     /**
      * get user dao
      * @return user dao .

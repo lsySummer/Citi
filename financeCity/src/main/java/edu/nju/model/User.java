@@ -4,10 +4,11 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.sql.Date;
 import java.sql.Timestamp;
 
 /**
- * Created by Sun YuHao on 2016/9/2.
+ * Created by Sun YuHao on 2016/9/3.
  */
 @Entity
 public class User {
@@ -25,7 +26,7 @@ public class User {
     private String name;
     private Byte ifCity;
     private String city;
-    private Timestamp birthday;
+    private Date birthday;
     private Integer monthlyExpense;
     private Integer income;
 
@@ -171,11 +172,11 @@ public class User {
 
     @Basic
     @Column(name = "birthday")
-    public Timestamp getBirthday() {
+    public Date getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Timestamp birthday) {
+    public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
 

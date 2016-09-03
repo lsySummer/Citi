@@ -54,21 +54,23 @@ public class UserController {
         UserService userService = ServiceManagerImpl.getInstance().getUserService();
         BaseVO baseVO = new BaseVO();
         try {
-            boolean ifSuccess = userService.modifyUserInfo((String)map.get("birthday"), (Integer)map.get("income"),
+            userService.modifyUserInfo((String)map.get("birthday"), (Integer)map.get("income"),
                     (Integer)map.get("isUrben") == 1, (Integer)map.get("expense"),
                     (FinanceCityUser)request.getSession(false).getAttribute("user"));
 
-            if (ifSuccess) {
-                ErrorManager.setError(baseVO, ErrorManager.errorNormal);
-                return baseVO;
-            }
+            ErrorManager.setError(baseVO, ErrorManager.errorNormal);
+            return baseVO;
+        }
+        catch (NotLoginException n) {
+            n.printStackTrace();
+            ErrorManager.setError(baseVO, ErrorManager.errorNotLogin);
+            return baseVO;
         }
         catch (Exception e) {
             e.printStackTrace();
+            ErrorManager.setError(baseVO, ErrorManager.errorInvalidParameter);
+            return baseVO;
         }
-
-        ErrorManager.setError(baseVO, ErrorManager.errorNotLogin);
-        return baseVO;
     }
 
     @RequestMapping(value = "user", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")

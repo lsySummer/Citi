@@ -6,6 +6,15 @@ package edu.nju.service.Sessions;
 public class FinanceCityUser {
     private Integer ID;
     private String loginSession;
+    private String userName;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public Integer getID() {
         return ID;
