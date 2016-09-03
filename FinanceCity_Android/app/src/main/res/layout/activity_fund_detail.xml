@@ -65,27 +65,26 @@
 		          android:paddingLeft="3dp"
 		          android:layout_below="@+id/txtPdtName" android:layout_alignLeft="@+id/txtPdtName"
 		          android:layout_alignStart="@+id/txtPdtName"/>
-		<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="状态"
+		<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="基金状态"
 		          android:id="@+id/textView5" android:paddingTop="3dp" android:paddingBottom="8dp"
 		          android:paddingLeft="3dp"
-		          android:layout_alignTop="@+id/txtState" android:layout_toLeftOf="@+id/txtState"
-		          android:layout_toStartOf="@+id/txtState"/>
+		          android:layout_below="@+id/textView6" android:layout_alignLeft="@+id/textView6"
+		          android:layout_alignStart="@+id/textView6"/>
 		<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="认购中"
-		          android:id="@+id/txtState" android:textColor="@color/propertyValue"
+		          android:id="@+id/txtLength" android:textColor="@color/propertyValue"
 		          android:paddingTop="3dp" android:paddingBottom="8dp"
 		          android:paddingLeft="8dp"
 		          android:layout_below="@+id/txtNewestNetValue" android:layout_toRightOf="@+id/textView6"
 		          android:layout_toEndOf="@+id/textView6"/>
 		<Button
-				android:layout_width="50dp"
-				android:layout_height="150dp"
+				android:layout_width="150dp"
+				android:layout_height="35dp"
 				android:text="购 买"
 				android:id="@+id/btPruchase"
 				android:background="#3283fd" android:textColor="#ffffff"
 				android:textSize="20sp"
 				android:layout_alignParentBottom="true"
 				android:layout_below="@+id/textView5"
-				android:layout_alignRight="@+id/txtNewestNetValue" android:layout_alignEnd="@+id/txtNewestNetValue"
 				android:layout_alignLeft="@+id/textView6" android:layout_alignStart="@+id/textView6"/>
 		<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="￥"
 		          android:id="@+id/textView9" android:paddingTop="3dp" android:paddingBottom="3dp"

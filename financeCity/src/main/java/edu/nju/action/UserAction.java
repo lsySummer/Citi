@@ -5,18 +5,29 @@ import edu.nju.service.ExceptionsAndError.*;
 import edu.nju.service.ServiceManagerImpl;
 import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.service.UserService.UserService;
+import edu.nju.service.Utils.JsonUtil;
+import edu.nju.vo.BaseVO;
 import edu.nju.vo.UserVO;
+import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.sql.Timestamp;
+import java.util.Map;
 
 /**
  * Created by Sun YuHao on 2016/9/2.
  */
 @Controller
 public class UserAction extends BaseAction {
+    private final String default_after_login = "/jsp/search-result.jsp";
+    private BaseVO message;
+
+    public BaseVO getMessage() {
+        return message;
+    }
 
     @SuppressWarnings("unchecked")
     public String register() {
@@ -69,20 +80,19 @@ public class UserAction extends BaseAction {
         }
 
         session.put("user", financeCityUser);
-        String refer_url = request.getHeader("Referer");
-        if (refer_url == null) {
-            refer_url = ERROR;
-        }
+        setReferURL(financeCityUser);
         ErrorManager.setError(request, ErrorManager.errorNormal);
-        System.out.println(refer_url);
-        return refer_url;
+        return SUCCESS;
+
     }
 
+    @SuppressWarnings("unchecked")
     public String getUserVO() {
         UserService userService = ServiceManagerImpl.getInstance().getUserService();
 
         FinanceCityUser financeCityUser = (FinanceCityUser) session.get("user");
         if (financeCityUser == null) {
+            session.put("refer_url", getRefererURL(request));
             ErrorManager.setError(request, ErrorManager.errorNotLogin);
             return LOGIN;
         }
@@ -123,6 +133,7 @@ public class UserAction extends BaseAction {
         }
         catch (NotLoginException n) {
             n.printStackTrace();
+            session.put("refer_url", getRefererURL(request));
             ErrorManager.setError(request, ErrorManager.errorNotLogin);
             return LOGIN;
         }
@@ -232,6 +243,7 @@ public class UserAction extends BaseAction {
         }
         catch (NotLoginException n) {
             n.printStackTrace();
+            session.put("refer_url", getRefererURL(request));
             ErrorManager.setError(request, ErrorManager.errorNotLogin);
             return LOGIN;
         }
@@ -245,12 +257,38 @@ public class UserAction extends BaseAction {
     private String toDateFormat(String year, String month, String day) {
         return year + "-" + month + "-" + day;
     }
+
+    private String getRefererURL(HttpServletRequest request) {
+        String url = request.getHeader("Referer");
+        url = toNeededURI(url);
+        return url;
+    }
+
+    public String getRefer_url() {
+        return (String)session.get("refer_url");
+    }
+
+    @SuppressWarnings("unchecked")
+    private void setReferURL(FinanceCityUser financeCityUser) {
+        if ((!session.containsKey("refer_url")) || ((String)session.get("refer_url")).contains("signup")) {
+            session.put("refer_url", default_after_login);
+        }
+    }
+
     
     @SuppressWarnings("unchecked")
 	public String loginURL() {
     	 String refer_url = request.getHeader("Referer");
+         refer_url = toNeededURI(refer_url);
     	 session.put("refer_url", refer_url);
     	 System.out.println(refer_url);
     	 return SUCCESS;
+    }
+
+    private String toNeededURI(String url) {
+        if (url == null) {
+            return null;
+        }
+        return url.replace("http://localhost:8080", "");
     }
 }

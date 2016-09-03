@@ -2,10 +2,10 @@ package edu.nju.model;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.sql.Date;
 
 /**
- * Created by Sun YuHao on 2016/9/2.
+ * Created by Sun YuHao on 2016/9/3.
  */
 @Entity
 @Table(name = "product_fund", schema = "citi", catalog = "")
@@ -30,10 +30,10 @@ public class ProductFund {
     private String custodian;
     private Integer purchaseThreshold;
     private Integer increasingUnit;
-    private Timestamp onPurchaseDate;
-    private Timestamp offPurchaseDate;
-    private Timestamp firstAccrRate;
-    private Timestamp onRedemptionDate;
+    private Date onPurchaseDate;
+    private Date offPurchaseDate;
+    private Date firstAccrDate;
+    private Date onRedemptionDate;
     private Integer length;
     private Integer subscribeSpeed;
     private String perfBenchmark;
@@ -43,6 +43,10 @@ public class ProductFund {
     private BigDecimal accumNav;
     private Byte operationMode;
     private BigDecimal fundScore;
+    private BigDecimal assetLiabilityRatio;
+    private BigDecimal dayRate;
+    private BigDecimal institutionNetworthRatio;
+    private BigDecimal stockBondProportion;
 
     @Id
     @Column(name = "id")
@@ -246,41 +250,41 @@ public class ProductFund {
 
     @Basic
     @Column(name = "on_purchase_date")
-    public Timestamp getOnPurchaseDate() {
+    public Date getOnPurchaseDate() {
         return onPurchaseDate;
     }
 
-    public void setOnPurchaseDate(Timestamp onPurchaseDate) {
+    public void setOnPurchaseDate(Date onPurchaseDate) {
         this.onPurchaseDate = onPurchaseDate;
     }
 
     @Basic
     @Column(name = "off_purchase_date")
-    public Timestamp getOffPurchaseDate() {
+    public Date getOffPurchaseDate() {
         return offPurchaseDate;
     }
 
-    public void setOffPurchaseDate(Timestamp offPurchaseDate) {
+    public void setOffPurchaseDate(Date offPurchaseDate) {
         this.offPurchaseDate = offPurchaseDate;
     }
 
     @Basic
-    @Column(name = "first_accr_rate")
-    public Timestamp getFirstAccrRate() {
-        return firstAccrRate;
+    @Column(name = "first_accr_date")
+    public Date getFirstAccrDate() {
+        return firstAccrDate;
     }
 
-    public void setFirstAccrRate(Timestamp firstAccrRate) {
-        this.firstAccrRate = firstAccrRate;
+    public void setFirstAccrDate(Date firstAccrDate) {
+        this.firstAccrDate = firstAccrDate;
     }
 
     @Basic
     @Column(name = "on_redemption_date")
-    public Timestamp getOnRedemptionDate() {
+    public Date getOnRedemptionDate() {
         return onRedemptionDate;
     }
 
-    public void setOnRedemptionDate(Timestamp onRedemptionDate) {
+    public void setOnRedemptionDate(Date onRedemptionDate) {
         this.onRedemptionDate = onRedemptionDate;
     }
 
@@ -374,6 +378,46 @@ public class ProductFund {
         this.fundScore = fundScore;
     }
 
+    @Basic
+    @Column(name = "asset_liability_ratio")
+    public BigDecimal getAssetLiabilityRatio() {
+        return assetLiabilityRatio;
+    }
+
+    public void setAssetLiabilityRatio(BigDecimal assetLiabilityRatio) {
+        this.assetLiabilityRatio = assetLiabilityRatio;
+    }
+
+    @Basic
+    @Column(name = "day_rate")
+    public BigDecimal getDayRate() {
+        return dayRate;
+    }
+
+    public void setDayRate(BigDecimal dayRate) {
+        this.dayRate = dayRate;
+    }
+
+    @Basic
+    @Column(name = "institution_networth_ratio")
+    public BigDecimal getInstitutionNetworthRatio() {
+        return institutionNetworthRatio;
+    }
+
+    public void setInstitutionNetworthRatio(BigDecimal institutionNetworthRatio) {
+        this.institutionNetworthRatio = institutionNetworthRatio;
+    }
+
+    @Basic
+    @Column(name = "stock_bond_proportion")
+    public BigDecimal getStockBondProportion() {
+        return stockBondProportion;
+    }
+
+    public void setStockBondProportion(BigDecimal stockBondProportion) {
+        this.stockBondProportion = stockBondProportion;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -411,7 +455,7 @@ public class ProductFund {
             return false;
         if (offPurchaseDate != null ? !offPurchaseDate.equals(that.offPurchaseDate) : that.offPurchaseDate != null)
             return false;
-        if (firstAccrRate != null ? !firstAccrRate.equals(that.firstAccrRate) : that.firstAccrRate != null)
+        if (firstAccrDate != null ? !firstAccrDate.equals(that.firstAccrDate) : that.firstAccrDate != null)
             return false;
         if (onRedemptionDate != null ? !onRedemptionDate.equals(that.onRedemptionDate) : that.onRedemptionDate != null)
             return false;
@@ -428,6 +472,13 @@ public class ProductFund {
         if (operationMode != null ? !operationMode.equals(that.operationMode) : that.operationMode != null)
             return false;
         if (fundScore != null ? !fundScore.equals(that.fundScore) : that.fundScore != null) return false;
+        if (assetLiabilityRatio != null ? !assetLiabilityRatio.equals(that.assetLiabilityRatio) : that.assetLiabilityRatio != null)
+            return false;
+        if (dayRate != null ? !dayRate.equals(that.dayRate) : that.dayRate != null) return false;
+        if (institutionNetworthRatio != null ? !institutionNetworthRatio.equals(that.institutionNetworthRatio) : that.institutionNetworthRatio != null)
+            return false;
+        if (stockBondProportion != null ? !stockBondProportion.equals(that.stockBondProportion) : that.stockBondProportion != null)
+            return false;
 
         return true;
     }
@@ -456,7 +507,7 @@ public class ProductFund {
         result = 31 * result + (increasingUnit != null ? increasingUnit.hashCode() : 0);
         result = 31 * result + (onPurchaseDate != null ? onPurchaseDate.hashCode() : 0);
         result = 31 * result + (offPurchaseDate != null ? offPurchaseDate.hashCode() : 0);
-        result = 31 * result + (firstAccrRate != null ? firstAccrRate.hashCode() : 0);
+        result = 31 * result + (firstAccrDate != null ? firstAccrDate.hashCode() : 0);
         result = 31 * result + (onRedemptionDate != null ? onRedemptionDate.hashCode() : 0);
         result = 31 * result + (length != null ? length.hashCode() : 0);
         result = 31 * result + (subscribeSpeed != null ? subscribeSpeed.hashCode() : 0);
@@ -467,6 +518,10 @@ public class ProductFund {
         result = 31 * result + (accumNav != null ? accumNav.hashCode() : 0);
         result = 31 * result + (operationMode != null ? operationMode.hashCode() : 0);
         result = 31 * result + (fundScore != null ? fundScore.hashCode() : 0);
+        result = 31 * result + (assetLiabilityRatio != null ? assetLiabilityRatio.hashCode() : 0);
+        result = 31 * result + (dayRate != null ? dayRate.hashCode() : 0);
+        result = 31 * result + (institutionNetworthRatio != null ? institutionNetworthRatio.hashCode() : 0);
+        result = 31 * result + (stockBondProportion != null ? stockBondProportion.hashCode() : 0);
         return result;
     }
 }

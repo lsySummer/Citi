@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import com.appyvet.rangebar.RangeBar;
 import nju.financecity_android.R;
 
 /**
@@ -44,7 +45,11 @@ public class Banner extends LinearLayout {
     }
 
     private void init(Context context) {
+<<<<<<< 28d765828b92add0b5d0315b7c036efb0f2f0adb:FinanceCity_Android/app/src/main/java/nju/financecity_android/controller/widget/Banner.java
         LayoutInflater.from(context).inflate(R.layout.banner, this, true);
+=======
+        LayoutInflater.from(context).inflate(R.layout.product_search_filter_income_rate, this, true);
+>>>>>>> 安卓::FinanceCity_Android/app/src/main/java/nju/financecity_android/controller/widget/IncomeRate.java
     }
     private TextView lblText;
 
