@@ -24,8 +24,8 @@
     <script type="text/javascript" rel="script" src="js/jquery.min.js"></script>
     <script type="text/javascript" rel="script" src="plugins/bootstrap-toggle-master/js/bootstrap-toggle.min.js"></script>
     <script type="text/javascript" rel="script" src="plugins/ion.rangeSlider-master/js/ion.rangeSlider.min.js"></script>
-    <script type="text/javascript" rel="script" src="js/signup-step.js"></script>
-
+	<script type="text/javascript" rel="script" src="js/signup-step.js"></script>
+	
 <script type="text/javascript">
   function jump1(){
 	  if(document.getElementById('select1').value=="0"){

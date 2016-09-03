@@ -266,5 +266,13 @@ public class UserAction extends BaseAction {
     @SuppressWarnings("unchecked")
     private void setReferURL(FinanceCityUser financeCityUser) {
         session.putIfAbsent("refer_url", "/jsp/search_result.jsp");
+
+    
+    @SuppressWarnings("unchecked")
+	public String loginURL() {
+    	 String refer_url = request.getHeader("Referer");
+    	 session.put("refer_url", refer_url);
+    	 System.out.println(refer_url);
+    	 return SUCCESS;
     }
 }
