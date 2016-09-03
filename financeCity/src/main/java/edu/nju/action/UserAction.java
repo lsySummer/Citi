@@ -8,6 +8,7 @@ import edu.nju.service.UserService.UserService;
 import edu.nju.vo.UserVO;
 import org.springframework.stereotype.Controller;
 
+import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.sql.Date;
 
@@ -16,7 +17,6 @@ import java.sql.Date;
  */
 @Controller
 public class UserAction extends BaseAction {
-
     @SuppressWarnings("unchecked")
     public String register() {
         String mobile = request.getParameter("mobile");
@@ -52,7 +52,7 @@ public class UserAction extends BaseAction {
 
     @SuppressWarnings("unchecked")
     public String login() {
-        String username = request.getParameter("username");
+        String username = request.getParameter("mobile");
         String password = request.getParameter("password");
 
         if (username == null || password == null) {
@@ -68,19 +68,18 @@ public class UserAction extends BaseAction {
         }
 
         session.put("user", financeCityUser);
-        String refer_url = request.getHeader("Referer");
-        if (refer_url == null) {
-            refer_url = ERROR;
-        }
+        setReferURL(financeCityUser);
         ErrorManager.setError(request, ErrorManager.errorNormal);
-        return refer_url;
+        return SUCCESS;
     }
 
+    @SuppressWarnings("unchecked")
     public String getUserVO() {
         UserService userService = ServiceManagerImpl.getInstance().getUserService();
 
         FinanceCityUser financeCityUser = (FinanceCityUser) session.get("user");
         if (financeCityUser == null) {
+            session.put("refer_url", getRefererURL(request));
             ErrorManager.setError(request, ErrorManager.errorNotLogin);
             return LOGIN;
         }
@@ -121,6 +120,7 @@ public class UserAction extends BaseAction {
         }
         catch (NotLoginException n) {
             n.printStackTrace();
+            session.put("refer_url", getRefererURL(request));
             ErrorManager.setError(request, ErrorManager.errorNotLogin);
             return LOGIN;
         }
@@ -230,6 +230,7 @@ public class UserAction extends BaseAction {
         }
         catch (NotLoginException n) {
             n.printStackTrace();
+            session.put("refer_url", getRefererURL(request));
             ErrorManager.setError(request, ErrorManager.errorNotLogin);
             return LOGIN;
         }
@@ -242,5 +243,28 @@ public class UserAction extends BaseAction {
 
     private String toDateFormat(String year, String month, String day) {
         return year + "-" + month + "-" + day;
+    }
+
+    private String getRefererURL(HttpServletRequest request) {
+        String url = request.getHeader("Referer");
+        url = url.replace("http://localhost:8080", "");
+        return url;
+        /*
+       String url = request.getRequestURL().toString();
+        if (url.endsWith("action")) {
+            url = url.substring(0, url.length() - "action".length()) + "jsp";
+        }
+
+        return url;
+        */
+    }
+
+    public String getRefer_url() {
+        return (String)session.get("refer_url");
+    }
+
+    @SuppressWarnings("unchecked")
+    private void setReferURL(FinanceCityUser financeCityUser) {
+        session.putIfAbsent("refer_url", "/jsp/search_result.jsp");
     }
 }
