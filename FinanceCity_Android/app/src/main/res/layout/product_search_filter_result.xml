@@ -35,14 +35,119 @@
 			
 		</LinearLayout>	
 		
+		<LinearLayout
+			android:orientation="horizontal"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"><!--标的风险收益类型-->
 		
+			<TextView
+				android:text="投资标的"
+				android:textColor="@color/grey"
+				android:textSize="24sp"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"/>
+			<Spinner
+				android:layout_width="100dp"
+				android:layout_height="45dp"
+				android:spinnerMode="dialog"/>
+			<Spinner
+				android:layout_width="100dp"
+				android:layout_height="45dp"
+				android:spinnerMode="dialog"/>
+			
+			<TextView
+				android:text="风险收益"
+				android:textColor="@color/grey"
+				android:textSize="24sp"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"/>
+			<Spinner
+				android:layout_width="100dp"
+				android:layout_height="45dp"
+				android:spinnerMode="dialog"/>	
+
+			<TextView
+				android:text="收益类型"
+				android:textColor="@color/grey"
+				android:textSize="24sp"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"/>
+			<Spinner
+				android:layout_width="100dp"
+				android:layout_height="45dp"
+				android:spinnerMode="dialog"/>
+		
+		</LinearLayout>
+		
+		<LinearLayout
+			android:orientation="horizontal"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"><!--期限生效赎回-->
+		
+			<TextView
+				android:text="投资期限"
+				android:textColor="@color/grey"
+				android:textSize="24sp"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"/>
+			<Spinner
+				android:layout_width="100dp"
+				android:layout_height="45dp"
+				android:spinnerMode="dialog"/>
+				
+			<TextView
+				android:text="购买至生效时间"
+				android:textColor="@color/grey"
+				android:textSize="24sp"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"/>
+			<Spinner
+				android:layout_width="100dp"
+				android:layout_height="45dp"
+				android:spinnerMode="dialog"/>
+				
+			<TextView
+				android:text="申请赎回至到账时间"
+				android:textColor="@color/grey"
+				android:textSize="24sp"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"/>
+			<Spinner
+				android:layout_width="100dp"
+				android:layout_height="45dp"
+				android:spinnerMode="dialog"/>
+		
+		</LinearLayout>
+		
+		<LinearLayout
+			android:orientation="horizontal"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"><!--数值范围-->
+		
+			<EditText
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"/>
+			<View 
+				android:layout_height="1dp" 
+				android:background="@color/grey" 
+				android:layout_width="20dp"
+				android:layout_marginTop="50dp"/>
+			<EditText
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"/>
+		
+		</LinearLayout>
 		
 	</LinearLayout>
 	
 	<LinearLayout
-		android:orientation="horizontal"
+		android:orientation="vertical"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"><!--结果布局-->
+		
+		<ListView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"/>
 		
 	</LinearLayout>
 
