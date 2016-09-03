@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-
+<!--筛选条件-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/search_filter_choose"
+	android:id="@+id/choose_layout"
 	android:orientation="horizontal"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
@@ -13,40 +13,28 @@
 		android:layout_height="30dp"
 		android:layout_marginLeft="10dp"
 		android:layout_marginTop="10dp"
-		android:gravity="left"
-		android:id="@+id/side_sign" />
+		android:gravity="left"/>
 	<TextView
+		android:id="@+id/choose_text"
 		android:text="筛 选"
 		android:textColor="@color/lightBlue"
 		android:textSize="24sp"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_marginTop="5dp"
-		android:id="@+id/key_text"/>
+		android:layout_marginTop="5dp"/>
 
 	<Spinner
-		android:layout_width="100dp"
-		android:layout_height="45dp"
-		android:layout_marginTop="0dp"
-		android:id="@+id/destination_master_spinner"
-		android:spinnerMode="dialog" />
-
-	<Spinner
-		android:layout_width="100dp"
-		android:layout_height="45dp"
-		android:layout_marginTop="0dp"
-		android:layout_marginLeft="10dp"
-		android:id="@+id/destination_slaver_spinner"
-		android:spinnerMode="dialog" />
-
-	<Button
-		android:layout_width="wrap_content"
+		android:id="@+id/choose_spinner1"
+		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:background="@color/lightBlue"
-		android:text="筛选"
-		android:textColor="@color/white"
-		android:layout_marginLeft="10dp"
-		android:id="@+id/choose_button"/>
+		android:layout_marginTop="0dp"
+		android:spinnerMode="dialog" />
 
+	<Spinner
+		android:id="@+id/choose_spinner2"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="0dp"
+		android:spinnerMode="dialog" />
 </LinearLayout>
 
