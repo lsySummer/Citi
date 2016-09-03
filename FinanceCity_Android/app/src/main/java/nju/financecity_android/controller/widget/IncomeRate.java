@@ -10,14 +10,18 @@ import nju.financecity_android.R;
 /**
  * Created by coral on 16-8-22.
  */
-public class Banner extends LinearLayout {
+public class IncomeRate extends LinearLayout {
 
-    public Banner(Context context) {
+    private LinearLayout search_filter_incomeRate;
+    private TextView incomeRate_text;
+	private RangeBar incomeRate_rangebar;
+	
+    public IncomeRate(Context context) {
         super(context);
         init(context);
     }
 
-    public Banner(Context context, AttributeSet attrs) {
+    public IncomeRate(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
@@ -25,11 +29,11 @@ public class Banner extends LinearLayout {
     //----------------------Interfaces------------------------
 
     public String getDisplayString() {
-        return lblText.getText().toString();
+        return incomeRate_text.getText().toString();
     }
 
     public void setDisplayText(String displayText) {
-        lblText.setText(displayText);
+        incomeRate_text.setText(displayText);
     }
 
     @Override
@@ -39,14 +43,11 @@ public class Banner extends LinearLayout {
     }
 
     private void loadComponents() {
-        lblText = (TextView) findViewById(R.id.lblText);
-        mainPane = (LinearLayout) findViewById(R.id.mainPane);
+        incomeRate_text = (TextView) findViewById(R.id.incomeRate_text);
+        search_filter_incomeRate = (LinearLayout) findViewById(R.id.search_filter_incomeRate);
     }
 
     private void init(Context context) {
-        LayoutInflater.from(context).inflate(R.layout.banner, this, true);
+        LayoutInflater.from(context).inflate(R.layout.product_search_filter_incomeRate, this, true);
     }
-    private TextView lblText;
-
-    private LinearLayout mainPane;
 }
