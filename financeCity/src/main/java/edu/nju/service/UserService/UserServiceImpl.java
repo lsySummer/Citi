@@ -5,11 +5,13 @@ import edu.nju.dao.UserDao;
 import edu.nju.dao.impl.CommonDao;
 import edu.nju.model.User;
 import edu.nju.model.UserLogin;
+import edu.nju.model.UserTemperPrefer;
 import edu.nju.service.BaseService.BaseServiceAdaptor;
 import edu.nju.service.ExceptionsAndError.*;
 import edu.nju.service.POJO.RegisterInfo;
 import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.vo.UserVO;
+import org.python.antlr.ast.Str;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -37,10 +39,10 @@ public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
         /** match username and password */
         List list;
         if (validMobile(userName)) {
-            list = DAO.login("SELECT id FROM User user WHERE user.phone=? AND user.password=?", userName, password);
+            list = DAO.login("SELECT user.username FROM User user WHERE user.phone=? AND user.password=?", userName, password);
         }
         else {
-            list = DAO.login("SELECT id FROM User user WHERE user.username=? AND user.password=?", userName, password);
+            list = DAO.login("SELECT user.username FROM User user WHERE user.username=? AND user.password=?", userName, password);
         }
 
         /** if login failed */
@@ -60,6 +62,9 @@ public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
             financeCityUser.setLoginSession(session);
             userLogin.setSession(session);
             DAO.saveOrUpdate(userLogin);
+
+            String nickname = (String)list.get(0);
+            financeCityUser.setUserName(nickname);
 
             return financeCityUser;
         }
@@ -121,6 +126,7 @@ public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
             userVO.setId(user.getId());
             userVO.setMobile(user.getPhone());
             userVO.setIncome(user.getIncome());
+            userVO.setUsername(user.getUsername());
             if (user.getBirthday() == null) {
                 userVO.setBirthday(null);
             }
@@ -139,32 +145,24 @@ public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
     }
 
     @Override
-    public boolean modifyUserInfo(UserVO userVO, FinanceCityUser financeCityUser) {
-        try {
-            List list = getUserDao(financeCityUser).find("FROM User u WHERE u.id=" + financeCityUser.getID());
-            User user = (User) list.get(0);
+    public void modifyUserInfo(UserVO userVO, FinanceCityUser financeCityUser) throws NotLoginException {
+        List list = getUserDao(financeCityUser).find("FROM User u WHERE u.id=" + financeCityUser.getID());
+        User user = (User) list.get(0);
 
-            user.setUpdateAt(new Timestamp(System.currentTimeMillis()));
-            user.setBirthday(Timestamp.valueOf(userVO.getBirthday()));
-            if (userVO.getUrben() == null) {
-                user.setIfCity(null);
-            }
-            else {
-                user.setIfCity(userVO.getUrben() ? (byte)0 : 1);
-            }
-            user.setIfCity((userVO.getUrben() == null || userVO.getUrben()) ? (byte) 1 : 0);
-            user.setMonthlyExpense(userVO.getExpense());
-            user.setIncome(userVO.getIncome());
-            user.setPhone(userVO.getMobile());
-
-            getUserDao(financeCityUser).save(user);
-
-            return true;
+        user.setUpdateAt(new Timestamp(System.currentTimeMillis()));
+        user.setBirthday(Timestamp.valueOf(userVO.getBirthday()));
+        if (userVO.getUrben() == null) {
+            user.setIfCity(null);
         }
-        catch (NotLoginException n) {
-            n.printStackTrace();
-            return false;
+        else {
+            user.setIfCity(userVO.getUrben() ? (byte)0 : 1);
         }
+        user.setIfCity((userVO.getUrben() == null || userVO.getUrben()) ? (byte) 1 : 0);
+        user.setMonthlyExpense(userVO.getExpense());
+        user.setIncome(userVO.getIncome());
+        user.setPhone(userVO.getMobile());
+
+        getUserDao(financeCityUser).save(user);
     }
 
     @Override
@@ -225,27 +223,24 @@ public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
     }
 
     @Override
-    public boolean modifyUserInfo(String birthday, int income, boolean isUrben, int expense, FinanceCityUser financeCityUser) {
-        try {
-            List list = getUserDao(financeCityUser).find("From User u WHERE u.id=" + financeCityUser.getID());
-            if (list == null || list.size() == 0) {
-                return false;
-            }
-
-            User user = (User)list.get(0);
-            user.setBirthday(Timestamp.valueOf(birthday));
-            user.setIncome(income);
-            user.setIfCity(isUrben ? (byte)1 : 0);
-            user.setMonthlyExpense(expense);
-
-            getUserDao(financeCityUser).update(user);
-
-            return true;
+    public void modifyUserInfo(String birthday, int income, boolean isUrben, int expense, FinanceCityUser financeCityUser) throws NotLoginException {
+        List list = getUserDao(financeCityUser).find("From User u WHERE u.id=" + financeCityUser.getID());
+        if (list == null || list.size() == 0) {
+            throw new NotLoginException();
         }
-        catch (NotLoginException n) {
-            n.printStackTrace();
-            return false;
-        }
+
+        User user = (User)list.get(0);
+        user.setBirthday(Timestamp.valueOf(birthday));
+        user.setIncome(income);
+        user.setIfCity(isUrben ? (byte)1 : 0);
+        user.setMonthlyExpense(expense);
+
+        getUserDao(financeCityUser).update(user);
+    }
+
+    @Override
+    public void setUserTemperPrefer(UserTemperPrefer userTemperPrefer, FinanceCityUser financeCityUser) throws NotLoginException {
+        getUserDao(financeCityUser).save(userTemperPrefer);
     }
 
     private boolean validPassword(String password) {

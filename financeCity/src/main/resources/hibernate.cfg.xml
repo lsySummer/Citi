@@ -9,8 +9,7 @@
     <mapping class="edu.nju.model.DeletedCommodity"/>
     <mapping class="edu.nju.model.DeletedProduct"/>
     <mapping class="edu.nju.model.History"/>
-    <mapping class="edu.nju.model.UserTemperPrefer"/>
-    <mapping class="edu.nju.model.InvestHistory"/>
+      <mapping class="edu.nju.model.InvestHistory"/>
     <mapping class="edu.nju.model.InvestStatus"/>
     <mapping class="edu.nju.model.MarketStatus"/>
     <mapping class="edu.nju.model.NameToId"/>
@@ -33,6 +32,7 @@
     <mapping class="edu.nju.model.FundHistory"/>
     <mapping class="edu.nju.model.ProductBond"/>
     <mapping class="edu.nju.model.CategoryIndex"/>
+    <mapping class="edu.nju.model.UserTemperPrefer"/>
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hbm2ddl.auto">update</property> -->
   </session-factory>
