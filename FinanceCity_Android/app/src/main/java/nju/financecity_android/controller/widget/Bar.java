@@ -3,34 +3,33 @@ package nju.financecity_android.controller.widget;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import nju.financecity_android.R;
 import com.appyvet.rangebar.RangeBar;
 
 public class Bar extends LinearLayout {
-    private LinearLayout bar_layout;
     private TextView bar_text;
 	private RangeBar bar_rangebar;
+    private float start;
+    private float end;
+    private double interval;
+    private String unit;
 	
     public Bar(Context context) {
         super(context);
-        init(context);
+        LayoutInflater.from(context).inflate(R.layout.bar, this, true);
     }
 
     public Bar(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context);
-    }
-
-    private void init(Context context) {
         LayoutInflater.from(context).inflate(R.layout.bar, this, true);
-    }
-
-    private void loadComponents() {
-        bar_layout = (LinearLayout) findViewById(R.id.bar_layout);
-//        bar_text = (TextView) findViewById(R.id.bar_text);
-//        bar_rangebar= (RangeBar) findViewById(R.id.bar_rangebar);
+        bar_text = (TextView) findViewById(R.id.bar_text);
+        bar_rangebar= (RangeBar) findViewById(R.id.bar_rangebar);
+        start=bar_rangebar.getTickStart();
+        end=bar_rangebar.getTickEnd();
+        interval=bar_rangebar.getTickInterval();
     }
 
     public String getBar_text() {
@@ -41,20 +40,39 @@ public class Bar extends LinearLayout {
         bar_text.setText(text);
     }
 
-    public void setBar_rangebar(int start,int end,int unit) {
+    public void setBar_rangebar_start(float start)
+    {
         this.bar_rangebar.setTickStart(start);
-        this.bar_rangebar.setTickEnd(end);
-        this.bar_rangebar.setTickInterval(unit);
-    }
-
-    public RangeBar getBar_rangebar() {
-        return bar_rangebar;
     }
 
     @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
-        loadComponents();
+    public boolean onTouchEvent(MotionEvent event) {
+        this.start=bar_rangebar.getTickStart();
+        this.end=bar_rangebar.getTickEnd();
+        return super.onTouchEvent(event);
     }
 
+    public void setBar_rangebar_start( )
+    {
+        this.bar_rangebar.setTickStart(start);
+    }
+
+    public void setBar_rangebar_end(float end)
+    {
+        this.bar_rangebar.setTickEnd(end);
+    }
+
+    public void setBar_rangebar_interval(float interval)
+    {
+        this.bar_rangebar.setTickInterval(interval);
+    }
+
+    public float getStart()
+    {
+        return start;
+    }
+    public float getEnd()
+    {
+        return end;
+    }
 }

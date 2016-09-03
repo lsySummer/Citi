@@ -45,11 +45,10 @@
                 android:text="搜索"
                 android:textSize="20dp"
                 android:textColor="@color/white"
-                android:background="@color/lightBlue"
+                android:background="@drawable/button"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_gravity="right"/>
-            <!--android:background="@drawable/roundrect"-->
         </LinearLayout>
         <!--产品搜索筛选器列表-->
         <ListView

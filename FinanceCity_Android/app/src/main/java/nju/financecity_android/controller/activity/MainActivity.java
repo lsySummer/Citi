@@ -18,32 +18,39 @@ import nju.financecity_android.controller.widget.Footer;
  */
 public class MainActivity extends Activity {
 
+    private Banner banner;
+    private LinearLayout main_mid_layout;
+    private Footer footer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.product_search);
+        setContentView(R.layout.main);
         initComponents();
     }
 
     private void initComponents() {
-        footer = (Footer) findViewById(R.id.footer);
         banner = (Banner) findViewById(R.id.banner);
+        main_mid_layout=(LinearLayout) findViewById(R.id.main_mid_layout);
+        footer = (Footer) findViewById(R.id.footer);
 
-        banner.setDisplayText("投资");
+//        main_mid_layout.addView(findViewById(R.id.product_search_fragment));
+//        banner.setDisplayText("投资");
+        banner.setDisplayText("产品");
 
-        for (int i = 0; i < 4; i++) {
-            final int tempi = i;
-            footer.setOnClickListener(i, new View.OnClickListener() {
 
-                @Override
-                public void onClick(View v) {
-                    banner.setDisplayText(footer.getText(tempi));
-                    footer.setSelectedById(tempi);
-                }
-            });
-        }
+//        for (int i = 0; i < 4; i++) {
+//            final int tempi = i;
+//            footer.setOnClickListener(i, new View.OnClickListener() {
+//
+//                @Override
+//                public void onClick(View v) {
+//                    banner.setDisplayText(footer.getText(tempi));
+//                    footer.setSelectedById(tempi);
+//                }
+//            });
+//        }
     }
 
-    private Footer footer;
-    private Banner banner;
+
 }
