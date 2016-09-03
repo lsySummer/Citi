@@ -4,19 +4,19 @@ package edu.nju.vo;
  * Created by Sun YuHao on 2016/8/31.
  */
 public class InsuranceVO {
-    private int pid;
+    private Integer pid;
     private String name;
     private String insurance_lift;
-    private int insurance_age;
+    private Integer insurance_age;
     private int[] amount_in_force;
     private String way_of_charge;
     private String distributor;
 
-    public int getPid() {
+    public Integer getPid() {
         return pid;
     }
 
-    public void setPid(int pid) {
+    public void setPid(Integer pid) {
         this.pid = pid;
     }
 
@@ -36,11 +36,11 @@ public class InsuranceVO {
         this.insurance_lift = insurance_lift;
     }
 
-    public int getInsurance_age() {
+    public Integer getInsurance_age() {
         return insurance_age;
     }
 
-    public void setInsurance_age(int insurance_age) {
+    public void setInsurance_age(Integer insurance_age) {
         this.insurance_age = insurance_age;
     }
 

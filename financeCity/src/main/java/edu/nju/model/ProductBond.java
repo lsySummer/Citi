@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
- * Created by Sun YuHao on 2016/9/1.
+ * Created by Sun YuHao on 2016/9/2.
  */
 @Entity
 @Table(name = "product_bond", schema = "citi", catalog = "")
@@ -39,7 +39,7 @@ public class ProductBond {
     private String releaseWay;
     private String objectOriented;
     private Byte taxState;
-    private Integer coupon;
+    private BigDecimal coupon;
     private Integer advanceRedeemDate;
     private Integer advanceRedeemInterestDate;
     private Byte state;
@@ -337,11 +337,11 @@ public class ProductBond {
 
     @Basic
     @Column(name = "coupon")
-    public Integer getCoupon() {
+    public BigDecimal getCoupon() {
         return coupon;
     }
 
-    public void setCoupon(Integer coupon) {
+    public void setCoupon(BigDecimal coupon) {
         this.coupon = coupon;
     }
 

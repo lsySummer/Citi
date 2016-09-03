@@ -9,7 +9,34 @@
 		<action name="test" class="TestAction">
 		<result name="success">/new.jsp</result>
 		</action>
+		
+		<action name="register" class="edu.nju.action.UserAction" method="register">
+			<result name="success">/jsp/signup_step2.jsp</result>
+			<result name="error">/jsp/signup_step1.jsp</result>
+		</action>
+		
+		<action name="login" class="" method="">
+			<result name="success"></result> <!-- 跳转到登录前页面 -->
+			<result name="error">/jsp/login.jsp</result>
+		</action>
+		
+		<action name="signup2" class="" method="">
+			<result name="success">/jsp/signup_step3.jsp</result>
+			<result name="error">/jsp/signup_step2.jsp</result>
+		</action>
+		
+		<action name="signup3" class="" method="">
+			<result name="success">/jsp/signup_step4.jsp</result>
+			<result name="error">/jsp/signup_step3.jsp</result>
+		</action>
+		
+		<action name="signup4" class="" method="">
+			<result name="success">/jsp/search-result.jsp</result>
+			<result name="error">/jsp/signup_step4.jsp</result>
+		</action>
 	</package>
+
+	<constant name="struts.action.extension" value="action" />
 
 </struts>
 

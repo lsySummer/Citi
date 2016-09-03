@@ -20,29 +20,18 @@
 </head>
 <body>
 	<s:include value="header.jsp"></s:include>
-	<div style="height: 480px">
+	<div style="height: 450px">
 		<div class="container"
 			style="margin-top: 30px; background-color: white;">
 			<br />
 			<div class="smallBlock"></div>
-			<span class="blueFont">注册</span>
+			<span class="blueFont">登录</span>
 			<div class="signupContent">
-				<s:form action="register" method="post">
+				<s:form action="login" method="post">
 					<table border="0" style="margin-left: 15%; width: 70%">
 						<tr>
 							<td><span style="font-size: 14px">手机号码</span></td>
 							<td><input type="text" class="inputSize" name="mobile"></td>
-						</tr>
-						<tr>
-							<td><span style="font-size: 14px">短信验证码</span></td>
-							<td><input type="text" style="height: 30px; width: 150px"
-								name="verify">
-								<button class="platButton">获取</button></td>
-
-						</tr>
-						<tr>
-							<td><span style="font-size: 14px">昵称</span></td>
-							<td><input type="text" class="inputSize" name="nickname"></td>
 						</tr>
 						<tr>
 							<td><span style="font-size: 14px">密码</span></td>
@@ -55,7 +44,7 @@
 						</tr>
 						<tr>
 							<td colspan="2"><input type="submit" class="wideButton"
-								value="完成注册"></td>
+								value="登&nbsp&nbsp&nbsp&nbsp录"></td>
 						</tr>
 					</table>
 				</s:form>

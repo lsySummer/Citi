@@ -35,7 +35,13 @@ public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
     @Override
     public FinanceCityUser login(String userName, String password) {
         /** match username and password */
-        List list = DAO.login("SELECT id FROM User user WHERE user.username=? AND user.password=?", userName, password);
+        List list;
+        if (validMobile(userName)) {
+            list = DAO.login("SELECT id FROM User user WHERE user.phone=? AND user.password=?", userName, password);
+        }
+        else {
+            list = DAO.login("SELECT id FROM User user WHERE user.username=? AND user.password=?", userName, password);
+        }
 
         /** if login failed */
         if (list == null || list.size() == 0) {
@@ -63,8 +69,11 @@ public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
     public boolean logout(FinanceCityUser financeCityUser) {
         /** not online */
         try {
-            UserLogin userLogin = (UserLogin)DAO.find("FROM UserLogin userLogin WHERE userLogin.id=" + financeCityUser.getID() +
-            " AND userLogin.session=" + financeCityUser.getLoginSession()).get(0);
+            int id = financeCityUser.getID();
+            String session = financeCityUser.getLoginSession();
+            List list = DAO.find("FROM UserLogin userLogin WHERE userLogin.userId=" + id +
+            " AND userLogin.session='" + session + "'");
+            UserLogin userLogin = (UserLogin)list.get(0);
             if (userLogin != null) {
                 getUserDao(financeCityUser).delete(userLogin);
                 financeCityUser.setID(null);
@@ -83,7 +92,7 @@ public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
     @Override
     public boolean isLogin(FinanceCityUser financeCityUser) {
         try {
-            List list = DAO.find("SELECT loginID FROM UserLogin userLogin WHERE userLogin.id=" + financeCityUser.getID());
+            List list = DAO.find("SELECT session FROM UserLogin userLogin WHERE userLogin.userId=" + financeCityUser.getID());
             /** weather login id is the same as the one in database*/
             return (financeCityUser.getLoginSession().equals(list.get(0)));
         }
@@ -98,19 +107,30 @@ public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
         UserVO userVO = new UserVO();
 
         try {
-            List list = getUserDao(financeCityUser).find("FROM User u WHERE u.id=" + financeCityUser.getID());
+            int id = financeCityUser.getID();
+            List list = getUserDao(financeCityUser).find("FROM User u WHERE u.id=" + id);
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             User user = (User) list.get(0);
 
-            userVO.setUrben(user.getIfCity() == 1);
+            if (user.getIfCity() == null) {
+                userVO.setUrben(null);
+            }
+            else {
+                userVO.setUrben(user.getIfCity() == 1);
+            }
             userVO.setId(user.getId());
             userVO.setMobile(user.getPhone());
             userVO.setIncome(user.getIncome());
-            userVO.setBirthday(dateFormat.format(user.getBirthday()));
+            if (user.getBirthday() == null) {
+                userVO.setBirthday(null);
+            }
+            else {
+                userVO.setBirthday(dateFormat.format(user.getBirthday()));
+            }
             userVO.setExpense(user.getMonthlyExpense());
             ErrorManager.setError(userVO, ErrorManager.errorNormal);
         }
-        catch (NotLoginException e) {
+        catch (Exception e) {
             ErrorManager.setError(userVO, ErrorManager.errorNotLogin);
             e.printStackTrace();
         }
@@ -126,7 +146,13 @@ public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
 
             user.setUpdateAt(new Timestamp(System.currentTimeMillis()));
             user.setBirthday(Timestamp.valueOf(userVO.getBirthday()));
-            user.setIfCity(userVO.isUrben() ? (byte) 1 : 0);
+            if (userVO.getUrben() == null) {
+                user.setIfCity(null);
+            }
+            else {
+                user.setIfCity(userVO.getUrben() ? (byte)0 : 1);
+            }
+            user.setIfCity((userVO.getUrben() == null || userVO.getUrben()) ? (byte) 1 : 0);
             user.setMonthlyExpense(userVO.getExpense());
             user.setIncome(userVO.getIncome());
             user.setPhone(userVO.getMobile());
@@ -177,7 +203,7 @@ public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
     }
 
     @Override
-    public FinanceCityUser register(String mobile, String password, String session) throws InvalidPasswordException, InvalidMobileException, UserAlreadyExistException {
+    public FinanceCityUser register(String mobile, String password, String username) throws InvalidPasswordException, InvalidMobileException, UserAlreadyExistException {
         if (!validMobile(mobile)){
             throw new InvalidMobileException();
         }
@@ -191,6 +217,7 @@ public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
             User user = new User();
             user.setPhone(mobile);
             user.setPassword(password);
+            user.setUsername(username);
             DAO.save(user);
 
             return login(mobile, password);
@@ -226,7 +253,7 @@ public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
     }
 
     private boolean validMobile(String mobile) {
-        return  (mobile.length() == 13 && isNumeric(mobile));
+        return  (mobile.length() == 11 && isNumeric(mobile));
     }
 
     private boolean isNumeric(String str) {

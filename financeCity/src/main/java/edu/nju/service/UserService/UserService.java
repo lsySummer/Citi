@@ -3,10 +3,7 @@ package edu.nju.service.UserService;
 import edu.nju.dao.UserDao;
 import edu.nju.dao.impl.CommonDao;
 import edu.nju.service.BaseService.BaseService;
-import edu.nju.service.ExceptionsAndError.InvalidMobileException;
-import edu.nju.service.ExceptionsAndError.InvalidPasswordException;
-import edu.nju.service.ExceptionsAndError.NotLoginException;
-import edu.nju.service.ExceptionsAndError.UserAlreadyExistException;
+import edu.nju.service.ExceptionsAndError.*;
 import edu.nju.service.POJO.RegisterInfo;
 import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.vo.UserVO;
@@ -31,7 +28,7 @@ public interface UserService extends BaseService {
      * @param password .
      * @return user info
      */
-    FinanceCityUser register(String mobile, String password, String session) throws InvalidPasswordException, InvalidMobileException, UserAlreadyExistException;
+    FinanceCityUser register(String mobile, String password, String username) throws InvalidPasswordException, InvalidMobileException, UserAlreadyExistException;
 
     /**
      * user login

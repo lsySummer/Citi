@@ -10,14 +10,15 @@
     request.setAttribute("basePath", basePath);
 %>
 <html>
+ <base href="<%=basePath%>">
 <body style="margin: 0">
 <div class="header shadow">
     <div class="container">
         <div class="header-square"></div>
         <h1 class="header-title">Invest Go</h1>
         <div class="header-button">
-            <button class="button-style">注册</button>
-            <button class="button-style">登录</button>
+           <a href="${basePath}/jsp/signup_step1.jsp"><button class="button-style">注册</button></a>
+            <a href="${basePath}/jsp/login.jsp"><button class="button-style">登录</button></a>
         </div>
     </div>
 

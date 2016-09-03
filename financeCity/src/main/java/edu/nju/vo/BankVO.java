@@ -4,21 +4,21 @@ package edu.nju.vo;
  * Created by Sun YuHao on 2016/8/31.
  */
 public class BankVO {
-    private int pid;
+    private Integer pid;
     private String name;
-    private double yearly_income_rate;
+    private Double yearly_income_rate;
     private String product_type;
     private String income_type;
-    private int initial_money;
+    private Integer initial_money;
     private String open_date;
     private String distributor_bank;
     private String distributor_institution;
 
-    public int getPid() {
+    public Integer getPid() {
         return pid;
     }
 
-    public void setPid(int pid) {
+    public void setPid(Integer pid) {
         this.pid = pid;
     }
 
@@ -30,11 +30,11 @@ public class BankVO {
         this.name = name;
     }
 
-    public double getYearly_income_rate() {
+    public Double getYearly_income_rate() {
         return yearly_income_rate;
     }
 
-    public void setYearly_income_rate(double yearly_income_rate) {
+    public void setYearly_income_rate(Double yearly_income_rate) {
         this.yearly_income_rate = yearly_income_rate;
     }
 
@@ -54,11 +54,11 @@ public class BankVO {
         this.income_type = income_type;
     }
 
-    public int getInitial_money() {
+    public Integer getInitial_money() {
         return initial_money;
     }
 
-    public void setInitial_money(int initial_money) {
+    public void setInitial_money(Integer initial_money) {
         this.initial_money = initial_money;
     }
 
