@@ -5,6 +5,10 @@ import android.app.Fragment;
 import android.os.Bundle;
 
 import android.view.View;
+import android.view.animation.LinearInterpolator;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+
 import nju.financecity_android.R;
 import nju.financecity_android.controller.widget.Banner;
 import nju.financecity_android.controller.widget.Footer;
@@ -17,7 +21,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.product_search);
         initComponents();
     }
 
