@@ -23,11 +23,7 @@ import java.util.Map;
 @Controller
 public class UserAction extends BaseAction {
     private final String default_after_login = "/jsp/search-result.jsp";
-    private BaseVO message;
-
-    public BaseVO getMessage() {
-        return message;
-    }
+    private final String server = "http://localhost:8080";
 
     @SuppressWarnings("unchecked")
     public String register() {
@@ -289,6 +285,6 @@ public class UserAction extends BaseAction {
         if (url == null) {
             return null;
         }
-        return url.replace("http://localhost:8080", "");
+        return url.replace(server, "");
     }
 }

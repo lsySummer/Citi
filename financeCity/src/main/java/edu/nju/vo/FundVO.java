@@ -4,6 +4,7 @@ package edu.nju.vo;
  * Created by Sun YuHao on 2016/8/31.
  */
 public class FundVO {
+    private String productType;
     private Integer pid;
     private String name;
     private Double expected_income_rate;
@@ -13,6 +14,14 @@ public class FundVO {
     private String sid;
     private Double mng_charge_rate;
     private String est_date;
+
+    public String getProductType() {
+        return productType;
+    }
+
+    public void setProductType(String productType) {
+        this.productType = productType;
+    }
 
     public Integer getPid() {
         return pid;

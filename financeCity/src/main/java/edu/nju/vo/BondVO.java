@@ -4,6 +4,7 @@ package edu.nju.vo;
  * Created by Sun YuHao on 2016/8/31.
  */
 public class BondVO {
+    private String productType;
     private Integer pid;
     private String name;
     private Double yearly_interest_rate;
@@ -11,6 +12,14 @@ public class BondVO {
     private Integer life;
     private String type;
     private String code;
+
+    public String getProductType() {
+        return productType;
+    }
+
+    public void setProductType(String productType) {
+        this.productType = productType;
+    }
 
     public Integer getPid() {
         return pid;

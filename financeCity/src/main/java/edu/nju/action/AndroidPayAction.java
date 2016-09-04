@@ -31,7 +31,7 @@ public class AndroidPayAction extends AndroidAction {
             List<PayWay> payWayList = payService.getPayWayList((FinanceCityUser) session.get("user"));
 
             if (payWayList == null) {
-                ErrorManager.setError(payWayVO, ErrorManager.errorDateNotFound);
+                ErrorManager.setError(payWayVO, ErrorManager.errorDataNotFound);
                 setResult(payWayVO);
 
                 return SUCCESS;
