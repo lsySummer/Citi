@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import com.appyvet.rangebar.RangeBar;
 import nju.financecity_android.R;
 
 /**
@@ -45,7 +46,9 @@ public class Banner extends LinearLayout {
 
     private void init(Context context) {
         LayoutInflater.from(context).inflate(R.layout.banner, this, true);
+
     }
     private TextView lblText;
+
     private LinearLayout mainPane;
 }

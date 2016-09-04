@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<color name="colorPrimary">#e9131a</color>
-	<color name="colorPrimaryDark">#68000a</color>
-	<color name="colorAccent">#ff7b00</color>
+	<color name="colorPrimary">#0a0900</color>
+	<color name="colorPrimaryDark">#000000</color>
+	<color name="colorAccent">#d7cf5e</color>
 	<color name="white">#ffffff</color>
 	<color name="increasingRed">#c23535</color>
 	<color name="decreasingGreen">#56b354</color>
 	<color name="plainText">#232323</color>
+	<color name="bank">#f9d540</color>
+	<color name="bond">#f99c52</color>
+	<color name="validBlue">#1b72ff</color>
+	<color name="fund">#fd3278</color>
+	<color name="insurance">#c601f8</color>
+	<color name="propertyName">#383838</color>
+	<color name="propertyValue">#878787</color>
 	<color name="lightBlue">#11b7f3</color>
 	<color name="grey">#bbbab0</color>
 </resources>

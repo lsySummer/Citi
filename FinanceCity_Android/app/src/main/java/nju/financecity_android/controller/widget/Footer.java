@@ -3,6 +3,7 @@ package nju.financecity_android.controller.widget;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,7 +17,7 @@ import java.util.Map;
  *
  * Created by alpaca. on 16-8-20.
  */
-public class Footer extends LinearLayout {
+public class Footer extends LinearLayout{
 
     public Footer(Context context) {
         super(context);
@@ -122,6 +123,7 @@ public class Footer extends LinearLayout {
         lbls[2].setText(getResources().getString(R.string.footer_lbl3));
         lbls[3] = (TextView) findViewById(R.id.lblPersonalInfo);
         lbls[3].setText(getResources().getString(R.string.footer_lbl4));
+
     }
 
     private void init(Context context) {
@@ -133,4 +135,5 @@ public class Footer extends LinearLayout {
     private LinearLayout[] items;
     private ImageView[] imgs;
     private TextView[] lbls;
+
 }

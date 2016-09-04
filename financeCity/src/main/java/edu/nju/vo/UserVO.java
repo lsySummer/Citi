@@ -17,6 +17,16 @@ public class UserVO extends BaseVO {
 	private Boolean isUrben;
 	/**月支出*/
 	private Integer expense;
+	/**用户名*/
+	private String username;
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
 	public Integer getId() {
 		return id;
