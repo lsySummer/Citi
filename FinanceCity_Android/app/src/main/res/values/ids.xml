@@ -22,5 +22,9 @@
     <item name="close2" type="id"/>
     <item name="sort" type="id"/>
     <item name="limit3" type="id"/>
+    <item name="year3" type="id"/>
+    <item name="broadcast" type="id"/>
+    <item name="company" type="id"/>
+    <item name="value" type="id"/>
 
 </resources>

@@ -11,17 +11,21 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TableRow;
+import android.widget.TextView;
 
 import org.apache.http.impl.conn.AbstractClientConnAdapter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import nju.financecity_android.R;
@@ -29,6 +33,7 @@ import nju.financecity_android.controller.widget.Bar;
 import nju.financecity_android.controller.widget.Choose;
 import nju.financecity_android.controller.widget.Key;
 import nju.financecity_android.controller.widget.Onoff;
+import nju.financecity_android.vo.ProductInfo;
 
 /**
  * Created by Administrator on 2016/9/3.
@@ -41,9 +46,14 @@ public class ProductSearch extends Fragment implements View.OnClickListener{
     /**产品搜索结果*/
     private static LinearLayout product_search_result_layout;
     /**产品搜索筛选器列表*/
-    private static RelativeLayout product_search_filter_list_layout;
+    private static LinearLayout product_search_filter_list_layout;
     /**产品搜索结果列表*/
     private static ListView product_search_result_listview;
+    private ArrayList<HashMap<String,Object>> resultList;
+    private SimpleAdapter resultAdapter;
+
+    /**搜索按钮*/
+    private static Button product_search_filter_button;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,15 +66,67 @@ public class ProductSearch extends Fragment implements View.OnClickListener{
     public void onStart() {
         super.onStart();
         initProduct_search();
+        initProduct_result();
     }
 
     public void initProduct_search() {
         this.product_search_layout=(LinearLayout)getView().findViewById(R.id.product_search_layout);
         this.product_search_filter_layout =(LinearLayout)getView().findViewById(R.id.product_search_filter_layout);
-        this.product_search_result_layout=(LinearLayout)getView().findViewById(R.id.product_search_result_layout);
-        this.product_search_filter_list_layout=(RelativeLayout) getView().findViewById(R.id.product_search_filter_list_layout);
-        this.product_search_result_listview =(ListView)getView().findViewById(R.id.product_search_result_listview);
+        this.product_search_filter_list_layout=(LinearLayout) getView().findViewById(R.id.product_search_filter_list_layout);
+
+        this.product_search_filter_button=(Button)getView().findViewById(R.id.product_search_filter_button);
+        this.product_search_filter_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                product_search_result_listview TODO 显示搜索结果
+                ArrayList<ProductInfo> list=new ArrayList<ProductInfo>();
+                ProductInfo pi1=new ProductInfo();
+                pi1.productName="some name";
+                pi1.currPrice=100.8;
+                list.add(pi1);
+                setResult(list);
+            }
+        });
+
         setSearchAll();
+    }
+
+    public void initProduct_result()
+    {
+        this.product_search_result_layout=(LinearLayout)getView().findViewById(R.id.product_search_result_layout);
+        this.product_search_result_listview =(ListView)getView().findViewById(R.id.product_search_result_listview);
+        this.resultList=new ArrayList<HashMap<String,Object>>();
+        /*===============================*/
+        HashMap<String,Object> map1=new HashMap<String, Object>();
+        Button button1=new Button(getActivity());
+        button1.setText("product1");
+        TextView textview1=new TextView(getActivity());
+        textview1.setText("introduction1");
+        map1.put("product",button1);
+        map1.put("introduction",textview1);
+        this.resultList.add(map1);
+
+        HashMap<String,Object> map2=new HashMap<String, Object>();
+        Button button2=new Button(getActivity());
+        button2.setText("product2");
+        TextView textview2=new TextView(getActivity());
+        textview2.setText("introduction2");
+        map2.put("product",button2);
+        map2.put("introduction",textview2);
+        this.resultList.add(map2);
+
+        HashMap<String,Object> map3=new HashMap<String, Object>();
+        Button button3=new Button(getActivity());
+        button3.setText("product3");
+        TextView textview3=new TextView(getActivity());
+        textview3.setText("introduction3");
+        map3.put("product",button3);
+        map3.put("introduction",textview3);
+        this.resultList.add(map3);
+        /*===============================*/
+        this.resultAdapter=new SimpleAdapter(getActivity(),resultList,R.layout.product_search_result_element,new String[]{"product","introduction"},new int[]{R.id.search_result_element_button,R.id.search_result_element_text});
+        this.product_search_result_listview.setAdapter(resultAdapter);
+
     }
 
     public void setSearch(int n)
@@ -98,7 +160,24 @@ public class ProductSearch extends Fragment implements View.OnClickListener{
                         choose.setSpinner2_content(spinner2_resources.get(pos));
 
                         //修改其他筛选器
-
+                        switch(pos)
+                        {
+                            case 0:
+                                setSearchAll();
+                                break;
+                            case 1:
+                                setSearchBank();
+                                break;
+                            case 2:
+                                setSearchDebt();
+                                break;
+                            case 3:
+                                setSearchFund();
+                                break;
+                            case 4:
+                                setSearchInsurance();
+                                break;
+                        }
                     }
                     @Override
                     public void onNothingSelected(AdapterView<?> arg0) {
@@ -118,12 +197,9 @@ public class ProductSearch extends Fragment implements View.OnClickListener{
                     }
                 }
         );
-        RelativeLayout.LayoutParams param0=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        RelativeLayout.LayoutParams param1=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        param1.addRule(RelativeLayout.BELOW,R.id.key);
 
-        product_search_filter_list_layout.addView(key,param0);
-        product_search_filter_list_layout.addView(choose,param1);
+        product_search_filter_list_layout.addView(choose);
+        product_search_filter_list_layout.addView(key);
     }
 
     public void setSearchAll()
@@ -142,20 +218,15 @@ public class ProductSearch extends Fragment implements View.OnClickListener{
         limit.setBar_text("期限");
         close.setOnoff_text("是否封闭");
 
-        RelativeLayout.LayoutParams param2=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        RelativeLayout.LayoutParams param3=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        RelativeLayout.LayoutParams param4=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        param2.addRule(RelativeLayout.BELOW,R.id.choose);
-        param3.addRule(RelativeLayout.BELOW,R.id.year);
-        param4.addRule(RelativeLayout.BELOW,R.id.limit);
-        product_search_filter_list_layout.addView(year,param2);
-        product_search_filter_list_layout.addView(limit,param3);
-        product_search_filter_list_layout.addView(close,param4);
+        product_search_filter_list_layout.addView(year);
+        product_search_filter_list_layout.addView(limit);
+        product_search_filter_list_layout.addView(close);
 
     }
 
     public void setSearchBank()
     {
+        product_search_filter_list_layout.removeAllViews();
         setSearch(1);
 
         Bar year=new Bar(this.getActivity());
@@ -178,29 +249,18 @@ public class ProductSearch extends Fragment implements View.OnClickListener{
         incometype.setChoose_text("收益类型");
         close.setOnoff_text("是否封闭");
 
-        RelativeLayout.LayoutParams param2=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        RelativeLayout.LayoutParams param3=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        RelativeLayout.LayoutParams param4=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        RelativeLayout.LayoutParams param5=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        RelativeLayout.LayoutParams param6=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        RelativeLayout.LayoutParams param7=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        param2.addRule(RelativeLayout.BELOW,R.id.choose);
-        param3.addRule(RelativeLayout.BELOW,R.id.year1);
-        param4.addRule(RelativeLayout.BELOW,R.id.start);
-        param5.addRule(RelativeLayout.BELOW,R.id.limit1);
-        param6.addRule(RelativeLayout.BELOW,R.id.advisement);
-        param7.addRule(RelativeLayout.BELOW,R.id.incometype);
-        product_search_filter_list_layout.addView(year,param2);
-        product_search_filter_list_layout.addView(start,param3);
-        product_search_filter_list_layout.addView(limit,param4);
-        product_search_filter_list_layout.addView(advisement,param5);
-        product_search_filter_list_layout.addView(incometype,param6);
-        product_search_filter_list_layout.addView(close,param7);
+        product_search_filter_list_layout.addView(year);
+        product_search_filter_list_layout.addView(start);
+        product_search_filter_list_layout.addView(limit);
+        product_search_filter_list_layout.addView(advisement);
+        product_search_filter_list_layout.addView(incometype);
+        product_search_filter_list_layout.addView(close);
 
     }
 
     public void setSearchDebt()
     {
+        product_search_filter_list_layout.removeAllViews();
         setSearch(2);
 
         Bar year=new Bar(this.getActivity());
@@ -217,22 +277,15 @@ public class ProductSearch extends Fragment implements View.OnClickListener{
         end.setChoose_text("到期日");
         state.setChoose_text("状态");
 
-        RelativeLayout.LayoutParams param2=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        RelativeLayout.LayoutParams param3=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        RelativeLayout.LayoutParams param4=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        RelativeLayout.LayoutParams param5=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        param2.addRule(RelativeLayout.BELOW,R.id.choose);
-        param3.addRule(RelativeLayout.BELOW,R.id.year2);
-        param4.addRule(RelativeLayout.BELOW,R.id.limit2);
-        param5.addRule(RelativeLayout.BELOW,R.id.end1);
-        product_search_filter_list_layout.addView(year,param2);
-        product_search_filter_list_layout.addView(limit,param3);
-        product_search_filter_list_layout.addView(end,param4);
-        product_search_filter_list_layout.addView(state,param5);
+        product_search_filter_list_layout.addView(year);
+        product_search_filter_list_layout.addView(limit);
+        product_search_filter_list_layout.addView(end);
+        product_search_filter_list_layout.addView(state);
     }
 
     public void setSearchFund()
     {
+        product_search_filter_list_layout.removeAllViews();
         setSearch(3);
 
         Choose advisement=new Choose(this.getActivity());
@@ -258,38 +311,28 @@ public class ProductSearch extends Fragment implements View.OnClickListener{
         sort.setOnoff_text("按近X年收益率排序");
         limit.setChoose_text("期限");
 
-        RelativeLayout.LayoutParams param2=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        RelativeLayout.LayoutParams param3=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        RelativeLayout.LayoutParams param4=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        RelativeLayout.LayoutParams param5=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        RelativeLayout.LayoutParams param6=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        RelativeLayout.LayoutParams param7=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        RelativeLayout.LayoutParams param8=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        param2.addRule(RelativeLayout.BELOW,R.id.choose);
-        param3.addRule(RelativeLayout.BELOW,R.id.advisement1);
-        param4.addRule(RelativeLayout.BELOW,R.id.incometype1);
-        param5.addRule(RelativeLayout.BELOW,R.id.state1);
-        param6.addRule(RelativeLayout.BELOW,R.id.latest);
-        param7.addRule(RelativeLayout.BELOW,R.id.close2);
-        param8.addRule(RelativeLayout.BELOW,R.id.sort);
-        product_search_filter_list_layout.addView(advisement,param2);
-        product_search_filter_list_layout.addView(incometype,param3);
-        product_search_filter_list_layout.addView(state,param4);
-        product_search_filter_list_layout.addView(latest,param5);
-        product_search_filter_list_layout.addView(close,param6);
-        product_search_filter_list_layout.addView(sort,param7);
-        product_search_filter_list_layout.addView(limit,param8);
+        product_search_filter_list_layout.addView(advisement);
+        product_search_filter_list_layout.addView(incometype);
+        product_search_filter_list_layout.addView(state);
+        product_search_filter_list_layout.addView(latest);
+        product_search_filter_list_layout.addView(close);
+        product_search_filter_list_layout.addView(sort);
+        product_search_filter_list_layout.addView(limit);
     }
 
     public void setSearchInsurance()
     {
+        product_search_filter_list_layout.removeAllViews();
         setSearch(4);
 
         Bar year=new Bar(this.getActivity());
-
+        year.setId(R.id.year3);
         Bar broadcast=new Bar(this.getActivity());
+        broadcast.setId(R.id.broadcast);
         Choose company=new Choose(this.getActivity());
+        company.setId(R.id.company);
         Choose value=new Choose(this.getActivity());
+        value.setId(R.id.value);
 
         year.setBar_text("年利率");
         broadcast.setBar_text("期限");
@@ -302,6 +345,25 @@ public class ProductSearch extends Fragment implements View.OnClickListener{
         product_search_filter_list_layout.addView(value);
     }
 
+    public void setResult(ArrayList<ProductInfo> list)
+    {
+        this.resultList.clear();
+        for(int i=0;i<list.size();i++)
+        {
+            ProductInfo pInfo=list.get(i);
+            HashMap<String,Object> map=new HashMap<String,Object>();
+            Button button=new Button(getActivity());
+            button.setText(pInfo.productName);
+            TextView textview=new TextView(getActivity());
+            textview.setText(pInfo.currPrice+"");
+            map.put("product",pInfo.productName);
+            map.put("introduction",pInfo.currPrice+"");//TODO 这里可能有改动
+            resultList.add(map);
+        }
+        this.resultAdapter=new SimpleAdapter(getActivity(),resultList,R.layout.product_search_result_element,new String[]{"product","introduction"},new int[]{R.id.search_result_element_button,R.id.search_result_element_text});
+        this.product_search_result_listview.setAdapter(resultAdapter);
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -310,6 +372,5 @@ public class ProductSearch extends Fragment implements View.OnClickListener{
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             break;
         }
-
     }
 }

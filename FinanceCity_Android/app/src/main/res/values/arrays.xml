@@ -8,16 +8,18 @@
         <item>保险</item>
     </string-array>
     <string-array name="slavery_all">
-        <item>——</item>
+        <item>所有</item>
     </string-array>
     <string-array name="slavery_bank">
-        <item>——</item>
+        <item>所有</item>
     </string-array>
     <string-array name="slavery_debt">
+        <item>所有</item>
         <item>记账式</item>
         <item>储蓄式</item>
     </string-array>
     <string-array name="slavery_fund">
+        <item>所有</item>
         <item>股票型</item>
         <item>股指型</item>
         <item>混合型</item>
@@ -28,6 +30,7 @@
         <item>封闭型</item>
     </string-array>
     <string-array name="slavery_insurance">
+        <item>所有</item>
         <item>两全万能险</item>
     </string-array>
 
