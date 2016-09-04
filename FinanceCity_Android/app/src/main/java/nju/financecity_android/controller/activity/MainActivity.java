@@ -37,7 +37,7 @@ public class MainActivity extends Activity{
         setContentView(R.layout.main);
         initComponents();
         fragmentManager=getFragmentManager();
-        setFragment(0);
+        setFragment(2);
     }
 
     private void initComponents() {

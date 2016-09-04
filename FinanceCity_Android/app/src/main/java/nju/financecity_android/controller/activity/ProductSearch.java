@@ -67,6 +67,9 @@ public class ProductSearch extends Fragment{
 
         key.setKey_text("关键字");
         choose.setChoose_text("筛选");
+            choose.setSpinner1_content(new String[]{"所有投资标的","银行理财","债券","基金","保险"});
+            choose.setSpinner2_content(new String[]{"—— ——"});
+        //TODO Listener
         year.setBar_text("年化收益率");
         limit.setBar_text("期限");
         close.setOnoff_text("是否封闭");
@@ -83,6 +86,8 @@ public class ProductSearch extends Fragment{
     {
         Key key=new Key(this.getActivity());
         Choose choose=new Choose(this.getActivity());
+            choose.setSpinner1_content(new String[]{"所有投资标的","银行理财","债券","基金","保险"});
+            choose.setSpinner2_content(new String[]{"—— ——"});
         Bar year=new Bar(this.getActivity());
         Bar start=new Bar(this.getActivity());
         Bar limit=new Bar(this.getActivity());
@@ -92,6 +97,8 @@ public class ProductSearch extends Fragment{
 
         key.setKey_text("关键字");
         choose.setChoose_text("筛选");
+            choose.setSpinner1_content(new String[]{"所有投资标的","银行理财","债券","基金","保险"});
+            choose.setSpinner2_content(new String[]{"1","2","3"});
         year.setBar_text("预计年利率");
         start.setBar_text("起购金额");
         limit.setBar_text("期限");
