@@ -1,6 +1,7 @@
 package edu.nju.service.SearchService;
 
 import edu.nju.model.CategoryIndex;
+import edu.nju.model.Institution;
 import edu.nju.model.User;
 import edu.nju.model.UserTemperPrefer;
 import edu.nju.service.BaseService.BaseFunctionServiceAdaptor;
@@ -224,5 +225,22 @@ public class SearchServiceImpl extends BaseFunctionServiceAdaptor implements Sea
             e.printStackTrace();
             return -1;
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<String> getInstitutionNameList() {
+        List<String> list = getUserService().getCommonDao().find("SELECT i.name FROM Institution i");
+        if (list == null || list.size() == 0) {
+            return null;
+        }
+        else {
+            return list;
+        }
+    }
+
+    @Override
+    public List<Institution> getInstitutionList() {
+        return null;
     }
 }

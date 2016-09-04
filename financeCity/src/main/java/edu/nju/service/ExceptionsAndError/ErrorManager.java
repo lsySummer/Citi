@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ErrorManager {
     static public final int errorNormal = 0;
     static public final int errorNotLogin = 1;
-    static public final int errorDateNotFound = 2;
+    static public final int errorDataNotFound = 2;
     static public final int errorInvalidPassword = 3;
     static public final int errorRegisterFailed = 4;
     static public final int errorNoSuchProduct = 5;
@@ -23,11 +23,11 @@ public class ErrorManager {
     static public final int errorInnerDataError = 11;
     static public final int errorUnhandledMethod = 12;
 
-    static private String[] errorDescreption;
-    static private String[] errorDescreptionCH;
+    static private String[] errorDescription;
+    static private String[] errorDescriptionCH;
 
     static {
-        errorDescreption = new String[] {
+        errorDescription = new String[] {
                 "",
                 "Not Login",
                 "No Data Found",
@@ -42,7 +42,7 @@ public class ErrorManager {
                 "Inner Data Error",
                 "Unhandled Method"
         };
-        errorDescreptionCH = new String[] {
+        errorDescriptionCH = new String[] {
                 "",
                 "未登录",
                 "未找到相关数据",
@@ -60,9 +60,9 @@ public class ErrorManager {
     }
 
     static private String getDescription(int i) {
-        return errorDescreption[i];
+        return errorDescription[i];
     }
-    static private String getDescriptionCH(int i) { return errorDescreptionCH[i]; }
+    static private String getDescriptionCH(int i) { return errorDescriptionCH[i]; }
 
     static public void setError(BaseVO baseVO, int error) {
         baseVO.setError(error);

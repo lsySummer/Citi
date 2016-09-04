@@ -63,7 +63,7 @@ public class AndroidSearchAction extends AndroidAction {
 
             Product[] products = searchService.getProductsByIds(list);
             if (products.length == 0) {
-                ErrorManager.setError(productsDetailVO, ErrorManager.errorDateNotFound);
+                ErrorManager.setError(productsDetailVO, ErrorManager.errorDataNotFound);
                 setResult(productsDetailVO);
 
                 return SUCCESS;

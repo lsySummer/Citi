@@ -1,6 +1,7 @@
 package edu.nju.service.SearchService;
 
 import edu.nju.model.CategoryIndex;
+import edu.nju.model.Institution;
 import edu.nju.model.User;
 import edu.nju.model.UserTemperPrefer;
 import edu.nju.service.BaseService.BaseService;
@@ -112,4 +113,12 @@ public interface SearchService extends BaseService{
      * @return cost
      */
     double getCost(int[] id, int[] amount);
+
+    /**
+     * get institution list
+     * @return institution list
+     */
+    List<Institution> getInstitutionList();
+
+    List<String> getInstitutionNameList();
 }

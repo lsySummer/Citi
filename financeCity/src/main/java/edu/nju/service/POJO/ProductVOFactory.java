@@ -31,6 +31,7 @@ public class ProductVOFactory {
             BondVO bondVO = new BondVO();
             ProductBond productBond = (ProductBond)product.getProduct();
 
+            bondVO.setProductType("bond");
             bondVO.setType(product.getCategory().getChineseName());
             bondVO.setCode(productBond.getProductCode());
             bondVO.setLife(productBond.getLength());
@@ -45,6 +46,7 @@ public class ProductVOFactory {
             BankVO bankVO = new BankVO();
             ProductBank productBank = (ProductBank)product.getProduct();
 
+            bankVO.setProductType("bank");
             bankVO.setPid(product.getID());
             bankVO.setName(productBank.getName());
             bankVO.setIncome_type(ProductCategoryManager.getBankIncomeTypeInChinese(productBank));
@@ -62,6 +64,7 @@ public class ProductVOFactory {
             InsuranceVO insuranceVO = new InsuranceVO();
             ProductInsurance productInsurance = (ProductInsurance)product.getProduct();
 
+            insuranceVO.setProductType("insurance");
             insuranceVO.setName(productInsurance.getName());
             insuranceVO.setDistributor(productInsurance.getInstitutionManage());
             insuranceVO.setPid(product.getID());
@@ -77,6 +80,7 @@ public class ProductVOFactory {
             ProductFund productFund = (ProductFund)product.getProduct();
             FundVO fundVO = new FundVO();
 
+            fundVO.setProductType("fund");
             fundVO.setPid(product.getID());
             fundVO.setName(productFund.getName());
             fundVO.setExpected_income_rate(productFund.getYearlyRtnRate().doubleValue());

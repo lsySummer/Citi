@@ -96,7 +96,7 @@ public class AssetManagementServiceImpl extends BaseFunctionServiceAdaptor imple
             List list = getUserService().getUserDao(financeCityUser).find("FROM TradHistory t WHERE t.userId=" + financeCityUser.getID());
 
             if (list == null || list.size() == 0) {
-                ErrorManager.setError(tradeHistoryListVO, ErrorManager.errorDateNotFound);
+                ErrorManager.setError(tradeHistoryListVO, ErrorManager.errorDataNotFound);
             }
 
             List<TradeHistory> tradeHistoryList = (List<TradeHistory>) list;
