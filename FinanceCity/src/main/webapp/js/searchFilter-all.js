@@ -124,7 +124,7 @@ function initFilterButton() {
             }
         }
 
-        f_list[index](0);
+        f_list[index](1);
     });
 }
 
@@ -146,7 +146,7 @@ function submitAll(page_num) {
     }
 
     data["options"] = options;
-    data["page_num"] = page_num;
+    data["page_num"] = page_num+"";
     console.log("data="+JSON.stringify(data));
 
     $.ajax({

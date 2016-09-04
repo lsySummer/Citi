@@ -19,14 +19,6 @@
 			<result name="success">/jsp/search-result.jsp</result>
 		</action>
 
-		<!--<action name="searchFilter" class="edu.nju.action.SearchFilterAction" method="filter">-->
-			<!--<result name="all">/jsp/searchFilter-all.jsp</result>-->
-			<!--<result name="bank">/jsp/searchFilter-bank.jsp</result>-->
-			<!--<result name="bond">/jsp/searchFilter-bond.jsp</result>-->
-			<!--<result name="fund">/jsp/searchFilter-fund.jsp</result>-->
-			<!--<result name="insurance">/jsp/searchFilter-insurance.jsp</result>-->
-		<!--</action>-->
-
 		<action name="searchFilter" class="edu.nju.action.SearchFilterAction" method="filter">
 			<result name="success">/jsp/result.jsp</result>
 		</action>
