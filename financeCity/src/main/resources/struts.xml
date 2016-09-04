@@ -4,7 +4,7 @@
 	"http://struts.apache.org/dtds/struts-2.3.dtd">
 
 <struts>
-
+	
 	<package name="struts2" extends="struts-default">
 		<action name="test" class="TestAction">
 		<result name="success">/new.jsp</result>
@@ -22,6 +22,10 @@
 		
 		<action name="loginURL" class="edu.nju.action.UserAction" method="loginURL">
 			<result name="success">/jsp/login.jsp</result> <!-- 跳转到登录前页面 -->
+		</action>
+
+		<action name="institutionList" class="edu.nju.action.SearchAction" method="getInstitutionList">
+			<result name="success"></result>
 		</action>
 		
 		<action name="signup2" class="userAction" method="setUserInfoInStep2">
@@ -43,7 +47,7 @@
 		</action>
 	</package>
 	
-	<package name="android" extends="json-default">
+	<package name="android" extends="json-default" namespace="/api">
 		<action name="user" class="edu.nju.action.AndroidUserAction" method="api_User">
 			<result name="success" type="json">
 				<param name="root">result</param>
@@ -101,7 +105,7 @@
 		</action>
 	</package>
 
-	<constant name="struts.action.extension" value="action" />
+	<constant name="struts.action.extension" value="," />
 
 </struts>
 

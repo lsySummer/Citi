@@ -73,37 +73,24 @@ public class ServiceManagerImpl implements ServiceManager {
                 tradeService,
                 userService
         };
-        //try {
-            APIFilter BFAPIFilter = new BaseFunctionAPIFilter();
-            for (BaseService service : services) {
-                System.out.println(service);
-                if (service instanceof BaseFunctionService) {
-                    ((BaseFunctionService) service).bindUserService(userService);
-
-                    //invokerManager.loadService(service, BFAPIFilter);
-                }
-                else {
-                    /** filter user service's APIs */
-                    //invokerManager.loadService(service, new UserServiceAPIFilter());
-                }
-
-                /** build service list */
-                serviceList.add(service.getName());
-                /** build service map */
-                serviceMap.put(service.getName(), service);
+        for (BaseService service : services) {
+            System.out.println(service);
+            if (service instanceof BaseFunctionService) {
+                ((BaseFunctionService) service).bindUserService(userService);
             }
 
-            /** bind search service to invest advisor */
-            investAdvisorService.bindSearchService(searchService);
-            /** bind search service to asset manager */
-            assetManagementService.bindSearchService(searchService);
+            /** build service list */
+            serviceList.add(service.getName());
+            /** build service map */
+            serviceMap.put(service.getName(), service);
+        }
 
-            System.out.println("Service Manager Init Successfully");
-        //}
-        //catch (DuplicateFunctionNameException d) {
-        //    d.printStackTrace();
-        //}
+        /** bind search service to invest advisor */
+        investAdvisorService.bindSearchService(searchService);
+        /** bind search service to asset manager */
+        assetManagementService.bindSearchService(searchService);
 
+        System.out.println("Service Manager Init Successfully");
 
         serviceManager = this;
     }
