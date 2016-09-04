@@ -7,13 +7,30 @@
 
 	<package name="struts2" extends="struts-default">
 		<action name="test" class="TestAction">
-		<result name="success">/new.jsp</result>
+			<result name="success">/new.jsp</result>
 		</action>
 		
 		<action name="register" class="edu.nju.action.UserAction" method="register">
 			<result name="success">/jsp/signup_step2.jsp</result>
 			<result name="error">/jsp/signup_step1.jsp</result>
 		</action>
+
+		<action name="searchResult" class="edu.nju.action.SearchResultAction" method="search">
+			<result name="success">/jsp/search-result.jsp</result>
+		</action>
+
+		<!--<action name="searchFilter" class="edu.nju.action.SearchFilterAction" method="filter">-->
+			<!--<result name="all">/jsp/searchFilter-all.jsp</result>-->
+			<!--<result name="bank">/jsp/searchFilter-bank.jsp</result>-->
+			<!--<result name="bond">/jsp/searchFilter-bond.jsp</result>-->
+			<!--<result name="fund">/jsp/searchFilter-fund.jsp</result>-->
+			<!--<result name="insurance">/jsp/searchFilter-insurance.jsp</result>-->
+		<!--</action>-->
+
+		<action name="searchFilter" class="edu.nju.action.SearchFilterAction" method="filter">
+			<result name="success">/jsp/result.jsp</result>
+		</action>
+
 	</package>
 
 	<constant name="struts.action.extension" value="action" />
