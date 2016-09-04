@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.zip.Inflater;
 
@@ -24,6 +25,7 @@ public class RegisterActivity extends Activity {
     private TextView pswText;
     private TextView Btnreg;
     private Button BtnSub;
+    private Button BtnGet;
 
     private String Account;
     private String security;
@@ -44,6 +46,7 @@ public class RegisterActivity extends Activity {
         pswText = (TextView) findViewById(R.id.pwdEt);
         Btnreg = (TextView) findViewById(R.id.Btnregister);
         BtnSub = (Button) findViewById(R.id.BtnSub);
+        BtnGet = (Button) findViewById(R.id.messageGet);
     }
 
     public void addListener(){
@@ -72,6 +75,13 @@ public class RegisterActivity extends Activity {
                 Password = pswText.getText().toString();
 //                Log.d("account",Account);
 //                Log.d("account",Password);
+            }
+        });
+
+        BtnGet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(RegisterActivity.this,"短信已发送",Toast.LENGTH_SHORT).show();
             }
         });
     }
