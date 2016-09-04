@@ -34,7 +34,22 @@
         <item>两全万能险</item>
     </string-array>
 
+    <string-array name="master_year">
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>20</item>
+        <item>25</item>
+        <item>30</item>
+        <item>终身</item>
+    </string-array>
 
+    <string-array name="incometype">
+        <item>所有</item>
+        <item>保证收益型</item>
+        <item>保本浮动收益型</item>
+        <item>非保本浮动收益型</item>
+    </string-array>
 
     <string-array name="master_none">
         <item>——</item>

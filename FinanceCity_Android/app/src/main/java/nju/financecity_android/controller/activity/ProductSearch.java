@@ -98,33 +98,21 @@ public class ProductSearch extends Fragment implements View.OnClickListener{
         this.resultList=new ArrayList<HashMap<String,Object>>();
         /*===============================*/
         HashMap<String,Object> map1=new HashMap<String, Object>();
-        Button button1=new Button(getActivity());
-        button1.setText("product1");
-        TextView textview1=new TextView(getActivity());
-        textview1.setText("introduction1");
-        map1.put("product",button1);
-        map1.put("introduction",textview1);
+        map1.put("product","product1");
+        map1.put("introduction","introduction1");
         this.resultList.add(map1);
 
         HashMap<String,Object> map2=new HashMap<String, Object>();
-        Button button2=new Button(getActivity());
-        button2.setText("product2");
-        TextView textview2=new TextView(getActivity());
-        textview2.setText("introduction2");
-        map2.put("product",button2);
-        map2.put("introduction",textview2);
+        map2.put("product","product2");
+        map2.put("introduction","introduction2");
         this.resultList.add(map2);
 
         HashMap<String,Object> map3=new HashMap<String, Object>();
-        Button button3=new Button(getActivity());
-        button3.setText("product3");
-        TextView textview3=new TextView(getActivity());
-        textview3.setText("introduction3");
-        map3.put("product",button3);
-        map3.put("introduction",textview3);
+        map3.put("product","product3");
+        map3.put("introduction","introduction3");
         this.resultList.add(map3);
         /*===============================*/
-        this.resultAdapter=new SimpleAdapter(getActivity(),resultList,R.layout.product_search_result_element,new String[]{"product","introduction"},new int[]{R.id.search_result_element_button,R.id.search_result_element_text});
+        this.resultAdapter=new SimpleAdapter(getActivity(),resultList,R.layout.product_search_result_element,new String[]{"product","introduction"},new int[]{R.id.search_result_element_product,R.id.search_result_element_introduction});
         this.product_search_result_listview.setAdapter(resultAdapter);
 
     }
@@ -215,7 +203,13 @@ public class ProductSearch extends Fragment implements View.OnClickListener{
         close.setId(R.id.close);
 
         year.setBar_text("年化收益率");
+            year.setStart(0);
+            year.setEnd(15);
+            year.setInterval(0.0001f);
         limit.setBar_text("期限");
+            limit.setStart(0);
+            limit.setEnd(60);
+            limit.setInterval(1);
         close.setOnoff_text("是否封闭");
 
         product_search_filter_list_layout.addView(year);
@@ -352,15 +346,11 @@ public class ProductSearch extends Fragment implements View.OnClickListener{
         {
             ProductInfo pInfo=list.get(i);
             HashMap<String,Object> map=new HashMap<String,Object>();
-            Button button=new Button(getActivity());
-            button.setText(pInfo.productName);
-            TextView textview=new TextView(getActivity());
-            textview.setText(pInfo.currPrice+"");
             map.put("product",pInfo.productName);
             map.put("introduction",pInfo.currPrice+"");//TODO 这里可能有改动
             resultList.add(map);
         }
-        this.resultAdapter=new SimpleAdapter(getActivity(),resultList,R.layout.product_search_result_element,new String[]{"product","introduction"},new int[]{R.id.search_result_element_button,R.id.search_result_element_text});
+        this.resultAdapter=new SimpleAdapter(getActivity(),resultList,R.layout.product_search_result_element,new String[]{"product","introduction"},new int[]{R.id.search_result_element_product,R.id.search_result_element_introduction});
         this.product_search_result_listview.setAdapter(resultAdapter);
     }
 

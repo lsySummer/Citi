@@ -42,7 +42,6 @@ public class Onoff extends LinearLayout{
 
     public boolean getOnoff_switch()
     {
-//        return onoff_switch
-        return false;//TODO
+        return onoff_switch.getShowText();
     }
 }

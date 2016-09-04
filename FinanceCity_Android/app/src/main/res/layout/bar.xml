@@ -39,10 +39,10 @@
 		android:id="@+id/bar_unit"
 		android:text="%"
 		android:textColor="@color/grey"
-		android:textSize="10dp"
+		android:textSize="20dp"
 		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:gravity="left"/>
+		android:layout_height="match_parent"
+		android:gravity="bottom"/>
 
 </LinearLayout>
 

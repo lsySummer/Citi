@@ -14,10 +14,7 @@ import com.appyvet.rangebar.RangeBar;
 public class Bar extends LinearLayout {
     private TextView bar_text;
 	private RangeBar bar_rangebar;
-    private float start;
-    private float end;
-    private double interval;
-    private String unit;
+    private TextView bar_unit;
 	
     public Bar(Context context) {
         super(context);
@@ -48,9 +45,7 @@ public class Bar extends LinearLayout {
         //获取子控件
         bar_text = (TextView) findViewById(R.id.bar_text);
         bar_rangebar= (RangeBar) findViewById(R.id.bar_rangebar);
-        start=bar_rangebar.getTickStart();
-        end=bar_rangebar.getTickEnd();
-        interval=bar_rangebar.getTickInterval();
+        bar_unit=(TextView)findViewById(R.id.bar_unit);
 
         //将从资源文件中加载的属性设置给子控件
 //        if (!TextUtils.isEmpty(titleText))
@@ -63,44 +58,46 @@ public class Bar extends LinearLayout {
     public String getBar_text() {
         return bar_text.getText().toString();
     }
-
     public void setBar_text(String text) {
         bar_text.setText(text);
     }
 
-    public void setBar_rangebar_start(float start)
-    {
-        this.bar_rangebar.setTickStart(start);
-    }
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        this.start=bar_rangebar.getTickStart();
-        this.end=bar_rangebar.getTickEnd();
-        return super.onTouchEvent(event);
+        return bar_rangebar.onTouchEvent(event);
     }
 
-    public void setBar_rangebar_start( )
+    public void setStart(float start)
     {
         this.bar_rangebar.setTickStart(start);
     }
-
-    public void setBar_rangebar_end(float end)
+    public void setEnd(float end)
     {
         this.bar_rangebar.setTickEnd(end);
     }
-
-    public void setBar_rangebar_interval(float interval)
+    public void setInterval(float interval)
     {
         this.bar_rangebar.setTickInterval(interval);
+    }
+    public void setUnit(String unit)
+    {
+        this.bar_unit.setText(unit);
     }
 
     public float getStart()
     {
-        return start;
+        return bar_rangebar.getTickStart();
     }
     public float getEnd()
     {
-        return end;
+        return bar_rangebar.getTickEnd();
+    }
+    public double getInterval()
+    {
+        return bar_rangebar.getTickInterval();
+    }
+    public String getUnit()
+    {
+        return bar_unit.getText().toString();
     }
 }
