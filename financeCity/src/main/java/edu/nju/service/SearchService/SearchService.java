@@ -121,4 +121,6 @@ public interface SearchService extends BaseService{
     List<Institution> getInstitutionList();
 
     List<String> getInstitutionNameList();
+
+    List<String> getInstitutionNameList(String category);
 }

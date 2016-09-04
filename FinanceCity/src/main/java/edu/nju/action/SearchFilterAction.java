@@ -1,5 +1,8 @@
 package edu.nju.action;
 
+import com.mathworks.toolbox.javabuilder.external.org.json.JSONArray;
+import com.mathworks.toolbox.javabuilder.external.org.json.JSONException;
+import com.mathworks.toolbox.javabuilder.external.org.json.JSONObject;
 import com.opensymphony.xwork2.ActionContext;
 import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.ExceptionsAndError.InvalidParametersException;
@@ -60,7 +63,7 @@ public class SearchFilterAction extends BaseAction {
                 }
             }
 
-            JSONArray list = new JSONArray()
+            JSONArray list = new JSONArray();
 
             context.put("searchResult", productVOFactory.getResultList());
 

@@ -243,4 +243,28 @@ public class SearchServiceImpl extends BaseFunctionServiceAdaptor implements Sea
     public List<Institution> getInstitutionList() {
         return null;
     }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<String> getInstitutionNameList(String category) {
+        List<Integer> list = getUserService().getCommonDao().find("SELECT i.institutionId FROM InstitutionCategoryRelation i");
+
+        if (list == null || list.size() == 0) {
+            return null;
+        }
+        else {
+            List<String> insList = new ArrayList<>();
+            for (Integer ins_id : list) {
+                String ins = (String)getUserService().getCommonDao().find("SELECT i.name FROM Institution i WHERE i.id=" + ins_id).get(0);
+                insList.add(ins);
+            }
+
+            if (insList.size() == 0) {
+                return null;
+            }
+            else {
+                return insList;
+            }
+        }
+    }
 }

@@ -2,9 +2,7 @@ package edu.nju.action;
 
 import edu.nju.service.ExceptionsAndError.ErrorManager;
 import edu.nju.service.SearchService.SearchService;
-import edu.nju.service.ServiceManager;
 import edu.nju.service.ServiceManagerImpl;
-import edu.nju.service.UserService.UserService;
 
 import java.util.List;
 
@@ -14,8 +12,11 @@ import java.util.List;
 public class SearchAction extends BaseAction {
     @SuppressWarnings("unchecked")
     public String getInstitutionList() {
+        //TODO:set category
+        String productCategory = "";
+
         SearchService searchService = ServiceManagerImpl.getInstance().getSearchService();
-        List<String> institutionList = searchService.getInstitutionNameList();
+        List<String> institutionList = searchService.getInstitutionNameList(productCategory);
 
         if (institutionList == null) {
             ErrorManager.setError(request, ErrorManager.errorDataNotFound);
