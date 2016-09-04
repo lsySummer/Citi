@@ -151,7 +151,7 @@ function submitAll(page_num) {
 
     $.ajax({
         type: "post",
-        url: "searchFilter.action",
+        url: "searchFilter",
         data: "data="+JSON.stringify(data),
         cache: false,
         success: function(data) {
