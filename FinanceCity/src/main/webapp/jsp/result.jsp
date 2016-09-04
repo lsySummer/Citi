@@ -171,7 +171,7 @@
     <s:iterator id="product" value="#request.searchResult.data">
         <s:set name="size" value="#size+1"/>
         <s:if test="#product.distributor_bank!=null">
-            <div class="product bank-financing">
+            <div class="product bank-financing" data-toggle="modal" data-target="#myModal">
                 <div class="circle">
                     <h1><s:property value="#product.yearly_income_rate"/></h1>
                     <h4>年化收益率</h4>
