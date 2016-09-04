@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>--%>
+<%@ taglib prefix="s" uri="/struts-tags"%>
 
 <%
     String path = request.getContextPath();
@@ -39,83 +40,85 @@
 <jsp:include page="header.jsp"></jsp:include>
 <div class="main-content">
     <div class="selection-wrapper">
-        <div class="keyword-wrapper">
-            <label>关键字</label>
-            <input type="text"/>
-            <button id="sift_product_button" class="button button-3d button-primary button-rounded" type="button">筛选产品</button>
-        </div>
-        <div class="quota-wrapper">
-            <div class="quota-item">
-                <label>投资标的</label>
-                <select class="selector input-add-on-field">
-                    <option class="display-none"></option>
-                    <option>Mustard</option>
-                    <option>Ketchup</option>
-                    <option>Relish</option>
-                </select>
-                <select class="selector input-add-on-field">
-                    <option class="display-none"></option>
-                    <option>Mustard</option>
-                    <option>Ketchup</option>
-                    <option>Relish</option>
-                </select>
+        <form id="search_filter">
+            <div class="keyword-wrapper">
+                <label>关键字</label>
+                <input name="keyword" type="text"/>
+                <button id="sift_product_button" class="button button-3d button-primary button-rounded" type="button">筛选产品</button>
             </div>
-            <div class="quota-item">
-                <label>风险收益</label>
-                <select class="selector input-add-on-field">
-                    <option class="display-none"></option>
-                    <option>Mustard</option>
-                    <option>Ketchup</option>
-                    <option>Relish</option>
-                </select>
+            <div class="quota-wrapper">
+                <div class="quota-item">
+                    <label>投资标的</label>
+                    <select name="mark1" class="selector input-add-on-field">
+                        <option class="display-none" value=""></option>
+                        <option>Mustard</option>
+                        <option>Ketchup</option>
+                        <option>Relish</option>
+                    </select>
+                    <select name="mark2" class="selector input-add-on-field">
+                        <option class="display-none" value=""></option>
+                        <option>Mustard</option>
+                        <option>Ketchup</option>
+                        <option>Relish</option>
+                    </select>
+                </div>
+                <div class="quota-item">
+                    <label>风险收益</label>
+                    <select name="risk" class="selector input-add-on-field">
+                        <option class="display-none" value=""></option>
+                        <option>Mustard</option>
+                        <option>Ketchup</option>
+                        <option>Relish</option>
+                    </select>
+                </div>
+                <div class="quota-item">
+                    <label>收益类型</label>
+                    <select name="income_type" class="selector input-add-on-field">
+                        <option class="display-none" value=""></option>
+                        <option>Mustard</option>
+                        <option>Ketchup</option>
+                        <option>Relish</option>
+                    </select>
+                </div>
             </div>
-            <div class="quota-item">
-                <label>收益类型</label>
-                <select class="selector input-add-on-field">
-                    <option class="display-none"></option>
-                    <option>Mustard</option>
-                    <option>Ketchup</option>
-                    <option>Relish</option>
-                </select>
+            <div class="quota-wrapper">
+                <div class="quota-item">
+                    <label>投资期限</label>
+                    <select name="term_of_investment" class="selector">
+                        <option class="display-none" value=""></option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                    </select>
+                </div>
+                <div class="quota-item">
+                    <label>购买至生效时间</label>
+                    <select name="start_time" class="selector">
+                        <option class="display-none" value=""></option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                    </select>
+                </div>
+                <div class="quota-item">
+                    <label>申请赎回到账时间</label>
+                    <select name="to_account_time" class="selector">
+                        <option class="display-none" value=""></option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                    </select>
+                </div>
             </div>
-        </div>
-        <div class="quota-wrapper">
-            <div class="quota-item">
-                <label>投资期限</label>
-                <select class="selector">
-                    <option class="display-none"></option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                </select>
+            <div class="quota-wrapper">
+                <div class="quota-item">
+                    <label>数值范围</label>
+                    <input name="start_range" class="num-range" type="text"/>
+                    <label class="line"></label>
+                    <input name="end_range" class="num-range" type="text"/>
+                </div>
             </div>
-            <div class="quota-item">
-                <label>购买至生效时间</label>
-                <select class="selector">
-                    <option class="display-none"></option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                </select>
-            </div>
-            <div class="quota-item">
-                <label>申请赎回到账时间</label>
-                <select class="selector">
-                    <option class="display-none"></option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                </select>
-            </div>
-        </div>
-        <div class="quota-wrapper">
-            <div class="quota-item">
-                <label>数值范围</label>
-                <input class="num-range" type="text"/>
-                <label class="line"></label>
-                <input class="num-range" type="text"/>
-            </div>
-        </div>
+        </form>
     </div>
     <div class="product-wrapper">
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

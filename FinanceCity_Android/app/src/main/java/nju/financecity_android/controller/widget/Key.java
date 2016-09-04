@@ -23,6 +23,12 @@ public class Key extends LinearLayout{
     public Key(Context context, AttributeSet attrs) {
         super(context, attrs);
         LayoutInflater.from(context).inflate(R.layout.key, this, true);
+        onFinishInflate();
+    }
+
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
         key_text = (TextView) findViewById(R.id.key_text);
         key_putin= (EditText) findViewById(R.id.key_putin);
     }

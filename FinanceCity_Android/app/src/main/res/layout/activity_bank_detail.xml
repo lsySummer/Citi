@@ -31,7 +31,7 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:text="100000"
-				android:id="@+id/txtStartBuyMoney"
+				android:id="@+id/txt"
 				android:textColor="@color/propertyValue"
 				android:paddingTop="3dp" android:paddingBottom="3dp"
 				android:layout_below="@+id/txtPdtName" android:layout_toRightOf="@+id/textView8"
@@ -76,12 +76,12 @@
 		          android:layout_below="@+id/textView6" android:layout_alignLeft="@+id/textView6"
 		          android:layout_alignStart="@+id/textView6"/>
 		<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="2015-01-01"
-		          android:id="@+id/txtState" android:textColor="@color/propertyValue"
+		          android:id="@+id/txtLength" android:textColor="@color/propertyValue"
 		          android:paddingTop="3dp" android:paddingBottom="8dp"
 		          android:paddingLeft="8dp" android:layout_alignTop="@+id/textView5"
 		          android:layout_alignLeft="@+id/textView8" android:layout_alignStart="@+id/textView8"/>
 		<Button
-				android:layout_width="50dp"
+				android:layout_width="150dp"
 				android:layout_height="35dp"
 				android:text="购 买"
 				android:id="@+id/btPruchase"
@@ -90,7 +90,6 @@
 				android:layout_alignParentBottom="true"
 				android:layout_alignLeft="@+id/textView5"
 				android:layout_alignStart="@+id/textView5"
-				android:layout_alignRight="@+id/txtState" android:layout_alignEnd="@+id/txtState"
 				android:layout_below="@+id/textView5"/>
 	</RelativeLayout>
 	<LinearLayout

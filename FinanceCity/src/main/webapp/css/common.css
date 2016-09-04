@@ -21,7 +21,9 @@ html, body, h1, h2, h3, h4, h5, h6, li, ul, p, a, img, label {
 .main-content {
     width: 960px;
     height: auto;
-    margin: 90px auto auto auto;
+    min-height: 100vh;
+    margin: 0px auto auto auto;
+    padding-top: 90px;
     /*color: rgb(180, 180, 180);*/
     color: #535353;
     /*font-weight: lighter;*/
