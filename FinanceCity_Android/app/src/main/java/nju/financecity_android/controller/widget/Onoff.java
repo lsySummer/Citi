@@ -20,6 +20,7 @@ public class Onoff extends LinearLayout{
     public Onoff(Context context) {
         super(context);
         LayoutInflater.from(context).inflate(R.layout.onoff, this, true);
+        onFinishInflate();
     }
 
     public Onoff(Context context, AttributeSet attrs) {

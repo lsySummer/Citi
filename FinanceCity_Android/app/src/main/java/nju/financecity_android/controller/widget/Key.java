@@ -18,6 +18,7 @@ public class Key extends LinearLayout{
     public Key(Context context) {
         super(context);
         LayoutInflater.from(context).inflate(R.layout.key, this, true);
+        onFinishInflate();
     }
 
     public Key(Context context, AttributeSet attrs) {
@@ -40,5 +41,10 @@ public class Key extends LinearLayout{
     public String getkey_putin_text()
     {
         return key_putin.getText().toString();
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 }

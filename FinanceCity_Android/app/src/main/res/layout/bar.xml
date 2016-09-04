@@ -23,11 +23,11 @@
 		android:id="@+id/bar_rangebar"
 		android:layout_width="match_parent"
 		android:layout_weight="1"
-		android:layout_height="50dp"
+		android:layout_height="80dp"
 		custom:tickStart="0"
-		custom:tickInterval="1"
+		custom:tickInterval="0.1"
 		custom:tickEnd="100"
-		android:layout_gravity="center_vertical"/>
+		android:layout_gravity="bottom"/>
 
 </LinearLayout>
 

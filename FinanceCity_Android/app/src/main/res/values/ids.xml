@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="key" type="id"/>
+    <item name="choose" type="id"/>
+    <item name="year" type="id"/>
+    <item name="limit" type="id"/>
+    <item name="close" type="id"/>
+    <item name="year1" type="id"/>
+    <item name="start" type="id"/>
+    <item name="limit1" type="id"/>
+    <item name="advisement" type="id"/>
+    <item name="incometype" type="id"/>
+    <item name="close1" type="id"/>
+    <item name="year2" type="id"/>
+    <item name="limit2" type="id"/>
+    <item name="end1" type="id"/>
+    <item name="state" type="id"/>
+    <item name="advisement1" type="id"/>
+    <item name="incometype1" type="id"/>
+    <item name="state1" type="id"/>
+    <item name="latest" type="id"/>
+    <item name="close2" type="id"/>
+    <item name="sort" type="id"/>
+    <item name="limit3" type="id"/>
+
+</resources>
