@@ -33,28 +33,4 @@
         android:layout_above="@id/footer">
 
     </LinearLayout>
-    <!--<fragment-->
-        <!--android:id="@+id/investment_fragment"-->
-        <!--android:name="nju.financecity_android.controller.activity.Investment"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_above="@id/footer"-->
-        <!--android:layout_below="@id/banner">-->
-    <!--</fragment>-->
-    <!--<fragment-->
-        <!--android:id="@+id/assets_fragment"-->
-        <!--android:name="nju.financecity_android.controller.activity.Assets"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_above="@id/footer"-->
-        <!--android:layout_below="@id/banner">-->
-    <!--</fragment>-->
-<!--    <fragment
-        android:id="@+id/product_search_fragment"
-        android:name="nju.financecity_android.controller.activity.ProductSearch"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/footer"
-        android:layout_below="@id/banner">
-    </fragment>-->
 </RelativeLayout>

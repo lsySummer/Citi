@@ -19,18 +19,9 @@
 			<result name="success">/jsp/search-result.jsp</result>
 		</action>
 
-		<!--<action name="searchFilter" class="edu.nju.action.SearchFilterAction" method="filter">-->
-			<!--<result name="all">/jsp/searchFilter-all.jsp</result>-->
-			<!--<result name="bank">/jsp/searchFilter-bank.jsp</result>-->
-			<!--<result name="bond">/jsp/searchFilter-bond.jsp</result>-->
-			<!--<result name="fund">/jsp/searchFilter-fund.jsp</result>-->
-			<!--<result name="insurance">/jsp/searchFilter-insurance.jsp</result>-->
-		<!--</action>-->
-
 		<action name="searchFilter" class="edu.nju.action.SearchFilterAction" method="filter">
 			<result name="success">/jsp/result.jsp</result>
 		</action>
-
 
 		<action name="login" class="edu.nju.action.UserAction" method="login">
 			<result name="success">${refer_url}</result> <!-- 跳转到登录前页面 -->
@@ -38,7 +29,7 @@
 		</action>
 		
 		<action name="loginURL" class="edu.nju.action.UserAction" method="loginURL">
-			<result name="success">/jsp/login.jsp</result> <!-- 跳转到登录前页面 -->
+			<result name="success">/jsp/login.jsp</result> 
 		</action>
 
 		<action name="institutionList" class="edu.nju.action.SearchAction" method="getInstitutionList">
@@ -58,7 +49,7 @@
 		</action>
 		
 		<action name="signup4" class="edu.nju.action.UserAction" method="setTemperPrefer">
-			<result name="success">/jsp/search-result.jsp</result>
+			<result name="success">/jsp/searchFilter.jsp</result>
 			<result name="error">/jsp/signup_step4.jsp</result>
 			<result name="login">/jsp/login.jsp</result>
 		</action>

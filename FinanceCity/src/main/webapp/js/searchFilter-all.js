@@ -124,7 +124,7 @@ function initFilterButton() {
             }
         }
 
-        f_list[index](0);
+        f_list[index](1);
     });
 }
 
@@ -146,12 +146,12 @@ function submitAll(page_num) {
     }
 
     data["options"] = options;
-    data["page_num"] = page_num;
+    data["page_num"] = page_num+"";
     console.log("data="+JSON.stringify(data));
 
     $.ajax({
         type: "post",
-        url: "searchFilter.action",
+        url: "searchFilter",
         data: "data="+JSON.stringify(data),
         cache: false,
         success: function(data) {
@@ -188,8 +188,25 @@ function submitBank(page_num) {
     }
 
     data["options"] = options;
-    data["page_num"] = page_num;
+    data["page_num"] = page_num+"";
     console.log(data);
+
+    $.ajax({
+        type: "post",
+        url: "searchFilter.action",
+        data: "data="+JSON.stringify(data),
+        cache: false,
+        success: function(data) {
+            console.log(data);
+            $(".result-container").empty();
+            $(".result-container").append(data);
+
+            initPageToggle();
+        },
+        error: function() {
+
+        }
+    });
 }
 
 function submitBond(page_num) {
@@ -205,8 +222,25 @@ function submitBond(page_num) {
     options["state"] = $("#bond_state").val();
 
     data["options"] = options;
-    data["page_num"] = page_num;
+    data["page_num"] = page_num+"";
     console.log(data);
+
+    $.ajax({
+        type: "post",
+        url: "searchFilter.action",
+        data: "data="+JSON.stringify(data),
+        cache: false,
+        success: function(data) {
+            console.log(data);
+            $(".result-container").empty();
+            $(".result-container").append(data);
+
+            initPageToggle();
+        },
+        error: function() {
+
+        }
+    });
 }
 
 function submitFund(page_num) {
@@ -241,8 +275,25 @@ function submitFund(page_num) {
     }
 
     data["options"] = options;
-    data["page_num"] = page_num;
+    data["page_num"] = page_num+"";
     console.log(data);
+
+    $.ajax({
+        type: "post",
+        url: "searchFilter.action",
+        data: "data="+JSON.stringify(data),
+        cache: false,
+        success: function(data) {
+            console.log(data);
+            $(".result-container").empty();
+            $(".result-container").append(data);
+
+            initPageToggle();
+        },
+        error: function() {
+
+        }
+    });
 }
 
 function submitInsurance(page_num) {
@@ -258,8 +309,25 @@ function submitInsurance(page_num) {
 
     data["options"] = options;
 
-    data["page_num"] = page_num;
+    data["page_num"] = page_num+"";
     console.log(data);
+
+    $.ajax({
+        type: "post",
+        url: "searchFilter.action",
+        data: "data="+JSON.stringify(data),
+        cache: false,
+        success: function(data) {
+            console.log(data);
+            $(".result-container").empty();
+            $(".result-container").append(data);
+
+            initPageToggle();
+        },
+        error: function() {
+
+        }
+    });
 }
 
 function getNowFormatDate() {

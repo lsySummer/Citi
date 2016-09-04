@@ -64,13 +64,13 @@
 
 	<!--test-->
 
-	<bean id="testDaoImpl"
-		 class="edu.nju.dao.impl.TestDaoImpl">
-	</bean>
+	<!--<bean id="testDaoImpl"-->
+		 <!--class="edu.nju.dao.impl.TestDaoImpl">-->
+	<!--</bean>-->
 
-	<bean id="testServiceImpl"
-		  class="edu.nju.service.Impl">
-	</bean>
+	<!--<bean id="testServiceImpl"-->
+		  <!--class="edu.nju.service.Impl">-->
+	<!--</bean>-->
 	
 	<bean id="RegisterAction"
 		  class="edu.nju.action.Register">

@@ -88,6 +88,7 @@ label.line {
     background-color: white;
 
     flex: 0 0 24%;
+    cursor: pointer;
 }
 
 .product.nothing {
