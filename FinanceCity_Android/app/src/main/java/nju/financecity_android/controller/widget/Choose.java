@@ -34,11 +34,18 @@ public class Choose extends LinearLayout{
     public Choose(Context context) {
         super(context);
         LayoutInflater.from(context).inflate(R.layout.choose, this, true);
+        onFinishInflate();
     }
 
     public Choose(Context context, AttributeSet attrs) {
         super(context, attrs);
         LayoutInflater.from(context).inflate(R.layout.choose, this, true);
+        onFinishInflate();
+    }
+
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
         choose_text = (TextView) findViewById(R.id.choose_text);
         choose_spinner1= (Spinner) findViewById(R.id.choose_spinner1);
         choose_spinner2= (Spinner) findViewById(R.id.choose_spinner2);
@@ -75,6 +82,7 @@ public class Choose extends LinearLayout{
             }
         });
     }
+
 
     public void setChoose_text(String text) {
         choose_text.setText(text);

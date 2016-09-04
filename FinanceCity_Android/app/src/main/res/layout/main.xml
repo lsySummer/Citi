@@ -49,12 +49,12 @@
         <!--android:layout_above="@id/footer"-->
         <!--android:layout_below="@id/banner">-->
     <!--</fragment>-->
-    <fragment
+<!--    <fragment
         android:id="@+id/product_search_fragment"
         android:name="nju.financecity_android.controller.activity.ProductSearch"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/footer"
         android:layout_below="@id/banner">
-    </fragment>
+    </fragment>-->
 </RelativeLayout>

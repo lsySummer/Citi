@@ -2,10 +2,10 @@ package edu.nju.model;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.sql.Date;
 
 /**
- * Created by Sun YuHao on 2016/8/31.
+ * Created by Sun YuHao on 2016/9/3.
  */
 @Entity
 @Table(name = "product_bank", schema = "citi", catalog = "")
@@ -13,13 +13,12 @@ public class ProductBank {
     private int id;
     private String name;
     private String institutionManage;
-    private Byte type;
     private Integer purchaseThreshold;
     private Integer increasingUnit;
     private Integer length;
     private BigDecimal nav;
-    private Timestamp onPurchaseDate;
-    private Timestamp offPurchaseDate;
+    private Date onPurchaseDate;
+    private Date offPurchaseDate;
     private String salesRegion;
     private String productCode;
     private String registerCode;
@@ -34,13 +33,15 @@ public class ProductBank {
     private BigDecimal ratePurchase;
     private BigDecimal rateRedem;
     private BigDecimal rateManage;
-    private Timestamp firstAccrDate;
-    private Timestamp onRedemptionDate;
+    private Date firstAccrDate;
+    private Date onRedemptionDate;
     private Integer redemSpeed;
     private String payType;
     private String objectOriented;
     private Integer sizeUpperLimit;
     private Byte incomeType;
+    private Byte ifNavType;
+    private Byte ifClose;
 
     @Id
     @Column(name = "id")
@@ -70,16 +71,6 @@ public class ProductBank {
 
     public void setInstitutionManage(String institutionManage) {
         this.institutionManage = institutionManage;
-    }
-
-    @Basic
-    @Column(name = "type")
-    public Byte getType() {
-        return type;
-    }
-
-    public void setType(Byte type) {
-        this.type = type;
     }
 
     @Basic
@@ -124,21 +115,21 @@ public class ProductBank {
 
     @Basic
     @Column(name = "on_purchase_date")
-    public Timestamp getOnPurchaseDate() {
+    public Date getOnPurchaseDate() {
         return onPurchaseDate;
     }
 
-    public void setOnPurchaseDate(Timestamp onPurchaseDate) {
+    public void setOnPurchaseDate(Date onPurchaseDate) {
         this.onPurchaseDate = onPurchaseDate;
     }
 
     @Basic
     @Column(name = "off_purchase_date")
-    public Timestamp getOffPurchaseDate() {
+    public Date getOffPurchaseDate() {
         return offPurchaseDate;
     }
 
-    public void setOffPurchaseDate(Timestamp offPurchaseDate) {
+    public void setOffPurchaseDate(Date offPurchaseDate) {
         this.offPurchaseDate = offPurchaseDate;
     }
 
@@ -284,21 +275,21 @@ public class ProductBank {
 
     @Basic
     @Column(name = "first_accr_date")
-    public Timestamp getFirstAccrDate() {
+    public Date getFirstAccrDate() {
         return firstAccrDate;
     }
 
-    public void setFirstAccrDate(Timestamp firstAccrDate) {
+    public void setFirstAccrDate(Date firstAccrDate) {
         this.firstAccrDate = firstAccrDate;
     }
 
     @Basic
     @Column(name = "on_redemption_date")
-    public Timestamp getOnRedemptionDate() {
+    public Date getOnRedemptionDate() {
         return onRedemptionDate;
     }
 
-    public void setOnRedemptionDate(Timestamp onRedemptionDate) {
+    public void setOnRedemptionDate(Date onRedemptionDate) {
         this.onRedemptionDate = onRedemptionDate;
     }
 
@@ -352,6 +343,26 @@ public class ProductBank {
         this.incomeType = incomeType;
     }
 
+    @Basic
+    @Column(name = "if_NAV_type")
+    public Byte getIfNavType() {
+        return ifNavType;
+    }
+
+    public void setIfNavType(Byte ifNavType) {
+        this.ifNavType = ifNavType;
+    }
+
+    @Basic
+    @Column(name = "if_close")
+    public Byte getIfClose() {
+        return ifClose;
+    }
+
+    public void setIfClose(Byte ifClose) {
+        this.ifClose = ifClose;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -363,7 +374,6 @@ public class ProductBank {
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (institutionManage != null ? !institutionManage.equals(that.institutionManage) : that.institutionManage != null)
             return false;
-        if (type != null ? !type.equals(that.type) : that.type != null) return false;
         if (purchaseThreshold != null ? !purchaseThreshold.equals(that.purchaseThreshold) : that.purchaseThreshold != null)
             return false;
         if (increasingUnit != null ? !increasingUnit.equals(that.increasingUnit) : that.increasingUnit != null)
@@ -399,6 +409,8 @@ public class ProductBank {
         if (sizeUpperLimit != null ? !sizeUpperLimit.equals(that.sizeUpperLimit) : that.sizeUpperLimit != null)
             return false;
         if (incomeType != null ? !incomeType.equals(that.incomeType) : that.incomeType != null) return false;
+        if (ifNavType != null ? !ifNavType.equals(that.ifNavType) : that.ifNavType != null) return false;
+        if (ifClose != null ? !ifClose.equals(that.ifClose) : that.ifClose != null) return false;
 
         return true;
     }
@@ -408,7 +420,6 @@ public class ProductBank {
         int result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (institutionManage != null ? institutionManage.hashCode() : 0);
-        result = 31 * result + (type != null ? type.hashCode() : 0);
         result = 31 * result + (purchaseThreshold != null ? purchaseThreshold.hashCode() : 0);
         result = 31 * result + (increasingUnit != null ? increasingUnit.hashCode() : 0);
         result = 31 * result + (length != null ? length.hashCode() : 0);
@@ -436,6 +447,8 @@ public class ProductBank {
         result = 31 * result + (objectOriented != null ? objectOriented.hashCode() : 0);
         result = 31 * result + (sizeUpperLimit != null ? sizeUpperLimit.hashCode() : 0);
         result = 31 * result + (incomeType != null ? incomeType.hashCode() : 0);
+        result = 31 * result + (ifNavType != null ? ifNavType.hashCode() : 0);
+        result = 31 * result + (ifClose != null ? ifClose.hashCode() : 0);
         return result;
     }
 }

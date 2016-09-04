@@ -1,0 +1,1105 @@
+<dataSource name="MySQL - citi@123.206.202.103">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="2.6">
+    <schema id="1" name="citi">
+      <visible>1</visible>
+    </schema>
+    <schema id="2" name="information_schema" />
+    <schema id="3" name="linghang" />
+    <schema id="4" name="mysql" />
+    <schema id="5" name="test" />
+    <schema id="6" name="universal_insurance" />
+    <table id="7" parent="1" name="HS300" />
+    <table id="8" parent="1" name="History" />
+    <table id="9" parent="1" name="Institution" />
+    <table id="10" parent="1" name="User" />
+    <table id="11" parent="1" name="bond_index" />
+    <table id="12" parent="1" name="category_index" />
+    <table id="13" parent="1" name="deleted_commodity" />
+    <table id="14" parent="1" name="deleted_portfolio" />
+    <table id="15" parent="1" name="deleted_product" />
+    <table id="16" parent="1" name="fund_history" />
+    <table id="17" parent="1" name="invest_history" />
+    <table id="18" parent="1" name="invest_status" />
+    <table id="19" parent="1" name="market_status">
+      <comment>行情数据</comment>
+    </table>
+    <table id="20" parent="1" name="name_to_id" />
+    <table id="21" parent="1" name="pay_way" />
+    <table id="22" parent="1" name="product_bank" />
+    <table id="23" parent="1" name="product_bond" />
+    <table id="24" parent="1" name="product_fund" />
+    <table id="25" parent="1" name="product_insurance" />
+    <table id="26" parent="1" name="push_cache" />
+    <table id="27" parent="1" name="trade_history" />
+    <table id="28" parent="1" name="unpaid_item" />
+    <table id="29" parent="1" name="user_asset" />
+    <table id="30" parent="1" name="user_family_speeding" />
+    <table id="31" parent="1" name="user_information" />
+    <table id="32" parent="1" name="user_login" />
+    <table id="33" parent="1" name="user_temper_prefer">
+      <comment>投资性格偏好</comment>
+    </table>
+    <column id="34" parent="7" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="35" parent="7" name="HS300_return">
+      <data-type>decimal(19,2)|0</data-type>
+    </column>
+    <key id="36" parent="7" name="PRIMARY">
+      <columns>id
+id
+id
+id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="37" parent="8" name="commodity_id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="38" parent="8" name="date">
+      <data-type>datetime|0</data-type>
+    </column>
+    <column id="39" parent="8" name="price">
+      <data-type>decimal(19,2)|0</data-type>
+    </column>
+    <column id="40" parent="8" name="product_id">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <key id="41" parent="8" name="PRIMARY">
+      <columns>commodity_id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="42" parent="9" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="43" parent="9" name="created_at">
+      <data-type>datetime|0</data-type>
+    </column>
+    <column id="44" parent="9" name="name">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="45" parent="9" name="office_address">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="46" parent="9" name="register_address">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="47" parent="9" name="register_name">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="48" parent="9" name="update_at">
+      <data-type>datetime|0</data-type>
+    </column>
+    <column id="49" parent="9" name="url">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <key id="50" parent="9" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="51" parent="10" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="52" parent="10" name="account">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="53" parent="10" name="choosed_questions">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="54" parent="10" name="created_at">
+      <data-type>datetime|0</data-type>
+    </column>
+    <column id="55" parent="10" name="email">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="56" parent="10" name="password">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="57" parent="10" name="phone">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="58" parent="10" name="secure_answer">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="59" parent="10" name="state">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="60" parent="10" name="update_at">
+      <data-type>datetime|0</data-type>
+    </column>
+    <column id="61" parent="10" name="username">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="62" parent="10" name="name">
+      <data-type>varchar(45)|0</data-type>
+    </column>
+    <column id="63" parent="10" name="if_city">
+      <data-type>tinyint(1)|0</data-type>
+    </column>
+    <column id="64" parent="10" name="city">
+      <data-type>varchar(45)|0</data-type>
+    </column>
+    <column id="65" parent="10" name="birthday">
+      <data-type>date|0</data-type>
+    </column>
+    <column id="66" parent="10" name="monthly_expense">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="67" parent="10" name="income">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <key id="68" parent="10" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="69" parent="11" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="70" parent="11" name="bond_index">
+      <mandatory>1</mandatory>
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <key id="71" parent="11" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="72" parent="12" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="73" parent="12" name="fund_return_rate">
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <column id="74" parent="12" name="bond_return_rate">
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <column id="75" parent="12" name="bank_return_rate">
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <column id="76" parent="12" name="insurace_return_rate">
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <column id="77" parent="12" name="fund_market_value">
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <column id="78" parent="12" name="bank_market_value">
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <column id="79" parent="12" name="insurance_market_value">
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <column id="80" parent="12" name="bond_market_value">
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <column id="81" parent="12" name="risk_free_interest">
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <column id="82" parent="12" name="base_day_index">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="83" parent="12" name="base_period_index">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="84" parent="12" name="csi_300">
+      <data-type>decimal(10,2)|0</data-type>
+    </column>
+    <column id="85" parent="12" name="base_rate">
+      <data-type>decimal(10,2)|0</data-type>
+    </column>
+    <key id="86" parent="12" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="87" parent="13" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="88" parent="13" name="created_at">
+      <data-type>datetime|0</data-type>
+    </column>
+    <column id="89" parent="13" name="current_price">
+      <data-type>decimal(19,2)|0</data-type>
+    </column>
+    <column id="90" parent="13" name="expected_price">
+      <data-type>decimal(19,2)|0</data-type>
+    </column>
+    <column id="91" parent="13" name="interval_buy_buy">
+      <data-type>datetime|0</data-type>
+    </column>
+    <column id="92" parent="13" name="interval_buy_sell">
+      <data-type>datetime|0</data-type>
+    </column>
+    <column id="93" parent="13" name="interval_firstbuy_sell">
+      <data-type>datetime|0</data-type>
+    </column>
+    <column id="94" parent="13" name="product_id">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="95" parent="13" name="set_price">
+      <data-type>decimal(19,2)|0</data-type>
+    </column>
+    <column id="96" parent="13" name="starting_price">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="97" parent="13" name="state">
+      <data-type>tinyint(4)|0</data-type>
+    </column>
+    <column id="98" parent="13" name="trading_unit">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="99" parent="13" name="update_at">
+      <data-type>datetime|0</data-type>
+    </column>
+    <key id="100" parent="13" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="101" parent="14" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <key id="102" parent="14" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="103" parent="15" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="104" parent="15" name="institution">
+      <comment>发行机构</comment>
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="105" parent="15" name="category">
+      <comment>投资类别</comment>
+      <mandatory>1</mandatory>
+      <data-type>tinyint(4)|0</data-type>
+    </column>
+    <column id="106" parent="15" name="type">
+      <comment>具体品种</comment>
+      <mandatory>1</mandatory>
+      <data-type>tinyint(4)|0</data-type>
+    </column>
+    <column id="107" parent="15" name="created_at">
+      <mandatory>1</mandatory>
+      <data-type>timestamp|0</data-type>
+      <default-expression>CURRENT_TIMESTAMP</default-expression>
+    </column>
+    <column id="108" parent="15" name="amount_period">
+      <data-type>int(11)|0</data-type>
+      <default-expression>'0'</default-expression>
+    </column>
+    <column id="109" parent="15" name="update_at">
+      <mandatory>1</mandatory>
+      <data-type>timestamp|0</data-type>
+      <default-expression>'0000-00-00 00:00:00'</default-expression>
+    </column>
+    <key id="110" parent="15" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="111" parent="16" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="112" parent="16" name="fund_id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="113" parent="16" name="daily_return">
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <column id="114" parent="16" name="stock_ratio">
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <column id="115" parent="16" name="fund_size">
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <column id="116" parent="16" name="debt_ratio">
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <column id="117" parent="16" name="institutional_ratio">
+      <data-type>decimal(10,2)|0</data-type>
+    </column>
+    <key id="118" parent="16" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="119" parent="17" name="user_id">
+      <mandatory>1</mandatory>
+      <data-type>int(11) unsigned|0</data-type>
+      <default-expression>'0'</default-expression>
+    </column>
+    <column id="120" parent="17" name="product_id">
+      <mandatory>1</mandatory>
+      <data-type>int(11) unsigned|0</data-type>
+      <default-expression>'0'</default-expression>
+    </column>
+    <column id="121" parent="17" name="price">
+      <mandatory>1</mandatory>
+      <data-type>decimal(10,2) unsigned|0</data-type>
+    </column>
+    <column id="122" parent="17" name="amount">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <default-expression>'1'</default-expression>
+    </column>
+    <column id="123" parent="17" name="created_at">
+      <mandatory>1</mandatory>
+      <data-type>timestamp|0</data-type>
+      <default-expression>CURRENT_TIMESTAMP</default-expression>
+    </column>
+    <column id="124" parent="17" name="update_at">
+      <mandatory>1</mandatory>
+      <data-type>timestamp|0</data-type>
+      <default-expression>'0000-00-00 00:00:00'</default-expression>
+    </column>
+    <column id="125" parent="17" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(10) unsigned|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <key id="126" parent="17" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="127" parent="18" name="user_id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="128" parent="18" name="amount">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="129" parent="18" name="buying_price">
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <column id="130" parent="18" name="product_id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="131" parent="18" name="total_value">
+      <data-type>decimal(10,2)|0</data-type>
+    </column>
+    <column id="132" parent="18" name="date">
+      <data-type>timestamp|0</data-type>
+    </column>
+    <key id="133" parent="18" name="PRIMARY">
+      <columns>user_id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="134" parent="19" name="id">
+      <mandatory>1</mandatory>
+      <data-type>bigint(20)|0</data-type>
+    </column>
+    <column id="135" parent="19" name="exchange_rate">
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <column id="136" parent="19" name="deposit_interest_rate">
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <column id="137" parent="19" name="indexes">
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <key id="138" parent="19" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="139" parent="20" name="name">
+      <mandatory>1</mandatory>
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="140" parent="20" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11) unsigned|0</data-type>
+    </column>
+    <key id="141" parent="20" name="PRIMARY">
+      <columns>name</columns>
+      <primary>1</primary>
+    </key>
+    <column id="142" parent="21" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="143" parent="21" name="user_id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="144" parent="21" name="pay_way">
+      <mandatory>1</mandatory>
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <key id="145" parent="21" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="146" parent="22" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="147" parent="22" name="name">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="148" parent="22" name="institution_manage">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="149" parent="22" name="purchase_threshold">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="150" parent="22" name="increasing_unit">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="151" parent="22" name="length">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="152" parent="22" name="NAV">
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <column id="153" parent="22" name="on_purchase_date">
+      <mandatory>1</mandatory>
+      <data-type>date|0</data-type>
+      <default-expression>'0000-00-00'</default-expression>
+    </column>
+    <column id="154" parent="22" name="off_purchase_date">
+      <mandatory>1</mandatory>
+      <data-type>date|0</data-type>
+      <default-expression>'0000-00-00'</default-expression>
+    </column>
+    <column id="155" parent="22" name="sales_region">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="156" parent="22" name="product_code">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="157" parent="22" name="register_code">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="158" parent="22" name="currency">
+      <data-type>tinyint(4)|0</data-type>
+    </column>
+    <column id="159" parent="22" name="invest_field">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="160" parent="22" name="invest_ratio">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="161" parent="22" name="state">
+      <data-type>tinyint(4)|0</data-type>
+    </column>
+    <column id="162" parent="22" name="risk_level">
+      <data-type>tinyint(4)|0</data-type>
+    </column>
+    <column id="163" parent="22" name="session">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="164" parent="22" name="custodian">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="165" parent="22" name="expected_rate">
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <column id="166" parent="22" name="rate_purchase">
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <column id="167" parent="22" name="rate_redem">
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <column id="168" parent="22" name="rate_manage">
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <column id="169" parent="22" name="first_accr_date">
+      <data-type>date|0</data-type>
+      <default-expression>'0000-00-00'</default-expression>
+    </column>
+    <column id="170" parent="22" name="on_redemption_date">
+      <data-type>date|0</data-type>
+    </column>
+    <column id="171" parent="22" name="redem_speed">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="172" parent="22" name="pay_type">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="173" parent="22" name="object_oriented">
+      <data-type>varchar(45)|0</data-type>
+    </column>
+    <column id="174" parent="22" name="size_upper_limit">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="175" parent="22" name="income_type">
+      <data-type>tinyint(4)|0</data-type>
+    </column>
+    <column id="176" parent="22" name="if_NAV_type">
+      <data-type>tinyint(1)|0</data-type>
+    </column>
+    <column id="177" parent="22" name="if_close">
+      <data-type>tinyint(1)|0</data-type>
+    </column>
+    <key id="178" parent="22" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="179" parent="23" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11) unsigned|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="180" parent="23" name="title">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="181" parent="23" name="institution_issue">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="182" parent="23" name="product_code">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="183" parent="23" name="abbr_name">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="184" parent="23" name="on_issue_date">
+      <comment>发行起始日</comment>
+      <mandatory>1</mandatory>
+      <data-type>date|0</data-type>
+      <default-expression>'0000-00-00'</default-expression>
+    </column>
+    <column id="185" parent="23" name="off_issue_date">
+      <comment>发行截止日</comment>
+      <mandatory>1</mandatory>
+      <data-type>date|0</data-type>
+      <default-expression>'0000-00-00'</default-expression>
+    </column>
+    <column id="186" parent="23" name="first_accr_date">
+      <comment>起息日</comment>
+      <mandatory>1</mandatory>
+      <data-type>date|0</data-type>
+      <default-expression>'0000-00-00'</default-expression>
+    </column>
+    <column id="187" parent="23" name="length">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="188" parent="23" name="release_amount">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="189" parent="23" name="publish_date">
+      <mandatory>1</mandatory>
+      <data-type>date|0</data-type>
+      <default-expression>'0000-00-00'</default-expression>
+    </column>
+    <column id="190" parent="23" name="exchange">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="191" parent="23" name="credit_grade">
+      <data-type>tinyint(4)|0</data-type>
+    </column>
+    <column id="192" parent="23" name="institution_underwriter">
+      <data-type>varchar(45)|0</data-type>
+    </column>
+    <column id="193" parent="23" name="type">
+      <data-type>tinyint(4)|0</data-type>
+    </column>
+    <column id="194" parent="23" name="denomination">
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <column id="195" parent="23" name="issue_price">
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <column id="196" parent="23" name="currenct_value">
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <column id="197" parent="23" name="release_object">
+      <data-type>tinyint(4)|0</data-type>
+    </column>
+    <column id="198" parent="23" name="coupon_type">
+      <data-type>tinyint(4)|0</data-type>
+    </column>
+    <column id="199" parent="23" name="coupon_freq">
+      <data-type>tinyint(4)|0</data-type>
+    </column>
+    <column id="200" parent="23" name="maturity_date">
+      <mandatory>1</mandatory>
+      <data-type>date|0</data-type>
+      <default-expression>'0000-00-00'</default-expression>
+    </column>
+    <column id="201" parent="23" name="list_date">
+      <mandatory>1</mandatory>
+      <data-type>date|0</data-type>
+      <default-expression>'0000-00-00'</default-expression>
+    </column>
+    <column id="202" parent="23" name="payment_price">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="203" parent="23" name="object_apply_buy">
+      <data-type>varchar(45)|0</data-type>
+    </column>
+    <column id="204" parent="23" name="risk_grade">
+      <data-type>tinyint(4)|0</data-type>
+    </column>
+    <column id="205" parent="23" name="release_way">
+      <data-type>varchar(45)|0</data-type>
+    </column>
+    <column id="206" parent="23" name="object_oriented">
+      <data-type>varchar(45)|0</data-type>
+    </column>
+    <column id="207" parent="23" name="tax_state">
+      <data-type>tinyint(4)|0</data-type>
+    </column>
+    <column id="208" parent="23" name="coupon">
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <column id="209" parent="23" name="advance_redeem_date">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="210" parent="23" name="advance_redeem_interest_date">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="211" parent="23" name="state">
+      <data-type>tinyint(4)|0</data-type>
+    </column>
+    <column id="212" parent="23" name="adjust_yearly_rate">
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <key id="213" parent="23" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="214" parent="24" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11) unsigned|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="215" parent="24" name="name">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="216" parent="24" name="product_code">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="217" parent="24" name="yearly_rtn_rate">
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <column id="218" parent="24" name="category">
+      <data-type>tinyint(4)|0</data-type>
+    </column>
+    <column id="219" parent="24" name="state">
+      <data-type>tinyint(4)|0</data-type>
+    </column>
+    <column id="220" parent="24" name="manager_name">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="221" parent="24" name="rate_manage">
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <column id="222" parent="24" name="rate_subscribe">
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <column id="223" parent="24" name="rate_redem">
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <column id="224" parent="24" name="rate_purchase">
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <column id="225" parent="24" name="risk_income_description">
+      <data-type>text|0</data-type>
+    </column>
+    <column id="226" parent="24" name="fund_size">
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <column id="227" parent="24" name="share_size">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="228" parent="24" name="NAV">
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <column id="229" parent="24" name="risk_level">
+      <data-type>tinyint(4)|0</data-type>
+    </column>
+    <column id="230" parent="24" name="institution_manage">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="231" parent="24" name="custodian">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="232" parent="24" name="purchase_threshold">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="233" parent="24" name="increasing_unit">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="234" parent="24" name="on_purchase_date">
+      <data-type>date|0</data-type>
+    </column>
+    <column id="235" parent="24" name="off_purchase_date">
+      <data-type>date|0</data-type>
+    </column>
+    <column id="236" parent="24" name="first_accr_date">
+      <data-type>date|0</data-type>
+    </column>
+    <column id="237" parent="24" name="on_redemption_date">
+      <data-type>date|0</data-type>
+    </column>
+    <column id="238" parent="24" name="length">
+      <data-type>int(11)|0</data-type>
+      <default-expression>'0'</default-expression>
+    </column>
+    <column id="239" parent="24" name="subscribe_speed">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="240" parent="24" name="perf_benchmark">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="241" parent="24" name="target_ID">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="242" parent="24" name="redemption_speed">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="243" parent="24" name="adjust_NAV">
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <column id="244" parent="24" name="accum_NAV">
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <column id="245" parent="24" name="operation_mode">
+      <data-type>tinyint(4)|0</data-type>
+    </column>
+    <column id="246" parent="24" name="fund_score">
+      <data-type>decimal(10,2)|0</data-type>
+    </column>
+    <column id="247" parent="24" name="asset_liability_ratio">
+      <data-type>decimal(19,2)|0</data-type>
+    </column>
+    <column id="248" parent="24" name="day_rate">
+      <data-type>decimal(19,2)|0</data-type>
+    </column>
+    <column id="249" parent="24" name="institution_networth_ratio">
+      <data-type>decimal(19,2)|0</data-type>
+    </column>
+    <column id="250" parent="24" name="stock_bond_proportion">
+      <data-type>decimal(19,2)|0</data-type>
+    </column>
+    <column id="251" parent="24" name="first_accr_rate">
+      <data-type>datetime|0</data-type>
+    </column>
+    <key id="252" parent="24" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="253" parent="25" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="254" parent="25" name="name">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="255" parent="25" name="institution_manage">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="256" parent="25" name="risk_desctiption">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="257" parent="25" name="warranty_period">
+      <comment>保障年限</comment>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="258" parent="25" name="denomination">
+      <comment>面额</comment>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="259" parent="25" name="indemnity_per_unit">
+      <comment>单位金额赔偿</comment>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="260" parent="25" name="indemnity">
+      <comment>赔偿金额</comment>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="261" parent="25" name="day_rate">
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <column id="262" parent="25" name="year_rate">
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <column id="263" parent="25" name="length">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="264" parent="25" name="pay_type">
+      <data-type>tinyint(4)|0</data-type>
+    </column>
+    <column id="265" parent="25" name="expected_rate">
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <column id="266" parent="25" name="guaranteed_rate">
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <column id="267" parent="25" name="product_period">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <key id="268" parent="25" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="269" parent="26" name="id">
+      <mandatory>1</mandatory>
+      <data-type>bigint(20)|0</data-type>
+    </column>
+    <column id="270" parent="26" name="title">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="271" parent="26" name="content">
+      <data-type>text|0</data-type>
+    </column>
+    <column id="272" parent="26" name="created_at">
+      <mandatory>1</mandatory>
+      <data-type>timestamp|0</data-type>
+      <default-expression>CURRENT_TIMESTAMP</default-expression>
+    </column>
+    <key id="273" parent="26" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="274" parent="27" name="user_id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="275" parent="27" name="product_id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="276" parent="27" name="trading_unit">
+      <mandatory>1</mandatory>
+      <data-type>varchar(20)|0</data-type>
+    </column>
+    <column id="277" parent="27" name="amount">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="278" parent="27" name="check_code">
+      <mandatory>1</mandatory>
+      <data-type>char(30)|0</data-type>
+    </column>
+    <column id="279" parent="27" name="trade_at">
+      <mandatory>1</mandatory>
+      <data-type>timestamp|0</data-type>
+      <default-expression>CURRENT_TIMESTAMP</default-expression>
+    </column>
+    <column id="280" parent="27" name="trade_type">
+      <mandatory>1</mandatory>
+      <data-type>char(10)|0</data-type>
+    </column>
+    <column id="281" parent="27" name="trading_volume">
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <key id="282" parent="27" name="PRIMARY">
+      <columns>user_id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="283" parent="28" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="284" parent="28" name="product_id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="285" parent="28" name="unit">
+      <mandatory>1</mandatory>
+      <data-type>varchar(20)|0</data-type>
+    </column>
+    <column id="286" parent="28" name="amount">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="287" parent="28" name="trading_volume">
+      <mandatory>1</mandatory>
+      <data-type>decimal(10,2)|0</data-type>
+    </column>
+    <column id="288" parent="28" name="check_code">
+      <mandatory>1</mandatory>
+      <data-type>char(32)|0</data-type>
+    </column>
+    <column id="289" parent="28" name="expiration_time">
+      <mandatory>1</mandatory>
+      <data-type>timestamp|0</data-type>
+      <default-expression>CURRENT_TIMESTAMP</default-expression>
+    </column>
+    <column id="290" parent="28" name="user_id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <key id="291" parent="28" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="292" parent="29" name="user_id">
+      <mandatory>1</mandatory>
+      <data-type>bigint(20) unsigned|0</data-type>
+    </column>
+    <column id="293" parent="29" name="initial_price">
+      <data-type>decimal(10,2)|0</data-type>
+    </column>
+    <column id="294" parent="29" name="current_price">
+      <data-type>decimal(10,2)|0</data-type>
+    </column>
+    <column id="295" parent="29" name="future_price">
+      <data-type>decimal(10,2)|0</data-type>
+    </column>
+    <column id="296" parent="29" name="cash_assets">
+      <data-type>decimal(10,2)|0</data-type>
+    </column>
+    <column id="297" parent="29" name="long_term_assets">
+      <data-type>decimal(10,2)|0</data-type>
+    </column>
+    <column id="298" parent="29" name="emergency_assets">
+      <data-type>decimal(10,2)|0</data-type>
+    </column>
+    <key id="299" parent="29" name="PRIMARY">
+      <columns>user_id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="300" parent="30" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="301" parent="30" name="if_need">
+      <data-type>tinyint(4)|0</data-type>
+    </column>
+    <column id="302" parent="30" name="is_prepare">
+      <data-type>tinyint(4)|0</data-type>
+    </column>
+    <key id="303" parent="30" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="304" parent="31" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="305" parent="31" name="created_at">
+      <data-type>datetime|0</data-type>
+    </column>
+    <column id="306" parent="31" name="experience">
+      <data-type>tinyint(4)|0</data-type>
+    </column>
+    <column id="307" parent="31" name="intention">
+      <data-type>tinyint(4)|0</data-type>
+    </column>
+    <column id="308" parent="31" name="job">
+      <data-type>tinyint(4)|0</data-type>
+    </column>
+    <column id="309" parent="31" name="marriage_status">
+      <data-type>tinyint(4)|0</data-type>
+    </column>
+    <column id="310" parent="31" name="salary">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="311" parent="31" name="state">
+      <data-type>tinyint(4)|0</data-type>
+    </column>
+    <column id="312" parent="31" name="update_at">
+      <data-type>datetime|0</data-type>
+    </column>
+    <key id="313" parent="31" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="314" parent="32" name="user_id">
+      <mandatory>1</mandatory>
+      <data-type>int(11) unsigned|0</data-type>
+    </column>
+    <column id="315" parent="32" name="session">
+      <data-type>char(32)|0</data-type>
+    </column>
+    <column id="316" parent="32" name="date">
+      <data-type>timestamp|0</data-type>
+    </column>
+    <column id="317" parent="32" name="login_id">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <key id="318" parent="32" name="PRIMARY">
+      <columns>user_id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="319" parent="33" name="user_id">
+      <mandatory>1</mandatory>
+      <data-type>int(11) unsigned|0</data-type>
+    </column>
+    <column id="320" parent="33" name="expected_capital">
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <column id="321" parent="33" name="end_date">
+      <data-type>date|0</data-type>
+      <default-expression>'0000-00-00'</default-expression>
+    </column>
+    <column id="322" parent="33" name="expected_profit_min">
+      <data-type>decimal(10,2)|0</data-type>
+    </column>
+    <column id="323" parent="33" name="if_big_expense">
+      <data-type>tinyint(1)|0</data-type>
+    </column>
+    <column id="324" parent="33" name="may_redeem_amount">
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <column id="325" parent="33" name="redeem_time">
+      <data-type>date|0</data-type>
+    </column>
+    <column id="326" parent="33" name="insurance_amount">
+      <data-type>decimal(10,3)|0</data-type>
+    </column>
+    <column id="327" parent="33" name="expense_type">
+      <data-type>tinyint(1)|0</data-type>
+    </column>
+    <column id="328" parent="33" name="risk_tolerance_min">
+      <data-type>decimal(10,2)|0</data-type>
+    </column>
+    <column id="329" parent="33" name="expected_retrun_rate">
+      <data-type>decimal(10,2)|0</data-type>
+    </column>
+    <column id="330" parent="33" name="if_config_big_expense">
+      <data-type>tinyint(1)|0</data-type>
+    </column>
+    <column id="331" parent="33" name="begin_time">
+      <data-type>date|0</data-type>
+    </column>
+    <column id="332" parent="33" name="end_time">
+      <data-type>date|0</data-type>
+    </column>
+    <column id="333" parent="33" name="chosen_products">
+      <data-type>varchar(45)|0</data-type>
+    </column>
+    <column id="334" parent="33" name="bear_loss">
+      <data-type>decimal(10,2)|0</data-type>
+    </column>
+    <column id="335" parent="33" name="id">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="336" parent="33" name="risk_tolerance_max">
+      <data-type>decimal(10,2)|0</data-type>
+    </column>
+    <column id="337" parent="33" name="expected_profit_max">
+      <data-type>decimal(10,2)|0</data-type>
+    </column>
+    <column id="338" parent="33" name="money">
+      <data-type>decimal(19,2)|0</data-type>
+    </column>
+    <column id="339" parent="33" name="risk_violence">
+      <data-type>decimal(19,2)|0</data-type>
+    </column>
+    <column id="340" parent="33" name="stop_profit">
+      <data-type>decimal(19,2)|0</data-type>
+    </column>
+    <key id="341" parent="33" name="PRIMARY">
+      <columns>user_id</columns>
+      <primary>1</primary>
+    </key>
+  </database-model>
+</dataSource>

@@ -21,8 +21,10 @@ public class ErrorManager {
     static public final int errorInvalidMobile = 9;
     static public final int errorLoginFailed = 10;
     static public final int errorInnerDataError = 11;
+    static public final int errorUnhandledMethod = 12;
 
     static private String[] errorDescreption;
+    static private String[] errorDescreptionCH;
 
     static {
         errorDescreption = new String[] {
@@ -37,21 +39,38 @@ public class ErrorManager {
                 "User Not Exist",
                 "Invalid Phone Number",
                 "Login Failed",
-                "Inner Data Error"
+                "Inner Data Error",
+                "Unhandled Method"
+        };
+        errorDescreptionCH = new String[] {
+                "",
+                "未登录",
+                "未找到相关数据",
+                "无效的密码",
+                "注册失败",
+                "找不到满足条件的产品",
+                "无效的参数",
+                "该用户已存在",
+                "该用户不存在",
+                "无效的手机号",
+                "登录失败",
+                "内部数据错误",
+                "未处理的提交方式"
         };
     }
 
-    static private String getDescreption(int i) {
+    static private String getDescription(int i) {
         return errorDescreption[i];
     }
+    static private String getDescriptionCH(int i) { return errorDescreptionCH[i]; }
 
     static public void setError(BaseVO baseVO, int error) {
         baseVO.setError(error);
-        baseVO.setMessage(ErrorManager.getDescreption(error));
+        baseVO.setMessage(ErrorManager.getDescription(error));
     }
 
     static public void setError(HttpServletRequest request, int error) {
         request.setAttribute("error", error);
-        request.setAttribute("message", ErrorManager.getDescreption(error));
+        request.setAttribute("message", ErrorManager.getDescription(error));
     }
 }

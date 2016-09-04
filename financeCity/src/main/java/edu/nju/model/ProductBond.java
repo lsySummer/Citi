@@ -2,10 +2,10 @@ package edu.nju.model;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.sql.Date;
 
 /**
- * Created by Sun YuHao on 2016/9/2.
+ * Created by Sun YuHao on 2016/9/3.
  */
 @Entity
 @Table(name = "product_bond", schema = "citi", catalog = "")
@@ -15,12 +15,12 @@ public class ProductBond {
     private String institutionIssue;
     private String productCode;
     private String abbrName;
-    private Timestamp onIssueDate;
-    private Timestamp offIssueDate;
-    private Timestamp firstAccrDate;
+    private Date onIssueDate;
+    private Date offIssueDate;
+    private Date firstAccrDate;
     private Integer length;
     private Integer releaseAmount;
-    private Timestamp publishDate;
+    private Date publishDate;
     private String exchange;
     private Byte creditGrade;
     private String institutionUnderwriter;
@@ -31,8 +31,8 @@ public class ProductBond {
     private Byte releaseObject;
     private Byte couponType;
     private Byte couponFreq;
-    private Timestamp maturityDate;
-    private Timestamp listDate;
+    private Date maturityDate;
+    private Date listDate;
     private Integer paymentPrice;
     private String objectApplyBuy;
     private Byte riskGrade;
@@ -97,31 +97,31 @@ public class ProductBond {
 
     @Basic
     @Column(name = "on_issue_date")
-    public Timestamp getOnIssueDate() {
+    public Date getOnIssueDate() {
         return onIssueDate;
     }
 
-    public void setOnIssueDate(Timestamp onIssueDate) {
+    public void setOnIssueDate(Date onIssueDate) {
         this.onIssueDate = onIssueDate;
     }
 
     @Basic
     @Column(name = "off_issue_date")
-    public Timestamp getOffIssueDate() {
+    public Date getOffIssueDate() {
         return offIssueDate;
     }
 
-    public void setOffIssueDate(Timestamp offIssueDate) {
+    public void setOffIssueDate(Date offIssueDate) {
         this.offIssueDate = offIssueDate;
     }
 
     @Basic
     @Column(name = "first_accr_date")
-    public Timestamp getFirstAccrDate() {
+    public Date getFirstAccrDate() {
         return firstAccrDate;
     }
 
-    public void setFirstAccrDate(Timestamp firstAccrDate) {
+    public void setFirstAccrDate(Date firstAccrDate) {
         this.firstAccrDate = firstAccrDate;
     }
 
@@ -147,11 +147,11 @@ public class ProductBond {
 
     @Basic
     @Column(name = "publish_date")
-    public Timestamp getPublishDate() {
+    public Date getPublishDate() {
         return publishDate;
     }
 
-    public void setPublishDate(Timestamp publishDate) {
+    public void setPublishDate(Date publishDate) {
         this.publishDate = publishDate;
     }
 
@@ -257,21 +257,21 @@ public class ProductBond {
 
     @Basic
     @Column(name = "maturity_date")
-    public Timestamp getMaturityDate() {
+    public Date getMaturityDate() {
         return maturityDate;
     }
 
-    public void setMaturityDate(Timestamp maturityDate) {
+    public void setMaturityDate(Date maturityDate) {
         this.maturityDate = maturityDate;
     }
 
     @Basic
     @Column(name = "list_date")
-    public Timestamp getListDate() {
+    public Date getListDate() {
         return listDate;
     }
 
-    public void setListDate(Timestamp listDate) {
+    public void setListDate(Date listDate) {
         this.listDate = listDate;
     }
 
