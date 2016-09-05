@@ -451,4 +451,16 @@ public class ProductBank {
         result = 31 * result + (ifClose != null ? ifClose.hashCode() : 0);
         return result;
     }
+
+    private Byte type;
+
+    @Basic
+    @Column(name = "type")
+    public Byte getType() {
+        return type;
+    }
+
+    public void setType(Byte type) {
+        this.type = type;
+    }
 }

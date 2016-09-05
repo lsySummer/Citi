@@ -64,4 +64,16 @@ public class UserLogin {
         result = 31 * result + (date != null ? date.hashCode() : 0);
         return result;
     }
+
+    private String loginId;
+
+    @Basic
+    @Column(name = "login_id")
+    public String getLoginId() {
+        return loginId;
+    }
+
+    public void setLoginId(String loginId) {
+        this.loginId = loginId;
+    }
 }

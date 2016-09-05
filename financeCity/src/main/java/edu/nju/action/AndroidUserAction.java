@@ -5,6 +5,7 @@ import edu.nju.service.ServiceManagerImpl;
 import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.service.UserService.UserService;
 import edu.nju.vo.BaseVO;
+import edu.nju.vo.SessionIdVO;
 import edu.nju.vo.UserVO;
 
 import java.util.Map;
@@ -17,51 +18,52 @@ public class AndroidUserAction extends AndroidAction {
     private String register() {
         Map map = getRequestMap();
         UserService userService = ServiceManagerImpl.getInstance().getUserService();
-        BaseVO baseVO = new BaseVO();
+        SessionIdVO sessionIdVO = new SessionIdVO();
 
         try {
             FinanceCityUser financeCityUser = userService.register((String) map.get("mobile"), (String) map.get("password"), (String)map.get("username"));
 
             if (financeCityUser != null) {
-                session.put("user", financeCityUser);
-
-                ErrorManager.setError(baseVO, ErrorManager.errorNormal);
-                setResult(baseVO);
+                sessionIdVO.setSessionId(financeCityUser.getID());
+                ErrorManager.setError(sessionIdVO, ErrorManager.errorNormal);
+                setResult(sessionIdVO);
 
                 return SUCCESS;
             }
             else {
-                ErrorManager.setError(baseVO, ErrorManager.errorRegisterFailed);
-                setResult(baseVO);
+                ErrorManager.setError(sessionIdVO, ErrorManager.errorRegisterFailed);
+                setResult(sessionIdVO);
                 return SUCCESS;
             }
         }
         catch (UserAlreadyExistException e) {
             e.printStackTrace();
-            ErrorManager.setError(baseVO, ErrorManager.errorUserAlreadyExist);
+            ErrorManager.setError(sessionIdVO, ErrorManager.errorUserAlreadyExist);
         }
         catch (InvalidPasswordException i) {
             i.printStackTrace();
-            ErrorManager.setError(baseVO, ErrorManager.errorInvalidPassword);
+            ErrorManager.setError(sessionIdVO, ErrorManager.errorInvalidPassword);
         }
         catch (InvalidMobileException i2) {
             i2.printStackTrace();
-            ErrorManager.setError(baseVO, ErrorManager.errorInvalidMobile);
+            ErrorManager.setError(sessionIdVO, ErrorManager.errorInvalidMobile);
         }
 
-        setResult(baseVO);
+        setResult(sessionIdVO);
 
         return SUCCESS;
     }
 
     private String getUserVO() {
+        Map map = getRequestMap();
+
         UserService userService = ServiceManagerImpl.getInstance().getUserService();
 
         try {
-            FinanceCityUser financeCityUser = (FinanceCityUser)session.get("user");
-            if (financeCityUser == null) {
-                throw new NotLoginException();
-            }
+            FinanceCityUser financeCityUser = new FinanceCityUser();
+            financeCityUser.setID((Integer)map.get("id"));
+            financeCityUser.setLoginSession((String)map.get("session"));
+
             setResult(userService.getUserVO(financeCityUser));
         }
         catch (Exception e) {
@@ -81,9 +83,13 @@ public class AndroidUserAction extends AndroidAction {
 
         BaseVO baseVO = new BaseVO();
         try {
+            FinanceCityUser financeCityUser = new FinanceCityUser();
+            financeCityUser.setID((Integer)map.get("id"));
+            financeCityUser.setLoginSession((String)map.get("session"));
+
             userService.modifyUserInfo((String)map.get("birthday"), (Integer)map.get("income"),
                     (Integer)map.get("isUrben") == 1, (Integer)map.get("expense"),
-                    (FinanceCityUser)session.get("user"));
+                    financeCityUser);
 
             ErrorManager.setError(baseVO, ErrorManager.errorNormal);
             setResult(baseVO);
@@ -126,7 +132,7 @@ public class AndroidUserAction extends AndroidAction {
     public String login() {
         Map map = getRequestMap();
 
-        BaseVO ret = new BaseVO();
+        SessionIdVO ret = new SessionIdVO();
         UserService userService = ServiceManagerImpl.getInstance().getUserService();
 
         String username = (String)map.get("username");
@@ -145,9 +151,8 @@ public class AndroidUserAction extends AndroidAction {
             setResult(ret);
         }
         else {
-            session.put("user", financeCityUser);
             ErrorManager.setError(ret, ErrorManager.errorNormal);
-
+            ret.setSessionId(financeCityUser.getID());
             setResult(ret);
         }
 

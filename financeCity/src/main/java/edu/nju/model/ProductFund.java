@@ -3,6 +3,7 @@ package edu.nju.model;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  * Created by Sun YuHao on 2016/9/3.
@@ -523,5 +524,17 @@ public class ProductFund {
         result = 31 * result + (institutionNetworthRatio != null ? institutionNetworthRatio.hashCode() : 0);
         result = 31 * result + (stockBondProportion != null ? stockBondProportion.hashCode() : 0);
         return result;
+    }
+
+    private Timestamp firstAccrRate;
+
+    @Basic
+    @Column(name = "first_accr_rate")
+    public Timestamp getFirstAccrRate() {
+        return firstAccrRate;
+    }
+
+    public void setFirstAccrRate(Timestamp firstAccrRate) {
+        this.firstAccrRate = firstAccrRate;
     }
 }
