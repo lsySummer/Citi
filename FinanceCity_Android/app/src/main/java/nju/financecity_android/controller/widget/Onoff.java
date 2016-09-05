@@ -42,6 +42,11 @@ public class Onoff extends LinearLayout{
 
     public boolean getOnoff_switch()
     {
-        return onoff_switch.getShowText();
+        return onoff_switch.getShowText();//TODO ?
+    }
+
+    public void setOnoff_switch(boolean checked)
+    {
+        onoff_switch.setChecked(checked);
     }
 }
