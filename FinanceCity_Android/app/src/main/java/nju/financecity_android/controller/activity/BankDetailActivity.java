@@ -8,7 +8,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import nju.financecity_android.R;
 import nju.financecity_android.controller.widget.SimpleProperty;
-import nju.financecity_android.dao.ProductDao;
+import nju.financecity_android.model.ProductBank;
 import nju.financecity_android.vo.PropertyVO;
 
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public class BankDetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String productId = intent.getStringExtra("productId");
-        Map data = (new ProductDao(productId)).readData();
+        Map data = (new ProductBank(productId)).getProperties();
         processData(data);
     }
 
@@ -35,21 +35,17 @@ public class BankDetailActivity extends AppCompatActivity {
         listProperties.setAdapter(adapter);
     }
 
-    protected void setHeaderInfo(String productName, double interestRate, int startBuyMoney, String openDate) {
+    protected void setHeaderInfo(String productName, String interestRate, String startBuyMoney, String openDate) {
         txtPrdtName.setText(productName);
-        String strInterestRate = String.valueOf(interestRate * 100);
-        if (strInterestRate.length() > 4) {
-            strInterestRate = strInterestRate.substring(0, 4) + "%";
-        }
-        txtInterestRate.setText(strInterestRate);
-        txtStartBuyMoney.setText(String.valueOf(startBuyMoney));
+        txtInterestRate.setText(interestRate);
+        txtStartBuyMoney.setText(startBuyMoney);
         txtOpenDate.setText(openDate);
     }
 
     private void processData(Map data) {
         String productName = data.get("产品名称").toString();
-        double interestRate = Double.parseDouble(data.get("预计年化收益率").toString());
-        int startBuyMoney = Integer.parseInt(data.get("起购金额").toString());
+        String interestRate = data.get("预计年化收益率").toString();
+        String startBuyMoney = data.get("起购金额").toString();
         String openDate = data.get("开放日").toString();
         setHeaderInfo(productName, interestRate, startBuyMoney, openDate);
 

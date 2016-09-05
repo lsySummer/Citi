@@ -1,13 +1,14 @@
 package nju.financecity_android.controller.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import nju.financecity_android.R;
 import nju.financecity_android.controller.widget.SimpleProperty;
+import nju.financecity_android.model.ProductBond;
 import nju.financecity_android.vo.PropertyVO;
 
 import java.util.ArrayList;
@@ -22,6 +23,11 @@ public class BondDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bond_detail);
         initComponents();
+
+        Intent intent = getIntent();
+        String productId = intent.getStringExtra("productId");
+        Map data = (new ProductBond(productId)).getProperties();
+        processData(data);
     }
 
     protected void setHeaderInfo(String productName, String state, String length, String interestRate) {

@@ -3,14 +3,14 @@ package nju.financecity_android.model;
 /**
  * Created by coral on 16-9-4.
  */
-public class FCBondProduct extends FCBaseProduct {
+public class ProductBond extends BaseProduct {
 
-    public FCBondProduct(String productId) {
+    public ProductBond(String productId) {
         super(productId);
     }
 
     @Override
-    protected void processDate() {
+    protected void processData() {
 
         int zhaiquanfenlei;
         zhaiquanfenlei = Integer.parseInt(mRawData.get("type").toString());
@@ -159,7 +159,7 @@ public class FCBondProduct extends FCBaseProduct {
             mData.put("债券名称", zhaiquanmingcheng);
             mData.put("债券简称", zhaiquanjiancheng);
             mData.put("债券代码", zhaiquandaima);
-            mData.put("债券分类", "储蓄式");
+            mData.put("债券分类", "记账式");
             mData.put("发型单位", faxingdanwei);
             String strPiaoMianLiLv = String.valueOf(piaomianlilv * 100);
             if (strPiaoMianLiLv.length() > 4) strPiaoMianLiLv = strPiaoMianLiLv.substring(0, 4);

@@ -9,16 +9,16 @@ import java.util.Set;
 /**
  * Created by coral on 16-9-3.
  */
-public abstract class FCBaseProduct {
+public abstract class BaseProduct {
 
-    public FCBaseProduct(String productId) {
+    public BaseProduct(String productId) {
         setProductId(productId);
         mRawData = new ProductDao(productId).readData();
         if (mRawData.get("error").toString().equals("0")) {
             mRawData = (Map) mRawData.get("data");
         }
         mData = new HashMap<>();
-        processDate();
+        processData();
     }
 
     public String getProductId() {
@@ -49,7 +49,7 @@ public abstract class FCBaseProduct {
     /**
      * 将读取到的数据写入到属性。
      */
-    protected abstract void processDate();
+    protected abstract void processData();
 
     protected Map mRawData;
     protected Map<String, Object> mData;
