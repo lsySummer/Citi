@@ -8,6 +8,7 @@ import edu.nju.service.POJO.SearchFilterFactory;
 import edu.nju.service.SearchService.ProductFilter;
 import edu.nju.service.SearchService.SearchService;
 import edu.nju.service.ServiceManagerImpl;
+import edu.nju.vo.InstitutionListVO;
 import edu.nju.vo.ProductDetailVO;
 import edu.nju.vo.ProductsDetailVO;
 import edu.nju.vo.SearchResultVO;
@@ -117,6 +118,32 @@ public class AndroidSearchAction extends AndroidAction {
             setResult(searchResult);
         }
 
+        return SUCCESS;
+    }
+
+    public String getInstitutionList() {
+        Map map = getRequestMap();
+        InstitutionListVO institutionListVO = new InstitutionListVO();
+
+        String category = (String)map.get("type");
+        SearchService searchService = ServiceManagerImpl.getInstance().getSearchService();
+
+        try {
+            List<String> institutions = searchService.getInstitutionNameList(category);
+
+            if (institutions == null) {
+                ErrorManager.setError(institutionListVO, ErrorManager.errorDataNotFound);
+            }
+            else {
+                institutionListVO.setInstitutions(institutions);
+                ErrorManager.setError(institutionListVO, ErrorManager.errorNormal);
+            }
+        }
+        catch (Exception e) {
+            ErrorManager.setError(institutionListVO, ErrorManager.errorInvalidParameter);
+        }
+
+        setResult(institutionListVO);
         return SUCCESS;
     }
 

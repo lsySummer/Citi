@@ -34,6 +34,8 @@
       <mapping class="edu.nju.model.ProductInsurance"/>
     <mapping class="edu.nju.model.ProductBank"/>
       <mapping class="edu.nju.model.InstitutionCategoryRelation"/>
+      <mapping class="edu.nju.model.FundDailyHistory"/>
+      <mapping class="edu.nju.model.InsuranceDailyHistory"/>
       <!-- DB schema will be updated if needed -->
     <!-- <property name="hbm2ddl.auto">update</property> -->
   </session-factory>

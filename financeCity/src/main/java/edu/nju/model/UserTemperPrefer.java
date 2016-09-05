@@ -283,4 +283,39 @@ public class UserTemperPrefer {
         result = 31 * result + (expectedProfitMax != null ? expectedProfitMax.hashCode() : 0);
         return result;
     }
+
+    private BigDecimal money;
+
+    @Basic
+    @Column(name = "money")
+    public BigDecimal getMoney() {
+        return money;
+    }
+
+    public void setMoney(BigDecimal money) {
+        this.money = money;
+    }
+
+    private BigDecimal riskViolence;
+
+    @Basic
+    @Column(name = "risk_violence")
+    public BigDecimal getRiskViolence() {
+        return riskViolence;
+    }
+
+
+    public void setRiskViolence(BigDecimal riskViolence) {
+        this.riskViolence = riskViolence;
+    }    private BigDecimal stopProfit;
+
+    @Basic
+    @Column(name = "stop_profit")
+    public BigDecimal getStopProfit() {
+        return stopProfit;
+    }
+
+    public void setStopProfit(BigDecimal stopProfit) {
+        this.stopProfit = stopProfit;
+    }
 }

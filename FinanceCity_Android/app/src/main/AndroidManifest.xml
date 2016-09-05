@@ -31,6 +31,13 @@
 		</activity>
 		<activity android:name=".controller.activity.BondDetailActivity">
 		</activity>
+		<activity android:name=".controller.activity.Persons_Edit">
+			<!--<intent-filter>-->
+				<!--<action android:name="android.intent.action.MAIN"/>-->
+
+				<!--<category android:name="android.intent.category.LAUNCHER"/>-->
+			<!--</intent-filter>-->
+		</activity>
 	</application>
 
 </manifest>

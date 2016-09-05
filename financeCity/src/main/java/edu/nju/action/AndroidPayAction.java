@@ -9,6 +9,7 @@ import edu.nju.vo.BaseVO;
 import edu.nju.vo.PayWayVO;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Sun YuHao on 2016/9/3.
@@ -24,11 +25,17 @@ public class AndroidPayAction extends AndroidAction {
     }
 
     private String getPayWayList() {
+        Map map = getRequestMap();
+
         PayWayVO payWayVO = new PayWayVO();
 
         try {
             PayService payService = ServiceManagerImpl.getInstance().getPayService();
-            List<PayWay> payWayList = payService.getPayWayList((FinanceCityUser) session.get("user"));
+
+            FinanceCityUser financeCityUser = new FinanceCityUser();
+            financeCityUser.setID((Integer)map.get("id"));
+            financeCityUser.setLoginSession((String)map.get("session"));
+            List<PayWay> payWayList = payService.getPayWayList(financeCityUser);
 
             if (payWayList == null) {
                 ErrorManager.setError(payWayVO, ErrorManager.errorDataNotFound);
@@ -37,7 +44,7 @@ public class AndroidPayAction extends AndroidAction {
                 return SUCCESS;
             }
 
-            int size = payWayList == null ? 0 :payWayList.size();
+            int size = payWayList.size();
             PayWayVO.PayWayResult[] payWayResults = new PayWayVO.PayWayResult[size];
             for (int i = 0; i < size; ++i) {
                 payWayResults[i].setPid(payWayList.get(i).getId());

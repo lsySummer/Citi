@@ -17,6 +17,10 @@ public class History {
     private BigDecimal price;
     private int productId;
 
+    public void setProductId(Integer productId) {
+        this.productId = productId;
+    }
+
     @Id
     @Column(name = "commodity_id")
     public int getCommodityId() {

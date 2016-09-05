@@ -15,6 +15,8 @@ import java.util.Map;
  */
 public class AndroidAssetAction extends AndroidAction {
     public String getHistoryVO() {
+        Map map = getRequestMap();
+
         if (!request.getMethod().equals("POST")) {
             TradeHistoryListVO tradeHistoryListVO = new TradeHistoryListVO();
             ErrorManager.setError(tradeHistoryListVO, ErrorManager.errorUnhandledMethod);
@@ -25,7 +27,10 @@ public class AndroidAssetAction extends AndroidAction {
         AssetManagementService assetManagementService = ServiceManagerImpl.getInstance().getAssetManagementService();
 
         try {
-            setResult(assetManagementService.getTradeHistory((FinanceCityUser) session.get("user")));
+            FinanceCityUser financeCityUser = new FinanceCityUser();
+            financeCityUser.setID((Integer)map.get("id"));
+            financeCityUser.setLoginSession((String)map.get("session"));
+            setResult(assetManagementService.getTradeHistory(financeCityUser));
         }
         catch (Exception e) {
             TradeHistoryListVO tradeHistoryListVO = new TradeHistoryListVO();
@@ -38,6 +43,8 @@ public class AndroidAssetAction extends AndroidAction {
     }
 
     public String getCurrentInvestmentVO() {
+        Map map = getRequestMap();
+
         if (!request.getMethod().equals("POST")) {
             CurrentInvestmentVO currentInvestmentVO = new CurrentInvestmentVO();
             ErrorManager.setError(currentInvestmentVO, ErrorManager.errorUnhandledMethod);
@@ -48,7 +55,10 @@ public class AndroidAssetAction extends AndroidAction {
         AssetManagementService assetManagementService = ServiceManagerImpl.getInstance().getAssetManagementService();
 
         try {
-            setResult(assetManagementService.getInvestProductVOList((FinanceCityUser) session.get("user")));
+            FinanceCityUser financeCityUser = new FinanceCityUser();
+            financeCityUser.setID((Integer)map.get("id"));
+            financeCityUser.setLoginSession((String)map.get("session"));
+            setResult(assetManagementService.getInvestProductVOList(financeCityUser));
         }
         catch (Exception e) {
             CurrentInvestmentVO currentInvestmentVO = new CurrentInvestmentVO();

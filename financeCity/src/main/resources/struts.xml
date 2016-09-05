@@ -111,6 +111,19 @@
 				<param name="ignoreHierarchy">false</param>
 			</result>
 		</action>
+
+		<action name="institution" class="edu.nju.action.AndroidSearchAction" method="getInstitutionList">
+			<result name="success" type="json">
+				<param name="root">result</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+
+		<action name="order" class="edu.nju.action.AndroidBuyAction" method="getOrderPrice>">
+			<result name="success" type="plainText">
+				<param name="root">resultText</param>
+			</result>
+		</action>
 	</package>
 
 	<constant name="struts.action.extension" value="," />
