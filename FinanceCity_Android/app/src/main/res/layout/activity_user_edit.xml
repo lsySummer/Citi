@@ -22,12 +22,13 @@
             android:textColor="#000000"
             android:textSize="20sp" />
 
-        <TextView
+        <EditText
             android:id="@+id/nameid"
-            android:layout_width="wrap_content"
+            android:background="@null"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="25dip"
-            android:text="S100001S"
+            android:hint="请输入用户名"
             android:textColor="#000000"
             android:textSize="20sp" />
     </LinearLayout>
@@ -50,12 +51,13 @@
             android:textColor="#000000"
             android:textSize="20sp" />
 
-        <TextView
+        <EditText
             android:id="@+id/mobile"
-            android:layout_width="wrap_content"
+            android:background="@null"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="25dip"
-            android:text="13388889999"
+            android:hint="请输入手机号"
             android:textColor="#000000"
             android:textSize="20sp" />
     </LinearLayout>
@@ -78,13 +80,14 @@
             android:textColor="#000000"
             android:textSize="20sp" />
 
-        <Button
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="25dip"
             android:gravity="center_vertical"
             android:background="#ffffff"
             android:hint="选择出生日期"
+            android:textColor="#000000"
             android:textSize="20sp"
             android:id="@+id/button" />
 
@@ -152,12 +155,13 @@
             android:textColor="#000000"
             android:textSize="20sp" />
 
-        <TextView
+        <EditText
             android:id="@+id/get_in"
-            android:layout_width="wrap_content"
+            android:background="@null"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="25dip"
-            android:text="10000"
+            android:hint="请输入收入"
             android:textColor="#000000"
             android:textSize="20sp" />
     </LinearLayout>
@@ -180,12 +184,13 @@
             android:textColor="#000000"
             android:textSize="20sp" />
 
-        <TextView
+        <EditText
             android:id="@+id/get_out"
-            android:layout_width="wrap_content"
+            android:background="@null"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="25dip"
-            android:text="2000"
+            android:hint="请输入支出"
             android:textColor="#000000"
             android:textSize="20sp" />
     </LinearLayout>
