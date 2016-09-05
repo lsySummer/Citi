@@ -12,6 +12,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -25,6 +26,7 @@ import android.widget.TextView;
 import org.apache.http.impl.conn.AbstractClientConnAdapter;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -119,72 +121,69 @@ public class ProductSearch extends Fragment implements View.OnClickListener{
 
     public void setSearch(int n)
     {
-        Key key=new Key(getActivity());
-        key.setId(R.id.key);
+
         final Choose choose=new Choose(this.getActivity());
         choose.setId(R.id.choose);
+        Key key=new Key(getActivity());
+        key.setId(R.id.key);
 
-        key.setKey_text("关键字");
         choose.setChoose_text("筛选");
-        final List<Integer> spinner2_resources=new ArrayList<Integer>();
-        spinner2_resources.add(R.array.slavery_all);
-        spinner2_resources.add(R.array.slavery_bank);
-        spinner2_resources.add(R.array.slavery_debt);
-        spinner2_resources.add(R.array.slavery_fund);
-        spinner2_resources.add(R.array.slavery_insurance);
-//            choose.setSpinner_content(R.array.master_destination,spinner2_resources);
-        choose.setSpinner1_content(R.array.master_destination);
-        choose.setSpinner1_choosed(n);
-        choose.setSpinner2_content(R.array.slavery_all);
-        choose.setOnItemSelectedListener(
-                new Spinner.OnItemSelectedListener()
-                {
-                    @Override
-                    public void onItemSelected(AdapterView<?> av, View v, int pos, long arg3)
+            choose.setSpinner1_content(R.array.master_destination);
+            choose.setSpinner1_choosed(n);
+            choose.setSpinner2_content(R.array.slavery_all);
+            choose.setOnItemSelectedListener(
+                    new Spinner.OnItemSelectedListener()
                     {
-                        choose.setSpinner1_choosed(pos);
-
-                        //修改spinner2的内容
-                        choose.setSpinner2_content(spinner2_resources.get(pos));
-
-                        //修改其他筛选器
-                        switch(pos)
+                        @Override
+                        public void onItemSelected(AdapterView<?> av, View v, int pos, long arg3)
                         {
-                            case 0:
-                                setSearchAll();
-                                break;
-                            case 1:
-                                setSearchBank();
-                                break;
-                            case 2:
-                                setSearchDebt();
-                                break;
-                            case 3:
-                                setSearchFund();
-                                break;
-                            case 4:
-                                setSearchInsurance();
-                                break;
+                            choose.setSpinner1_choosed(pos);
+
+                            //修改spinner2的内容和其他筛选器
+                            switch(pos)
+                            {
+                                case 0:
+                                    choose.setSpinner2_content(R.array.slavery_all);
+                                    setSearchAll();
+                                    break;
+                                case 1:
+                                    choose.setSpinner2_content(R.array.slavery_bank);
+                                    setSearchBank();
+                                    break;
+                                case 2:
+                                    choose.setSpinner2_content(R.array.slavery_debt);
+                                    setSearchBond();
+                                    break;
+                                case 3:
+                                    choose.setSpinner2_content(R.array.slavery_fund);
+                                    setSearchFund();
+                                    break;
+                                case 4:
+                                    choose.setSpinner2_content(R.array.slavery_insurance);
+                                    setSearchInsurance();
+                                    break;
+                            }
+                        }
+                        @Override
+                        public void onNothingSelected(AdapterView<?> arg0) {
+                            //nothing
+                        }
+                    },
+                    new Spinner.OnItemSelectedListener()
+                    {
+                        @Override
+                        public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3)
+                        {
+                            //TODO
+                        }
+                        @Override
+                        public void onNothingSelected(AdapterView<?> arg0) {
+                            //nothing
                         }
                     }
-                    @Override
-                    public void onNothingSelected(AdapterView<?> arg0) {
-                        //nothing
-                    }
-                },
-                new Spinner.OnItemSelectedListener()
-                {
-                    @Override
-                    public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3)
-                    {
-                        //TODO
-                    }
-                    @Override
-                    public void onNothingSelected(AdapterView<?> arg0) {
-                        //nothing
-                    }
-                }
-        );
+            );
+        key.setKey_text("关键字");
+
 
         product_search_filter_list_layout.addView(choose);
         product_search_filter_list_layout.addView(key);
@@ -199,18 +198,28 @@ public class ProductSearch extends Fragment implements View.OnClickListener{
         year.setId(R.id.year);
         Bar limit=new Bar(this.getActivity());
         limit.setId(R.id.limit);
-        Onoff close=new Onoff(this.getActivity());
+        final Onoff close=new Onoff(this.getActivity());
         close.setId(R.id.close);
 
         year.setBar_text("年化收益率");
             year.setStart(0);
             year.setEnd(15);
             year.setInterval(0.0001f);
+            year.setUnit("%");
         limit.setBar_text("期限");
             limit.setStart(0);
-            limit.setEnd(60);
+            limit.setEnd(60*30);
             limit.setInterval(1);
+            limit.setUnit("天");
         close.setOnoff_text("是否封闭");
+            close.setOnoff_switch(false);
+            close.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+            {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    close.setOnoff_switch(b);
+                }
+            });
 
         product_search_filter_list_layout.addView(year);
         product_search_filter_list_layout.addView(limit);
@@ -233,15 +242,39 @@ public class ProductSearch extends Fragment implements View.OnClickListener{
         advisement.setId(R.id.advisement);
         Choose incometype=new Choose(this.getActivity());
         incometype.setId(R.id.incometype);
-        Onoff close=new Onoff(this.getActivity());
+        final Onoff close=new Onoff(this.getActivity());
         close.setId(R.id.close1);
 
-        year.setBar_text("预计年利率");
+        year.setBar_text("预计年化利率");
+            year.setStart(0);
+            year.setEnd(15);
+            year.setInterval(0.0001f);
+            year.setUnit("%");
         start.setBar_text("起购金额");
+            start.setStart(0);
+            start.setEnd(1000000);
+            start.setInterval(0.0001f);
+            start.setUnit("元");
         limit.setBar_text("期限");
+            limit.setStart(0);
+            limit.setEnd(60*30);
+            limit.setInterval(1);
+            limit.setUnit("天");
         advisement.setChoose_text("管理机构");
+            advisement.setSpinner1_content(new String[]{"1","2","3"});//TODO get agents from API
+            advisement.setSpinner2Visible(View.INVISIBLE);
         incometype.setChoose_text("收益类型");
+            incometype.setSpinner1_content(R.array.bank_incometype);
+            incometype.setSpinner2Visible(View.INVISIBLE);
         close.setOnoff_text("是否封闭");
+            close.setOnoff_switch(false);
+            close.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+            {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    close.setOnoff_switch(b);
+                }
+            });
 
         product_search_filter_list_layout.addView(year);
         product_search_filter_list_layout.addView(start);
@@ -252,7 +285,7 @@ public class ProductSearch extends Fragment implements View.OnClickListener{
 
     }
 
-    public void setSearchDebt()
+    public void setSearchBond()
     {
         product_search_filter_list_layout.removeAllViews();
         setSearch(2);
@@ -267,9 +300,29 @@ public class ProductSearch extends Fragment implements View.OnClickListener{
         state.setId(R.id.state);
 
         year.setBar_text("年利率");
+            year.setStart(0);
+            year.setEnd(10);
+            year.setInterval(0.0001f);
+            year.setUnit("%");
         limit.setBar_text("期限");
+            limit.setStart(0);
+            limit.setEnd(60*30);
+            limit.setInterval(1);
+            limit.setUnit("天");
         end.setChoose_text("到期日");
+            Calendar cal= Calendar.getInstance();
+            int cal_year=cal.get(Calendar.YEAR);
+            String[] years=new String[10];
+            for(int i=0;i<10;i++)
+            {
+                years[i]=cal_year+i+"";
+            }
+            end.setSpinner1_content(years);
+            end.setSpinner2Visible(View.INVISIBLE);
         state.setChoose_text("状态");
+            state.setSpinner1_content(R.array.bond_state);
+            state.setSpinner2Visible(View.INVISIBLE);
+
 
         product_search_filter_list_layout.addView(year);
         product_search_filter_list_layout.addView(limit);
@@ -284,34 +337,42 @@ public class ProductSearch extends Fragment implements View.OnClickListener{
 
         Choose advisement=new Choose(this.getActivity());
         advisement.setId(R.id.advisement1);
-        Choose incometype=new Choose(this.getActivity());
-        incometype.setId(R.id.incometype1);
         Choose state=new Choose(this.getActivity());
         state.setId(R.id.state1);
         Bar latest=new Bar(this.getActivity());
         latest.setId(R.id.latest);
-        Onoff close=new Onoff(this.getActivity());
+        final Onoff close=new Onoff(this.getActivity());
         close.setId(R.id.close2);
-        Onoff sort=new Onoff(this.getActivity());
+        Key sort=new Key(this.getActivity());
         sort.setId(R.id.sort);
-        Choose limit=new Choose(this.getActivity());
-        limit.setId(R.id.limit3);
 
         advisement.setChoose_text("管理机构");
-        incometype.setChoose_text("目标类型");
+            advisement.setSpinner1_content(new String[]{"1","2","3"});//TODO get agents from API
+            advisement.setSpinner2Visible(View.INVISIBLE);
         state.setChoose_text("状态");
+            state.setSpinner1_content(R.array.fund_state);
+            state.setSpinner2Visible(View.INVISIBLE);
         latest.setBar_text("最新净值");
+            latest.setStart(0);
+            latest.setEnd(10);
+            latest.setInterval(0.0001f);
+            latest.setUnit("");
         close.setOnoff_text("是否封闭");
-        sort.setOnoff_text("按近X年收益率排序");
-        limit.setChoose_text("期限");
+            close.setOnoff_switch(false);
+            close.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+            {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    close.setOnoff_switch(b);
+                }
+            });
+        sort.setKey_text("按近X年收益率排序");
 
         product_search_filter_list_layout.addView(advisement);
-        product_search_filter_list_layout.addView(incometype);
         product_search_filter_list_layout.addView(state);
         product_search_filter_list_layout.addView(latest);
         product_search_filter_list_layout.addView(close);
         product_search_filter_list_layout.addView(sort);
-        product_search_filter_list_layout.addView(limit);
     }
 
     public void setSearchInsurance()
@@ -321,17 +382,29 @@ public class ProductSearch extends Fragment implements View.OnClickListener{
 
         Bar year=new Bar(this.getActivity());
         year.setId(R.id.year3);
-        Bar broadcast=new Bar(this.getActivity());
+        Choose broadcast=new Choose(this.getActivity());
         broadcast.setId(R.id.broadcast);
         Choose company=new Choose(this.getActivity());
         company.setId(R.id.company);
-        Choose value=new Choose(this.getActivity());
+        Bar value=new Bar(this.getActivity());
         value.setId(R.id.value);
 
-        year.setBar_text("年利率");
-        broadcast.setBar_text("期限");
-        company.setChoose_text("发行公司");
-        value.setChoose_text("保险产品金额");
+        year.setBar_text("年化收益率");
+            year.setStart(0);
+            year.setEnd(10);
+            year.setInterval(0.0001f);
+            year.setUnit("%");
+        broadcast.setChoose_text("保障年限");
+            broadcast.setSpinner1_content(R.array.insurance_year);
+            broadcast.setSpinner2Visible(View.INVISIBLE);
+        company.setChoose_text("产品发行公司");
+            company.setSpinner1_content(new String[]{"1","2","3"});//TODO get agents from API
+            company.setSpinner2Visible(View.INVISIBLE);
+        value.setBar_text("保险产品面额");
+            value.setStart(0);
+            value.setEnd(50000);
+            value.setInterval(1);
+            value.setUnit("元");
 
         product_search_filter_list_layout.addView(year);
         product_search_filter_list_layout.addView(broadcast);

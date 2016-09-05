@@ -4,8 +4,11 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import nju.financecity_android.R;
@@ -13,6 +16,8 @@ import com.appyvet.rangebar.RangeBar;
 
 public class Bar extends LinearLayout {
     private TextView bar_text;
+    private EditText bar_putin1;
+    private EditText bar_putin2;
 	private RangeBar bar_rangebar;
     private TextView bar_unit;
 	
@@ -44,8 +49,19 @@ public class Bar extends LinearLayout {
 
         //获取子控件
         bar_text = (TextView) findViewById(R.id.bar_text);
+        bar_putin1=(EditText) findViewById(R.id.bar_putin1);
+        bar_putin2=(EditText) findViewById(R.id.bar_putin2);
         bar_rangebar= (RangeBar) findViewById(R.id.bar_rangebar);
         bar_unit=(TextView)findViewById(R.id.bar_unit);
+
+        bar_rangebar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
+            @Override
+            public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex, int rightPinIndex, String leftPinValue, String rightPinValue) {
+                bar_putin1.setText(leftPinValue);
+                bar_putin2.setText(rightPinValue);
+            }
+        });
+
 
         //将从资源文件中加载的属性设置给子控件
 //        if (!TextUtils.isEmpty(titleText))
@@ -67,6 +83,7 @@ public class Bar extends LinearLayout {
         return bar_rangebar.onTouchEvent(event);
     }
 
+
     public void setStart(float start)
     {
         this.bar_rangebar.setTickStart(start);
@@ -82,6 +99,10 @@ public class Bar extends LinearLayout {
     public void setUnit(String unit)
     {
         this.bar_unit.setText(unit);
+    }
+    public void setLow()
+    {
+
     }
 
     public float getStart()

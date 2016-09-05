@@ -3,6 +3,7 @@ package nju.financecity_android.controller.widget;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Switch;
@@ -13,9 +14,10 @@ import nju.financecity_android.R;
 /**
  * Created by Administrator on 2016/9/4.
  */
-public class Onoff extends LinearLayout{
+public class Onoff extends LinearLayout {
     private TextView onoff_text;
     private Switch onoff_switch;
+    private boolean checked;
 
     public Onoff(Context context) {
         super(context);
@@ -40,13 +42,19 @@ public class Onoff extends LinearLayout{
         onoff_text.setText(text);
     }
 
-    public boolean getOnoff_switch()
-    {
-        return onoff_switch.getShowText();//TODO ?
-    }
-
     public void setOnoff_switch(boolean checked)
     {
+        this.checked=checked;
         onoff_switch.setChecked(checked);
+    }
+
+    public boolean getOnoff_switch()
+    {
+        return checked;
+    }
+
+    public void setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener listner)
+    {
+        onoff_switch.setOnCheckedChangeListener(listner);
     }
 }

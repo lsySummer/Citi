@@ -34,7 +34,7 @@
         <item>两全万能险</item>
     </string-array>
 
-    <string-array name="master_year">
+    <string-array name="insurance_year">
         <item>5</item>
         <item>10</item>
         <item>15</item>
@@ -44,11 +44,25 @@
         <item>终身</item>
     </string-array>
 
-    <string-array name="incometype">
+    <string-array name="bank_incometype">
         <item>所有</item>
         <item>保证收益型</item>
         <item>保本浮动收益型</item>
         <item>非保本浮动收益型</item>
+    </string-array>
+
+    <string-array name="bond_state">
+        <item>所有</item>
+        <item>发行中</item>
+        <item>已售罄</item>
+        <item>未发行</item>
+    </string-array>
+
+    <string-array name="fund_state">
+        <item>所有</item>
+        <item>申购中</item>
+        <item>认购中</item>
+        <item>已关闭</item>
     </string-array>
 
     <string-array name="master_none">

@@ -3,46 +3,70 @@
 <!--筛选条-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@+id/bar_layout"
-	android:orientation="horizontal"
+	android:orientation="vertical"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content">
 
-	<TextView
-		android:id="@+id/bar_text"
-		android:text="~~~~~~~~~~~"
-		android:textColor="@color/grey"
-		android:textSize="15dp"
+	<LinearLayout
+		android:orientation="horizontal"
 		android:layout_width="match_parent"
-		android:layout_weight="4"
-		android:layout_height="wrap_content"
-		android:layout_gravity="center_vertical"
-		android:gravity="left"/>
+		android:layout_height="wrap_content">
+		<TextView
+			android:id="@+id/bar_text"
+			android:text="~~~~~~~~~~~"
+			android:textColor="@color/grey"
+			android:textSize="15dp"
+			android:layout_width="match_parent"
+			android:layout_weight="4"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_vertical"
+			android:gravity="left"/>
+		<EditText
+			android:id="@+id/bar_putin1"
+			android:layout_width="40dp"
+			android:layout_height="wrap_content"/>
+		<View
+			android:layout_height="1dp"
+			android:background="@color/grey"
+			android:layout_width="20dp"
+			android:layout_marginTop="20dp"/>
+		<EditText
+			android:id="@+id/bar_putin2"
+			android:layout_width="40dp"
+			android:layout_height="wrap_content"/>
 
-	<com.appyvet.rangebar.RangeBar
-		xmlns:custom="http://schemas.android.com/apk/res-auto"
-		android:id="@+id/bar_rangebar"
+	</LinearLayout>
+
+	<LinearLayout
+		android:orientation="horizontal"
 		android:layout_width="match_parent"
-		android:layout_weight="1"
-		android:layout_height="80dp"
-		custom:rangeBarColor="@color/lightBlue"
-		custom:pinColor="@color/lightBlue"
-		custom:selectorColor="@color/lightBlue"
-		custom:connectingLineColor="@color/lightBlue"
-		custom:tickColor="@color/lightBlue"
-		custom:textColor="@color/white"
-		custom:tickStart="0"
-		custom:tickInterval="0.1"
-		custom:tickEnd="100"
-		android:layout_gravity="bottom"/>
+		android:layout_height="wrap_content">
+		<com.appyvet.rangebar.RangeBar
+			xmlns:custom="http://schemas.android.com/apk/res-auto"
+			android:id="@+id/bar_rangebar"
+			android:layout_width="match_parent"
+			android:layout_weight="1"
+			android:layout_height="80dp"
+			custom:rangeBarColor="@color/lightBlue"
+			custom:pinColor="@color/lightBlue"
+			custom:selectorColor="@color/lightBlue"
+			custom:connectingLineColor="@color/lightBlue"
+			custom:tickColor="@color/lightBlue"
+			custom:textColor="@color/white"
+			custom:tickStart="0"
+			custom:tickInterval="0.1"
+			custom:tickEnd="100"
+			android:layout_gravity="bottom"/>
 
-	<TextView
-		android:id="@+id/bar_unit"
-		android:text="%"
-		android:textColor="@color/grey"
-		android:textSize="20dp"
-		android:layout_width="wrap_content"
-		android:layout_height="match_parent"
-		android:gravity="bottom"/>
+		<TextView
+			android:id="@+id/bar_unit"
+			android:text="%"
+			android:textColor="@color/grey"
+			android:textSize="20dp"
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:gravity="bottom"/>
+	</LinearLayout>
 
 </LinearLayout>
 
