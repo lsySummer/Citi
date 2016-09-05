@@ -48,8 +48,7 @@
             <ImageView
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
-
-                android:src="@mipmap/PayCard"/>
+                android:src="@mipmap/paycard"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -76,8 +75,7 @@
             <ImageView
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
-
-                android:src="@mipmap/payBao"/>
+                android:src="@mipmap/paybao"/>
 
             <TextView
                 android:layout_width="wrap_content"

@@ -25,7 +25,7 @@ public class MainActivity extends Activity{
     private static Fragment productDetailFragment;//TODO
     private static Fragment investmentFragment;//TODO
     private static Assets assetsFragment;
-    private static Fragment personFragment;//TODO
+    private static Persons personFragment;//TODO
 
     private static Banner banner;
     private static LinearLayout main_mid_layout;
@@ -51,7 +51,7 @@ public class MainActivity extends Activity{
             footer.setOnClickListener(i, new View.OnClickListener() {
 
                 @Override
-                public void onClick(View v) {
+                    public void onClick(View v) {
                     MainActivity.setFragment(tempi);
                 }
             });
@@ -92,6 +92,13 @@ public class MainActivity extends Activity{
                 }
                 break;
             case 3:
+                banner.setDisplayText(footer.getText(3));
+                footer.setSelectedById(3);
+                personFragment = new Persons();
+                transaction.add(R.id.main_mid_layout,personFragment);
+                if(personFragment!=null){
+                    transaction.show(personFragment);
+                }
 //                transaction.add(R.id.,f);person TODO
                 break;
             case 4:
