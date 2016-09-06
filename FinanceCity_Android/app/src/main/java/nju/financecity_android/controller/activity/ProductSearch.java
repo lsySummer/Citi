@@ -13,6 +13,8 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.RunnableFuture;
@@ -25,6 +27,8 @@ import nju.financecity_android.controller.widget.FundSearch;
 import nju.financecity_android.controller.widget.InsuranceSearch;
 import nju.financecity_android.controller.widget.SearchResult;
 import nju.financecity_android.controller.widget.SingleSearchResult;
+import nju.financecity_android.dao.SearchDao;
+import nju.financecity_android.model.SearchProduct;
 import nju.financecity_android.vo.ProductVO;
 
 /**
@@ -161,11 +165,12 @@ public class ProductSearch extends Fragment{
 //                    public void run() {
                     /*=======================================================================================*/
                 List<ProductVO> list = new ArrayList<ProductVO>();
-                list.add(new ProductVO("1hfds001", "中国人寿", "insurance", 2.05, "这是中国人寿的分红险种"));
+                list.add(new ProductVO("1hfds001", "中国人寿", "insurance", 2.05,SearchProduct.analyse().toString()
+                ));//"这是中国人寿的分红险种"));
                 list.add(new ProductVO("s4fd70000", "稳利80", "fund", 3.57, "这是平安银行的理财产品"));
                 list.add(new ProductVO("dghesct", "万科债券", "bond", 5.67, "这是万科的企业债券"));
                 list.add(new ProductVO("wnr04bhf", "我瞎编的", "bond", 100.67, "这是一款暴利基金"));
-                list.add(new ProductVO("567uu9", "伊尔基金", "fund", 2.67, "这是平安银行的理财产品"));
+                list.add(new ProductVO("567uu9", "伊尔基金", "fund", 2.67, "这是一首简单的小~情~歌~，唱出.."));
                     /*=======================================================================================*/
 //                    }
 //                }).start();
