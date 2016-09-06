@@ -12,6 +12,8 @@ import edu.nju.vo.BondVO;
 import edu.nju.vo.FundVO;
 import edu.nju.vo.InsuranceVO;
 
+import java.math.BigDecimal;
+import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,9 +38,9 @@ public class ProductVOFactory {
             bondVO.setCode(productBond.getProductCode());
             bondVO.setLife(productBond.getLength());
             bondVO.setName(productBond.getTitle());
-            bondVO.setNominal_interest_rate(productBond.getCoupon().doubleValue());
+            bondVO.setNominal_interest_rate(getDoubleValue(productBond.getCoupon()));
             bondVO.setPid(product.getID());
-            bondVO.setYearly_interest_rate(productBond.getAdjustYearlyRate().doubleValue());
+            bondVO.setYearly_interest_rate(getDoubleValue(productBond.getAdjustYearlyRate()));
 
             poducts.add(bondVO);
         }
@@ -51,8 +53,8 @@ public class ProductVOFactory {
             bankVO.setName(productBank.getName());
             bankVO.setIncome_type(ProductCategoryManager.getBankIncomeTypeInChinese(productBank));
             bankVO.setInitial_money(productBank.getPurchaseThreshold());
-            bankVO.setOpen_date(dateFormat.format(productBank.getOnRedemptionDate()));
-            bankVO.setYearly_income_rate(productBank.getExpectedRate().doubleValue());
+            bankVO.setOpen_date(getDate(productBank.getOnRedemptionDate()));
+            bankVO.setYearly_income_rate(getDoubleValue(productBank.getExpectedRate()));
             bankVO.setProduct_type(ProductCategoryManager.getBankType(productBank));
             //TODO:check if right
             bankVO.setDistributor_bank(productBank.getCustodian());
@@ -83,14 +85,14 @@ public class ProductVOFactory {
             fundVO.setProductType("fund");
             fundVO.setPid(product.getID());
             fundVO.setName(productFund.getName());
-            fundVO.setExpected_income_rate(productFund.getYearlyRtnRate().doubleValue());
+            fundVO.setExpected_income_rate(getDoubleValue(productFund.getYearlyRtnRate()));
             fundVO.setState(ProductCategoryManager.getFundState(productFund));
-            fundVO.setNet_value(productFund.getNav().intValue());
+            fundVO.setNet_value(getIntValue(productFund.getNav()));
             fundVO.setSid(productFund.getProductCode());
             fundVO.setType(product.getCategory().getChineseName());
-            fundVO.setMng_charge_rate(productFund.getRateManage().doubleValue());
+            fundVO.setMng_charge_rate(getDoubleValue(productFund.getRateManage()));
             //TODO:set est date
-            fundVO.setEst_date(dateFormat.format(productFund.getOnPurchaseDate()));
+            fundVO.setEst_date(getDate(productFund.getOnPurchaseDate()));
 
             poducts.add(fundVO);
         }
@@ -103,5 +105,32 @@ public class ProductVOFactory {
         else {
             return poducts.toArray();
         }
+    }
+
+    private Double getDoubleValue(BigDecimal bigDecimal) {
+        if (bigDecimal == null) {
+            return null;
+        }
+        else {
+            return bigDecimal.doubleValue();
+        }
+    }
+
+    private Integer getIntValue(BigDecimal bigDecimal) {
+        if (bigDecimal == null) {
+            return null;
+        }
+        else {
+            return bigDecimal.intValue();
+        }
+    }
+
+    private String getDate(Date date) {
+        if (date == null) {
+            return null;
+        }
+
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return dateFormat.format(date);
     }
 }

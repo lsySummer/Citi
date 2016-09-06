@@ -4,6 +4,7 @@ import edu.nju.model.ProductBank;
 import edu.nju.model.ProductBond;
 import edu.nju.model.ProductFund;
 import edu.nju.model.ProductInsurance;
+import edu.nju.service.ExceptionsAndError.InvalidParametersException;
 import org.python.antlr.ast.Str;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ public class ProductCategoryManager {
     static public final String categoryBond = "Bond";
     static public final String categoryInsurance = "Insurance";
     static public final String categoryBank = "Bank";
+    static private int fundBase = 4;
     static public final int categoryNum = 13;
     static private List<Category> categoryList;
     static private final int serialNumberSize = 10000000;
@@ -108,12 +110,14 @@ public class ProductCategoryManager {
         return null;
     }
 
-   static public Integer generateProductID(Object product, String category) {
+   static public Integer generateProductID(Object product) {
+       Category category = getProductCategory(product);
+
         try {
             Class cls = Class.forName("Product" + category);
             Field field = cls.getField("id");
             int id = field.getInt(product);
-            return generateProductID(id, category);
+            return generateProductID(id, category.getCategoryName());
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -208,7 +212,42 @@ public class ProductCategoryManager {
         return null;
     }
 
+    static public Category getProductCategory(Object product) {
+        Category category;
+
+        try {
+            if (product instanceof ProductFund) {
+                ProductFund productFund = (ProductFund)product;
+
+                Byte fund_index = productFund.getCategory();
+                if (fund_index == null) {
+                    fund_index = -1;
+                }
+
+                category = getCategoryList().get(fundBase + fund_index);
+            } else if (product instanceof ProductBank) {
+                category = getCategoryByName(ProductCategoryManager.categoryBank);
+            } else if (product instanceof ProductBond) {
+                category = getCategoryByName(ProductCategoryManager.categoryBond);
+            } else if (product instanceof ProductInsurance) {
+                category = getCategoryByName(ProductCategoryManager.categoryInsurance);
+            } else {
+                throw new InvalidParametersException("generateProductID");
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            category = null;
+        }
+
+        return category;
+    }
+
     static public String getFundState(ProductFund productFund) {
+        if (productFund.getState() == null) {
+            return null;
+        }
+
         switch (productFund.getState()) {
             case 0:
                 return "申购中";
@@ -217,7 +256,7 @@ public class ProductCategoryManager {
             case 2:
                 return "已关闭";
             default:
-                return "";
+                return null;
         }
     }
 

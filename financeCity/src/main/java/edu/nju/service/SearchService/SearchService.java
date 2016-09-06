@@ -44,7 +44,7 @@ public interface SearchService extends BaseService{
      * @param keyWord .
      * @return products
      */
-    List<Product> searchProductsByKey(String keyWord);
+    List<Product> searchProductsByKey(String keyWord, String type);
 
     /**
      * search product by condition
