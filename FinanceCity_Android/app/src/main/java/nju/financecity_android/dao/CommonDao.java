@@ -29,4 +29,5 @@ public abstract class CommonDao {
         }
         return data;
     }
+
 }

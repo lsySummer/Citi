@@ -1,30 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--单个产品搜索结果单元-->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@+id/search_result_element_layout"
-	android:orientation="horizontal"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent">
+	android:layout_height="110dp"
+	android:layout_marginTop="5dp"
+	android:layout_marginBottom="5dp"
+	android:clickable="true">
 
     <!--产品名称-->
+	<ImageView
+		android:id="@+id/background"
+		android:layout_width="110dp"
+		android:layout_height="110dp"
+		android:layout_alignParentLeft="true"/>
 	<TextView
-		android:id="@+id/search_result_element_product"
-		android:text="产品"
-		android:background="@drawable/head"
+		android:id="@+id/type"
+		android:text="产品类型"
 		android:layout_height="wrap_content"
-		android:layout_width="match_parent"
+		android:layout_width="wrap_content"
 		android:layout_weight="8"
-		android:textSize="15dp"/>
+		android:textSize="18dp"
+		android:layout_alignBottom="@id/background"
+		android:layout_alignLeft="@id/background"
+		android:layout_alignRight="@id/background"
+		android:gravity="center"
+		android:layout_marginBottom="15dp"/>
+	<TextView
+		android:id="@+id/line"
+		android:text="————————"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_above="@id/type"
+		android:layout_alignLeft="@id/background"
+		android:layout_alignRight="@id/background"
+		android:layout_marginTop="-5dp"
+		android:layout_marginBottom="-5dp"
+		android:gravity="center"/>
+	<TextView
+		android:id="@+id/year_text"
+		android:text="年化收益率 %"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_above="@id/line"
+		android:layout_alignLeft="@id/background"
+		android:layout_alignRight="@id/background"
+		android:gravity="center"/>
+	<TextView
+		android:id="@+id/year_rate"
+		android:text="2.19"
+		android:textSize="25dp"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+		android:layout_alignLeft="@id/background"
+		android:layout_alignRight="@id/background"
+		android:gravity="center"
+		android:layout_above="@id/year_text"/>
 
 	<!--产品简介-->
+	<TextView
+		android:id="@+id/product"
+		android:text="产品名称"
+		android:textSize="18dp"
+		android:layout_width="wrap_content"
+		android:layout_height="30dp"
+		android:layout_toRightOf="@id/background"
+		android:gravity="left"
+		android:layout_gravity="right"
+		android:layout_marginLeft="5dp" />
     <TextView
-		android:id="@+id/search_result_element_introduction"
-		android:text="介绍。。。。。。。。。。。。。。。。。"
+		android:id="@+id/introduction"
+		android:text="介绍。。。。。。。。。。。。。。"
+		android:textColor="@color/WordBlack"
         android:layout_height="wrap_content"
-		android:layout_width="match_parent"
-		android:layout_weight="2"
+		android:layout_width="fill_parent"
         android:textSize="15dp"
+		android:layout_toRightOf="@id/background"
         android:gravity="left"
-        android:layout_gravity="right"
-        android:layout_marginLeft="10dp"/>
-</LinearLayout>
+        android:layout_alignParentBottom="true"
+		android:layout_below="@id/product"
+        android:layout_marginLeft="5dp"/>
+</RelativeLayout>

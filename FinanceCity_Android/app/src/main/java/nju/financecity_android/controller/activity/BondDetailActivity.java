@@ -3,7 +3,6 @@ package nju.financecity_android.controller.activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import nju.financecity_android.R;

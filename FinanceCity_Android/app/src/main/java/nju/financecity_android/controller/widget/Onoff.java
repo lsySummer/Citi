@@ -15,6 +15,8 @@ import nju.financecity_android.R;
  * Created by Administrator on 2016/9/4.
  */
 public class Onoff extends LinearLayout {
+    private String onoff_checked;
+
     private TextView onoff_text;
     private Switch onoff_switch;
     private boolean checked;

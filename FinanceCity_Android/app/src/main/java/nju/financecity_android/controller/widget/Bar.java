@@ -1,25 +1,33 @@
 package nju.financecity_android.controller.widget;
 
 import android.content.Context;
-import android.text.TextUtils;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import nju.financecity_android.R;
 import com.appyvet.rangebar.RangeBar;
 
-public class Bar extends LinearLayout {
+public class Bar extends RelativeLayout {
+    private String bar_name;
+    private Float bar_start;
+    private Float bar_end;
+    private Float bar_interval;
+    private String bar_unit;
+    private Float putin1_text;
+    private Float putin2_text;
+
     private TextView bar_text;
     private EditText bar_putin1;
     private EditText bar_putin2;
 	private RangeBar bar_rangebar;
-    private TextView bar_unit;
+    private TextView bar_unit_text;
 	
     public Bar(Context context) {
         super(context);
@@ -32,15 +40,21 @@ public class Bar extends LinearLayout {
         super(context, attrs);
         //加载视图的布局
         LayoutInflater.from(context).inflate(R.layout.bar, this, true);
-        onFinishInflate();
+
         //加载自定义的属性
-//        TypedArray a=context.obtainStyledAttributes(attrs,R.styleable.Header);
-//        titleText=a.getString(R.styleable.Header_titleText);
-//        titleTextColor=a.getColor(R.styleable.Header_titleTextColor, Color.WHITE);
-//        titleTextSize=a.getDimension(R.styleable.Header_titleTextSize,20f);
+        TypedArray a=context.obtainStyledAttributes(attrs,R.styleable.Bar);
+        bar_name=a.getString(R.styleable.Bar_bar_name);
+        bar_start=a.getFloat(R.styleable.Bar_bar_start,0);
+        bar_end=a.getFloat(R.styleable.Bar_bar_end,100);
+        bar_interval=a.getFloat(R.styleable.Bar_bar_interval,1);
+        bar_unit=a.getString(R.styleable.Bar_bar_unit);
+        putin1_text=a.getFloat(R.styleable.Bar_putin1_text,0);
+        putin2_text=a.getFloat(R.styleable.Bar_putin2_text,100);
 
         //回收资源，这一句必须调用
-//        a.recycle();
+        a.recycle();
+
+        onFinishInflate();
     }
 
     @Override
@@ -52,7 +66,15 @@ public class Bar extends LinearLayout {
         bar_putin1=(EditText) findViewById(R.id.bar_putin1);
         bar_putin2=(EditText) findViewById(R.id.bar_putin2);
         bar_rangebar= (RangeBar) findViewById(R.id.bar_rangebar);
-        bar_unit=(TextView)findViewById(R.id.bar_unit);
+        bar_unit_text =(TextView)findViewById(R.id.bar_unit);
+
+        bar_text.setText(bar_name);
+        bar_putin1.setText(putin1_text+"");
+        bar_putin2.setText(putin2_text+"");
+        bar_rangebar.setTickStart(bar_start);
+        bar_rangebar.setTickEnd(bar_end);
+        bar_rangebar.setTickInterval(bar_interval);
+        bar_unit_text.setText(bar_unit);
 
         bar_rangebar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
             @Override
@@ -61,13 +83,36 @@ public class Bar extends LinearLayout {
                 bar_putin2.setText(rightPinValue);
             }
         });
+        bar_putin1.setOnFocusChangeListener(new OnFocusChangeListener() {
 
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (bar_putin1.hasFocus() == false) {
+                    float leftIntIndex=Float.parseFloat(bar_putin1.getText().toString());
+                    float rightIntIndex=Float.parseFloat(bar_putin2.getText().toString());
+                    Log.i("pin", "onFocusChange: left:"+leftIntIndex+" right:"+rightIntIndex);
+                    int leftIndex=(int)(leftIntIndex/bar_rangebar.getTickInterval());
+                    int rightIndex=(int)(rightIntIndex/bar_rangebar.getTickInterval());
+                    Log.i("pin", "onFocusChange: left:"+leftIndex+" right:"+rightIndex);
+                    bar_rangebar.setRangePinsByIndices(leftIndex,rightIndex);
+                }
+            }
+        });
+        bar_putin2.setOnFocusChangeListener(new OnFocusChangeListener() {
 
-        //将从资源文件中加载的属性设置给子控件
-//        if (!TextUtils.isEmpty(titleText))
-//            setPageTitleText(titleText);
-//        setPageTitleTextColor(titleTextColor);
-//        setPageTitleTextSize(titleTextSize);
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (bar_putin2.hasFocus() == false) {
+                    float leftIntIndex=Float.parseFloat(bar_putin1.getText().toString());
+                    float rightIntIndex=Float.parseFloat(bar_putin2.getText().toString());
+                    Log.i("pin", "onFocusChange: left:"+leftIntIndex+" right:"+rightIntIndex);
+                    int leftIndex=(int)(leftIntIndex/bar_rangebar.getTickInterval());
+                    int rightIndex=(int)(rightIntIndex/bar_rangebar.getTickInterval());
+                    Log.i("pin", "onFocusChange: left:"+leftIndex+" right:"+rightIndex);
+                    bar_rangebar.setRangePinsByIndices(leftIndex,rightIndex);
+                }
+            }
+        });
 
     }
 
@@ -87,10 +132,12 @@ public class Bar extends LinearLayout {
     public void setStart(float start)
     {
         this.bar_rangebar.setTickStart(start);
+        this.bar_putin1.setText(start+"");
     }
     public void setEnd(float end)
     {
         this.bar_rangebar.setTickEnd(end);
+        this.bar_putin2.setText(end+"");
     }
     public void setInterval(float interval)
     {
@@ -98,27 +145,15 @@ public class Bar extends LinearLayout {
     }
     public void setUnit(String unit)
     {
-        this.bar_unit.setText(unit);
-    }
-    public void setLow()
-    {
-
+        this.bar_unit_text.setText(unit);
     }
 
-    public float getStart()
+    public float getMin()
     {
-        return bar_rangebar.getTickStart();
+        return Float.parseFloat(bar_putin1.getText().toString());
     }
-    public float getEnd()
+    public float getMax()
     {
-        return bar_rangebar.getTickEnd();
-    }
-    public double getInterval()
-    {
-        return bar_rangebar.getTickInterval();
-    }
-    public String getUnit()
-    {
-        return bar_unit.getText().toString();
+        return Float.parseFloat(bar_putin2.getText().toString());
     }
 }

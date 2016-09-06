@@ -24,9 +24,11 @@ import nju.financecity_android.controller.activity.MainActivity;
  * Created by st0001 on 2016/9/3.
  */
 public class Choose extends LinearLayout{
-//    public static List<Integer> spinner2_resources;
-    private String[] spinner1_content={"——"};//getResources().getStringArray(R.array.master_destination);
-    private String[] spinner2_content={"——"};//getResources().getStringArray(R.array.slavery_all);
+    private String choose_name;
+    private boolean spinner2_visible;
+
+    private String[] spinner1_content={"——"};
+    private String[] spinner2_content={"——"};
     private String spinner1_choosed;
     private String spinner2_choosed;
     private TextView choose_text;
