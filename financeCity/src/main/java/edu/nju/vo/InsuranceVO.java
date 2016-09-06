@@ -4,7 +4,6 @@ package edu.nju.vo;
  * Created by Sun YuHao on 2016/8/31.
  */
 public class InsuranceVO {
-    private Integer productId;
     private String productType;
     private Integer pid;
     private String name;
@@ -13,14 +12,6 @@ public class InsuranceVO {
     private int[] amount_in_force;
     private String way_of_charge;
     private String distributor;
-
-    public Integer getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Integer productId) {
-        this.productId = productId;
-    }
 
     public String getProductType() {
         return productType;

@@ -3,14 +3,14 @@ package nju.financecity_android.model;
 /**
  * Created by coral on 16-9-3.
  */
-public class FCBankProduct extends FCBaseProduct {
+public class ProductBank extends BaseProduct {
 
-    public FCBankProduct(String productId) {
+    public ProductBank(String productId) {
         super(productId);
     }
 
     @Override
-    protected void processDate() {
+    protected void processData() {
         String chanpinmingcheng;
         String chanpinqici;
         String guanlijigou;
@@ -73,6 +73,7 @@ public class FCBankProduct extends FCBaseProduct {
 
         mData.put("产品名称", chanpinmingcheng);
         mData.put("产品期次", chanpinqici);
+        mData.put("管理机构", guanlijigou);
         mData.put("托管机构", tuoguanjigou);
         String strYjnhsyl = String.valueOf(yujinianhuashouyilv * 100);
         if (strYjnhsyl.length() > 4) strYjnhsyl = strYjnhsyl.substring(0, 4);
@@ -126,6 +127,7 @@ public class FCBankProduct extends FCBaseProduct {
         mData.put("理财币种", licaibizhong);
         mData.put("投资范围", touzifanwei);
         mData.put("投资比例", touzibili);
+        mData.put("登记编码", dengjibianma);
         mData.put("产品编码", chanpinbianma);
         mData.put("销售区域", xiaoshouquyu);
         mData.put("运行规模上限", yunxingguimoshangxian + "亿元");

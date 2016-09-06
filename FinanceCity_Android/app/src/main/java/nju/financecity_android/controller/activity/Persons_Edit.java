@@ -1,11 +1,14 @@
 package nju.financecity_android.controller.activity;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -20,9 +23,16 @@ import nju.financecity_android.R;
 public class Persons_Edit extends Activity {
 
     private List<String> list = new ArrayList<String>();
-    private TextView myTextView;
     private Spinner mySpinner;
     private ArrayAdapter<String> adapter;
+
+    private EditText MyName;
+    private EditText Mobile;
+    private EditText GetIn;
+    private EditText GetOut;
+    private TextView button;
+
+    private String theDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,11 +40,16 @@ public class Persons_Edit extends Activity {
         setContentView(R.layout.activity_user_edit);
         initComponent();
         dealSpinner();
-
+        addListener();
     }
 
     public void initComponent(){
         mySpinner = (Spinner) findViewById(R.id.city_spinner);
+        MyName = (EditText) findViewById(R.id.nameid);
+        Mobile = (EditText) findViewById(R.id.mobile);
+        GetIn = (EditText) findViewById(R.id.get_in);
+        GetOut = (EditText) findViewById(R.id.get_out);
+        button = (TextView) findViewById(R.id.button);
 
     }
 
@@ -59,7 +74,7 @@ public class Persons_Edit extends Activity {
             }
             public void onNothingSelected(AdapterView<?> arg0) {
                 // TODO Auto-generated method stub
-                myTextView.setText("NONE");
+//                myTextView.setText("NONE");
                 arg0.setVisibility(View.VISIBLE);
             }
         });
@@ -81,6 +96,23 @@ public class Persons_Edit extends Activity {
             }
         });
 
-
     }
+
+    private void addListener(){
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                new DatePickerDialog(Persons_Edit.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+                        theDate = String.format("%d-%d-%d",year,monthOfYear+1,dayOfMonth);
+                        button.setText(theDate);
+                    }
+                },2016,9,6).show();
+            }
+        });
+    }
+
 }

@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 
 /**
- * Created by Sun YuHao on 2016/9/3.
+ * Created by Sun YuHao on 2016/9/5.
  */
 @Entity
 @Table(name = "user_temper_prefer", schema = "citi", catalog = "")
@@ -29,6 +29,9 @@ public class UserTemperPrefer {
     private Integer id;
     private BigDecimal riskToleranceMax;
     private BigDecimal expectedProfitMax;
+    private BigDecimal money;
+    private BigDecimal riskViolence;
+    private BigDecimal stopProfit;
 
     @Id
     @Column(name = "user_id")
@@ -220,6 +223,36 @@ public class UserTemperPrefer {
         this.expectedProfitMax = expectedProfitMax;
     }
 
+    @Basic
+    @Column(name = "money")
+    public BigDecimal getMoney() {
+        return money;
+    }
+
+    public void setMoney(BigDecimal money) {
+        this.money = money;
+    }
+
+    @Basic
+    @Column(name = "risk_violence")
+    public BigDecimal getRiskViolence() {
+        return riskViolence;
+    }
+
+    public void setRiskViolence(BigDecimal riskViolence) {
+        this.riskViolence = riskViolence;
+    }
+
+    @Basic
+    @Column(name = "stop_profit")
+    public BigDecimal getStopProfit() {
+        return stopProfit;
+    }
+
+    public void setStopProfit(BigDecimal stopProfit) {
+        this.stopProfit = stopProfit;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -256,6 +289,9 @@ public class UserTemperPrefer {
             return false;
         if (expectedProfitMax != null ? !expectedProfitMax.equals(that.expectedProfitMax) : that.expectedProfitMax != null)
             return false;
+        if (money != null ? !money.equals(that.money) : that.money != null) return false;
+        if (riskViolence != null ? !riskViolence.equals(that.riskViolence) : that.riskViolence != null) return false;
+        if (stopProfit != null ? !stopProfit.equals(that.stopProfit) : that.stopProfit != null) return false;
 
         return true;
     }
@@ -281,41 +317,9 @@ public class UserTemperPrefer {
         result = 31 * result + (id != null ? id.hashCode() : 0);
         result = 31 * result + (riskToleranceMax != null ? riskToleranceMax.hashCode() : 0);
         result = 31 * result + (expectedProfitMax != null ? expectedProfitMax.hashCode() : 0);
+        result = 31 * result + (money != null ? money.hashCode() : 0);
+        result = 31 * result + (riskViolence != null ? riskViolence.hashCode() : 0);
+        result = 31 * result + (stopProfit != null ? stopProfit.hashCode() : 0);
         return result;
-    }
-
-    private BigDecimal money;
-
-    @Basic
-    @Column(name = "money")
-    public BigDecimal getMoney() {
-        return money;
-    }
-
-    public void setMoney(BigDecimal money) {
-        this.money = money;
-    }
-
-    private BigDecimal riskViolence;
-
-    @Basic
-    @Column(name = "risk_violence")
-    public BigDecimal getRiskViolence() {
-        return riskViolence;
-    }
-
-
-    public void setRiskViolence(BigDecimal riskViolence) {
-        this.riskViolence = riskViolence;
-    }    private BigDecimal stopProfit;
-
-    @Basic
-    @Column(name = "stop_profit")
-    public BigDecimal getStopProfit() {
-        return stopProfit;
-    }
-
-    public void setStopProfit(BigDecimal stopProfit) {
-        this.stopProfit = stopProfit;
     }
 }

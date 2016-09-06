@@ -5,17 +5,16 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
- * Created by Sun YuHao on 2016/8/31.
+ * Created by Sun YuHao on 2016/9/5.
  */
 @Entity
 @Table(name = "invest_status", schema = "citi", catalog = "")
 public class InvestStatus {
     private int userId;
-    private Integer amount;
-    private BigDecimal buyingPrice;
     private int productId;
-    private BigDecimal totalValue;
     private Timestamp date;
+    private BigDecimal tradingVolume;
+    private BigDecimal nav;
 
     @Id
     @Column(name = "user_id")
@@ -25,26 +24,6 @@ public class InvestStatus {
 
     public void setUserId(int userId) {
         this.userId = userId;
-    }
-
-    @Basic
-    @Column(name = "amount")
-    public Integer getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Integer amount) {
-        this.amount = amount;
-    }
-
-    @Basic
-    @Column(name = "buying_price")
-    public BigDecimal getBuyingPrice() {
-        return buyingPrice;
-    }
-
-    public void setBuyingPrice(BigDecimal buyingPrice) {
-        this.buyingPrice = buyingPrice;
     }
 
     @Basic
@@ -58,16 +37,6 @@ public class InvestStatus {
     }
 
     @Basic
-    @Column(name = "total_value")
-    public BigDecimal getTotalValue() {
-        return totalValue;
-    }
-
-    public void setTotalValue(BigDecimal totalValue) {
-        this.totalValue = totalValue;
-    }
-
-    @Basic
     @Column(name = "date")
     public Timestamp getDate() {
         return date;
@@ -75,6 +44,26 @@ public class InvestStatus {
 
     public void setDate(Timestamp date) {
         this.date = date;
+    }
+
+    @Basic
+    @Column(name = "trading_volume")
+    public BigDecimal getTradingVolume() {
+        return tradingVolume;
+    }
+
+    public void setTradingVolume(BigDecimal tradingVolume) {
+        this.tradingVolume = tradingVolume;
+    }
+
+    @Basic
+    @Column(name = "NAV")
+    public BigDecimal getNav() {
+        return nav;
+    }
+
+    public void setNav(BigDecimal nav) {
+        this.nav = nav;
     }
 
     @Override
@@ -86,10 +75,10 @@ public class InvestStatus {
 
         if (userId != that.userId) return false;
         if (productId != that.productId) return false;
-        if (amount != null ? !amount.equals(that.amount) : that.amount != null) return false;
-        if (buyingPrice != null ? !buyingPrice.equals(that.buyingPrice) : that.buyingPrice != null) return false;
-        if (totalValue != null ? !totalValue.equals(that.totalValue) : that.totalValue != null) return false;
         if (date != null ? !date.equals(that.date) : that.date != null) return false;
+        if (tradingVolume != null ? !tradingVolume.equals(that.tradingVolume) : that.tradingVolume != null)
+            return false;
+        if (nav != null ? !nav.equals(that.nav) : that.nav != null) return false;
 
         return true;
     }
@@ -97,11 +86,10 @@ public class InvestStatus {
     @Override
     public int hashCode() {
         int result = userId;
-        result = 31 * result + (amount != null ? amount.hashCode() : 0);
-        result = 31 * result + (buyingPrice != null ? buyingPrice.hashCode() : 0);
         result = 31 * result + productId;
-        result = 31 * result + (totalValue != null ? totalValue.hashCode() : 0);
         result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + (tradingVolume != null ? tradingVolume.hashCode() : 0);
+        result = 31 * result + (nav != null ? nav.hashCode() : 0);
         return result;
     }
 }

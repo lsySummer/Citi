@@ -1,10 +1,12 @@
 package nju.financecity_android.controller.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.TextView;
 import nju.financecity_android.R;
+import nju.financecity_android.model.ProductFund;
 import nju.financecity_android.vo.PropertyVO;
 
 import java.util.ArrayList;
@@ -19,23 +21,24 @@ public class FundDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fund_detail);
         initComponents();
+
+        Intent intent = getIntent();
+        String productId = intent.getStringExtra("productId");
+        Map data = (new ProductFund(productId)).getProperties();
+        processData(data);
     }
 
-    protected void setHeaderInfo(String productName, double interestRate, int netValue, String state) {
-        String strInterestRate = String.valueOf(interestRate * 100);
-        if (strInterestRate.length() > 4) {
-            strInterestRate = strInterestRate.substring(0, 4) + "%";
-        }
-        txtInterestRate.setText(strInterestRate);
+    protected void setHeaderInfo(String productName, String interestRate, String netValue, String state) {
+        txtInterestRate.setText(interestRate);
         txtPrdtName.setText(productName);
-        txtNewestNetValue.setText(String.valueOf(netValue));
+        txtNewestNetValue.setText(netValue);
         txtState.setText(state);
     }
 
     private void processData(Map data) {
         String productName = data.get("法定名称").toString();
-        double interestRate = Double.parseDouble(data.get("近一年收益率").toString());
-        int netValue = Integer.parseInt(data.get("最新净值").toString());
+        String interestRate = data.get("近一年收益率").toString();
+        String netValue = data.get("最新净值").toString();
         String state = data.get("状态").toString();
         setHeaderInfo(productName, interestRate, netValue, state);
 
@@ -84,7 +87,7 @@ public class FundDetailActivity extends AppCompatActivity {
     private void initComponents() {
         txtInterestRate = (TextView) findViewById(R.id.txtInterestRate);
         txtPrdtName = (TextView) findViewById(R.id.txtPdtName);
-        txtNewestNetValue = (TextView) findViewById(R.id.txtNewestNetValue);
+        txtNewestNetValue = (TextView) findViewById(R.id.txtGAge);
         txtState = (TextView) findViewById(R.id.txtLength);
         listProperties = (ListView) findViewById(R.id.listProperties);
     }
