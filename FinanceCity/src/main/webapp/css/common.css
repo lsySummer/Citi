@@ -1,5 +1,11 @@
 body {
     background-color: #dddddd;
+    font-family:
+            "Pingfang SC", "Open Sans",
+            "Lantinghei SC", "Microsoft Yahei Light",
+            "Microsoft Yahei", "Helvetica Neue",
+            Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-weight: lighter;
 }
 
 html, body, h1, h2, h3, h4, h5, h6, li, ul, p, a, img, label {
@@ -8,14 +14,17 @@ html, body, h1, h2, h3, h4, h5, h6, li, ul, p, a, img, label {
     border: 0;
     /*color: rgba(0,0,0,0.6);*/
     font-size: 14px;
+    text-decoration: none;
+    list-style: none;
+}
+
+input,button,select{
     font-family:
             "Pingfang SC", "Open Sans",
             "Lantinghei SC", "Microsoft Yahei Light",
             "Microsoft Yahei", "Helvetica Neue",
             Helvetica, Arial, "Lucida Grande", sans-serif;
     font-weight: lighter;
-    text-decoration: none;
-    list-style: none;
 }
 
 .main-content {

@@ -13,8 +13,9 @@
 %>
   <title>InvestGO</title>
  <base href="<%=basePath%>">
-<link href="${basePath}css/order.css" rel="stylesheet">
-<link href="${basePath}css/mycss.css" rel="stylesheet">
+    <link href="${basePath}css/common.css" rel="stylesheet">
+    <link href="${basePath}css/order.css" rel="stylesheet">
+    <link href="${basePath}css/mycss.css" rel="stylesheet">
 
  <title>InvestGO</title>
 </head>
