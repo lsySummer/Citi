@@ -18,19 +18,29 @@
 
 		<activity android:name=".controller.activity.Log_inActivity">
 			<!--<intent-filter>-->
-				<!--<action android:name="android.intent.action.MAIN"/>-->
+			<!--<action android:name="android.intent.action.MAIN"/>-->
 
-				<!--<category android:name="android.intent.category.LAUNCHER"/>-->
+			<!--<category android:name="android.intent.category.LAUNCHER"/>-->
 			<!--</intent-filter>-->
 		</activity>
 		<activity android:name=".controller.activity.RegisterActivity">
 		</activity>
 
 		<activity android:name=".controller.activity.BankDetailActivity">
+
 		</activity>
 		<activity android:name=".controller.activity.FundDetailActivity">
 		</activity>
 		<activity android:name=".controller.activity.BondDetailActivity">
+		</activity>
+		<activity android:name=".controller.activity.Persons_Edit">
+			<!--<intent-filter>-->
+				<!--<action android:name="android.intent.action.MAIN"/>-->
+
+				<!--<category android:name="android.intent.category.LAUNCHER"/>-->
+			<!--</intent-filter>-->
+		</activity>
+		<activity android:name=".controller.activity.InsuranceDetailActivity">
 		</activity>
 	</application>
 

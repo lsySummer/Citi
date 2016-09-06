@@ -30,12 +30,6 @@ public class Investment extends Fragment {
         thisView = getView();
 
         initComponents();
-
-        // 测试代码
-        ProductInfo pinfo = new ProductInfo("某个理财产品", Calendar.getInstance().getTime(), Calendar.getInstance().getTime(), Calendar.getInstance().getTime(), 1, 2);
-        ArrayList<ProductInfo> infos = new ArrayList<>();
-        infos.add(pinfo);infos.add(pinfo);infos.add(pinfo);infos.add(pinfo);
-        setProductListData(infos);
     }
 
     private void initComponents() {

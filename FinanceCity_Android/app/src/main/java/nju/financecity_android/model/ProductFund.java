@@ -3,14 +3,14 @@ package nju.financecity_android.model;
 /**
  * Created by coral on 16-9-3.
  */
-public class FCFundProduct extends FCBaseProduct {
+public class ProductFund extends BaseProduct {
 
-    public FCFundProduct(String productId) {
+    public ProductFund(String productId) {
         super(productId);
     }
 
     @Override
-    protected void processDate() {
+    protected void processData() {
         String fadingmingcheng;
         String jijinbianhao;
         String guanlijigou;
