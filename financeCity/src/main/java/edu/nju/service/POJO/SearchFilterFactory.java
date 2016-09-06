@@ -13,6 +13,7 @@ import org.python.antlr.ast.Str;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,22 +22,22 @@ import java.util.Map;
  */
 public class SearchFilterFactory {
     static public ProductFilter createFilter(String type, Map map) throws InvalidParametersException {
-        if (type.equals("bond")) {
-            return createBondFilter(map);
+        try {
+            if (type.equals("bond")) {
+                return createBondFilter(map);
+            } else if (type.equals("bank")) {
+                return createBankFilter(map);
+            } else if (ProductCategoryManager.belongTo(type, ProductCategoryManager.categoryFund)) {
+                return createFundFilter(map);
+            } else if (type.equals("insurance")) {
+                return createInsurance(map);
+            } else if (type.equals("all")) {
+                return createAllFilter(map);
+            } else {
+                throw new InvalidParametersException("createFilter(" + type + ")");
+            }
         }
-        else if (type.equals("bank")) {
-            return createBankFilter(map);
-        }
-        else if (type.equals("fund")) {
-            return createFundFilter(map);
-        }
-        else if (type.equals("insurance")) {
-            return createInsurance(map);
-        }
-        else if (type.equals("all")) {
-            return createAllFilter(map);
-        }
-        else {
+        catch (Exception e) {
             throw new InvalidParametersException("createFilter(" + type + ")");
         }
     }
@@ -212,6 +213,10 @@ public class SearchFilterFactory {
 
         try {
             Map option = (Map)map.get("options");
+            if (option == null) {
+                option = new HashMap();
+            }
+
             List<String> list = (List<String>)option.get("expiration");
             init_arrary(list, expiration);
 
