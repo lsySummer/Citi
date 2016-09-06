@@ -8,6 +8,7 @@
 
 <script src="../js/jquery.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
+<link href="../css/common.css" rel="stylesheet">
 <link href="../css/order.css" rel="stylesheet">
 <link href="../css/mycss.css" rel="stylesheet">
 </head>
@@ -41,7 +42,7 @@
 					</div>
 					<div class="modal-body" style="">
 						<div style="height: 180px;">
-							<div class="product-bigicon icon-manage">
+							<div class="product-bigicon bank-circle">
 								<span style="font-size: 35px"><b>2.95</b></span><br /> <span
 									style="font-size: 8px;">年化收益率</span>
 								<hr class="line" />
@@ -161,7 +162,7 @@
 				</div>
 				<div class="modal-body" style="">
 					<div style="height: 180px;">
-						<div class="product-bigicon icon-bond">
+						<div class="product-bigicon bond-circle">
 							<span style="font-size: 35px"><b>7.00</b></span><br /> <span
 								style="font-size: 8px;">年利率</span>
 							<hr class="line" />
@@ -267,7 +268,7 @@
 				</div>
 				<div class="modal-body" style="">
 					<div style="height: 180px;">
-						<div class="product-bigicon icon-bond">
+						<div class="product-bigicon bond-circle">
 							<span style="font-size: 35px"><b>7.00</b></span><br /> <span
 								style="font-size: 8px;">年利率</span>
 							<hr class="line" />
@@ -381,7 +382,7 @@
 				</div>
 				<div class="modal-body" style="">
 					<div style="height: 180px;">
-						<div class="product-bigicon icon-fund">
+						<div class="product-bigicon fund-circle">
 							<span style="font-size: 35px"><b>2.95</b></span><br /> <span
 								style="font-size: 8px;">收益率</span>
 							<hr class="line" />
@@ -491,7 +492,7 @@
 				</div>
 				<div class="modal-body" style="">
 					<div style="height: 180px;">
-						<div class="product-bigicon icon-insurance">
+						<div class="product-bigicon insurance-circle">
 							<span style="font-size: 35px"><b>12.95</b></span><br /> <span
 								style="font-size: 8px;">预计收益率</span>
 							<hr class="line" />

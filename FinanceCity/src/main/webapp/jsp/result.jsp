@@ -172,7 +172,7 @@
         <s:set name="size" value="#size+1"/>
         <s:if test="#product.distributor_bank!=null">
             <div class="product bank-financing" data-toggle="modal" data-target="#myModal">
-                <div class="circle">
+                <div class="bank-circle circle">
                     <h1><s:property value="#product.yearly_income_rate"/></h1>
                     <h4>年化收益率</h4>
                     <hr>
@@ -206,7 +206,7 @@
         </s:if>
         <s:elseif test="#product.mng_charge_rate!=null">
             <div class="product fund" data-toggle="modal" data-target="#myModal">
-                <div class="circle">
+                <div class="fund-circle circle">
                     <h1><s:property value="#product.expected_income_rate"/></h1>
                     <h4>收益率</h4>
                     <hr>
@@ -244,7 +244,7 @@
         </s:elseif>
         <s:elseif test="#product.insurance_life!=null">
             <div class="product insurance" data-toggle="modal" data-target="#myModal">
-                <div class="circle">
+                <div class="insurance-circle circle">
                     <h1><s:property value="#product.expected_income_rate"/></h1>
                     <h4>收益率</h4>
                     <hr>
@@ -278,7 +278,7 @@
         </s:elseif>
         <s:elseif test="#product.nominal_interest_rate!=null">
             <div class="product bond" data-toggle="modal" data-target="#myModal">
-                <div class="circle">
+                <div class="bond-circle circle">
                     <h1><s:property value="#product.yearly_interest_rate"/></h1>
                     <h4>收益率</h4>
                     <hr>

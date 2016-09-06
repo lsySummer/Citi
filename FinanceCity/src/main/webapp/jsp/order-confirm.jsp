@@ -7,6 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <title>订单信息确认</title>
+    <link href="../css/common.css" rel="stylesheet">
     <link href="../css/order.css" rel="stylesheet">
 </head>
 <body>
@@ -45,7 +46,7 @@
                     </tr>
                     <tr class="current">
                         <td>
-                            <div class="product-icon icon-manage">理</div>
+                            <div class="product-icon bank-circle">理</div>
                             <div class="product-title">
                                 <span class="main-title">稳赚利38天</span>
                                 </br>
@@ -62,7 +63,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <div class="product-icon icon-fund">基</div>
+                            <div class="product-icon fund-circle">基</div>
                             <div class="product-title">
                                 <span class="main-title">稳赚利38天</span>
                                 </br>
@@ -79,7 +80,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <div class="product-icon icon-insurance">保</div>
+                            <div class="product-icon insurance-circle">保</div>
                             <div class="product-title">
                                 <span class="main-title">稳赚利38天</span>
                                 </br>
@@ -96,7 +97,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <div class="product-icon icon-bond">债</div>
+                            <div class="product-icon bond-circle">债</div>
                             <div class="product-title">
                                 <span class="main-title">稳赚利38天</span>
                                 </br>
