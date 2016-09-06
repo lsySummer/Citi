@@ -112,25 +112,25 @@ label.line {
     border-bottom: 2px solid rgb(255, 150, 53);
 }
 
-.bank-financing .circle{
-    background-color: rgb(255, 206, 0);
-    box-shadow: 0px 0px 8px rgba(255, 206, 0, 0.7);
-}
+/*.bank-financing .circle{*/
+    /*background-color: rgb(255, 206, 0);*/
+    /*box-shadow: 0px 0px 8px rgba(255, 206, 0, 0.7);*/
+/*}*/
 
-.fund .circle {
-    background-color: rgb(255, 37, 122);
-    box-shadow: 0px 0px 8px rgba(255, 37, 122, 0.7);
-}
+/*.fund .circle {*/
+    /*background-color: rgb(255, 37, 122);*/
+    /*box-shadow: 0px 0px 8px rgba(255, 37, 122, 0.7);*/
+/*}*/
 
-.insurance .circle {
-    background-color: rgb(211, 0, 255);
-    box-shadow: 0px 0px 8px rgba(211, 0, 255, 0.7);
-}
+/*.insurance .circle {*/
+    /*background-color: rgb(211, 0, 255);*/
+    /*box-shadow: 0px 0px 8px rgba(211, 0, 255, 0.7);*/
+/*}*/
 
-.bond .circle {
-    background-color: rgb(255, 150, 53);
-    box-shadow: 0px 0px 8px rgba(255, 150, 53, 0.7);
-}
+/*.bond .circle {*/
+    /*background-color: rgb(255, 150, 53);*/
+    /*box-shadow: 0px 0px 8px rgba(255, 150, 53, 0.7);*/
+/*}*/
 
 .circle {
     width: 147px;
@@ -142,25 +142,25 @@ label.line {
     text-align: center;
 }
 
-.bank-financing .circle.empty-circle {
-    background: none;
-    color: rgb(255, 206, 0);
-}
+/*.bank-financing .circle.empty-circle {*/
+    /*background: none;*/
+    /*color: rgb(255, 206, 0);*/
+/*}*/
 
-.fund .circle.empty-circle {
-    background: none;
-    color: rgb(255, 37, 122);
-}
+/*.fund .circle.empty-circle {*/
+    /*background: none;*/
+    /*color: rgb(255, 37, 122);*/
+/*}*/
 
-.insurance .circle.empty-circle {
-    background: none;
-    color: rgb(211, 0, 255);
-}
+/*.insurance .circle.empty-circle {*/
+    /*background: none;*/
+    /*color: rgb(211, 0, 255);*/
+/*}*/
 
-.bond .circle.empty-circle {
-    background: none;
-    color: rgb(255, 150, 53);
-}
+/*.bond .circle.empty-circle {*/
+    /*background: none;*/
+    /*color: rgb(255, 150, 53);*/
+/*}*/
 
 .circle h1 {
     font-size: 38px;

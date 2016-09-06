@@ -75,6 +75,7 @@ p {
 
 .main {
     width: 100%;
+    padding-top: 60px;
     /*height: 600px;*/
 }
 /* top bar */
@@ -174,6 +175,16 @@ table button {
     cursor: pointer;
     background-color: #fff;
     border-radius: 3px;
+}
+
+table input[type=text]{
+    width: 40px;
+    height: 20px;
+    padding: 2px;
+    color: #707070;
+    font-size: 0.75rem;
+    font-family: "Microsoft YaHei";
+    outline: 0;
 }
 
 .order-info-confirm tr .product-section {

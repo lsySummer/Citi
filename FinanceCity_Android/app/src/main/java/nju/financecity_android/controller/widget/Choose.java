@@ -24,9 +24,11 @@ import nju.financecity_android.controller.activity.MainActivity;
  * Created by st0001 on 2016/9/3.
  */
 public class Choose extends LinearLayout{
-//    public static List<Integer> spinner2_resources;
-    private String[] spinner1_content={"——"};//getResources().getStringArray(R.array.master_destination);
-    private String[] spinner2_content={"——"};//getResources().getStringArray(R.array.slavery_all);
+    private String choose_name;
+    private boolean spinner2_visible;
+
+    private String[] spinner1_content={"——"};
+    private String[] spinner2_content={"——"};
     private String spinner1_choosed;
     private String spinner2_choosed;
     private TextView choose_text;
@@ -34,6 +36,11 @@ public class Choose extends LinearLayout{
     private ArrayAdapter spinner1_adapter;
     private Spinner choose_spinner2;
     private ArrayAdapter spinner2_adapter;
+
+    public void setSpinner2Visible(int visible)
+    {
+        choose_spinner2.setVisibility(visible);
+    }
 
     public Choose(Context context) {
         super(context);
@@ -67,17 +74,6 @@ public class Choose extends LinearLayout{
         choose_text.setText(text);
     }
 
-//    public void setSpinner_content(int master_resource,List<Integer> slavery_resources)
-//    {
-//        this.spinner1_content=getResources().getStringArray(master_resource);
-//        spinner1_adapter=new ArrayAdapter<String>(getContext(),R.layout.spinner_element,spinner1_content);
-//        choose_spinner1.setAdapter(spinner1_adapter);
-//
-//        spinner2_resources=slavery_resources;
-//        spinner2_content=getResources().getStringArray(slavery_resources.get(0));
-//        spinner2_adapter=new ArrayAdapter<String>(getContext(),R.layout.spinner_element,spinner2_content);
-//        choose_spinner2.setAdapter(spinner2_adapter);
-//    }
 
     public void setSpinner1_content(int master_resource)
     {
@@ -85,10 +81,23 @@ public class Choose extends LinearLayout{
         spinner1_adapter=new ArrayAdapter<String>(getContext(),R.layout.spinner_element,spinner1_content);
         choose_spinner1.setAdapter(spinner1_adapter);
     }
+    public void setSpinner1_content(String[] master_content)
+    {
+        this.spinner1_content=master_content;
+        spinner1_adapter=new ArrayAdapter<String>(getContext(),R.layout.spinner_element,spinner1_content);
+        choose_spinner1.setAdapter(spinner1_adapter);
+    }
 
     public void setSpinner2_content(int slavery_resource)
     {
         spinner2_content=getResources().getStringArray(slavery_resource);
+        spinner2_adapter=new ArrayAdapter<String>(getContext(),R.layout.spinner_element,spinner2_content);
+        choose_spinner2.setAdapter(spinner2_adapter);
+    }
+
+    public void setSpinner2_content(String[] master_content)
+    {
+        this.spinner2_content=master_content;
         spinner2_adapter=new ArrayAdapter<String>(getContext(),R.layout.spinner_element,spinner2_content);
         choose_spinner2.setAdapter(spinner2_adapter);
     }
