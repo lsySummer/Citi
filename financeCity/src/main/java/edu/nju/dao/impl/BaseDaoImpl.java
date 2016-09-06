@@ -2,6 +2,7 @@ package edu.nju.dao.impl;
 
 import java.util.List;
 
+import edu.nju.dao.UserDao;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -12,7 +13,7 @@ import edu.nju.dao.BaseDao;
 
 
 @Repository
-public class BaseDaoImpl implements BaseDao {
+public class BaseDaoImpl implements BaseDao, CommonDao, UserDao {
 	/** * Autowired 自动装配 相当于get() set() */
 	@Autowired
 	protected SessionFactory sessionFactory;
@@ -150,4 +151,9 @@ public class BaseDaoImpl implements BaseDao {
 		return session.createQuery(queryString).setParameter(0, uname).setParameter(1, pass).list();
 	}
 
+	@Override
+	public void query(String query) {
+		Session session = getSession();
+		session.createQuery(query);
+	}
 }

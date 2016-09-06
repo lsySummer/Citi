@@ -1,40 +1,50 @@
 package edu.nju.service.UserService;
 
 import edu.nju.dao.BaseDao;
-import edu.nju.dao.impl.BaseDaoImpl;
+import edu.nju.dao.UserDao;
+import edu.nju.dao.impl.CommonDao;
+import edu.nju.model.User;
+import edu.nju.model.UserLogin;
+import edu.nju.model.UserTemperPrefer;
 import edu.nju.service.BaseService.BaseServiceAdaptor;
-import edu.nju.service.Exceptions.InvalidAPINameException;
-import edu.nju.service.Exceptions.NotLoginException;
-import edu.nju.service.POJO.Online;
+import edu.nju.service.ExceptionsAndError.*;
 import edu.nju.service.POJO.RegisterInfo;
-import edu.nju.service.POJO.UserInfo;
+import edu.nju.service.Sessions.FinanceCityUser;
+import edu.nju.vo.UserVO;
+import org.python.antlr.ast.Str;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.util.DigestUtils;
 
-import java.lang.reflect.Method;
-import java.util.ArrayList;
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
  * Created by Sun YuHao on 2016/7/25.
  */
+@Service
 public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
-    private Long ID;
-    private String loginID;
-    private boolean loginState;
+    @Autowired
     private BaseDao DAO;
 
-    public UserServiceImpl() {
-        DAO = new BaseDaoImpl();
-    }
-
     @Override
-    public Long register(RegisterInfo regInfo) {
+    public FinanceCityUser register(RegisterInfo regInfo) {
         return null;
     }
 
     @Override
-    public Long login(String userName, String password) {
+    public FinanceCityUser login(String userName, String password) {
         /** match username and password */
-        List list = DAO.login("SELECT id FROM User user WHERE user.username=? AND user.password=?", userName, password);
+        List list;
+        if (validMobile(userName)) {
+            list = DAO.login("FROM User user WHERE user.phone=? AND user.password=?", userName, password);
+        }
+        else {
+            list = DAO.login("FROM User user WHERE user.username=? AND user.password=?", userName, password);
+        }
 
         /** if login failed */
         if (list == null || list.size() == 0) {
@@ -42,23 +52,42 @@ public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
         }
         /** if succeed */
         else {
-            ID = (Long)list.get(0);
+            User user = (User)list.get(0);
+            FinanceCityUser financeCityUser = new FinanceCityUser();
+            financeCityUser.setID(user.getId());
             /** online */
-            DAO.save(new Online(ID));
-            loginState = true;
+            UserLogin userLogin = new UserLogin();
+            userLogin.setUserId(financeCityUser.getID());
+            userLogin.setDate(new Timestamp(System.currentTimeMillis()));
 
-            return ID;
+            String session = MD5_32(userName + userLogin.getDate().toString());
+            financeCityUser.setLoginSession(session);
+            userLogin.setSession(session);
+            DAO.saveOrUpdate(userLogin);
+
+            String nickname = user.getUsername();
+            financeCityUser.setUserName(nickname);
+
+            return financeCityUser;
         }
     }
 
     @Override
-    public boolean logout() {
-        ID = null;
-        loginState = false;
-
+    public boolean logout(FinanceCityUser financeCityUser) {
         /** not online */
         try {
-            getUserDao().delete(new Online(ID));
+            int id = financeCityUser.getID();
+            String session = financeCityUser.getLoginSession();
+            List list = DAO.find("FROM UserLogin userLogin WHERE userLogin.userId=" + id +
+            " AND userLogin.session='" + session + "'");
+            UserLogin userLogin = (UserLogin)list.get(0);
+            if (userLogin != null) {
+                getUserDao(financeCityUser).delete(userLogin);
+                financeCityUser.setID(null);
+            }
+            else {
+                return false;
+            }
         }
         catch (NotLoginException n) {
             n.printStackTrace();
@@ -68,42 +97,170 @@ public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
     }
 
     @Override
-    public boolean isLogin() {
-        if (!loginState) {
+    public boolean isLogin(FinanceCityUser financeCityUser) {
+        try {
+            List list = DAO.find("SELECT session FROM UserLogin userLogin WHERE userLogin.userId=" + financeCityUser.getID());
+            /** weather login id is the same as the one in database*/
+            return (financeCityUser.getLoginSession().equals(list.get(0)));
+        }
+        catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public UserVO getUserVO(FinanceCityUser financeCityUser){
+        UserVO userVO = new UserVO();
 
         try {
-            List list = DAO.find("SELECT loginID FROM UserLogin userLogin WHERE userLogin.id=" + getID());
-            /** weather login id is the same as the one in database*/
-            return (loginID.equals((String) list.get(0)));
+            int id = financeCityUser.getID();
+            List list = getUserDao(financeCityUser).find("FROM User u WHERE u.id=" + id);
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            User user = (User) list.get(0);
+
+            if (user.getIfCity() == null) {
+                userVO.setUrben(null);
+            }
+            else {
+                userVO.setUrben(user.getIfCity() == 1);
+            }
+            userVO.setId(user.getId());
+            userVO.setMobile(user.getPhone());
+            userVO.setIncome(user.getIncome());
+            userVO.setUsername(user.getUsername());
+            if (user.getBirthday() == null) {
+                userVO.setBirthday(null);
+            }
+            else {
+                userVO.setBirthday(dateFormat.format(user.getBirthday()));
+            }
+            userVO.setExpense(user.getMonthlyExpense());
+            ErrorManager.setError(userVO, ErrorManager.errorNormal);
         }
-        catch (NotLoginException n) {
-            return false;
+        catch (Exception e) {
+            ErrorManager.setError(userVO, ErrorManager.errorNotLogin);
+            e.printStackTrace();
         }
+
+        return userVO;
     }
 
     @Override
-    public boolean modifyUserInfo(UserInfo userInfo) {
-        return false;
-    }
+    public void modifyUserInfo(UserVO userVO, FinanceCityUser financeCityUser) throws NotLoginException {
+        List list = getUserDao(financeCityUser).find("FROM User u WHERE u.id=" + financeCityUser.getID());
+        User user = (User) list.get(0);
 
-    @Override
-    public Long getID() throws NotLoginException {
-        if (ID == null) {
-            throw new NotLoginException();
+        user.setUpdateAt(new Timestamp(System.currentTimeMillis()));
+        user.setBirthday(Date.valueOf(userVO.getBirthday()));
+        if (userVO.getUrben() == null) {
+            user.setIfCity(null);
         }
+        else {
+            user.setIfCity(userVO.getUrben() ? (byte)0 : 1);
+        }
+        user.setIfCity((userVO.getUrben() == null || userVO.getUrben()) ? (byte) 1 : 0);
+        user.setMonthlyExpense(userVO.getExpense());
+        user.setIncome(userVO.getIncome());
+        user.setPhone(userVO.getMobile());
 
-        return ID;
+        getUserDao(financeCityUser).save(user);
     }
 
     @Override
-    public BaseDao getUserDao() throws NotLoginException {
-        if (!isLogin()) {
+    public UserDao getUserDao(FinanceCityUser financeCityUser) throws NotLoginException {
+        if (!isLogin(financeCityUser)) {
             throw new NotLoginException();
         }
         else {
-            return DAO;
+            return (UserDao)DAO;
         }
+    }
+
+    private String MD5_32(String message) {
+        return DigestUtils.md5DigestAsHex(message.getBytes());
+    }
+
+    private boolean ifUserExist(String mobile) {
+        List list = getCommonDao().find("FROM User u WHERE u.phone=" + mobile);
+        return  (list.size() > 0);
+    }
+
+    private Integer getIDByMobile(String mobile) {
+        List list = getCommonDao().find("SELECT id FROM User u WHERE u.phone=" + mobile);
+        if (list == null || list.size() == 0) {
+            return null;
+        }
+        else {
+            return (Integer)list.get(0);
+        }
+    }
+
+
+    @Override
+    public CommonDao getCommonDao() {
+        return (CommonDao)DAO;
+    }
+
+    @Override
+    public FinanceCityUser register(String mobile, String password, String username) throws InvalidPasswordException, InvalidMobileException, UserAlreadyExistException {
+        if (!validMobile(mobile)){
+            throw new InvalidMobileException();
+        }
+        else if (!validPassword(password)) {
+            throw new InvalidPasswordException();
+        }
+        else if (ifUserExist(mobile)) {
+            throw new UserAlreadyExistException();
+        }
+        else {
+            User user = new User();
+            user.setPhone(mobile);
+            user.setPassword(password);
+            user.setUsername(username);
+            DAO.save(user);
+
+            return login(mobile, password);
+        }
+    }
+
+    @Override
+    public void modifyUserInfo(String birthday, int income, boolean isUrben, int expense, FinanceCityUser financeCityUser) throws NotLoginException {
+        List list = getUserDao(financeCityUser).find("From User u WHERE u.id=" + financeCityUser.getID());
+        if (list == null || list.size() == 0) {
+            throw new NotLoginException();
+        }
+
+        User user = (User)list.get(0);
+        user.setBirthday(Date.valueOf(birthday));
+        user.setIncome(income);
+        user.setIfCity(isUrben ? (byte)1 : 0);
+        user.setMonthlyExpense(expense);
+
+        getUserDao(financeCityUser).update(user);
+    }
+
+    @Override
+    public void setUserTemperPrefer(UserTemperPrefer userTemperPrefer, FinanceCityUser financeCityUser) throws NotLoginException {
+        userTemperPrefer.setUserId(financeCityUser.getID());
+        getUserDao(financeCityUser).save(userTemperPrefer);
+    }
+
+    private boolean validPassword(String password) {
+        return password.length() >= 8 && password.length() <= 30;
+    }
+
+    private boolean validMobile(String mobile) {
+        return  (mobile.length() == 11 && isNumeric(mobile));
+    }
+
+    private boolean isNumeric(String str) {
+        for (int i = 0; i < str.length(); ++i) {
+            if (!Character.isDigit(str.charAt(i))) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

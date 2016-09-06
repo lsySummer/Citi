@@ -1,7 +1,9 @@
 package edu.nju.service.Invoker;
 
 import edu.nju.service.BaseService.BaseService;
-import edu.nju.service.Exceptions.DuplicateFunctionNameException;
+import edu.nju.service.ExceptionsAndError.DuplicateFunctionNameException;
+import edu.nju.service.ExceptionsAndError.InvalidAPINameException;
+import edu.nju.service.ExceptionsAndError.InvalidParametersException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -34,8 +36,13 @@ public class InvokerManagerImpl implements InvokerManager {
     }
 
     @Override
-    public Object invokeAPI(String apiName, List<Object> param) {
-        return null;
+    public Object invokeAPI(String apiName, List<Object> param) throws InvalidParametersException, InvalidAPINameException {
+        Invoker invoker = invokers.get(apiName);
+        if (invoker == null) {
+            throw new InvalidAPINameException(apiName);
+        }
+
+        return invoker.invokeAPI(param);
     }
 
     @Override

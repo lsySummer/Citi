@@ -1,7 +1,8 @@
 package edu.nju.service.Invoker;
 
 import edu.nju.service.BaseService.BaseService;
-import edu.nju.service.Exceptions.InvalidAPINameException;
+import edu.nju.service.ExceptionsAndError.InvalidAPINameException;
+import edu.nju.service.ExceptionsAndError.InvalidParametersException;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class InvokerImpl implements Invoker {
     }
 
     @Override
-    public Object invokeAPI(List<Object> param) throws InvalidAPINameException {
+    public Object invokeAPI(List<Object> param) throws InvalidAPINameException, InvalidParametersException {
         return service.invokeAPI(apiName, param);
     }
 

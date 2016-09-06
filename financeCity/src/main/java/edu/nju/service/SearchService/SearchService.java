@@ -1,77 +1,128 @@
 package edu.nju.service.SearchService;
 
+import edu.nju.model.CategoryIndex;
+import edu.nju.model.Institution;
+import edu.nju.model.User;
+import edu.nju.model.UserTemperPrefer;
 import edu.nju.service.BaseService.BaseService;
-import edu.nju.service.Exceptions.InvalidProductNameException;
-import edu.nju.service.POJO.Filter;
-import edu.nju.service.POJO.Product;
-import edu.nju.service.POJO.ProductBaseInfo;
-import edu.nju.service.POJO.SearchConfig;
+import edu.nju.service.CategoryAndProduct.Product;
+import edu.nju.service.ExceptionsAndError.NoSuchProductException;
 import edu.nju.vo.*;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * Created by Sun YuHao on 2016/7/25.
  */
+@Service
 public interface SearchService extends BaseService{
     /**
      * get product info
      * @param productName .
      * @return product info
      */
-    Product getProductByName(String productName) throws InvalidProductNameException;
+    Product getProductByName(String productName) throws NoSuchProductException;
+
+    /**
+     * get product by id
+     * @param ID .
+     * @return product .
+     * @throws NoSuchProductException .
+     */
+    Product getProductByID(Integer ID) throws NoSuchProductException;
 
     /**
      * search product by filter
      * @param filter .
      * @return products that are chosen
      */
-    List<Product> searchProductByFilter(Filter filter);
+    List<Product> searchProductByFilter(ProductFilter filter);
 
     /**
      * search products by keyword
      * @param keyWord .
      * @return products
      */
-    List<ProductBaseInfo> searchProductsByKey(String keyWord);
+    List<Product> searchProductsByKey(String keyWord, String type);
 
     /**
-     * get all products
-     * @return all products
+     * search product by condition
+     * @param type .
+     * @param cond .
+     * Note:object name is 'p'
+     * @return products list
      */
-    List<ProductBaseInfo> getAllProducts();
+    List<Product> searchProductsByCondition(String type, String cond);
 
     /**
-     * get products by search config
-     * @param searchConfig .
-     * @return products needed
+     * get product list by order
+     * Note: object name is 'p'
+     * @param type .
+     * @param order .
+     * @return product list order by param
      */
-    List<ProductBaseInfo> searchProductsByConfig(SearchConfig searchConfig);
+    List<Product> getProductListByOrder(String type, String order);
 
     /**
      * get history data
      * @param productId .
      * @return history data
      */
-    HistoryDataVO getHistoryDataVO(Long productId);
+    HistoryDataVO getHistoryDataVO(Integer productId);
 
     /**
      * get product detail
      * @param productID .
      * @return product detail
      */
-    ProductDetailVO getProductDetailVO(Long productID);
+    ProductDetailVO getProductDetailVO(Integer productID);
 
     /**
      * get project
      * @param projectID .
      * @return project
      */
-    ProjectVO getProjectVO(Long projectID);
+    ProjectVO getProjectVO(Integer projectID);
 
     /**
-     * get Timeline
-     * @return timeline
+     * search some object by min word
+     * @param type .
+     * @param word .
+     * @return min word.
      */
-    TimeLineVO getTimeLineVO();
+    Object searchMin(String type, String word);
+
+    /**
+     * get category index
+     * @return category index
+     */
+    CategoryIndex getCategoryIndex();
+
+    /**
+     * get products by ids
+     * @param ids .
+     * @return products
+     */
+    Product[] getProductsByIds(int[] ids);
+
+    /**
+     * get cost of products
+     * @param id .
+     * @param amount .
+     * @return cost
+     */
+    double getCost(int[] id, int[] amount);
+
+    /**
+     * get institution list
+     * @return institution list
+     */
+    List<Institution> getInstitutionList();
+
+    List<String> getInstitutionNameList();
+
+    List<String> getInstitutionNameList(String category);
+
+    double[] getHS_300ByTime();
 }

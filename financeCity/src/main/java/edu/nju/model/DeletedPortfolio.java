@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * Created by dell on 2016/8/12.
+ * Created by Sun YuHao on 2016/9/5.
  */
 @Entity
 @Table(name = "deleted_portfolio", schema = "citi", catalog = "")

@@ -8,7 +8,7 @@ import java.util.Map;
  */
 public class HistoryDataVO {
 	/**历史发行过多少期*/
-	private int term;
+	private Integer term;
 	
 	/**波动率*/
 	private Map<String,Double> volatility;
@@ -17,50 +17,48 @@ public class HistoryDataVO {
 	private Map<String,Double> incomeRate;
 	
 	/**成立时价值*/
-	private double builtValue;
+	private Double builtValue;
 	
 	/**当前价值*/
-	private double currentValue;
-	
-	public Map getVolatility() {
-		return volatility;
-	}
+	private Double currentValue;
 
-	public void setVolatility(Map<String,Double> volatility) {
-		this.volatility = volatility;
-	}
-
-	public Map getIncomeRate() {
-		return incomeRate;
-	}
-
-	public void setIncomeRate(Map<String,Double> incomeRate) {
-		this.incomeRate = incomeRate;
-	}
-
-	public double getBuiltValue() {
-		return builtValue;
-	}
-
-	public void setBuiltValue(double builtValue) {
-		this.builtValue = builtValue;
-	}
-
-	public double getCurrentValue() {
-		return currentValue;
-	}
-
-	public void setCurrentValue(double currentValue) {
-		this.currentValue = currentValue;
-	}
-
-	public int getTerm() {
+	public Integer getTerm() {
 		return term;
 	}
 
-	public void setTerm(int term) {
+	public void setTerm(Integer term) {
 		this.term = term;
 	}
-	
-	
+
+	public Map<String, Double> getVolatility() {
+		return volatility;
+	}
+
+	public void setVolatility(Map<String, Double> volatility) {
+		this.volatility = volatility;
+	}
+
+	public Map<String, Double> getIncomeRate() {
+		return incomeRate;
+	}
+
+	public void setIncomeRate(Map<String, Double> incomeRate) {
+		this.incomeRate = incomeRate;
+	}
+
+	public Double getBuiltValue() {
+		return builtValue;
+	}
+
+	public void setBuiltValue(Double builtValue) {
+		this.builtValue = builtValue;
+	}
+
+	public Double getCurrentValue() {
+		return currentValue;
+	}
+
+	public void setCurrentValue(Double currentValue) {
+		this.currentValue = currentValue;
+	}
 }

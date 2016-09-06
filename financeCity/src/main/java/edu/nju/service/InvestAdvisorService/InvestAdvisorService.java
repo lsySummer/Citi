@@ -1,92 +1,49 @@
 package edu.nju.service.InvestAdvisorService;
 
+import edu.nju.model.UserTemperPrefer;
 import edu.nju.service.BaseService.BaseService;
-import edu.nju.service.Exceptions.NotAllConfigurationSetException;
-import edu.nju.service.Exceptions.NotLoginException;
-import edu.nju.service.POJO.InvestmentPortFolio;
-import edu.nju.service.POJO.Preference;
+import edu.nju.service.ExceptionsAndError.NotAllConfigurationSetException;
+import edu.nju.service.ExceptionsAndError.NotLoginException;
+import edu.nju.service.POJO.InvestResult;
+import edu.nju.service.SearchService.SearchService;
+import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.vo.FamilySpendingVO;
 import edu.nju.vo.IdentityVO;
 import edu.nju.vo.TemperPreferVO;
 import edu.nju.vo.UserVO;
+import org.springframework.stereotype.Service;
 
 
 /**
  * Created by Sun YuHao on 2016/7/25.
  */
+@Service
 public interface InvestAdvisorService extends BaseService {
-    /**
-     * set identity
-     *
-     * @return if it's successful
-     */
-    boolean setIdentity(IdentityVO identity);
-
-    /**
-     * get identity
-     * @return identity
-     */
-    IdentityVO getIdentity();
-
     /**
      * set preference
      *
      * @param temperPreferVO preference .
      * @return if it's successful
      */
-    boolean setTemperPrefer(TemperPreferVO temperPreferVO);
+    boolean setTemperPrefer(TemperPreferVO temperPreferVO, FinanceCityUser financeCityUser) throws NotLoginException;
 
     /**
      * get temper preference
      * @return temper preference
      */
-    TemperPreferVO getTemperPreferVO();
+    TemperPreferVO getTemperPreferVO(FinanceCityUser financeCityUser) throws NotLoginException;
 
     /**
-     * set family spending
-     *
-     * @param familySpending .
-     * @return if it's successful
+     * create investment portfolio
+     * @param preference
+     * @return invest result
+     * @throws NotAllConfigurationSetException
      */
-    boolean setFamilySpending(FamilySpendingVO familySpending);
+    InvestResult createInvestmentPortFolio(UserTemperPrefer preference) throws NotAllConfigurationSetException;
 
     /**
-     * get family spending
-     *
-     * @return family spending
+     * bind search service
+     * @param searchService .
      */
-    FamilySpendingVO getFamilySpendingVO();
-
-    /**
-     * if identity is set, if yes return true, else return false
-     *
-     * @return if identity is set
-     */
-    boolean ifIdentityIsSet();
-
-    /**
-     * if Preference is set, if yes return true, else return false
-     *
-     * @return is preference is set
-     */
-    boolean ifPreferenceIsSet();
-
-    /**
-     * if all configuration is set
-     *
-     * @return if all configuration is set
-     */
-    boolean ifAllSet();
-
-    /**
-     * get investment portfolio
-     * @return investment portfolio
-     */
-    InvestmentPortFolio createInvestmentPortFolio() throws NotAllConfigurationSetException, NotLoginException;
-
-    /**
-     * get user vo
-     * @return user vo
-     */
-    UserVO getUserVO();
+    void bindSearchService(SearchService searchService);
 }

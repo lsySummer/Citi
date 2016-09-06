@@ -1,24 +1,40 @@
 package edu.nju.service.TradeService;
 
 import edu.nju.service.BaseService.BaseService;
+import edu.nju.service.Sessions.FinanceCityUser;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created by Sun YuHao on 2016/7/25.
  */
+@Service
 public interface TradeService extends BaseService {
     /**
      * buy product
-     * @param productID .
+     * @param tradeItemList .
      * @return if success
      */
-    boolean buyProduct(Long productID);
+    List<String> buyProduct(List<TradeItem> tradeItemList, FinanceCityUser financeCityUser);
+
+    /**
+     * cancel unpaid product
+     * @param checkCode .
+     */
+    boolean cancelUnpaid(String checkCode, FinanceCityUser financeCityUser);
+
+    /**
+     * cancel all unpaid product
+     */
+    boolean cancelAllUnpaid(FinanceCityUser financeCityUser);
 
     /**
      * redeem/sell product
      * @param ProductID .
      * @return if success
      */
-    boolean redeemProduct(Long ProductID);
+    boolean redeemProduct(Integer ProductID, FinanceCityUser financeCityUser);
 
     /**
      * enforce investment plan

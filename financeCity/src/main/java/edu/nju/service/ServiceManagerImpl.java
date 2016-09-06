@@ -3,11 +3,11 @@ package edu.nju.service;
 import edu.nju.service.AssetManagementService.AssetManagementService;
 import edu.nju.service.BaseService.BaseFunctionAPIFilter;
 import edu.nju.service.BaseService.BaseFunctionService;
-import edu.nju.service.BaseService.BaseFunctionServiceAdaptor;
 import edu.nju.service.BaseService.BaseService;
-import edu.nju.service.Exceptions.DuplicateFunctionNameException;
-import edu.nju.service.Exceptions.InvalidAPINameException;
-import edu.nju.service.Exceptions.InvalidServiceNameException;
+import edu.nju.service.ExceptionsAndError.DuplicateFunctionNameException;
+import edu.nju.service.ExceptionsAndError.InvalidAPINameException;
+import edu.nju.service.ExceptionsAndError.InvalidParametersException;
+import edu.nju.service.ExceptionsAndError.InvalidServiceNameException;
 import edu.nju.service.InvestAdvisorService.InvestAdvisorService;
 import edu.nju.service.Invoker.APIFilter;
 import edu.nju.service.Invoker.InvokerManager;
@@ -18,6 +18,7 @@ import edu.nju.service.TradeService.TradeService;
 import edu.nju.service.UserService.UserService;
 import edu.nju.service.UserService.UserServiceAPIFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -25,11 +26,13 @@ import java.util.*;
 /**
  * Created by Sun YuHao on 2016/7/25.
  */
-@Service
+@Component
 public class ServiceManagerImpl implements ServiceManager {
     private BaseService[] services;
     private List<String> serviceList;
     private Map<String, BaseService> serviceMap;
+
+    static ServiceManager serviceManager;
 
     @Autowired
     InvokerManager invokerManager;
@@ -70,31 +73,30 @@ public class ServiceManagerImpl implements ServiceManager {
                 tradeService,
                 userService
         };
-        try {
-            APIFilter BFAPIFilter = new BaseFunctionAPIFilter();
-            for (BaseService service : services) {
-                System.out.println(service);
-                if (service instanceof BaseFunctionService) {
-                    ((BaseFunctionService) service).bindUserService(userService);
-
-                    invokerManager.loadService(service, BFAPIFilter);
-                }
-                else {
-                    /** filter user service's APIs */
-                    invokerManager.loadService(service, new UserServiceAPIFilter());
-                }
-
-                /** build service list */
-                serviceList.add(service.getClass().getName());
-                /** build service map */
-                serviceMap.put(service.getClass().getName(), service);
+        for (BaseService service : services) {
+            System.out.println(service);
+            if (service instanceof BaseFunctionService) {
+                ((BaseFunctionService) service).bindUserService(userService);
             }
 
-            System.out.println("Service Manager Init Successfully");
+            /** build service list */
+            serviceList.add(service.getName());
+            /** build service map */
+            serviceMap.put(service.getName(), service);
         }
-        catch (DuplicateFunctionNameException d) {
-            d.printStackTrace();
-        }
+
+        /** bind search service to invest advisor */
+        investAdvisorService.bindSearchService(searchService);
+        /** bind search service to asset manager */
+        assetManagementService.bindSearchService(searchService);
+
+        System.out.println("Service Manager Init Successfully");
+
+        serviceManager = this;
+    }
+
+    public static ServiceManager getInstance() {
+        return serviceManager;
     }
 
     @Override
@@ -121,11 +123,39 @@ public class ServiceManagerImpl implements ServiceManager {
      * @throws InvalidAPINameException .
      */
     @Override
-    public Object invokeAPI(String apiName, List<Object> param) throws InvalidAPINameException {
+    public Object invokeAPI(String apiName, List<Object> param) throws InvalidAPINameException, InvalidParametersException {
         return invokerManager.invokeAPI(apiName, param);
     }
 
     private BaseService getService(String serviceName) throws InvalidServiceNameException {
         return serviceMap.get(serviceName);
+    }
+
+    public AssetManagementService getAssetManagementService() {
+        return assetManagementService;
+    }
+
+    public InvestAdvisorService getInvestAdvisorService() {
+        return investAdvisorService;
+    }
+
+    public PayService getPayService() {
+        return payService;
+    }
+
+    public PushService getPushService() {
+        return pushService;
+    }
+
+    public SearchService getSearchService() {
+        return searchService;
+    }
+
+    public TradeService getTradeService() {
+        return tradeService;
+    }
+
+    public UserService getUserService() {
+        return userService;
     }
 }
