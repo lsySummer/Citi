@@ -18,13 +18,59 @@ import nju.financecity_android.vo.ProductVO;
  * Created by Administrator on 2016/9/6.
  */
 public class SearchProduct {
-    private List<Map<String,Object>> analyse()//TODO 针对不同筛选条件
+    private static List<Map<String,Object>> analyse()//TODO 针对不同筛选条件
     {
-        String mRawData= new SearchDao().sendPost();
+//        String mRawData= new SearchDao().sendPost();
+        String mRawData="{" +
+                "'error':0," +
+                "'message':'reason of error'," +
+                "'data':[" +
+                "{" +
+                "'pid':100001," +
+                "'name':'name'," +
+                "'yearly_income_rate':0.0295," +
+                "'product_type':'开放式净值型'," +
+                "'income_type':'保本浮动收益型'," +
+                "'initial_money':50000," +
+                "'open_date':'yyyy-MM-dd'," +
+                "'distributor_bank':'浦发银行'," +
+                "'distributor_institution':'浦发银行'," +
+                "},F4" +
+                "{"+
+                "'pid':100001," +
+                "'name':'name'," +
+                "'expected_income_rate':0.05," +
+                "'state':'产品状态'," +
+                "'net_value':10000," +
+                "'sid':'基金编号'," +
+                "'type':'简单基金'," +
+                "'mng_charge_rate':4.5," +
+                "'est_date':'yyyy-MM-dd'" +
+                "}," +
+                "{" +
+                "'pid':100001," +
+                "'name':'name'," +
+                "'insurance_life':'终身'," +
+                "'insurance_age':30," +
+                "'amount_in_force':[100000, 200000]," +
+                "'way_of_charge':'缴费方式'," +
+                "'distributor':'叉叉基金'" +
+                "}," +
+                "{" +
+                "'pid':100001," +
+                "'name':'name'," +
+                "'yearly_interest_rate':0.07," +
+                "'nominal_interest_rate':0.025," +
+                "'life':2," +
+                "'type':'债券类型'," +
+                "'code':'债券代码'" +
+                "}" +
+                "]" +
+                "}";
         return onPostExecute(mRawData);
     }
 
-    private List<Map<String,Object>> onPostExecute(String result)
+    private static List<Map<String,Object>> onPostExecute(String result)
     {
         List<Map<String,Object>> resultList=new ArrayList<Map<String,Object>>();
         try {
@@ -93,5 +139,9 @@ public class SearchProduct {
             e.printStackTrace();
         }
         return resultList;
+    }
+    public static void main(String[] args)
+    {
+        System.out.println(SearchProduct.analyse());
     }
 }
