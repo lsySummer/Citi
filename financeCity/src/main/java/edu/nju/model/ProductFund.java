@@ -6,7 +6,7 @@ import java.sql.Date;
 import java.sql.Timestamp;
 
 /**
- * Created by Sun YuHao on 2016/9/3.
+ * Created by Sun YuHao on 2016/9/5.
  */
 @Entity
 @Table(name = "product_fund", schema = "citi", catalog = "")
@@ -48,6 +48,7 @@ public class ProductFund {
     private BigDecimal dayRate;
     private BigDecimal institutionNetworthRatio;
     private BigDecimal stockBondProportion;
+    private Timestamp firstAccrRate;
 
     @Id
     @Column(name = "id")
@@ -419,6 +420,16 @@ public class ProductFund {
         this.stockBondProportion = stockBondProportion;
     }
 
+    @Basic
+    @Column(name = "first_accr_rate")
+    public Timestamp getFirstAccrRate() {
+        return firstAccrRate;
+    }
+
+    public void setFirstAccrRate(Timestamp firstAccrRate) {
+        this.firstAccrRate = firstAccrRate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -480,6 +491,8 @@ public class ProductFund {
             return false;
         if (stockBondProportion != null ? !stockBondProportion.equals(that.stockBondProportion) : that.stockBondProportion != null)
             return false;
+        if (firstAccrRate != null ? !firstAccrRate.equals(that.firstAccrRate) : that.firstAccrRate != null)
+            return false;
 
         return true;
     }
@@ -523,18 +536,7 @@ public class ProductFund {
         result = 31 * result + (dayRate != null ? dayRate.hashCode() : 0);
         result = 31 * result + (institutionNetworthRatio != null ? institutionNetworthRatio.hashCode() : 0);
         result = 31 * result + (stockBondProportion != null ? stockBondProportion.hashCode() : 0);
+        result = 31 * result + (firstAccrRate != null ? firstAccrRate.hashCode() : 0);
         return result;
-    }
-
-    private Timestamp firstAccrRate;
-
-    @Basic
-    @Column(name = "first_accr_rate")
-    public Timestamp getFirstAccrRate() {
-        return firstAccrRate;
-    }
-
-    public void setFirstAccrRate(Timestamp firstAccrRate) {
-        this.firstAccrRate = firstAccrRate;
     }
 }

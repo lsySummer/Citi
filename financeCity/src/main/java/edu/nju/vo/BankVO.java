@@ -4,7 +4,6 @@ package edu.nju.vo;
  * Created by Sun YuHao on 2016/8/31.
  */
 public class BankVO {
-    private Integer productId;
     private String productType;
     private Integer pid;
     private String name;
@@ -15,14 +14,6 @@ public class BankVO {
     private String open_date;
     private String distributor_bank;
     private String distributor_institution;
-
-    public Integer getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Integer productId) {
-        this.productId = productId;
-    }
 
     public String getProductType() {
         return productType;

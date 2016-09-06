@@ -95,7 +95,7 @@ public class SearchFilterFactory {
                     //TODO:if close
                     ProductInsurance productInsurance = (ProductInsurance)product;
                     return  (productInsurance.getExpectedRate().doubleValue() >= year_rate[0] && productInsurance.getExpectedRate().doubleValue() <= year_rate[1] &&
-                            productInsurance.getLength() >= expiration[0] && productInsurance.getLength() <= expiration[1] &&
+                            productInsurance.getWarrantyPeriod() >= expiration[0] && productInsurance.getWarrantyPeriod() <= expiration[1] &&
                             (is_closed_ended == null || false));
                 }
                 else if (product instanceof ProductFund) {
@@ -429,7 +429,7 @@ public class SearchFilterFactory {
             public boolean isChosen(Object product) {
                 ProductInsurance productInsurance = (ProductInsurance)product;
 
-                return (productInsurance.getLength() >= year_length[0] && productInsurance.getLength() <= year_length[1] &&
+                return (productInsurance.getWarrantyPeriod() >= year_length[0] && productInsurance.getWarrantyPeriod() <= year_length[1] &&
                 productInsurance.getYearRate().doubleValue() >= income_rate[0] && productInsurance.getYearRate().doubleValue() <= income_rate[1] &&
                         (distributor == null || distributor.equals(productInsurance.getInstitutionManage())) &&
                         (price == null || price.equals(productInsurance.getDenomination())));
