@@ -1,9 +1,6 @@
 package edu.nju.service.SearchService;
 
-import edu.nju.model.CategoryIndex;
-import edu.nju.model.Institution;
-import edu.nju.model.User;
-import edu.nju.model.UserTemperPrefer;
+import edu.nju.model.*;
 import edu.nju.service.BaseService.BaseFunctionServiceAdaptor;
 import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.CategoryAndProduct.ProductFactory;
@@ -247,7 +244,8 @@ public class SearchServiceImpl extends BaseFunctionServiceAdaptor implements Sea
     @SuppressWarnings("unchecked")
     @Override
     public List<String> getInstitutionNameList(String category) {
-        List<Integer> list = getUserService().getCommonDao().find("SELECT i.institutionId FROM InstitutionCategoryRelation i");
+        List<Integer> list = getUserService().getCommonDao().find("SELECT i.institutionId FROM InstitutionCategoryRelation i WHERE i.category='"
+                + category + "'");
 
         if (list == null || list.size() == 0) {
             return null;
@@ -265,6 +263,25 @@ public class SearchServiceImpl extends BaseFunctionServiceAdaptor implements Sea
             else {
                 return insList;
             }
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public double[] getHS_300ByTime() {
+        List<Hs300> list = getUserService().getCommonDao().find("FROM Hs300 h ORDER by date");
+
+        if (list.size() == 0) {
+            return new double[0];
+        }
+        else {
+            double[] ret = new double[list.size()];
+
+            for (int i = 0; i < list.size(); ++i) {
+                ret[i] = list.get(i).getHs300Return().doubleValue();
+            }
+
+            return ret;
         }
     }
 }

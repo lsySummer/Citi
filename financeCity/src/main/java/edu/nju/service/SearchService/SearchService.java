@@ -123,4 +123,6 @@ public interface SearchService extends BaseService{
     List<String> getInstitutionNameList();
 
     List<String> getInstitutionNameList(String category);
+
+    double[] getHS_300ByTime();
 }

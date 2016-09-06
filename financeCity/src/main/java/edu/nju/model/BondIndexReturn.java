@@ -1,9 +1,6 @@
 package edu.nju.model;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
 
@@ -11,9 +8,10 @@ import java.sql.Date;
  * Created by Sun YuHao on 2016/9/5.
  */
 @Entity
-public class Hs300 {
+@Table(name = "bond_index_return", schema = "citi", catalog = "")
+public class BondIndexReturn {
     private int id;
-    private BigDecimal hs300Return;
+    private BigDecimal bondIndexReturn;
     private Date date;
 
     @Id
@@ -27,13 +25,13 @@ public class Hs300 {
     }
 
     @Basic
-    @Column(name = "HS300_return")
-    public BigDecimal getHs300Return() {
-        return hs300Return;
+    @Column(name = "bond_index_return")
+    public BigDecimal getBondIndexReturn() {
+        return bondIndexReturn;
     }
 
-    public void setHs300Return(BigDecimal hs300Return) {
-        this.hs300Return = hs300Return;
+    public void setBondIndexReturn(BigDecimal bondIndexReturn) {
+        this.bondIndexReturn = bondIndexReturn;
     }
 
     @Basic
@@ -51,11 +49,12 @@ public class Hs300 {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Hs300 hs300 = (Hs300) o;
+        BondIndexReturn that = (BondIndexReturn) o;
 
-        if (id != hs300.id) return false;
-        if (hs300Return != null ? !hs300Return.equals(hs300.hs300Return) : hs300.hs300Return != null) return false;
-        if (date != null ? !date.equals(hs300.date) : hs300.date != null) return false;
+        if (id != that.id) return false;
+        if (bondIndexReturn != null ? !bondIndexReturn.equals(that.bondIndexReturn) : that.bondIndexReturn != null)
+            return false;
+        if (date != null ? !date.equals(that.date) : that.date != null) return false;
 
         return true;
     }
@@ -63,7 +62,7 @@ public class Hs300 {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (hs300Return != null ? hs300Return.hashCode() : 0);
+        result = 31 * result + (bondIndexReturn != null ? bondIndexReturn.hashCode() : 0);
         result = 31 * result + (date != null ? date.hashCode() : 0);
         return result;
     }
