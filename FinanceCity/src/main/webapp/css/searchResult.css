@@ -112,6 +112,10 @@ label.line {
     border-bottom: 2px solid rgb(255, 150, 53);
 }
 
+.product.bank-financing:hover .bank-circle {
+
+}
+
 /*.bank-financing .circle{*/
     /*background-color: rgb(255, 206, 0);*/
     /*box-shadow: 0px 0px 8px rgba(255, 206, 0, 0.7);*/

@@ -12,7 +12,7 @@
 %>
 <html>
  <base href="<%=basePath%>">
-<body style="margin: 0">
+
 <div class="header shadow">
     <div class="container">
         <div class="header-square"></div>
@@ -33,6 +33,4 @@
     </div>
 
 </div>
-
-</body>
 </html>
