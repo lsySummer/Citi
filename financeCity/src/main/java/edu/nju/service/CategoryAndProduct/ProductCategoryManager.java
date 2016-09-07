@@ -5,10 +5,11 @@ import edu.nju.model.ProductBond;
 import edu.nju.model.ProductFund;
 import edu.nju.model.ProductInsurance;
 import edu.nju.service.ExceptionsAndError.InvalidParametersException;
-import org.python.antlr.ast.Str;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -114,9 +115,9 @@ public class ProductCategoryManager {
        Category category = getProductCategory(product);
 
         try {
-            Class cls = Class.forName("Product" + category);
-            Field field = cls.getField("id");
-            int id = field.getInt(product);
+            Class cls = product.getClass();
+            Method method = cls.getMethod("getId");
+            int id = (Integer)method.invoke(product);
             return generateProductID(id, category.getCategoryName());
         }
         catch (Exception e) {
@@ -193,13 +194,18 @@ public class ProductCategoryManager {
         return bank.getIfClose() == 1;
     }
 
-    static private String getFundType(Product product) {
-        if (!product.getCategory().getBiggerCategory().equals(categoryFund)) {
+    static public Category getFundCategory(Byte fund_index) {
+        try {
+            if (fund_index == null) {
+                fund_index = -1;
+            }
+
+            return getCategoryList().get(fundBase + fund_index);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
-
-        ProductFund productFund = (ProductFund)product.getProduct();
-        return categoryFund + fundTypEn[productFund.getCategory()];
     }
 
     static public Integer getFundTypeIndex(String category) {

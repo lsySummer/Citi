@@ -98,7 +98,7 @@ public class ProductVOFactory {
         }
     }
 
-    public Object[] getResultList() {
+    public Object[] getResultList(Byte order) {
         if (poducts.size() == 0) {
             return new Object[0];
         }

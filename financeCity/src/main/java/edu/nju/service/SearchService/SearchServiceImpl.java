@@ -22,20 +22,29 @@ import java.util.List;
 @Service
 public class SearchServiceImpl extends BaseFunctionServiceAdaptor implements SearchService {
 
+    @SuppressWarnings("unchecked")
     @Override
-    public Product getProductByName(String productName) throws NoSuchProductException {
-        List list = getUserService().getCommonDao().find("SELECT id FROM NameToId nameToId WHERE nameToId.name=" + productName);
+    public List<Product> getProductByName(String productName) throws NoSuchProductException {
+        List<Integer> list = getUserService().getCommonDao().find("SELECT id FROM NameToId nameToId WHERE nameToId.name='" + productName + "'");
         if (list == null || list.size() == 0) {
             throw  new NoSuchProductException(productName);
         }
 
-        Integer id = (Integer) list.get(0);
-        return getProductByID(id);
+        if (list.size() == 0) {
+            return null;
+        }
+
+        List<Product> productList = new ArrayList<>();
+        for (Integer id : list) {
+            productList.add(getProductByID(id));
+        }
+
+        return productList;
     }
 
     @Override
     public Product getProductByID(Integer ID) throws NoSuchProductException {
-        Category biggerCategory = ProductCategoryManager.getCategoryByID(ID);
+        Category biggerCategory = ProductCategoryManager.getCategoryByID(ID).getBiggerCategory();
         int index = ProductCategoryManager.getProductItemIndex(ID);
 
         List list = getUserService().getCommonDao().find("FROM Product" + biggerCategory + " product WHERE product.id=" + index);
@@ -79,8 +88,8 @@ public class SearchServiceImpl extends BaseFunctionServiceAdaptor implements Sea
             List<Product> productList = new ArrayList<>();
 
             if (searchType == null) {
-                List<Integer> list = getUserService().getCommonDao().find("SELECT id FROM NameToId nameToId WHERE nameToId.name LIKE %" +
-                        keyWord + "%");
+                List<Integer> list = getUserService().getCommonDao().find("SELECT id FROM NameToId nameToId WHERE nameToId.name LIKE '%" +
+                        keyWord + "%'");
 
                 for (Integer id : list) {
                     productList.add(getProductByID(id));
@@ -291,7 +300,7 @@ public class SearchServiceImpl extends BaseFunctionServiceAdaptor implements Sea
     @SuppressWarnings("unchecked")
     @Override
     public double[] getHS_300ByTime() {
-        List<Hs300> list = getUserService().getCommonDao().find("FROM Hs300 h ORDER by date");
+        List<Hs300> list = getUserService().getCommonDao().find("FROM Hs300 h ORDER by date DESC");
 
         if (list.size() == 0) {
             return new double[0];

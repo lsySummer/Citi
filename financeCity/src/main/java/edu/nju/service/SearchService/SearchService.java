@@ -22,7 +22,7 @@ public interface SearchService extends BaseService{
      * @param productName .
      * @return product info
      */
-    Product getProductByName(String productName) throws NoSuchProductException;
+    List<Product> getProductByName(String productName) throws NoSuchProductException;
 
     /**
      * get product by id
