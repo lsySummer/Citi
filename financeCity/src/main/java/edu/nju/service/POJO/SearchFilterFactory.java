@@ -431,6 +431,9 @@ public class SearchFilterFactory {
 
         try {
             Map option = (Map)map.get("options");
+            if (option == null) {
+                option = new HashMap();
+            }
             List<String> list = (List<String>)option.get("length_of_years");
             init_arrary(list, year_length);
 
