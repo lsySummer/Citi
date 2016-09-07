@@ -12,6 +12,9 @@ import com.appyvet.rangebar.RangeBar;
 import nju.financecity_android.R;
 
 public class Key extends LinearLayout{
+    private String key_name;
+    private String key_word;
+
     private TextView key_text;
     private EditText key_putin;
 

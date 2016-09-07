@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
- * Created by Sun YuHao on 2016/8/31.
+ * Created by Sun YuHao on 2016/9/5.
  */
 @Entity
 @Table(name = "user_login", schema = "citi", catalog = "")
@@ -63,17 +63,5 @@ public class UserLogin {
         result = 31 * result + (session != null ? session.hashCode() : 0);
         result = 31 * result + (date != null ? date.hashCode() : 0);
         return result;
-    }
-
-    private String loginId;
-
-    @Basic
-    @Column(name = "login_id")
-    public String getLoginId() {
-        return loginId;
-    }
-
-    public void setLoginId(String loginId) {
-        this.loginId = loginId;
     }
 }

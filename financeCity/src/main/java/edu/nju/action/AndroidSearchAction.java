@@ -1,6 +1,9 @@
 package edu.nju.action;
 
+import edu.nju.model.ProductFund;
+import edu.nju.service.CategoryAndProduct.Category;
 import edu.nju.service.CategoryAndProduct.Product;
+import edu.nju.service.CategoryAndProduct.ProductCategoryManager;
 import edu.nju.service.ExceptionsAndError.ErrorManager;
 import edu.nju.service.ExceptionsAndError.InvalidParametersException;
 import edu.nju.service.POJO.ProductVOFactory;
@@ -94,25 +97,48 @@ public class AndroidSearchAction extends AndroidAction {
         Map map = getRequestMap();
 
         SearchService searchService = ServiceManagerImpl.getInstance().getSearchService();
-        String key = (String)map.get("keyword");
-        String type = (String)map.get("type");
         SearchResultVO searchResult = new SearchResultVO();
 
         try {
-            ProductFilter productFilter = SearchFilterFactory.createFilter(type, map);
-            List<Product> productList = searchService.searchProductsByKey(key);
+            String key = (String)map.get("keyword");
+            String type = (String)map.get("type");
+            Byte order = (Byte) map.get("order");
+            String searchType;
 
-            ProductVOFactory productVOFactory = new ProductVOFactory();
-            for (Product product : productList) {
-                if (productFilter.isChosen(product.getProduct())) {
-                    productVOFactory.addProduct(product);
+            ProductFilter productFilter = SearchFilterFactory.createFilter(type, map);
+            Category category = ProductCategoryManager.getCategoryByName(type);
+            if (category == null) {
+                searchType = null;
+            }
+            else {
+                searchType = category.getBiggerCategory().getCategoryName();
+            }
+
+            List<Product> productList = searchService.searchProductsByKey(key, searchType);
+
+            //set order
+            if (type.equals(ProductCategoryManager.categoryFund) && order != null) {
+                if (order == 1) {
+                    productList.sort((p1, p2) -> ((ProductFund) p2.getProduct()).getYearlyRtnRate().compareTo(((ProductFund) p1.getProduct()).getYearlyRtnRate()));
+                }
+                else if (order == 2) {
+                    productList.sort((p1, p2) -> ((ProductFund) p1.getProduct()).getYearlyRtnRate().compareTo(((ProductFund) p2.getProduct()).getYearlyRtnRate()));
                 }
             }
 
-            searchResult.setData(productVOFactory.getResultList());
+            ProductVOFactory productVOFactory = new ProductVOFactory();
+            if (productList != null) {
+                for (Product product : productList) {
+                    if (productFilter.isChosen(product.getProduct())) {
+                        productVOFactory.addProduct(product);
+                    }
+                }
+            }
+
+            searchResult.setData(productVOFactory.getResultList(order));
             setResult(searchResult);
         }
-        catch (InvalidParametersException i) {
+        catch (Exception i) {
             i.printStackTrace();
             ErrorManager.setError(searchResult,ErrorManager.errorInvalidParameter);
             setResult(searchResult);
@@ -125,10 +151,9 @@ public class AndroidSearchAction extends AndroidAction {
         Map map = getRequestMap();
         InstitutionListVO institutionListVO = new InstitutionListVO();
 
-        String category = (String)map.get("type");
-        SearchService searchService = ServiceManagerImpl.getInstance().getSearchService();
-
         try {
+            String category = (String)map.get("type");
+            SearchService searchService = ServiceManagerImpl.getInstance().getSearchService();
             List<String> institutions = searchService.getInstitutionNameList(category);
 
             if (institutions == null) {

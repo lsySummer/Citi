@@ -1,8 +1,6 @@
 package edu.nju.model;
 
-import javax.persistence.Basic;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
 
@@ -10,12 +8,22 @@ import java.sql.Date;
  * Created by Sun YuHao on 2016/9/5.
  */
 @Entity
-@javax.persistence.Table(name = "fund_daily_history", schema = "citi", catalog = "")
+@Table(name = "fund_daily_history", schema = "citi", catalog = "")
 public class FundDailyHistory {
     private int id;
+    private Date date;
+    private BigDecimal nav;
+    private BigDecimal accumNav;
+    private BigDecimal adjustNav;
+    private Integer fundId;
+    private BigDecimal dailyReturn;
+    private BigDecimal stockRatio;
+    private BigDecimal fundSize;
+    private BigDecimal debtRatio;
+    private BigDecimal institutionRatio;
 
     @Id
-    @javax.persistence.Column(name = "id")
+    @Column(name = "id")
     public int getId() {
         return id;
     }
@@ -24,10 +32,8 @@ public class FundDailyHistory {
         this.id = id;
     }
 
-    private Date date;
-
     @Basic
-    @javax.persistence.Column(name = "date")
+    @Column(name = "date")
     public Date getDate() {
         return date;
     }
@@ -36,10 +42,8 @@ public class FundDailyHistory {
         this.date = date;
     }
 
-    private BigDecimal nav;
-
     @Basic
-    @javax.persistence.Column(name = "NAV")
+    @Column(name = "NAV")
     public BigDecimal getNav() {
         return nav;
     }
@@ -48,10 +52,8 @@ public class FundDailyHistory {
         this.nav = nav;
     }
 
-    private BigDecimal accumNav;
-
     @Basic
-    @javax.persistence.Column(name = "accum_NAV")
+    @Column(name = "accum_NAV")
     public BigDecimal getAccumNav() {
         return accumNav;
     }
@@ -60,10 +62,8 @@ public class FundDailyHistory {
         this.accumNav = accumNav;
     }
 
-    private BigDecimal adjustNav;
-
     @Basic
-    @javax.persistence.Column(name = "adjust_NAV")
+    @Column(name = "adjust_NAV")
     public BigDecimal getAdjustNav() {
         return adjustNav;
     }
@@ -72,10 +72,8 @@ public class FundDailyHistory {
         this.adjustNav = adjustNav;
     }
 
-    private Integer fundId;
-
     @Basic
-    @javax.persistence.Column(name = "fund_id")
+    @Column(name = "fund_id")
     public Integer getFundId() {
         return fundId;
     }
@@ -84,10 +82,8 @@ public class FundDailyHistory {
         this.fundId = fundId;
     }
 
-    private BigDecimal dailyReturn;
-
     @Basic
-    @javax.persistence.Column(name = "daily_return")
+    @Column(name = "daily_return")
     public BigDecimal getDailyReturn() {
         return dailyReturn;
     }
@@ -96,10 +92,8 @@ public class FundDailyHistory {
         this.dailyReturn = dailyReturn;
     }
 
-    private BigDecimal stockRatio;
-
     @Basic
-    @javax.persistence.Column(name = "stock_ratio")
+    @Column(name = "stock_ratio")
     public BigDecimal getStockRatio() {
         return stockRatio;
     }
@@ -108,10 +102,8 @@ public class FundDailyHistory {
         this.stockRatio = stockRatio;
     }
 
-    private BigDecimal fundSize;
-
     @Basic
-    @javax.persistence.Column(name = "fund_size")
+    @Column(name = "fund_size")
     public BigDecimal getFundSize() {
         return fundSize;
     }
@@ -120,10 +112,8 @@ public class FundDailyHistory {
         this.fundSize = fundSize;
     }
 
-    private BigDecimal debtRatio;
-
     @Basic
-    @javax.persistence.Column(name = "debt_ratio")
+    @Column(name = "debt_ratio")
     public BigDecimal getDebtRatio() {
         return debtRatio;
     }
@@ -132,10 +122,8 @@ public class FundDailyHistory {
         this.debtRatio = debtRatio;
     }
 
-    private BigDecimal institutionRatio;
-
     @Basic
-    @javax.persistence.Column(name = "institution_ratio")
+    @Column(name = "institution_ratio")
     public BigDecimal getInstitutionRatio() {
         return institutionRatio;
     }
