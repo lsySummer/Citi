@@ -22,52 +22,52 @@ import java.util.*;
 public class SearchFilterAction extends BaseAction {
 
 
-    private String test = "{\n" +
-            "    'error': 0,\n" +
-            "    'message': 'reason of error',\n" +
-            "    'data': [\n" +
-            "        {   // bank\n" +
-            "            'pid': 100001,\n" +
-            "            'name': 'name',\n" +
-            "            'yearly_income_rate': 0.0295,\n" +
-            "            'product_type': '开放式净值型',\n" +
-            "            'income_type': '保本浮动收益型',\n" +
-            "            'initial_money': 50000,\n" +
-            "            'open_date': 'yyyy-MM-dd',\n" +
-            "            'distributor_bank': '浦发银行',\n" +
-            "            'distributor_institution': '浦发银行',\n" +
-            "        },\n" +
-            "        {   // fund\n" +
-            "            'pid': 100001,\n" +
-            "            'name': 'name',\n" +
-            "            'expected_income_rate': 0.05,\n" +
-            "            'state': '产品状态',\n" +
-            "            'net_value': 10000,\n" +
-            "            'sid': '基金编号',\n" +
-            "            'type': '简单基金',\n" +
-            "            'mng_charge_rate': 4.5,\n" +
-            "            'est_date': 'yyyy-MM-dd'\n" +
-            "        },\n" +
-            "        {   // insurance\n" +
-            "            'pid': 100001,\n" +
-            "            'name': 'name',\n" +
-            "            'insurance_life': '终身',\n" +
-            "            'insurance_age': 30,\n" +
-            "            'amount_in_force': [100000, 200000],    //保额区间\n" +
-            "            'way_of_charge': '缴费方式',\n" +
-            "            'distributor': '叉叉基金'\n" +
-            "        },\n" +
-            "        {   // bond\n" +
-            "            'pid': 100001,\n" +
-            "            'name': 'name',\n" +
-            "            'yearly_interest_rate': 0.07,\n" +
-            "            'nominal_interest_rate': 0.025, // 票面利率\n" +
-            "            'life': 2,  // 债券期限\n" +
-            "            'type': '债券类型',\n" +
-            "            'code': '债券代码'\n" +
-            "        }\n" +
-            "    ]\n" +
-            "}";
+//    private String test = "{\n" +
+//            "    'error': 0,\n" +
+//            "    'message': 'reason of error',\n" +
+//            "    'data': [\n" +
+//            "        {   // bank\n" +
+//            "            'pid': 100001,\n" +
+//            "            'name': 'name',\n" +
+//            "            'yearly_income_rate': 0.0295,\n" +
+//            "            'product_type': '开放式净值型',\n" +
+//            "            'income_type': '保本浮动收益型',\n" +
+//            "            'initial_money': 50000,\n" +
+//            "            'open_date': 'yyyy-MM-dd',\n" +
+//            "            'distributor_bank': '浦发银行',\n" +
+//            "            'distributor_institution': '浦发银行',\n" +
+//            "        },\n" +
+//            "        {   // fund\n" +
+//            "            'pid': 100001,\n" +
+//            "            'name': 'name',\n" +
+//            "            'expected_income_rate': 0.05,\n" +
+//            "            'state': '产品状态',\n" +
+//            "            'net_value': 10000,\n" +
+//            "            'sid': '基金编号',\n" +
+//            "            'type': '简单基金',\n" +
+//            "            'mng_charge_rate': 4.5,\n" +
+//            "            'est_date': 'yyyy-MM-dd'\n" +
+//            "        },\n" +
+//            "        {   // insurance\n" +
+//            "            'pid': 100001,\n" +
+//            "            'name': 'name',\n" +
+//            "            'insurance_life': '终身',\n" +
+//            "            'insurance_age': 30,\n" +
+//            "            'amount_in_force': [100000, 200000],    //保额区间\n" +
+//            "            'way_of_charge': '缴费方式',\n" +
+//            "            'distributor': '叉叉基金'\n" +
+//            "        },\n" +
+//            "        {   // bond\n" +
+//            "            'pid': 100001,\n" +
+//            "            'name': 'name',\n" +
+//            "            'yearly_interest_rate': 0.07,\n" +
+//            "            'nominal_interest_rate': 0.025, // 票面利率\n" +
+//            "            'life': 2,  // 债券期限\n" +
+//            "            'type': '债券类型',\n" +
+//            "            'code': '债券代码'\n" +
+//            "        }\n" +
+//            "    ]\n" +
+//            "}";
 
     public Map<String, Object> getMap() {
         Map<String, Object> map = new HashMap<>();
@@ -110,43 +110,45 @@ public class SearchFilterAction extends BaseAction {
             return SUCCESS;
         }
 
+        System.out.println(map);
+
         String type = (String) map.get("type");
         String key = (String) map.get("keyword");
         String page_num_string = (String) map.get("page_num");
 
-        int page_num = Integer.parseInt(page_num_string);
+        int page_num = Integer.parseInt(page_num_string) - 1;
+        int page_length = 1;
         System.out.println(type+" "+page_num);
 
-//        try {
-//            ProductFilter productFilter = SearchFilterFactory.createFilter(type, map);
-//            List<Product> productList = searchService.searchProductsByKey(key);
-//
-//            ProductVOFactory productVOFactory = new ProductVOFactory();
-//            for (Product product : productList) {
-//                if (productFilter.isChosen(product.getProduct())) {
-//                    productVOFactory.addProduct(product);
-//                }
-//            }
-//
-//            JSONArray jsonArray = JSONArray.fromObject(productVOFactory.getResultList());
-//
-//            context.put("searchResult", jsonArray.toString());
-//
-//        } catch (InvalidParametersException e) {
-//            e.printStackTrace();
-//        }
+        ProductVOFactory resultFactory = new ProductVOFactory();
 
-//        JSONObject result = JSONObject.fromObject(test);
+        try {
+            ProductFilter productFilter = SearchFilterFactory.createFilter(type, map);
+            List<Product> productList = searchService.searchProductsByKey(key);
 
-//        System.out.println(result.toString());
+            int index = 0;
 
+            for(int i=0;i<productList.size();i++){
+                Product product = productList.get(i);
+                if(productFilter.isChosen(product)){
+                    if(index>=page_num*8&&i<(page_num+1)*8){//保证相应页面8个产品上限
+                        resultFactory.addProduct(product);
+                    }
+                    index++;
+                }
+            }
 
+            page_length = productList.size()/8+1;
 
-        context.put("searchResultJSON", JSON.toJSON(test));
-        context.put("searchResult", getMap());
+            context.put("searchResultJSON", JSON.toJSON(resultFactory.getResultList()));
+            context.put("searchResult", resultFactory.getResultList());
 
-        context.put("currentPage", 1);
-        context.put("pageLength", 10);
+        } catch (InvalidParametersException e) {
+            e.printStackTrace();
+        }
+
+        context.put("currentPage", page_num);
+        context.put("pageLength", page_length);
 
         return SUCCESS;
     }
@@ -164,7 +166,12 @@ public class SearchFilterAction extends BaseAction {
         Iterator it = options.keys();
         while(it.hasNext()){
             String key = (String) it.next();
-            optMap.put(key, options.get(key));
+            Object object = options.get(key);
+            if(object==null){
+                optMap.put(key, null);
+            }else{
+                optMap.put(key, object);
+            }
         }
 
         map.put("options", optMap);

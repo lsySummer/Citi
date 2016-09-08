@@ -8,22 +8,25 @@
     <meta charset="UTF-8">
     <title>订单信息确认</title>
     <link href="../css/order.css" rel="stylesheet">
+
+    <script type="text/javascript" rel="stylesheet" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" rel="stylesheet" src="../js/order-confirm.js"></script>
+
 </head>
 <body>
 
-<body>
 <s:include value="header.jsp"></s:include>
 
 
 <div class="main">
     <div class="container">
         <div class="top-bar white-bg">
-            <a href="./" class="select-section current">
+            <a class="select-section current">
                 <div class="circle">1</div>
                 <span class="title">确认订单信息</span>
             </a>
             <div class="line"></div>
-            <a href="./" class="select-section">
+            <a class="select-section">
                 <div class="circle">2
                 </div>
                 <span class="title">完成支付</span>
@@ -55,10 +58,10 @@
                         </td>
                         <td>￥300</td>
                         <td>
-                            <input type="text" id="quantity1" name="quantity" value="1"/>
+                            <input type="text" id="quantity1" name="quantity" value="1" class="size"/>
                         </td>
                         <td class="product-sum">￥300</td>
-                        <td><button>删除</button></td>
+                        <td><button class="delete">删除</button></td>
                     </tr>
                     <tr>
                         <td>
@@ -72,10 +75,10 @@
                         </td>
                         <td>￥300</td>
                         <td>
-                            <input type="text" id="quantity2" name="quantity" value="1"/>
+                            <input type="text" id="quantity2" name="quantity" value="1" class="size"/>
                         </td>
                         <td class="product-sum">￥300</td>
-                        <td><button>删除</button></td>
+                        <td><button class="delete">删除</button></td>
                     </tr>
                     <tr>
                         <td>
@@ -89,10 +92,10 @@
                         </td>
                         <td>￥300</td>
                         <td>
-                            <input type="text" id="quantity3" name="quantity" value="1"/>
+                            <input type="text" id="quantity3" name="quantity" value="1" class="size"/>
                         </td>
                         <td class="product-sum">￥300</td>
-                        <td><button>删除</button></td>
+                        <td><button class="delete">删除</button></td>
                     </tr>
                     <tr>
                         <td>
@@ -106,10 +109,10 @@
                         </td>
                         <td>￥300</td>
                         <td>
-                            <input type="text" id="quantity4" name="quantity" value="1"/>
+                            <input type="text" id="quantity4" name="quantity" value="1" class="size"/>
                         </td>
                         <td class="product-sum">￥300</td>
-                        <td><button>删除</button></td>
+                        <td><button class="delete">删除</button></td>
                     </tr>
                 </table>
             </div>
@@ -123,7 +126,7 @@
                     <span class="total-title">合计:</span>
                     <span class="total-sum">￥1200</span>
                 </div>
-                <button class="block-button">提交订单</button>
+                <button id="order_confirm" class="block-button">提交订单</button>
             </div>
             <div class="clear"></div>
         </div>
@@ -131,7 +134,6 @@
 </div>
 
 <s:include value="footer.jsp"></s:include>
-</body>
 
 </body>
 </html>
