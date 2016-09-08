@@ -118,10 +118,6 @@ public interface SearchService extends BaseService{
      * get institution list
      * @return institution list
      */
-    List<Institution> getInstitutionList();
-
-    List<String> getInstitutionNameList();
-
     List<String> getInstitutionNameList(String category);
 
     List<String> getBondYieldType();

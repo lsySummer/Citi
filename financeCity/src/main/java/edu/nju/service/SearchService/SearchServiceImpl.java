@@ -258,23 +258,6 @@ public class SearchServiceImpl extends BaseFunctionServiceAdaptor implements Sea
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<String> getInstitutionNameList() {
-        List<String> list = getUserService().getCommonDao().find("SELECT i.name FROM Institution i");
-        if (list == null || list.size() == 0) {
-            return null;
-        }
-        else {
-            return list;
-        }
-    }
-
-    @Override
-    public List<Institution> getInstitutionList() {
-        return null;
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
     public List<String> getInstitutionNameList(String category) {
         String searchType;
 
