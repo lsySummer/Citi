@@ -5,7 +5,7 @@
 
 <struts>
 	
-	<package name="struts2" extends="struts-default">
+	<package name="struts2" extends="struts-default" namespace="/jsp">
 		<action name="test" class="TestAction">
 			<result name="success">/new.jsp</result>
 		</action>
@@ -36,7 +36,7 @@
 			<result name="success"></result>
 		</action>
 		
-		<action name="signup2" class="userAction" method="setUserInfoInStep2">
+		<action name="signup2" class="edu.nju.action.UserAction" method="setUserInfoInStep2">
 			<result name="success">/jsp/signup_step3.jsp</result>
 			<result name="error">/jsp/signup_step2.jsp</result>
 			<result name="login">/jsp/login.jsp</result>

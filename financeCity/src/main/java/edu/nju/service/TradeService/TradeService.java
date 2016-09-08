@@ -1,6 +1,5 @@
 package edu.nju.service.TradeService;
 
-import edu.nju.service.BaseService.BaseService;
 import edu.nju.service.Sessions.FinanceCityUser;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +9,7 @@ import java.util.List;
  * Created by Sun YuHao on 2016/7/25.
  */
 @Service
-public interface TradeService extends BaseService {
+public interface TradeService {
     /**
      * buy product
      * @param tradeItemList .

@@ -1,10 +1,6 @@
 package edu.nju.service.SearchService;
 
 import edu.nju.model.CategoryIndex;
-import edu.nju.model.Institution;
-import edu.nju.model.User;
-import edu.nju.model.UserTemperPrefer;
-import edu.nju.service.BaseService.BaseService;
 import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.ExceptionsAndError.NoSuchProductException;
 import edu.nju.vo.*;
@@ -16,7 +12,7 @@ import java.util.List;
  * Created by Sun YuHao on 2016/7/25.
  */
 @Service
-public interface SearchService extends BaseService{
+public interface SearchService {
     /**
      * get product info
      * @param productName .

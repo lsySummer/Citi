@@ -1,16 +1,12 @@
 package edu.nju.service.InvestAdvisorService;
 
 import edu.nju.model.UserTemperPrefer;
-import edu.nju.service.BaseService.BaseService;
 import edu.nju.service.ExceptionsAndError.NotAllConfigurationSetException;
 import edu.nju.service.ExceptionsAndError.NotLoginException;
 import edu.nju.service.POJO.InvestResult;
 import edu.nju.service.SearchService.SearchService;
 import edu.nju.service.Sessions.FinanceCityUser;
-import edu.nju.vo.FamilySpendingVO;
-import edu.nju.vo.IdentityVO;
 import edu.nju.vo.TemperPreferVO;
-import edu.nju.vo.UserVO;
 import org.springframework.stereotype.Service;
 
 
@@ -18,7 +14,7 @@ import org.springframework.stereotype.Service;
  * Created by Sun YuHao on 2016/7/25.
  */
 @Service
-public interface InvestAdvisorService extends BaseService {
+public interface InvestAdvisorService {
     /**
      * set preference
      *

@@ -3,7 +3,7 @@ package edu.nju.action;
 import com.opensymphony.xwork2.ActionContext;
 import edu.nju.service.ExceptionsAndError.ErrorManager;
 import edu.nju.service.SearchService.SearchService;
-import edu.nju.service.ServiceManagerImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -11,6 +11,9 @@ import java.util.List;
  * Created by Sun YuHao on 2016/9/4.
  */
 public class SearchAction extends BaseAction {
+    @Autowired
+    SearchService searchService;
+
     @SuppressWarnings("unchecked")
     public String getInstitutionList() {
         //TODO:set category
@@ -19,7 +22,6 @@ public class SearchAction extends BaseAction {
 
         try {
 
-            SearchService searchService = ServiceManagerImpl.getInstance().getSearchService();
             List<String> institutionList = searchService.getInstitutionNameList(productCategory);
 
             if (institutionList == null) {

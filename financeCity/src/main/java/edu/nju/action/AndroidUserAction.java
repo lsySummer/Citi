@@ -1,12 +1,12 @@
 package edu.nju.action;
 
 import edu.nju.service.ExceptionsAndError.*;
-import edu.nju.service.ServiceManagerImpl;
 import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.service.UserService.UserService;
 import edu.nju.vo.BaseVO;
 import edu.nju.vo.SessionIdVO;
 import edu.nju.vo.UserVO;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Map;
 
@@ -15,9 +15,11 @@ import java.util.Map;
  */
 @SuppressWarnings("unchecked")
 public class AndroidUserAction extends AndroidAction {
+    @Autowired
+    UserService userService;
+
     private String register() {
         Map map = getRequestMap();
-        UserService userService = ServiceManagerImpl.getInstance().getUserService();
         SessionIdVO sessionIdVO = new SessionIdVO();
 
         try {
@@ -61,8 +63,6 @@ public class AndroidUserAction extends AndroidAction {
     private String getUserVO() {
         Map map = getRequestMap();
 
-        UserService userService = ServiceManagerImpl.getInstance().getUserService();
-
         try {
             FinanceCityUser financeCityUser = new FinanceCityUser();
             financeCityUser.setID((Integer)map.get("id"));
@@ -82,7 +82,6 @@ public class AndroidUserAction extends AndroidAction {
     }
 
     private String setUserInfo() {
-        UserService userService = ServiceManagerImpl.getInstance().getUserService();
         Map map = getRequestMap();
 
         BaseVO baseVO = new BaseVO();
@@ -137,7 +136,6 @@ public class AndroidUserAction extends AndroidAction {
         Map map = getRequestMap();
 
         SessionIdVO ret = new SessionIdVO();
-        UserService userService = ServiceManagerImpl.getInstance().getUserService();
         try {
 
             String username = (String) map.get("username");

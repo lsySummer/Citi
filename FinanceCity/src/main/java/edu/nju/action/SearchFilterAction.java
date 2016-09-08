@@ -2,15 +2,9 @@ package edu.nju.action;
 
 import com.alibaba.fastjson.JSON;
 import com.opensymphony.xwork2.ActionContext;
-import edu.nju.service.CategoryAndProduct.Product;
-import edu.nju.service.ExceptionsAndError.InvalidParametersException;
-import edu.nju.service.POJO.ProductVOFactory;
-import edu.nju.service.POJO.SearchFilterFactory;
-import edu.nju.service.SearchService.ProductFilter;
 import edu.nju.service.SearchService.SearchService;
-import edu.nju.service.ServiceManagerImpl;
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.util.*;
@@ -20,7 +14,8 @@ import java.util.*;
  */
 @Controller
 public class SearchFilterAction extends BaseAction {
-
+    @Autowired
+    SearchService searchService;
 
     private String test = "{\n" +
             "    'error': 0,\n" +
@@ -95,7 +90,6 @@ public class SearchFilterAction extends BaseAction {
 
     @SuppressWarnings("unchecked")
     public String filter() {
-        SearchService searchService = ServiceManagerImpl.getInstance().getSearchService();
         ActionContext context = ActionContext.getContext();
 
         String json_data = request.getParameter("data");
