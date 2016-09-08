@@ -22,7 +22,7 @@ public interface SearchService extends BaseService{
      * @param productName .
      * @return product info
      */
-    Product getProductByName(String productName) throws NoSuchProductException;
+    List<Product> getProductByName(String productName) throws NoSuchProductException;
 
     /**
      * get product by id
@@ -123,6 +123,14 @@ public interface SearchService extends BaseService{
     List<String> getInstitutionNameList();
 
     List<String> getInstitutionNameList(String category);
+
+    List<String> getBondYieldType();
+
+    List<String> getBondStateType();
+
+    List<String> getFundTargetType();
+
+    List<String> getFundState();
 
     double[] getHS_300ByTime();
 }

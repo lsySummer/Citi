@@ -22,7 +22,7 @@ import java.util.Map;
  */
 @Controller
 public class UserAction extends BaseAction {
-    private final String default_after_login = "/jsp/search-result.jsp";
+    private final String default_after_login = "/jsp/searchFilter.jsp";
     private final String server = "http://localhost:8080";
 
     @SuppressWarnings("unchecked")

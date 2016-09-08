@@ -1,5 +1,6 @@
 package edu.nju.action;
 
+import edu.nju.model.ProductFund;
 import edu.nju.service.CategoryAndProduct.Category;
 import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.CategoryAndProduct.ProductCategoryManager;
@@ -101,6 +102,7 @@ public class AndroidSearchAction extends AndroidAction {
         try {
             String key = (String)map.get("keyword");
             String type = (String)map.get("type");
+            Byte order = (Byte) map.get("order");
             String searchType;
 
             ProductFilter productFilter = SearchFilterFactory.createFilter(type, map);
@@ -114,6 +116,16 @@ public class AndroidSearchAction extends AndroidAction {
 
             List<Product> productList = searchService.searchProductsByKey(key, searchType);
 
+            //set order
+            if (type.equals(ProductCategoryManager.categoryFund) && order != null) {
+                if (order == 1) {
+                    productList.sort((p1, p2) -> ((ProductFund) p2.getProduct()).getYearlyRtnRate().compareTo(((ProductFund) p1.getProduct()).getYearlyRtnRate()));
+                }
+                else if (order == 2) {
+                    productList.sort((p1, p2) -> ((ProductFund) p1.getProduct()).getYearlyRtnRate().compareTo(((ProductFund) p2.getProduct()).getYearlyRtnRate()));
+                }
+            }
+
             ProductVOFactory productVOFactory = new ProductVOFactory();
             if (productList != null) {
                 for (Product product : productList) {
@@ -123,7 +135,7 @@ public class AndroidSearchAction extends AndroidAction {
                 }
             }
 
-            searchResult.setData(productVOFactory.getResultList());
+            searchResult.setData(productVOFactory.getResultList(order));
             setResult(searchResult);
         }
         catch (Exception i) {

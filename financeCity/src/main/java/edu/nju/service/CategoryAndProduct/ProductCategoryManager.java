@@ -5,11 +5,15 @@ import edu.nju.model.ProductBond;
 import edu.nju.model.ProductFund;
 import edu.nju.model.ProductInsurance;
 import edu.nju.service.ExceptionsAndError.InvalidParametersException;
-import org.python.antlr.ast.Str;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -59,6 +63,14 @@ public class ProductCategoryManager {
     };
     static private final String[] bondInterestType = {
         "附息债", "零息债", "贴现债"
+    };
+
+    static private final String[] bondStateType = {
+        "发行中", "已售罄", "未发行"
+    };
+
+    static private final String[] fundStateType = {
+        "申购中", "认购中", "已关闭"
     };
 
     static {
@@ -114,9 +126,9 @@ public class ProductCategoryManager {
        Category category = getProductCategory(product);
 
         try {
-            Class cls = Class.forName("Product" + category);
-            Field field = cls.getField("id");
-            int id = field.getInt(product);
+            Class cls = product.getClass();
+            Method method = cls.getMethod("getId");
+            int id = (Integer)method.invoke(product);
             return generateProductID(id, category.getCategoryName());
         }
         catch (Exception e) {
@@ -134,6 +146,10 @@ public class ProductCategoryManager {
         return bondTypes[productBond.getType()];
     }
 
+    public static List<String> getBondStateType() {
+        return Arrays.asList(bondStateType);
+    }
+
     static public String getBondInterestType(Product product) {
         if (!product.getCategory().getBiggerCategory().equals("Bond")) {
             return null;
@@ -142,6 +158,12 @@ public class ProductCategoryManager {
         ProductBond productBond = (ProductBond) product.getProduct();
         return bondInterestType[productBond.getCouponType()];
     }
+
+    static public List<String> getBondInterestTypeList() {
+        return Arrays.asList(bondInterestType);
+    }
+
+
 
     static public String getBondType(ProductBond productBond) {
         return bondTypes[productBond.getType()];
@@ -193,13 +215,22 @@ public class ProductCategoryManager {
         return bank.getIfClose() == 1;
     }
 
-    static private String getFundType(Product product) {
-        if (!product.getCategory().getBiggerCategory().equals(categoryFund)) {
+    static public Category getFundCategory(Byte fund_index) {
+        try {
+            if (fund_index == null) {
+                fund_index = -1;
+            }
+
+            return getCategoryList().get(fundBase + fund_index);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
+    }
 
-        ProductFund productFund = (ProductFund)product.getProduct();
-        return categoryFund + fundTypEn[productFund.getCategory()];
+    public static List<String> getFundStateType() {
+        return Arrays.asList(fundStateType);
     }
 
     static public Integer getFundTypeIndex(String category) {
@@ -210,6 +241,10 @@ public class ProductCategoryManager {
         }
 
         return null;
+    }
+
+    public static List<String> getFundTypeCH() {
+        return Arrays.asList(fundTypeCH);
     }
 
     static public Category getProductCategory(Object product) {
