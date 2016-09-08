@@ -5,7 +5,6 @@ import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONStringer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,53 +12,38 @@ import java.util.List;
 import java.util.Map;
 
 import nju.financecity_android.dao.SearchDao;
-import nju.financecity_android.vo.ProductVO;
 
 /**
  * Created by Administrator on 2016/9/6.
  */
 public class SearchProduct {
-    public static String changeFormat()
+    public static ArrayList<HashMap<String,Object>> analyse(JSONObject param)
     {
-        JSONObject jsonObject1=new JSONObject();
-        try {
-            jsonObject1.put("pid", 100001);
-            jsonObject1.put("name", "name");
-            jsonObject1.put("yearly_income_rate", 0.0295);
-            jsonObject1.put("product_type", "开放式净值型");
-            jsonObject1.put("income_type", "保本浮动收益型");
-            jsonObject1.put("initial_money", 50000);
-            jsonObject1.put("open_date", "yyyy-MM-dd");
-            jsonObject1.put("distributor_bank", "浦发银行");
-            jsonObject1.put("distributor_institution", "浦发银行");
-        } catch(Exception e){}
-        JSONObject jsonObject0=new JSONObject();
-        try {
-            jsonObject0.put("error",0);
-            jsonObject0.put("message","reason of error");
-            jsonObject0.put("data",jsonObject1);
-        } catch(Exception e){}
-
-        return jsonObject0.toString();
-    }
-    public static List<Map<String,Object>> analyse()//TODO 针对不同筛选条件
-    {
-//        String mRawData= new SearchDao().sendPost();
-        String mRawData=changeFormat();
+        // 先封装一个 JSON 对象
+//        JSONObject param = new JSONObject();
+//        try {
+//            param.put("keyword", "300");
+//            param.put("type", "Fund");
+//        } catch (JSONException e) {}
+        String mRawData= new SearchDao().sendPost(param);
+//        String mRawData="{error=0,\"data\":[{\"est_date\":null,\"expected_income_rate\":null,\"mng_charge_rate\":0.6,\"name\":\"华泰柏瑞沪深300交易型开放式指数证券投资基金\",\"net_value\":null,\"pid\":null,\"productType\":\"fund\",\"sid\":\"510300\",\"state\":null,\"type\":\"ETF基金\"}]}";
         return onPostExecute(mRawData);
     }
 
-    public static List<Map<String,Object>> onPostExecute(String result)
+    public static ArrayList<HashMap<String,Object>> onPostExecute(String result)
     {
-        List<Map<String,Object>> resultList=new ArrayList<Map<String,Object>>();
+        ArrayList<HashMap<String,Object>> resultList=new ArrayList<HashMap<String,Object>>();
         try {
             JSONObject jsonObject = new JSONObject(result);
+            Log.i("test","SearchProduct: jsonObject="+jsonObject.toString());
             int resultCode = jsonObject.getInt("error");
             if (resultCode == 0) {
                 JSONArray resultJsonArray = jsonObject.getJSONArray("data");
+                Log.i("test","resultJsonArray="+resultJsonArray.toString());
                 for (int i = 0; i < resultJsonArray.length(); i++) {
                     JSONObject resultJsonObject = resultJsonArray.getJSONObject(i);
                     String type = resultJsonObject.getString("productType");
+                    Log.i("test","SearchProduct: type="+type);
                     HashMap<String, Object> map = new HashMap<>();
                     switch (type) {
                         case "bank":
@@ -76,17 +60,16 @@ public class SearchProduct {
                             map.put("distributor_institution", resultJsonObject.getString("distributor_institution"));
                             break;
                         case "fund":
-                            map.put("productId", resultJsonObject.getInt("productId"));
                             map.put("productType", type);
-                            map.put("pid", resultJsonObject.getInt("pid"));
-                            map.put("name", resultJsonObject.getString("name"));
-                            map.put("expected_income_rate", resultJsonObject.getDouble("expected_income_rate"));
-                            map.put("state", resultJsonObject.getString("state"));
-                            map.put("net_value", resultJsonObject.getString("net_value"));
-                            map.put("sid", resultJsonObject.getInt("sid"));
-                            map.put("type", resultJsonObject.getString("type"));
-                            map.put("mng_charge_rate", resultJsonObject.getString("mng_charge_rate"));
-                            map.put("est_date", resultJsonObject.getString("est_date"));
+                            map.put("pid", resultJsonObject.get("pid"));
+                            map.put("name", resultJsonObject.get("name"));
+                            map.put("expected_income_rate", resultJsonObject.get("expected_income_rate"));
+                            map.put("state", resultJsonObject.get("state"));
+                            map.put("net_value", resultJsonObject.get("net_value"));
+                            map.put("sid", resultJsonObject.get("sid"));
+                            map.put("type", resultJsonObject.get("type"));
+                            map.put("mng_charge_rate", resultJsonObject.get("mng_charge_rate"));
+                            map.put("est_date", resultJsonObject.get("est_date"));
                             break;
                         case "insurance":
                             map.put("productId", resultJsonObject.getInt("productId"));
@@ -111,11 +94,13 @@ public class SearchProduct {
                             break;
                     }
                     resultList.add(map);
+                    Log.i("test","SearchProduct: map="+map.toString());
                 }
             }
         }catch (JSONException e) {
             e.printStackTrace();
         }
+        Log.i("test","SearchProduct: resultList="+resultList.toString());
         return resultList;
     }
 }

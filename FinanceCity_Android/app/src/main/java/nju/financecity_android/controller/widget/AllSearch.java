@@ -65,4 +65,23 @@ public class AllSearch extends RelativeLayout {
     {
         return close_checked;
     }
+
+    public void setYear(float start,float end) {
+        year.setStart(start);
+        year.setEnd(end);
+    }
+    public void setLimit(float start,float end) {
+        limit.setStart(start);
+        limit.setEnd(end);
+    }
+    public void setClose_checked(boolean close_checked) {
+        this.close_checked=close_checked;
+        this.close.setChecked(close_checked);
+    }
+    public void setInit()
+    {
+        setYear(0,15);
+        setLimit(0,1800);
+        setClose_checked(false);
+    }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:nju="http://schemas.android.com/apk/res-auto"
     android:id="@+id/product_search_filter_bond_layout"
     android:layout_width="match_parent"
@@ -74,4 +74,4 @@
         android:layout_below="@id/ddl_name"
         android:layout_marginLeft="5dp"
         android:layout_alignParentRight="true"/>
-</RelativeLayout>
+</merge>

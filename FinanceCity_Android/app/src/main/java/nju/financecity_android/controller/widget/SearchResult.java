@@ -50,6 +50,12 @@ public class SearchResult extends ScrollView {
         listLayout=(LinearLayout) findViewById(R.id.product_search_result_layout);
         for(int i=0;i<resultList.size();i++) {
             View single=new SingleSearchResult(getContext(),resultList.get(i));
+            single.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
             listLayout.addView(single);
         }
     }
