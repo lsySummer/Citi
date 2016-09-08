@@ -16,15 +16,15 @@
 	<TextView
 		android:id="@+id/key_text"
 		android:text="关键字"
-		android:textColor="@color/grey"
-		android:textSize="15dp"
+		android:textColor="@color/WordBlack"
+		android:textSize="15sp"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"/>
 
 	<EditText
 		android:id="@+id/key_putin"
 		android:textColorLink="@color/lightBlue"
-		android:layout_width="match_parent"
+		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:layout_weight="1" />
 

@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 /**
- * Created by Sun YuHao on 2016/9/3.
+ * Created by Sun YuHao on 2016/9/5.
  */
 @Entity
 @Table(name = "product_insurance", schema = "citi", catalog = "")
@@ -19,7 +19,6 @@ public class ProductInsurance {
     private Integer indemnity;
     private BigDecimal dayRate;
     private BigDecimal yearRate;
-    private Integer length;
     private Byte payType;
     private BigDecimal expectedRate;
     private BigDecimal guaranteedRate;
@@ -126,16 +125,6 @@ public class ProductInsurance {
     }
 
     @Basic
-    @Column(name = "length")
-    public Integer getLength() {
-        return length;
-    }
-
-    public void setLength(Integer length) {
-        this.length = length;
-    }
-
-    @Basic
     @Column(name = "pay_type")
     public Byte getPayType() {
         return payType;
@@ -196,7 +185,6 @@ public class ProductInsurance {
         if (indemnity != null ? !indemnity.equals(that.indemnity) : that.indemnity != null) return false;
         if (dayRate != null ? !dayRate.equals(that.dayRate) : that.dayRate != null) return false;
         if (yearRate != null ? !yearRate.equals(that.yearRate) : that.yearRate != null) return false;
-        if (length != null ? !length.equals(that.length) : that.length != null) return false;
         if (payType != null ? !payType.equals(that.payType) : that.payType != null) return false;
         if (expectedRate != null ? !expectedRate.equals(that.expectedRate) : that.expectedRate != null) return false;
         if (guaranteedRate != null ? !guaranteedRate.equals(that.guaranteedRate) : that.guaranteedRate != null)
@@ -219,7 +207,6 @@ public class ProductInsurance {
         result = 31 * result + (indemnity != null ? indemnity.hashCode() : 0);
         result = 31 * result + (dayRate != null ? dayRate.hashCode() : 0);
         result = 31 * result + (yearRate != null ? yearRate.hashCode() : 0);
-        result = 31 * result + (length != null ? length.hashCode() : 0);
         result = 31 * result + (payType != null ? payType.hashCode() : 0);
         result = 31 * result + (expectedRate != null ? expectedRate.hashCode() : 0);
         result = 31 * result + (guaranteedRate != null ? guaranteedRate.hashCode() : 0);

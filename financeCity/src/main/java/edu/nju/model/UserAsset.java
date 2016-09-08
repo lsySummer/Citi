@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 /**
- * Created by Sun YuHao on 2016/8/31.
+ * Created by Sun YuHao on 2016/9/5.
  */
 @Entity
 @Table(name = "user_asset", schema = "citi", catalog = "")

@@ -48,6 +48,10 @@ public class AndroidUserAction extends AndroidAction {
             i2.printStackTrace();
             ErrorManager.setError(sessionIdVO, ErrorManager.errorInvalidMobile);
         }
+        catch (Exception e2) {
+            e2.printStackTrace();
+            ErrorManager.setError(sessionIdVO, ErrorManager.errorInvalidParameter);
+        }
 
         setResult(sessionIdVO);
 
@@ -134,25 +138,30 @@ public class AndroidUserAction extends AndroidAction {
 
         SessionIdVO ret = new SessionIdVO();
         UserService userService = ServiceManagerImpl.getInstance().getUserService();
+        try {
 
-        String username = (String)map.get("username");
-        String password = (String)map.get("password");
-        if (username == null || password == null) {
+            String username = (String) map.get("username");
+            String password = (String) map.get("password");
+            if (username == null || password == null) {
+                ErrorManager.setError(ret, ErrorManager.errorInvalidParameter);
+
+                setResult(ret);
+                return SUCCESS;
+            }
+
+            FinanceCityUser financeCityUser = userService.login(username, password);
+            if (financeCityUser == null) {
+                ErrorManager.setError(ret, ErrorManager.errorInvalidPassword);
+
+                setResult(ret);
+            } else {
+                ErrorManager.setError(ret, ErrorManager.errorNormal);
+                ret.setSessionId(financeCityUser.getID());
+                setResult(ret);
+            }
+        }
+        catch (Exception e) {
             ErrorManager.setError(ret, ErrorManager.errorInvalidParameter);
-
-            setResult(ret);
-            return SUCCESS;
-        }
-
-        FinanceCityUser financeCityUser = userService.login(username, password);
-        if (financeCityUser == null) {
-            ErrorManager.setError(ret, ErrorManager.errorInvalidPassword);
-
-            setResult(ret);
-        }
-        else {
-            ErrorManager.setError(ret, ErrorManager.errorNormal);
-            ret.setSessionId(financeCityUser.getID());
             setResult(ret);
         }
 

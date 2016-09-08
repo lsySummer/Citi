@@ -1,56 +1,56 @@
 package nju.financecity_android.controller.activity;
 
+import android.annotation.TargetApi;
+import android.app.ActionBar;
 import android.app.Fragment;
-import android.content.Context;
 import android.os.Bundle;
-import android.text.Layout;
-import android.util.AttributeSet;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.ListView;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
-import android.widget.SimpleAdapter;
 import android.widget.Spinner;
-import android.widget.TableRow;
+import android.widget.Switch;
 import android.widget.TextView;
 
-import org.apache.http.impl.conn.AbstractClientConnAdapter;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.RunnableFuture;
 
 import nju.financecity_android.R;
+import nju.financecity_android.controller.widget.AllSearch;
+import nju.financecity_android.controller.widget.BankSearch;
 import nju.financecity_android.controller.widget.Bar;
-import nju.financecity_android.controller.widget.Choose;
-import nju.financecity_android.controller.widget.Key;
-import nju.financecity_android.controller.widget.Onoff;
-import nju.financecity_android.vo.ProductInfo;
+import nju.financecity_android.controller.widget.BondSearch;
+import nju.financecity_android.controller.widget.FundSearch;
+import nju.financecity_android.controller.widget.InsuranceSearch;
+import nju.financecity_android.controller.widget.SearchResult;
+import nju.financecity_android.controller.widget.SingleSearchResult;
+import nju.financecity_android.dao.SearchDao;
+import nju.financecity_android.model.SearchAgent;
+import nju.financecity_android.model.SearchProduct;
+import nju.financecity_android.vo.ProductVO;
 
 /**
  * Created by Administrator on 2016/9/3.
  */
-public class ProductSearch extends Fragment implements View.OnClickListener{
-    /**产品搜索主页面*/
-    private static LinearLayout product_search_layout;
-    /**产品搜索筛选器*/
-    private static LinearLayout product_search_filter_layout;
-    /**产品搜索结果*/
-    private static LinearLayout product_search_result_layout;
-    /**产品搜索筛选器列表*/
-    private static LinearLayout product_search_filter_list_layout;
-    /**产品搜索结果列表*/
-    private static ListView product_search_result_listview;
-    private ArrayList<HashMap<String,Object>> resultList;
-    private SimpleAdapter resultAdapter;
+public class ProductSearch extends Fragment{
+    /**产品搜索体*/
+//    private RelativeLayout product_search_layout;
+    private RelativeLayout product_search_body;
+    private SearchResult searchResult;
 
     /**搜索按钮*/
     private static Button product_search_filter_button;
@@ -62,134 +62,156 @@ public class ProductSearch extends Fragment implements View.OnClickListener{
         return view;
     }
 
+    @TargetApi(19)
     @Override
     public void onStart() {
         super.onStart();
-        initProduct_search();
-        initProduct_result();
-    }
+//        this.product_search_layout=(RelativeLayout)getView().findViewById(R.id.product_search_layout);
+        this.product_search_body=(RelativeLayout)getView().findViewById(R.id.product_search_body);
+//        final RelativeLayout.LayoutParams rlp_result=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.MATCH_PARENT);
+//        rlp_result.addRule(RelativeLayout.BELOW,R.id.slavery_spinner);
 
-    public void initProduct_search() {
-        this.product_search_layout=(LinearLayout)getView().findViewById(R.id.product_search_layout);
-        this.product_search_filter_layout =(LinearLayout)getView().findViewById(R.id.product_search_filter_layout);
-        this.product_search_filter_list_layout=(LinearLayout) getView().findViewById(R.id.product_search_filter_list_layout);
+        //TODO 此处应加载所有产品
+        List<ProductVO> list=new ArrayList<ProductVO>();
+                    /*=======================================================================================*/
+        list.add(new ProductVO("sh600000","稳利80","bank",3.57,"这是平安银行的理财产品"));
+        list.add(new ProductVO("dghesct","万科债券","bond",5.67,"这是万科的企业债券"));
+        list.add(new ProductVO("100001","中国人寿","insurance",2.05,"这是中国人寿的分红险种"));
+        list.add(new ProductVO("567uu9","伊尔基金","fund",2.67,"这是平安银行的理财产品"));
+        list.add(new ProductVO("wnr300006","我瞎编的","bond",100.67,"这是一款暴利基金"));
+                    /*=======================================================================================*/
+        searchResult=new SearchResult(getActivity(),list);
+        product_search_body.addView(searchResult);
+//        product_search_layout.addView(searchResult,rlp_result);
 
-        this.product_search_filter_button=(Button)getView().findViewById(R.id.product_search_filter_button);
-        this.product_search_filter_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                product_search_result_listview TODO 显示搜索结果
-                ArrayList<ProductInfo> list=new ArrayList<ProductInfo>();
-                ProductInfo pi1=new ProductInfo();
-                pi1.productName="some name";
-                pi1.currPrice=100.8;
-                list.add(pi1);
-                setResult(list);
-            }
-        });
+        //关键字搜索框
+        final EditText key=(EditText)getView().findViewById(R.id.key);
+        Log.i("key",key.getText().toString());
+        //主筛选框
+        final Spinner master=(Spinner)getView().findViewById(R.id.master_spinner);
+        ArrayAdapter<String> master_adapter=new ArrayAdapter<String>(getActivity(),R.layout.spinner_element,getResources().getStringArray(R.array.master_destination));
+        master.setAdapter(master_adapter);
+        //副筛选框
+        final Spinner slavery=(Spinner)getView().findViewById(R.id.slavery_spinner);
+        final ArrayAdapter<String> slavery_adapter=new ArrayAdapter<String>(getActivity(),R.layout.spinner_element,getResources().getStringArray(R.array.slavery_all));
+        slavery.setAdapter(slavery_adapter);
+        final ArrayAdapter<String>[] adapter=new ArrayAdapter[]{slavery_adapter};
 
-        setSearchAll();
-    }
+        final int[] selector={0,0};//两个spinner
+        final ArrayList<String[]> content=new ArrayList<String[]>();
+        content.add(getResources().getStringArray(R.array.slavery_all));
+        content.add(getResources().getStringArray(R.array.slavery_bank));
+        content.add(getResources().getStringArray(R.array.slavery_bond));
+        content.add(getResources().getStringArray(R.array.slavery_fund));
+        content.add(getResources().getStringArray(R.array.slavery_insurance));
+        final View[] filter=new View[]{new AllSearch(getActivity())};
+        final AllSearch all = new AllSearch(getActivity());
+        final BankSearch bank = new BankSearch(getActivity());
+        final BondSearch bond = new BondSearch(getActivity());
+        final FundSearch fund = new FundSearch(getActivity());
+        final InsuranceSearch insurance = new InsuranceSearch(getActivity());
+        final boolean[] isPicked={false};
 
-    public void initProduct_result()
-    {
-        this.product_search_result_layout=(LinearLayout)getView().findViewById(R.id.product_search_result_layout);
-        this.product_search_result_listview =(ListView)getView().findViewById(R.id.product_search_result_listview);
-        this.resultList=new ArrayList<HashMap<String,Object>>();
-        /*===============================*/
-        HashMap<String,Object> map1=new HashMap<String, Object>();
-        Button button1=new Button(getActivity());
-        button1.setText("product1");
-        TextView textview1=new TextView(getActivity());
-        textview1.setText("introduction1");
-        map1.put("product",button1);
-        map1.put("introduction",textview1);
-        this.resultList.add(map1);
-
-        HashMap<String,Object> map2=new HashMap<String, Object>();
-        Button button2=new Button(getActivity());
-        button2.setText("product2");
-        TextView textview2=new TextView(getActivity());
-        textview2.setText("introduction2");
-        map2.put("product",button2);
-        map2.put("introduction",textview2);
-        this.resultList.add(map2);
-
-        HashMap<String,Object> map3=new HashMap<String, Object>();
-        Button button3=new Button(getActivity());
-        button3.setText("product3");
-        TextView textview3=new TextView(getActivity());
-        textview3.setText("introduction3");
-        map3.put("product",button3);
-        map3.put("introduction",textview3);
-        this.resultList.add(map3);
-        /*===============================*/
-        this.resultAdapter=new SimpleAdapter(getActivity(),resultList,R.layout.product_search_result_element,new String[]{"product","introduction"},new int[]{R.id.search_result_element_button,R.id.search_result_element_text});
-        this.product_search_result_listview.setAdapter(resultAdapter);
-
-    }
-
-    public void setSearch(int n)
-    {
-        Key key=new Key(getActivity());
-        key.setId(R.id.key);
-        final Choose choose=new Choose(this.getActivity());
-        choose.setId(R.id.choose);
-
-        key.setKey_text("关键字");
-        choose.setChoose_text("筛选");
-        final List<Integer> spinner2_resources=new ArrayList<Integer>();
-        spinner2_resources.add(R.array.slavery_all);
-        spinner2_resources.add(R.array.slavery_bank);
-        spinner2_resources.add(R.array.slavery_debt);
-        spinner2_resources.add(R.array.slavery_fund);
-        spinner2_resources.add(R.array.slavery_insurance);
-//            choose.setSpinner_content(R.array.master_destination,spinner2_resources);
-        choose.setSpinner1_content(R.array.master_destination);
-        choose.setSpinner1_choosed(n);
-        choose.setSpinner2_content(R.array.slavery_all);
-        choose.setOnItemSelectedListener(
+//        final int count[]={0};//改变几个组件
+//        final ArrayList<View> viewList=new ArrayList<View>();
+        master.setOnItemSelectedListener(
                 new Spinner.OnItemSelectedListener()
                 {
                     @Override
                     public void onItemSelected(AdapterView<?> av, View v, int pos, long arg3)
                     {
-                        choose.setSpinner1_choosed(pos);
-
-                        //修改spinner2的内容
-                        choose.setSpinner2_content(spinner2_resources.get(pos));
-
-                        //修改其他筛选器
-                        switch(pos)
-                        {
+                        selector[0]=pos;
+                        //修改slavery的内容
+                        adapter[0]=new ArrayAdapter<String>(getActivity(),R.layout.spinner_element,content.get(pos));
+                        slavery.setAdapter(adapter[0]);
+                        switch (selector[0]) {
                             case 0:
-                                setSearchAll();
+//                                View all = new AllSearch(getActivity());
+//                                all.setLayoutParams(rlp_result);
+                                all.setInit();
+                                filter[0]=all;
+//                                viewList.clear();
+//                                RelativeLayout.LayoutParams rlp_all_year=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
+//                                rlp_all_year.addRule(RelativeLayout.BELOW,R.id.master_spinner);
+//                                Bar all_year=new Bar(getActivity());
+//                                all_year.setStart(0f);
+//                                all_year.setEnd(15f);
+//                                all_year.setInterval(0.0001f);
+//                                all_year.setUnit("%");
+//                                all_year.setBar_text("年化收益率");
+//                                all_year.setId(R.id.all_year);
+//                                all_year.setLayoutParams(rlp_all_year);
+//                                viewList.add(all_year);
+//
+//                                rlp_all_year=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
+//                                rlp_all_year.addRule(RelativeLayout.BELOW,R.id.all_year);
+//                                Bar all_limit=new Bar(getActivity());
+//                                all_limit.setStart(0f);
+//                                all_limit.setEnd(1800f);
+//                                all_limit.setInterval(1f);
+//                                all_limit.setUnit("天");
+//                                all_limit.setBar_text("期限");
+//                                all_limit.setId(R.id.all_limit);
+//                                all_limit.setLayoutParams(rlp_all_year);
+//                                viewList.add(all_limit);
+//
+//                                rlp_all_year=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,40);
+//                                rlp_all_year.addRule(RelativeLayout.BELOW,R.id.all_limit);
+//                                rlp_all_year.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+//                                TextView all_close_name=new TextView(getActivity());
+//                                all_close_name.setText("是否封闭");
+//                                all_close_name.setTextSize(18);//TODO 单位
+//                                all_close_name.setTextColor(getResources().getColor(R.color.WordBlack));
+//                                all_close_name.setGravity(Gravity.CENTER);
+//                                all_close_name.setLayoutParams(rlp_all_year);
+//                                all_close_name.setId(R.id.all_close_name);
+//                                all_close_name.setLayoutParams(rlp_all_year);
+//                                viewList.add(all_close_name);
+//
+//                                rlp_all_year=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,40);
+//                                rlp_all_year.addRule(RelativeLayout.BELOW,R.id.all_limit);
+//                                rlp_all_year.addRule(RelativeLayout.RIGHT_OF,R.id.all_close_name);
+//                                rlp_all_year.setMargins(18,0,0,0);//left top right bottom
+//                                Switch all_close_switch=new Switch(getActivity());
+//                                all_close_switch.setId(R.id.all_close_switch);
+//                                all_close_switch.setLayoutParams(rlp_all_year);
+//                                viewList.add(all_close_switch);
+
                                 break;
                             case 1:
-                                setSearchBank();
+//                                View bank = new BankSearch(getActivity());
+//                                bank.setLayoutParams(rlp_result);
+//                                bank.set
+                                bank.setInit();
+                                filter[0]=bank;
                                 break;
                             case 2:
-                                setSearchDebt();
+//                                View bond = new BondSearch(getActivity());
+//                                bond.setLayoutParams(rlp_result);
+                                bond.setInit();
+                                filter[0]=bond;
                                 break;
                             case 3:
-                                setSearchFund();
+//                                View fund = new FundSearch(getActivity());
+//                                fund.setLayoutParams(rlp_result);
+                                fund.setInit();
+                                filter[0]=fund;
                                 break;
                             case 4:
-                                setSearchInsurance();
+//                                View insurance = new InsuranceSearch(getActivity());
+//                                insurance.setLayoutParams(rlp_result);
+                                insurance.setInit();
+                                filter[0]=insurance;
                                 break;
                         }
-                    }
-                    @Override
-                    public void onNothingSelected(AdapterView<?> arg0) {
-                        //nothing
-                    }
-                },
-                new Spinner.OnItemSelectedListener()
-                {
-                    @Override
-                    public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3)
-                    {
-                        //TODO
+                        if(isPicked[0])
+                        {
+                            //已经在筛选则直接更改页面
+                            product_search_body.removeAllViews();
+                            product_search_body.addView(filter[0]);
+////                            product_search_layout.removeViewAt(7);
+////                            product_search_layout.addView(filter[0]);
+                        }
                     }
                     @Override
                     public void onNothingSelected(AdapterView<?> arg0) {
@@ -198,179 +220,215 @@ public class ProductSearch extends Fragment implements View.OnClickListener{
                 }
         );
 
-        product_search_filter_list_layout.addView(choose);
-        product_search_filter_list_layout.addView(key);
+        slavery.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                selector[1]=i;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        //搜索按钮
+        Button search=(Button)getView().findViewById(R.id.search);
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO 关键字和条件一起搜索得到产品信息列表
+                    /*=======================================================================================*/
+                final ArrayList<HashMap<String,Object>> maps=new ArrayList<HashMap<String,Object>>();
+                Thread thread=new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String[] types={"All","Bank","Bond","Fund","Insurance"};
+                        JSONObject masterJObject=new JSONObject();
+                        try {
+                            if(key.getText()!=null)
+                            {
+                                masterJObject.put("keyword", key.getText());
+                            }
+                            else
+                            {
+                                Log.i("test","key is blank");
+                            }
+                            masterJObject.put("type",types[selector[0]]);
+                        }catch(Exception e){Log.e("test","condition to json exception1");e.printStackTrace();}
+                        JSONObject optionJObject=new JSONObject();
+                        try {
+                            switch (selector[0]) {//TODO 还要处理默认情况,很多数据还不对
+                                case 0:
+                                    AllSearch allSearch = (AllSearch) filter[0];
+                                    float[] all_yearly_income_rate = {allSearch.getYearMin(), allSearch.getYearMax()};
+                                    float[] all_expiration = {allSearch.getLimitMin(), allSearch.getLimitMax()};
+                                    int all_is_close_ended = 0;//TODO 0的意思
+                                    if (allSearch.getCloseChecked()) {
+                                        all_is_close_ended = 1;
+                                    }
+                                    optionJObject.put("yearly_income_rate", new JSONArray(all_yearly_income_rate));
+                                    optionJObject.put("expiration",new JSONArray(all_expiration));
+                                    optionJObject.put("is_close_ended",all_is_close_ended);
+                                    break;
+                                case 1:
+                                    BankSearch bankSearch = (BankSearch) filter[0];
+                                    float[] bank_yearly_income_rate = {bankSearch.getYearMin(), bankSearch.getYearMax()};
+                                    float[] bank_expiration = {bankSearch.getLimitMin(), bankSearch.getLimitMax()};
+                                    float[] bank_initial_amount = {bankSearch.getStartMin(), bankSearch.getStartMax()};
+                                    String bank_institution_manage=bankSearch.getAgent();
+                                    String bank_income_type=bank.getIncometype();
+                                    int bank_is_close_ended = 0;//TODO 0的意思
+                                    if (bankSearch.getCloseChecked()) {
+                                        bank_is_close_ended = 1;
+                                    }
+                                    optionJObject.put("yearly_income_rate", new JSONArray(bank_yearly_income_rate));
+                                    optionJObject.put("expiration",new JSONArray(bank_expiration));
+                                    optionJObject.put("is_close_ended",bank_is_close_ended);
+                                    optionJObject.put("initial_amount",new JSONArray(bank_initial_amount));
+                                    if(!bank_institution_manage.equals("所有"))
+                                    {
+                                        optionJObject.put("institution_manage",bank_institution_manage);//TODO
+                                    }
+                                    optionJObject.put("income_type",bank_income_type);//TODO
+                                    break;
+                                case 2:
+                                    BondSearch bondSearch = (BondSearch) filter[0];
+                                    float[] bond_yearly_income_rate = {bondSearch.getYearMin(), bondSearch.getYearMax()};
+                                    float[] bond_expiration = {bondSearch.getLimitMin(), bondSearch.getLimitMax()};
+                                    String bond_expiration_date=bondSearch.getDdl()+""+"-12-31";//TODO
+                                    String bond_state=bondSearch.getState();
+                                    optionJObject.put("yearly_income_rate", new JSONArray(bond_yearly_income_rate));
+                                    optionJObject.put("expiration",new JSONArray(bond_expiration));
+                                    optionJObject.put("expiration_date",bond_expiration_date);
+                                    if(!bond_state.equals("所有")) {
+                                        optionJObject.put("state", bond_state);
+                                    }
+                                    break;
+                                case 3:
+                                    FundSearch fundSearch=(FundSearch) filter[0];
+                                    String fund_institution_manage=fundSearch.getAgent();
+                                    String fund_type=slavery.getAdapter().getItem(selector[1]).toString();
+                                    String fund_state=fundSearch.getState();
+                                    float[] fund_net_value={fundSearch.getLatestMin(),fundSearch.getLatestMax()};
+                                    int fund_is_close_ended=0;
+                                    if(fundSearch.getCloseChecked()){fund_is_close_ended=1;}
+                                    int fund_sort_type=fundSearch.getSort_type_item();
+                                    if(fund_sort_type==2){fund_sort_type=-1;}
+                                    int fund_expiration=fundSearch.getSortYear();//TODO
+                                    if(!fund_institution_manage.equals("所有"))
+                                    {
+                                        optionJObject.put("institution_manage",fund_institution_manage);//TODO
+                                    }
+                                    optionJObject.put("type",fund_type);
+                                    if(!fund_state.equals("所有")) {
+                                        optionJObject.put("state", fund_state);
+                                    }
+                                    optionJObject.put("net_value",new JSONArray(fund_net_value));
+                                    optionJObject.put("is_close_ended",fund_is_close_ended);
+                                    optionJObject.put("sort_type",fund_sort_type);
+                                    if(fund_expiration!=-1)
+                                        optionJObject.put("expiration",fund_expiration);
+                                    break;
+                                case 4:
+                                    InsuranceSearch insuranceSearch=(InsuranceSearch)filter[0];
+                                    String insurance_length_of_years=insuranceSearch.getLimit();//TODO
+                                    float[] insurance_income_rate={insuranceSearch.getYearMin(),insuranceSearch.getYearMax()};
+                                    String insurance_distributor=insuranceSearch.getAgent();
+                                    float[] insurance_price={insuranceSearch.getValueMin(),insuranceSearch.getValueMax()};
+                                    optionJObject.put("length_of_years",insurance_length_of_years);
+                                    optionJObject.put("income_rate",new JSONArray(insurance_income_rate));
+                                    if(!insurance_distributor.equals("所有"))
+                                    {
+                                        optionJObject.put("institution_manage",insurance_distributor);//TODO
+                                    }
+                                    optionJObject.put("price",new JSONArray(insurance_price));
+                                    break;
+                            }
+                            if(optionJObject.length()!=0)
+                            {
+                                masterJObject.put("options",optionJObject);
+                            }
+                            Log.i("test","optionObject="+optionJObject.toString());
+                            Log.i("test","masterObject="+masterJObject.toString());
+                        }catch(Exception e){Log.e("test","condition to json exception2");e.printStackTrace();}
+                        maps.addAll(SearchProduct.analyse(masterJObject));
+                    }
+                });
+                thread.start();
+                List<ProductVO> list = new ArrayList<ProductVO>();
+                try{thread.join();}catch(Exception e){};
+
+                for(int i=0;i<maps.size();i++) {//TODO 要展现哪些数据
+                    HashMap<String, Object> map = maps.get(i);
+                    String sid = (String) map.get("sid");
+                    String name = (String) map.get("name");
+                    String type = (String) map.get("productType");
+                    double year = 0;
+                    try {
+                        year = (double) map.get("expected_income_rate");
+                    }catch(Exception e){}
+                    String state = (String) map.get("type");
+                    list.add(new ProductVO(sid, name, type, year, state));
+                }
+                /*=======================================================================================*/
+
+                searchResult = new SearchResult(getActivity(), list);
+                isPicked[0] = false;
+
+                product_search_body.removeAllViews();
+                product_search_body.addView(searchResult);
+////                product_search_layout.removeViewAt(7);
+//                while(count[0]>=0)
+//                {
+//                    product_search_layout.removeViewAt(7+count[0]);
+//                    count[0]--;
+//                }
+//                product_search_layout.addView(searchResult,rlp_result);
+//                count[0]++;
+
+            }
+        });
+        //筛选按钮
+        Button pick=(Button)getView().findViewById(R.id.pick);
+        pick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                isPicked[0]=!isPicked[0];
+
+                product_search_body.removeAllViews();
+                product_search_body.addView(filter[0]);
+//                while(count[0]>=0)
+//                {
+//                    product_search_layout.removeViewAt(7+count[0]);
+//                    count[0]--;
+//                }
+
+////                product_search_layout.removeViewAt(7);
+////                product_search_layout.addView(filter[0]);
+//                for(int i=0;i<viewList.size();i++)
+//                {
+//                    product_search_layout.addView(viewList.get(i));
+//                    count[0]++;
+//                }
+            }
+        });
+        //返回按钮
+        ImageButton back=(ImageButton)getView().findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                product_search_body.removeAllViews();
+                product_search_body.addView(searchResult);
+////                product_search_layout.removeViewAt(7);
+//                while(count[0]>=0)
+//                {
+//                    product_search_layout.removeViewAt(7+count[0]);
+//                    count[0]--;
+//                }
+//                product_search_layout.addView(searchResult,rlp_result);
+//                count[0]++;
+            }
+        });
     }
 
-    public void setSearchAll()
-    {
-        product_search_filter_list_layout.removeAllViews();
-        setSearch(0);
-
-        Bar year=new Bar(this.getActivity());
-        year.setId(R.id.year);
-        Bar limit=new Bar(this.getActivity());
-        limit.setId(R.id.limit);
-        Onoff close=new Onoff(this.getActivity());
-        close.setId(R.id.close);
-
-        year.setBar_text("年化收益率");
-        limit.setBar_text("期限");
-        close.setOnoff_text("是否封闭");
-
-        product_search_filter_list_layout.addView(year);
-        product_search_filter_list_layout.addView(limit);
-        product_search_filter_list_layout.addView(close);
-
-    }
-
-    public void setSearchBank()
-    {
-        product_search_filter_list_layout.removeAllViews();
-        setSearch(1);
-
-        Bar year=new Bar(this.getActivity());
-        year.setId(R.id.year1);
-        Bar start=new Bar(this.getActivity());
-        start.setId(R.id.start);
-        Bar limit=new Bar(this.getActivity());
-        limit.setId(R.id.limit1);
-        Choose advisement=new Choose(this.getActivity());
-        advisement.setId(R.id.advisement);
-        Choose incometype=new Choose(this.getActivity());
-        incometype.setId(R.id.incometype);
-        Onoff close=new Onoff(this.getActivity());
-        close.setId(R.id.close1);
-
-        year.setBar_text("预计年利率");
-        start.setBar_text("起购金额");
-        limit.setBar_text("期限");
-        advisement.setChoose_text("管理机构");
-        incometype.setChoose_text("收益类型");
-        close.setOnoff_text("是否封闭");
-
-        product_search_filter_list_layout.addView(year);
-        product_search_filter_list_layout.addView(start);
-        product_search_filter_list_layout.addView(limit);
-        product_search_filter_list_layout.addView(advisement);
-        product_search_filter_list_layout.addView(incometype);
-        product_search_filter_list_layout.addView(close);
-
-    }
-
-    public void setSearchDebt()
-    {
-        product_search_filter_list_layout.removeAllViews();
-        setSearch(2);
-
-        Bar year=new Bar(this.getActivity());
-        year.setId(R.id.year2);
-        Bar limit=new Bar(this.getActivity());
-        limit.setId(R.id.limit2);
-        Choose end=new Choose(this.getActivity());
-        end.setId(R.id.end1);
-        Choose state=new Choose(this.getActivity());
-        state.setId(R.id.state);
-
-        year.setBar_text("年利率");
-        limit.setBar_text("期限");
-        end.setChoose_text("到期日");
-        state.setChoose_text("状态");
-
-        product_search_filter_list_layout.addView(year);
-        product_search_filter_list_layout.addView(limit);
-        product_search_filter_list_layout.addView(end);
-        product_search_filter_list_layout.addView(state);
-    }
-
-    public void setSearchFund()
-    {
-        product_search_filter_list_layout.removeAllViews();
-        setSearch(3);
-
-        Choose advisement=new Choose(this.getActivity());
-        advisement.setId(R.id.advisement1);
-        Choose incometype=new Choose(this.getActivity());
-        incometype.setId(R.id.incometype1);
-        Choose state=new Choose(this.getActivity());
-        state.setId(R.id.state1);
-        Bar latest=new Bar(this.getActivity());
-        latest.setId(R.id.latest);
-        Onoff close=new Onoff(this.getActivity());
-        close.setId(R.id.close2);
-        Onoff sort=new Onoff(this.getActivity());
-        sort.setId(R.id.sort);
-        Choose limit=new Choose(this.getActivity());
-        limit.setId(R.id.limit3);
-
-        advisement.setChoose_text("管理机构");
-        incometype.setChoose_text("目标类型");
-        state.setChoose_text("状态");
-        latest.setBar_text("最新净值");
-        close.setOnoff_text("是否封闭");
-        sort.setOnoff_text("按近X年收益率排序");
-        limit.setChoose_text("期限");
-
-        product_search_filter_list_layout.addView(advisement);
-        product_search_filter_list_layout.addView(incometype);
-        product_search_filter_list_layout.addView(state);
-        product_search_filter_list_layout.addView(latest);
-        product_search_filter_list_layout.addView(close);
-        product_search_filter_list_layout.addView(sort);
-        product_search_filter_list_layout.addView(limit);
-    }
-
-    public void setSearchInsurance()
-    {
-        product_search_filter_list_layout.removeAllViews();
-        setSearch(4);
-
-        Bar year=new Bar(this.getActivity());
-        year.setId(R.id.year3);
-        Bar broadcast=new Bar(this.getActivity());
-        broadcast.setId(R.id.broadcast);
-        Choose company=new Choose(this.getActivity());
-        company.setId(R.id.company);
-        Choose value=new Choose(this.getActivity());
-        value.setId(R.id.value);
-
-        year.setBar_text("年利率");
-        broadcast.setBar_text("期限");
-        company.setChoose_text("发行公司");
-        value.setChoose_text("保险产品金额");
-
-        product_search_filter_list_layout.addView(year);
-        product_search_filter_list_layout.addView(broadcast);
-        product_search_filter_list_layout.addView(company);
-        product_search_filter_list_layout.addView(value);
-    }
-
-    public void setResult(ArrayList<ProductInfo> list)
-    {
-        this.resultList.clear();
-        for(int i=0;i<list.size();i++)
-        {
-            ProductInfo pInfo=list.get(i);
-            HashMap<String,Object> map=new HashMap<String,Object>();
-            Button button=new Button(getActivity());
-            button.setText(pInfo.productName);
-            TextView textview=new TextView(getActivity());
-            textview.setText(pInfo.currPrice+"");
-            map.put("product",pInfo.productName);
-            map.put("introduction",pInfo.currPrice+"");//TODO 这里可能有改动
-            resultList.add(map);
-        }
-        this.resultAdapter=new SimpleAdapter(getActivity(),resultList,R.layout.product_search_result_element,new String[]{"product","introduction"},new int[]{R.id.search_result_element_button,R.id.search_result_element_text});
-        this.product_search_result_listview.setAdapter(resultAdapter);
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-        case R.id.product_search_layout:
-            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-            break;
-        }
-    }
 }

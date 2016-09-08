@@ -57,21 +57,17 @@ public class Footer extends LinearLayout{
 
     public void setSelectedById(int id) {
         imgs[0].setImageResource(R.mipmap.products_unselected);
-        imgs[1].setImageResource(R.mipmap.investment_unselected);
-        imgs[2].setImageResource(R.mipmap.asset_unselected);
-        imgs[3].setImageResource(R.mipmap.personal_unselected);
+        imgs[1].setImageResource(R.mipmap.asset_unselected);
+        imgs[2].setImageResource(R.mipmap.personal_unselected);
         switch (id) {
             case 0:
                 imgs[0].setImageResource(R.mipmap.products_selected);
                 break;
             case 1:
-                imgs[1].setImageResource(R.mipmap.investment_selected);
+                imgs[1].setImageResource(R.mipmap.asset_selected);
                 break;
             case 2:
-                imgs[2].setImageResource(R.mipmap.asset_selected);
-                break;
-            case 3:
-                imgs[3].setImageResource(R.mipmap.personal_selected);
+                imgs[2].setImageResource(R.mipmap.personal_selected);
                 break;
             default:
         }
@@ -82,14 +78,11 @@ public class Footer extends LinearLayout{
             case "product":
                 setSelectedById(0);
                 return;
-            case "investment":
+            case "asset":
                 setSelectedById(1);
                 return;
-            case "asset":
-                setSelectedById(2);
-                return;
             case "personal":
-                setSelectedById(3);
+                setSelectedById(2);
                 return;
             default:
         }
@@ -102,27 +95,23 @@ public class Footer extends LinearLayout{
     }
 
     private void loadComponents() {
-        items = new LinearLayout[4];
+        items = new LinearLayout[3];
         items[0] = (LinearLayout) findViewById(R.id.itmProduct);
-        items[1] = (LinearLayout) findViewById(R.id.itmInvestment);
-        items[2] = (LinearLayout) findViewById(R.id.itmAsset);
-        items[3] = (LinearLayout) findViewById(R.id.itmPersonalInfo);
+        items[1] = (LinearLayout) findViewById(R.id.itmAsset);
+        items[2] = (LinearLayout) findViewById(R.id.itmPersonalInfo);
 
-        imgs = new ImageView[4];
+        imgs = new ImageView[3];
         imgs[0] = (ImageView) findViewById(R.id.imgProduct);
-        imgs[1] = (ImageView) findViewById(R.id.imgInvestment);
-        imgs[2] = (ImageView) findViewById(R.id.imgAsset);
-        imgs[3] = (ImageView) findViewById(R.id.imgPersonalInfo);
+        imgs[1] = (ImageView) findViewById(R.id.imgAsset);
+        imgs[2] = (ImageView) findViewById(R.id.imgPersonalInfo);
 
-        lbls = new TextView[4];
+        lbls = new TextView[3];
         lbls[0] = (TextView) findViewById(R.id.lblProduct);
         lbls[0].setText(getResources().getString(R.string.footer_lbl1));
-        lbls[1] = (TextView) findViewById(R.id.lblInvestment);
-        lbls[1].setText(getResources().getString(R.string.footer_lbl2));
-        lbls[2] = (TextView) findViewById(R.id.lblAsset);
-        lbls[2].setText(getResources().getString(R.string.footer_lbl3));
-        lbls[3] = (TextView) findViewById(R.id.lblPersonalInfo);
-        lbls[3].setText(getResources().getString(R.string.footer_lbl4));
+        lbls[1] = (TextView) findViewById(R.id.lblAsset);
+        lbls[1].setText(getResources().getString(R.string.footer_lbl3));
+        lbls[2] = (TextView) findViewById(R.id.lblPersonalInfo);
+        lbls[2].setText(getResources().getString(R.string.footer_lbl4));
 
     }
 

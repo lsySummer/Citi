@@ -1,8 +1,6 @@
 package edu.nju.model;
 
-import javax.persistence.Basic;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
 
@@ -10,12 +8,15 @@ import java.sql.Date;
  * Created by Sun YuHao on 2016/9/5.
  */
 @Entity
-@javax.persistence.Table(name = "insurance_daily_history", schema = "citi", catalog = "")
+@Table(name = "insurance_daily_history", schema = "citi", catalog = "")
 public class InsuranceDailyHistory {
     private int id;
+    private Date date;
+    private BigDecimal historyRate;
+    private Integer insuranceId;
 
     @Id
-    @javax.persistence.Column(name = "id")
+    @Column(name = "id")
     public int getId() {
         return id;
     }
@@ -24,10 +25,8 @@ public class InsuranceDailyHistory {
         this.id = id;
     }
 
-    private Date date;
-
     @Basic
-    @javax.persistence.Column(name = "date")
+    @Column(name = "date")
     public Date getDate() {
         return date;
     }
@@ -36,10 +35,8 @@ public class InsuranceDailyHistory {
         this.date = date;
     }
 
-    private BigDecimal historyRate;
-
     @Basic
-    @javax.persistence.Column(name = "history_rate")
+    @Column(name = "history_rate")
     public BigDecimal getHistoryRate() {
         return historyRate;
     }
@@ -48,10 +45,8 @@ public class InsuranceDailyHistory {
         this.historyRate = historyRate;
     }
 
-    private Integer insuranceId;
-
     @Basic
-    @javax.persistence.Column(name = "insurance_id")
+    @Column(name = "insurance_id")
     public Integer getInsuranceId() {
         return insuranceId;
     }

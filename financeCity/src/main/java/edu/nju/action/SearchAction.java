@@ -36,6 +36,7 @@ public class SearchAction extends BaseAction {
         List<String> institutionNameList = searchService.getInstitutionNameList();
         List<String> apiList = searchService.getAPIList();
 
+
         return SUCCESS;
     }
 }

@@ -59,7 +59,7 @@
 		</action>
 	</package>
 	
-	<package name="android" extends="json-default" namespace="/api">
+	<package name="androidBase" extends="json-default" namespace="/api">
 		<action name="user" class="edu.nju.action.AndroidUserAction" method="api_User">
 			<result name="success" type="json">
 				<param name="root">result</param>
@@ -68,41 +68,6 @@
 		</action>
 
 		<action name="login" class="edu.nju.action.AndroidUserAction" method="login">
-			<result name="success" type="json">
-				<param name="root">result</param>
-				<param name="ignoreHierarchy">false</param>
-			</result>
-		</action>
-
-		<action name="product/infos" class="edu.nju.action.AndroidSearchAction" method="getProductsByIds">
-			<result name="success" type="json">
-				<param name="root">result</param>
-				<param name="ignoreHierarchy">false</param>
-			</result>
-		</action>
-
-		<action name="product/info" class="edu.nju.action.AndroidSearchAction" method="findProductById">
-			<result name="success" type="json">
-				<param name="root">result</param>
-				<param name="ignoreHierarchy">false</param>
-			</result>
-		</action>
-
-		<action name="product/s" class="edu.nju.action.AndroidSearchAction" method="searchProducts">
-			<result name="success" type="json">
-				<param name="root">result</param>
-				<param name="ignoreHierarchy">false</param>
-			</result>
-		</action>
-
-		<action name="payment/mode" class="edu.nju.action.AndroidPayAction" method="payMode">
-			<result name="success" type="json">
-				<param name="root">result</param>
-				<param name="ignoreHierarchy">false</param>
-			</result>
-		</action>
-
-		<action name="asset/history" class="edu.nju.action.AndroidAssetAction" method="getHistoryVO">
 			<result name="success" type="json">
 				<param name="root">result</param>
 				<param name="ignoreHierarchy">false</param>
@@ -123,9 +88,50 @@
 			</result>
 		</action>
 
-		<action name="order" class="edu.nju.action.AndroidBuyAction" method="getOrderPrice>">
+		<action name="order" class="edu.nju.action.AndroidBuyAction" method="getOrderPrice">
 			<result name="success" type="plainText">
 				<param name="root">resultText</param>
+			</result>
+		</action>
+	</package>
+
+	<package name="androidProduct" extends="json-default" namespace="/api/product">
+		<action name="infos" class="edu.nju.action.AndroidSearchAction" method="getProductsByIds">
+			<result name="success" type="json">
+				<param name="root">result</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+
+		<action name="info" class="edu.nju.action.AndroidSearchAction" method="findProductById">
+			<result name="success" type="json">
+				<param name="root">result</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+
+		<action name="s" class="edu.nju.action.AndroidSearchAction" method="searchProducts">
+			<result name="success" type="json">
+				<param name="root">result</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+	</package>
+
+	<package name="androidPay" extends="json-default" namespace="/api/payment">
+		<action name="mode" class="edu.nju.action.AndroidPayAction" method="payMode">
+			<result name="success" type="json">
+				<param name="root">result</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+	</package>
+
+	<package name="androidAsset" extends="json-default" namespace="/api/asset">
+		<action name="history" class="edu.nju.action.AndroidAssetAction" method="getHistoryVO">
+			<result name="success" type="json">
+				<param name="root">result</param>
+				<param name="ignoreHierarchy">false</param>
 			</result>
 		</action>
 	</package>

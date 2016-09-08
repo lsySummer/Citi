@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 
 /**
- * Created by Sun YuHao on 2016/9/3.
+ * Created by Sun YuHao on 2016/9/5.
  */
 @Entity
 @Table(name = "product_bank", schema = "citi", catalog = "")
@@ -42,6 +42,7 @@ public class ProductBank {
     private Byte incomeType;
     private Byte ifNavType;
     private Byte ifClose;
+    private Byte type;
 
     @Id
     @Column(name = "id")
@@ -363,6 +364,16 @@ public class ProductBank {
         this.ifClose = ifClose;
     }
 
+    @Basic
+    @Column(name = "type")
+    public Byte getType() {
+        return type;
+    }
+
+    public void setType(Byte type) {
+        this.type = type;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -411,6 +422,7 @@ public class ProductBank {
         if (incomeType != null ? !incomeType.equals(that.incomeType) : that.incomeType != null) return false;
         if (ifNavType != null ? !ifNavType.equals(that.ifNavType) : that.ifNavType != null) return false;
         if (ifClose != null ? !ifClose.equals(that.ifClose) : that.ifClose != null) return false;
+        if (type != null ? !type.equals(that.type) : that.type != null) return false;
 
         return true;
     }
@@ -449,18 +461,7 @@ public class ProductBank {
         result = 31 * result + (incomeType != null ? incomeType.hashCode() : 0);
         result = 31 * result + (ifNavType != null ? ifNavType.hashCode() : 0);
         result = 31 * result + (ifClose != null ? ifClose.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
         return result;
-    }
-
-    private Byte type;
-
-    @Basic
-    @Column(name = "type")
-    public Byte getType() {
-        return type;
-    }
-
-    public void setType(Byte type) {
-        this.type = type;
     }
 }
