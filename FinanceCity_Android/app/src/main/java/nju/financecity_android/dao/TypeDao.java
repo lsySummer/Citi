@@ -9,13 +9,16 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
-public class SearchDao {
-//    private String url="http://172.19.105.116:8888/Citi/api/product/s";//TODO 使用服务器URL
+/**
+ * Created by Administrator on 2016/9/8.
+ */
+public class TypeDao {
+//    private static String url="http://172.19.105.116:8888/Citi/api/institution";//TODO 使用服务器URL
     private static String url="http://192.168.1.111:8888/Citi/api/institution";
-
-    public String sendPost(JSONObject param)
-    {
+    public static String readData(String type) {
+        JSONObject param=new JSONObject();
         try {
+            param.put("type",type);
             HttpPost request = new HttpPost(url);
             // 绑定到请求 Entry
             StringEntity se = new StringEntity(param.toString());

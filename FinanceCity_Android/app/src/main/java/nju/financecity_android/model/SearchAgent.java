@@ -1,0 +1,45 @@
+package nju.financecity_android.model;
+
+import android.util.Log;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
+import nju.financecity_android.dao.TypeDao;
+
+/**
+ * Created by Administrator on 2016/9/8.
+ */
+public class SearchAgent {
+    public static ArrayList<String> getAgent(String type)
+    {
+        String result=TypeDao.readData(type);
+        return exchangeAgent(result);
+    }
+    private static ArrayList<String> exchangeAgent(String source)
+    {
+        JSONObject jsonObject=null;
+        ArrayList<String> list=new ArrayList<String>();
+        try {
+            jsonObject = new JSONObject(source);
+            if(jsonObject.getInt("error")==0) {
+                JSONArray jlist = jsonObject.getJSONArray("institutions");
+                for (int i = 0; i > jlist.length(); i++) {
+                    list.add(jlist.getString(i));
+                }
+                Log.i("test", "exchangeAgent: list=" + list);
+            }
+            else
+            {
+                Log.e("test", "exchangeAgent: json error");
+            }
+        } catch (Exception e)
+        {
+            Log.i("test","exchangeAgent: json exception");
+            e.printStackTrace();
+        }
+        return list;
+    }
+}

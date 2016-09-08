@@ -19,7 +19,7 @@
         android:layout_alignRight="@+id/loginPanel"
         android:gravity="center"
         android:text="Invest Go"
-        android:textSize="30dp" />
+        android:textSize="30sp" />
 
     <LinearLayout
         android:id="@+id/loginPanel"

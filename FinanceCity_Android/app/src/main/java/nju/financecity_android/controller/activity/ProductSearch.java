@@ -1,7 +1,11 @@
 package nju.financecity_android.controller.activity;
 
+import android.annotation.TargetApi;
+import android.app.ActionBar;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,22 +16,30 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.Switch;
+import android.widget.TextView;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.RunnableFuture;
 
 import nju.financecity_android.R;
 import nju.financecity_android.controller.widget.AllSearch;
 import nju.financecity_android.controller.widget.BankSearch;
+import nju.financecity_android.controller.widget.Bar;
 import nju.financecity_android.controller.widget.BondSearch;
 import nju.financecity_android.controller.widget.FundSearch;
 import nju.financecity_android.controller.widget.InsuranceSearch;
 import nju.financecity_android.controller.widget.SearchResult;
 import nju.financecity_android.controller.widget.SingleSearchResult;
 import nju.financecity_android.dao.SearchDao;
+import nju.financecity_android.model.SearchAgent;
 import nju.financecity_android.model.SearchProduct;
 import nju.financecity_android.vo.ProductVO;
 
@@ -36,7 +48,8 @@ import nju.financecity_android.vo.ProductVO;
  */
 public class ProductSearch extends Fragment{
     /**产品搜索体*/
-    private RelativeLayout product_search__body;
+//    private RelativeLayout product_search_layout;
+    private RelativeLayout product_search_body;
     private SearchResult searchResult;
 
     /**搜索按钮*/
@@ -46,45 +59,45 @@ public class ProductSearch extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.product_search, container, false);
-
         return view;
     }
 
+    @TargetApi(19)
     @Override
     public void onStart() {
         super.onStart();
-//        searchResult=new SearchResult(getActivity());
-//        new Thread(new Runnable(){//TODO 此处应加载所有产品
-//            @Override
-//            public void run() {
-                    List<ProductVO> list=new ArrayList<ProductVO>();
-                    /*=======================================================================================*/
-                    list.add(new ProductVO("sh600000","稳利80","bank",3.57,"这是平安银行的理财产品"));
-                    list.add(new ProductVO("dghesct","万科债券","bond",5.67,"这是万科的企业债券"));
-                    list.add(new ProductVO("100001","中国人寿","insurance",2.05,"这是中国人寿的分红险种"));
-                    list.add(new ProductVO("567uu9","伊尔基金","fund",2.67,"这是平安银行的理财产品"));
-                    list.add(new ProductVO("wnr300006","我瞎编的","bond",100.67,"这是一款暴利基金"));
-                    /*=======================================================================================*/
-                    searchResult=new SearchResult(getActivity(),list);
-//            }
-//        }).start();
+//        this.product_search_layout=(RelativeLayout)getView().findViewById(R.id.product_search_layout);
+        this.product_search_body=(RelativeLayout)getView().findViewById(R.id.product_search_body);
+//        final RelativeLayout.LayoutParams rlp_result=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.MATCH_PARENT);
+//        rlp_result.addRule(RelativeLayout.BELOW,R.id.slavery_spinner);
 
-        this.product_search__body=(RelativeLayout) getView().findViewById(R.id.body);
-        product_search__body.addView(searchResult);
+        //TODO 此处应加载所有产品
+        List<ProductVO> list=new ArrayList<ProductVO>();
+                    /*=======================================================================================*/
+        list.add(new ProductVO("sh600000","稳利80","bank",3.57,"这是平安银行的理财产品"));
+        list.add(new ProductVO("dghesct","万科债券","bond",5.67,"这是万科的企业债券"));
+        list.add(new ProductVO("100001","中国人寿","insurance",2.05,"这是中国人寿的分红险种"));
+        list.add(new ProductVO("567uu9","伊尔基金","fund",2.67,"这是平安银行的理财产品"));
+        list.add(new ProductVO("wnr300006","我瞎编的","bond",100.67,"这是一款暴利基金"));
+                    /*=======================================================================================*/
+        searchResult=new SearchResult(getActivity(),list);
+        product_search_body.addView(searchResult);
+//        product_search_layout.addView(searchResult,rlp_result);
 
         //关键字搜索框
-        EditText key=(EditText)getView().findViewById(R.id.key_putin);
+        final EditText key=(EditText)getView().findViewById(R.id.key);
+        Log.i("key",key.getText().toString());
         //主筛选框
-        Spinner master=(Spinner)getView().findViewById(R.id.master_spinner);
+        final Spinner master=(Spinner)getView().findViewById(R.id.master_spinner);
         ArrayAdapter<String> master_adapter=new ArrayAdapter<String>(getActivity(),R.layout.spinner_element,getResources().getStringArray(R.array.master_destination));
         master.setAdapter(master_adapter);
         //副筛选框
         final Spinner slavery=(Spinner)getView().findViewById(R.id.slavery_spinner);
-        ArrayAdapter<String> slavery_adapter=new ArrayAdapter<String>(getActivity(),R.layout.spinner_element,getResources().getStringArray(R.array.slavery_all));
+        final ArrayAdapter<String> slavery_adapter=new ArrayAdapter<String>(getActivity(),R.layout.spinner_element,getResources().getStringArray(R.array.slavery_all));
         slavery.setAdapter(slavery_adapter);
         final ArrayAdapter<String>[] adapter=new ArrayAdapter[]{slavery_adapter};
 
-        final int[] selector={0,0};
+        final int[] selector={0,0};//两个spinner
         final ArrayList<String[]> content=new ArrayList<String[]>();
         content.add(getResources().getStringArray(R.array.slavery_all));
         content.add(getResources().getStringArray(R.array.slavery_bank));
@@ -92,7 +105,15 @@ public class ProductSearch extends Fragment{
         content.add(getResources().getStringArray(R.array.slavery_fund));
         content.add(getResources().getStringArray(R.array.slavery_insurance));
         final View[] filter=new View[]{new AllSearch(getActivity())};
+        final AllSearch all = new AllSearch(getActivity());
+        final BankSearch bank = new BankSearch(getActivity());
+        final BondSearch bond = new BondSearch(getActivity());
+        final FundSearch fund = new FundSearch(getActivity());
+        final InsuranceSearch insurance = new InsuranceSearch(getActivity());
         final boolean[] isPicked={false};
+
+//        final int count[]={0};//改变几个组件
+//        final ArrayList<View> viewList=new ArrayList<View>();
         master.setOnItemSelectedListener(
                 new Spinner.OnItemSelectedListener()
                 {
@@ -105,35 +126,91 @@ public class ProductSearch extends Fragment{
                         slavery.setAdapter(adapter[0]);
                         switch (selector[0]) {
                             case 0:
-                                product_search__body.removeAllViews();
-                                View all = new AllSearch(getActivity());
+//                                View all = new AllSearch(getActivity());
+//                                all.setLayoutParams(rlp_result);
+                                all.setInit();
                                 filter[0]=all;
+//                                viewList.clear();
+//                                RelativeLayout.LayoutParams rlp_all_year=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
+//                                rlp_all_year.addRule(RelativeLayout.BELOW,R.id.master_spinner);
+//                                Bar all_year=new Bar(getActivity());
+//                                all_year.setStart(0f);
+//                                all_year.setEnd(15f);
+//                                all_year.setInterval(0.0001f);
+//                                all_year.setUnit("%");
+//                                all_year.setBar_text("年化收益率");
+//                                all_year.setId(R.id.all_year);
+//                                all_year.setLayoutParams(rlp_all_year);
+//                                viewList.add(all_year);
+//
+//                                rlp_all_year=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
+//                                rlp_all_year.addRule(RelativeLayout.BELOW,R.id.all_year);
+//                                Bar all_limit=new Bar(getActivity());
+//                                all_limit.setStart(0f);
+//                                all_limit.setEnd(1800f);
+//                                all_limit.setInterval(1f);
+//                                all_limit.setUnit("天");
+//                                all_limit.setBar_text("期限");
+//                                all_limit.setId(R.id.all_limit);
+//                                all_limit.setLayoutParams(rlp_all_year);
+//                                viewList.add(all_limit);
+//
+//                                rlp_all_year=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,40);
+//                                rlp_all_year.addRule(RelativeLayout.BELOW,R.id.all_limit);
+//                                rlp_all_year.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+//                                TextView all_close_name=new TextView(getActivity());
+//                                all_close_name.setText("是否封闭");
+//                                all_close_name.setTextSize(18);//TODO 单位
+//                                all_close_name.setTextColor(getResources().getColor(R.color.WordBlack));
+//                                all_close_name.setGravity(Gravity.CENTER);
+//                                all_close_name.setLayoutParams(rlp_all_year);
+//                                all_close_name.setId(R.id.all_close_name);
+//                                all_close_name.setLayoutParams(rlp_all_year);
+//                                viewList.add(all_close_name);
+//
+//                                rlp_all_year=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,40);
+//                                rlp_all_year.addRule(RelativeLayout.BELOW,R.id.all_limit);
+//                                rlp_all_year.addRule(RelativeLayout.RIGHT_OF,R.id.all_close_name);
+//                                rlp_all_year.setMargins(18,0,0,0);//left top right bottom
+//                                Switch all_close_switch=new Switch(getActivity());
+//                                all_close_switch.setId(R.id.all_close_switch);
+//                                all_close_switch.setLayoutParams(rlp_all_year);
+//                                viewList.add(all_close_switch);
+
                                 break;
                             case 1:
-                                product_search__body.removeAllViews();
-                                View bank = new BankSearch(getActivity());
+//                                View bank = new BankSearch(getActivity());
+//                                bank.setLayoutParams(rlp_result);
+//                                bank.set
+                                bank.setInit();
                                 filter[0]=bank;
                                 break;
                             case 2:
-                                product_search__body.removeAllViews();
-                                View bond = new BondSearch(getActivity());
+//                                View bond = new BondSearch(getActivity());
+//                                bond.setLayoutParams(rlp_result);
+                                bond.setInit();
                                 filter[0]=bond;
                                 break;
                             case 3:
-                                product_search__body.removeAllViews();
-                                View fund = new FundSearch(getActivity());
+//                                View fund = new FundSearch(getActivity());
+//                                fund.setLayoutParams(rlp_result);
+                                fund.setInit();
                                 filter[0]=fund;
                                 break;
                             case 4:
-                                product_search__body.removeAllViews();
-                                View insurance = new InsuranceSearch(getActivity());
+//                                View insurance = new InsuranceSearch(getActivity());
+//                                insurance.setLayoutParams(rlp_result);
+                                insurance.setInit();
                                 filter[0]=insurance;
                                 break;
                         }
                         if(isPicked[0])
                         {
-                            product_search__body.removeAllViews();
-                            product_search__body.addView(filter[0]);
+                            //已经在筛选则直接更改页面
+                            product_search_body.removeAllViews();
+                            product_search_body.addView(filter[0]);
+////                            product_search_layout.removeViewAt(7);
+////                            product_search_layout.addView(filter[0]);
                         }
                     }
                     @Override
@@ -160,25 +237,154 @@ public class ProductSearch extends Fragment{
             @Override
             public void onClick(View view) {
                 //TODO 关键字和条件一起搜索得到产品信息列表
-//                new Thread(new Runnable() {
-//                    @Override
-//                    public void run() {
                     /*=======================================================================================*/
+                final ArrayList<HashMap<String,Object>> maps=new ArrayList<HashMap<String,Object>>();
+                Thread thread=new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String[] types={"All","Bank","Bond","Fund","Insurance"};
+                        JSONObject masterJObject=new JSONObject();
+                        try {
+                            if(key.getText()!=null)
+                            {
+                                masterJObject.put("keyword", key.getText());
+                            }
+                            else
+                            {
+                                Log.i("test","key is blank");
+                            }
+                            masterJObject.put("type",types[selector[0]]);
+                        }catch(Exception e){Log.e("test","condition to json exception1");e.printStackTrace();}
+                        JSONObject optionJObject=new JSONObject();
+                        try {
+                            switch (selector[0]) {//TODO 还要处理默认情况,很多数据还不对
+                                case 0:
+                                    AllSearch allSearch = (AllSearch) filter[0];
+                                    float[] all_yearly_income_rate = {allSearch.getYearMin(), allSearch.getYearMax()};
+                                    float[] all_expiration = {allSearch.getLimitMin(), allSearch.getLimitMax()};
+                                    int all_is_close_ended = 0;//TODO 0的意思
+                                    if (allSearch.getCloseChecked()) {
+                                        all_is_close_ended = 1;
+                                    }
+                                    optionJObject.put("yearly_income_rate", new JSONArray(all_yearly_income_rate));
+                                    optionJObject.put("expiration",new JSONArray(all_expiration));
+                                    optionJObject.put("is_close_ended",all_is_close_ended);
+                                    break;
+                                case 1:
+                                    BankSearch bankSearch = (BankSearch) filter[0];
+                                    float[] bank_yearly_income_rate = {bankSearch.getYearMin(), bankSearch.getYearMax()};
+                                    float[] bank_expiration = {bankSearch.getLimitMin(), bankSearch.getLimitMax()};
+                                    float[] bank_initial_amount = {bankSearch.getStartMin(), bankSearch.getStartMax()};
+                                    String bank_institution_manage=bankSearch.getAgent();
+                                    String bank_income_type=bank.getIncometype();
+                                    int bank_is_close_ended = 0;//TODO 0的意思
+                                    if (bankSearch.getCloseChecked()) {
+                                        bank_is_close_ended = 1;
+                                    }
+                                    optionJObject.put("yearly_income_rate", new JSONArray(bank_yearly_income_rate));
+                                    optionJObject.put("expiration",new JSONArray(bank_expiration));
+                                    optionJObject.put("is_close_ended",bank_is_close_ended);
+                                    optionJObject.put("initial_amount",new JSONArray(bank_initial_amount));
+                                    if(!bank_institution_manage.equals("所有"))
+                                    {
+                                        optionJObject.put("institution_manage",bank_institution_manage);//TODO
+                                    }
+                                    optionJObject.put("income_type",bank_income_type);//TODO
+                                    break;
+                                case 2:
+                                    BondSearch bondSearch = (BondSearch) filter[0];
+                                    float[] bond_yearly_income_rate = {bondSearch.getYearMin(), bondSearch.getYearMax()};
+                                    float[] bond_expiration = {bondSearch.getLimitMin(), bondSearch.getLimitMax()};
+                                    String bond_expiration_date=bondSearch.getDdl()+""+"-12-31";//TODO
+                                    String bond_state=bondSearch.getState();
+                                    optionJObject.put("yearly_income_rate", new JSONArray(bond_yearly_income_rate));
+                                    optionJObject.put("expiration",new JSONArray(bond_expiration));
+                                    optionJObject.put("expiration_date",bond_expiration_date);
+                                    if(!bond_state.equals("所有")) {
+                                        optionJObject.put("state", bond_state);
+                                    }
+                                    break;
+                                case 3:
+                                    FundSearch fundSearch=(FundSearch) filter[0];
+                                    String fund_institution_manage=fundSearch.getAgent();
+                                    String fund_type=slavery.getAdapter().getItem(selector[1]).toString();
+                                    String fund_state=fundSearch.getState();
+                                    float[] fund_net_value={fundSearch.getLatestMin(),fundSearch.getLatestMax()};
+                                    int fund_is_close_ended=0;
+                                    if(fundSearch.getCloseChecked()){fund_is_close_ended=1;}
+                                    int fund_sort_type=fundSearch.getSort_type_item();
+                                    if(fund_sort_type==2){fund_sort_type=-1;}
+                                    int fund_expiration=fundSearch.getSortYear();//TODO
+                                    if(!fund_institution_manage.equals("所有"))
+                                    {
+                                        optionJObject.put("institution_manage",fund_institution_manage);//TODO
+                                    }
+                                    optionJObject.put("type",fund_type);
+                                    if(!fund_state.equals("所有")) {
+                                        optionJObject.put("state", fund_state);
+                                    }
+                                    optionJObject.put("net_value",new JSONArray(fund_net_value));
+                                    optionJObject.put("is_close_ended",fund_is_close_ended);
+                                    optionJObject.put("sort_type",fund_sort_type);
+                                    if(fund_expiration!=-1)
+                                        optionJObject.put("expiration",fund_expiration);
+                                    break;
+                                case 4:
+                                    InsuranceSearch insuranceSearch=(InsuranceSearch)filter[0];
+                                    String insurance_length_of_years=insuranceSearch.getLimit();//TODO
+                                    float[] insurance_income_rate={insuranceSearch.getYearMin(),insuranceSearch.getYearMax()};
+                                    String insurance_distributor=insuranceSearch.getAgent();
+                                    float[] insurance_price={insuranceSearch.getValueMin(),insuranceSearch.getValueMax()};
+                                    optionJObject.put("length_of_years",insurance_length_of_years);
+                                    optionJObject.put("income_rate",new JSONArray(insurance_income_rate));
+                                    if(!insurance_distributor.equals("所有"))
+                                    {
+                                        optionJObject.put("institution_manage",insurance_distributor);//TODO
+                                    }
+                                    optionJObject.put("price",new JSONArray(insurance_price));
+                                    break;
+                            }
+                            if(optionJObject.length()!=0)
+                            {
+                                masterJObject.put("options",optionJObject);
+                            }
+                            Log.i("test","optionObject="+optionJObject.toString());
+                            Log.i("test","masterObject="+masterJObject.toString());
+                        }catch(Exception e){Log.e("test","condition to json exception2");e.printStackTrace();}
+                        maps.addAll(SearchProduct.analyse(masterJObject));
+                    }
+                });
+                thread.start();
                 List<ProductVO> list = new ArrayList<ProductVO>();
-                list.add(new ProductVO("1hfds001", "中国人寿", "insurance", 2.05,SearchProduct.analyse().toString()
-                ));//"这是中国人寿的分红险种"));
-                list.add(new ProductVO("s4fd70000", "稳利80", "fund", 3.57, "这是平安银行的理财产品"));
-                list.add(new ProductVO("dghesct", "万科债券", "bond", 5.67, "这是万科的企业债券"));
-                list.add(new ProductVO("wnr04bhf", "我瞎编的", "bond", 100.67, "这是一款暴利基金"));
-                list.add(new ProductVO("567uu9", "伊尔基金", "fund", 2.67, "这是一首简单的小~情~歌~，唱出.."));
-                    /*=======================================================================================*/
-//                    }
-//                }).start();
+                try{thread.join();}catch(Exception e){};
+
+                for(int i=0;i<maps.size();i++) {//TODO 要展现哪些数据
+                    HashMap<String, Object> map = maps.get(i);
+                    String sid = (String) map.get("sid");
+                    String name = (String) map.get("name");
+                    String type = (String) map.get("productType");
+                    double year = 0;
+                    try {
+                        year = (double) map.get("expected_income_rate");
+                    }catch(Exception e){}
+                    String state = (String) map.get("type");
+                    list.add(new ProductVO(sid, name, type, year, state));
+                }
+                /*=======================================================================================*/
 
                 searchResult = new SearchResult(getActivity(), list);
                 isPicked[0] = false;
-                product_search__body.removeAllViews();
-                product_search__body.addView(searchResult);
+
+                product_search_body.removeAllViews();
+                product_search_body.addView(searchResult);
+////                product_search_layout.removeViewAt(7);
+//                while(count[0]>=0)
+//                {
+//                    product_search_layout.removeViewAt(7+count[0]);
+//                    count[0]--;
+//                }
+//                product_search_layout.addView(searchResult,rlp_result);
+//                count[0]++;
 
             }
         });
@@ -188,8 +394,22 @@ public class ProductSearch extends Fragment{
             @Override
             public void onClick(View view) {
                 isPicked[0]=!isPicked[0];
-                product_search__body.removeAllViews();
-                product_search__body.addView(filter[0]);
+
+                product_search_body.removeAllViews();
+                product_search_body.addView(filter[0]);
+//                while(count[0]>=0)
+//                {
+//                    product_search_layout.removeViewAt(7+count[0]);
+//                    count[0]--;
+//                }
+
+////                product_search_layout.removeViewAt(7);
+////                product_search_layout.addView(filter[0]);
+//                for(int i=0;i<viewList.size();i++)
+//                {
+//                    product_search_layout.addView(viewList.get(i));
+//                    count[0]++;
+//                }
             }
         });
         //返回按钮
@@ -197,10 +417,18 @@ public class ProductSearch extends Fragment{
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                product_search__body.removeAllViews();
-                product_search__body.addView(searchResult);
+                product_search_body.removeAllViews();
+                product_search_body.addView(searchResult);
+////                product_search_layout.removeViewAt(7);
+//                while(count[0]>=0)
+//                {
+//                    product_search_layout.removeViewAt(7+count[0]);
+//                    count[0]--;
+//                }
+//                product_search_layout.addView(searchResult,rlp_result);
+//                count[0]++;
             }
         });
-
     }
+
 }

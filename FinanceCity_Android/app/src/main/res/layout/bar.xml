@@ -9,7 +9,7 @@
 		<EditText
 			android:id="@+id/bar_putin2"
 			android:textColor="@color/WordBlack"
-			android:textSize="18dp"
+			android:textSize="18sp"
 			android:textColorLink="@color/darkGrey"
 			android:layout_width="100dp"
 			android:layout_height="wrap_content"

@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
 import java.util.Calendar;
+import java.util.List;
 
 import nju.financecity_android.R;
 
@@ -106,5 +107,31 @@ public class BondSearch extends RelativeLayout {
     public String getState()
     {
         return state_content[state_item];
+    }
+
+    public void setYear(float start,float end) {
+        year.setStart(start);
+        year.setEnd(end);
+    }
+    public void setLimit(float start,float end) {
+        limit.setStart(start);
+        limit.setEnd(end);
+    }
+    public void setState(int pos)
+    {
+        state.setSelection(pos);
+        state_item=pos;
+    }
+    public void setDDL(int pos)
+    {
+        ddl_item=pos;
+        ddl.setSelection(pos);
+    }
+    public void setInit()
+    {
+        setYear(0,10);
+        setLimit(0,1800);
+        setState(0);
+        setDDL(0);
     }
 }
