@@ -15,7 +15,7 @@
 				android:layout_width="wrap_content"
 				android:layout_height="@android:dimen/app_icon_size"
 				android:id="@+id/imgProduct" android:layout_weight="3" android:layout_gravity="center"
-				android:src="@mipmap/products_unselected" android:scaleType="fitCenter"/>
+				android:src="@mipmap/products_unselected" android:scaleType="fitCenter" android:padding="5dp"/>
 		<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
@@ -25,21 +25,10 @@
 				android:layout_gravity="center" android:textColor="@color/white" android:textSize="12sp"/>
 	</LinearLayout>
 	<LinearLayout android:orientation="vertical" android:layout_width="wrap_content"
-	              android:layout_height="match_parent" android:layout_weight="1" android:id="@+id/itmInvestment">
-		<ImageView android:layout_width="wrap_content" android:layout_height="@android:dimen/app_icon_size"
-		           android:id="@+id/imgInvestment" android:layout_weight="3" android:layout_gravity="center"
-		           android:src="@mipmap/investment_unselected" android:scaleType="fitCenter"/>
-		<TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-		          android:textAppearance="?android:attr/textAppearanceSmall" android:text="投资"
-		          android:id="@+id/lblInvestment" android:layout_weight="1"
-		          android:gravity="center_vertical|center_horizontal" android:layout_gravity="center"
-		          android:textColor="@color/white" android:textSize="12sp"/>
-	</LinearLayout>
-	<LinearLayout android:orientation="vertical" android:layout_width="wrap_content"
 	              android:layout_height="match_parent" android:layout_weight="1" android:id="@+id/itmAsset">
 		<ImageView android:layout_width="wrap_content" android:layout_height="@android:dimen/app_icon_size"
 		           android:id="@+id/imgAsset" android:layout_weight="3" android:layout_gravity="center"
-		           android:src="@mipmap/asset_unselected" android:scaleType="fitCenter"/>
+		           android:src="@mipmap/asset_unselected" android:scaleType="fitCenter" android:padding="5dp"/>
 		<TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
 		          android:textAppearance="?android:attr/textAppearanceSmall" android:text="资产"
 		          android:id="@+id/lblAsset" android:layout_weight="1"
@@ -50,7 +39,7 @@
 	              android:layout_height="match_parent" android:layout_weight="1" android:id="@+id/itmPersonalInfo">
 		<ImageView android:layout_width="wrap_content" android:layout_height="@android:dimen/app_icon_size"
 		           android:id="@+id/imgPersonalInfo" android:layout_weight="3" android:layout_gravity="center"
-		           android:src="@mipmap/personal_unselected" android:scaleType="fitCenter"/>
+		           android:src="@mipmap/personal_unselected" android:scaleType="fitCenter" android:padding="5dp"/>
 		<TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
 		          android:textAppearance="?android:attr/textAppearanceSmall" android:text="个人"
 		          android:id="@+id/lblPersonalInfo" android:layout_weight="1"

@@ -15,13 +15,13 @@ import nju.financecity_android.R;
 import com.appyvet.rangebar.RangeBar;
 
 public class Bar extends RelativeLayout {
-    private String bar_name;
-    private Float bar_start;
-    private Float bar_end;
-    private Float bar_interval;
-    private String bar_unit;
-    private Float putin1_text;
-    private Float putin2_text;
+    private String bar_name="bar";
+    private Float bar_start=0f;
+    private Float bar_end=100f;
+    private Float bar_interval=1f;
+    private String bar_unit="%";
+    private Float putin1_text=0f;
+    private Float putin2_text=100f;
 
     private TextView bar_text;
     private EditText bar_putin1;

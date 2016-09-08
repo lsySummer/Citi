@@ -65,6 +65,12 @@
         <item>已关闭</item>
     </string-array>
 
+    <string-array name="sort_type">
+        <item>不排序</item>
+        <item>升序</item>
+        <item>降序</item>
+    </string-array>
+
     <string-array name="master_none">
         <item>——</item>
     </string-array>

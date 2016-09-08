@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--产品搜索主页面-->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/product_search_layout"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="5dp">
+    android:layout_height="match_parent">
 
-    <RelativeLayout
+<!--    <RelativeLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/lightGreyPlus"
-        android:layout_marginBottom="5dp">
+        android:layout_marginBottom="5dp">-->
         <ImageButton
             android:id="@+id/back"
             android:layout_width="25dp"
@@ -53,18 +52,17 @@
             android:layout_toRightOf="@id/back"
             android:layout_toLeftOf="@id/search"/>
 
-        <TextView
+        <!--<TextView
             android:id="@+id/placeholder"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_centerHorizontal="true"/>
+            android:layout_centerHorizontal="true" />-->
         <Spinner
             android:id="@+id/slavery_spinner"
             android:textSize="18dp"
-            android:layout_width="wrap_content"
+            android:layout_width="120dp"
             android:layout_height="40dp"
             android:layout_below="@id/key"
-            android:layout_toRightOf="@id/placeholder"
             android:layout_alignParentRight="true"
             android:spinnerMode="dropdown"/>
         <TextView
@@ -82,23 +80,29 @@
         <Spinner
             android:id="@+id/master_spinner"
             android:textSize="18dp"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="40dp"
             android:layout_toRightOf="@id/spinner_name"
-            android:layout_toLeftOf="@id/placeholder"
+            android:layout_toLeftOf="@id/slavery_spinner"
             android:layout_below="@id/key"
             android:spinnerMode="dropdown"/>
 
 
-    </RelativeLayout>
-    <RelativeLayout
-        android:id="@+id/body"
-        android:background="@color/white"
+    <!--</RelativeLayout>-->
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/product_search_result_scroll"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@id/slavery_spinner">
+        <RelativeLayout
+            android:id="@+id/product_search_body"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp">
 
-    </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
 
 
-
-</LinearLayout>
+</RelativeLayout>

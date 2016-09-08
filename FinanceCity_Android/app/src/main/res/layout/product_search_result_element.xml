@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--单个产品搜索结果单元-->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@+id/search_result_element_layout"
 	android:layout_width="match_parent"
 	android:layout_height="110dp"
@@ -19,7 +19,6 @@
 		android:text="产品类型"
 		android:layout_height="wrap_content"
 		android:layout_width="wrap_content"
-		android:layout_weight="8"
 		android:textSize="18dp"
 		android:layout_alignBottom="@id/background"
 		android:layout_alignLeft="@id/background"
@@ -64,7 +63,7 @@
 		android:text="产品名称"
 		android:textSize="18dp"
 		android:layout_width="wrap_content"
-		android:layout_height="30dp"
+		android:layout_height="wrap_content"
 		android:layout_toRightOf="@id/background"
 		android:gravity="left"
 		android:layout_gravity="right"
@@ -81,4 +80,4 @@
         android:layout_alignParentBottom="true"
 		android:layout_below="@id/product"
         android:layout_marginLeft="5dp"/>
-</RelativeLayout>
+</merge>
