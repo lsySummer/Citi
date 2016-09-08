@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <declare-styleable name="Banner">
+        <attr name="display_text" format="string"/>
+        <attr name="show_search_button" format="boolean"/>
+    </declare-styleable>
     <declare-styleable name="Bar">
         <attr name="bar_name" format="string"/>
         <attr name="bar_start" format="float"/>

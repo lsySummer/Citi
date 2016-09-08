@@ -11,6 +11,7 @@ import android.view.animation.LinearInterpolator;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import android.widget.Toast;
 import nju.financecity_android.R;
 import nju.financecity_android.controller.widget.Banner;
 import nju.financecity_android.controller.widget.Bar;
@@ -47,12 +48,13 @@ public class MainActivity extends Activity{
         footer = (Footer) findViewById(R.id.footer);
 
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 3; i++) {
             final int tempi = i;
             footer.setOnClickListener(i, new View.OnClickListener() {
 
                 @Override
-                    public void onClick(View v) {
+                public void onClick(View v) {
+                    Toast.makeText(MainActivity.this, tempi + "", Toast.LENGTH_SHORT).show();
                     MainActivity.setFragment(tempi);
                 }
             });
@@ -80,11 +82,8 @@ public class MainActivity extends Activity{
                 }
                 break;
             case 1:
-//                transaction.add(R.id.,f);investment TODO
-                break;
-            case 2:
-                banner.setDisplayText(footer.getText(2));
-                footer.setSelectedById(2);
+                banner.setDisplayText(footer.getText(1));
+                footer.setSelectedById(1);
                 assetsFragment=new Assets();
                 transaction.add(R.id.main_mid_layout,assetsFragment);
                 if(assetsFragment!=null)
@@ -92,9 +91,9 @@ public class MainActivity extends Activity{
                     transaction.show(assetsFragment);
                 }
                 break;
-            case 3:
-                banner.setDisplayText(footer.getText(3));
-                footer.setSelectedById(3);
+            case 2:
+                banner.setDisplayText(footer.getText(2));
+                footer.setSelectedById(2);
                 personFragment = new Persons();
                 transaction.add(R.id.main_mid_layout,personFragment);
                 if(personFragment!=null){
@@ -102,7 +101,7 @@ public class MainActivity extends Activity{
                 }
 //                transaction.add(R.id.,f);person TODO
                 break;
-            case 4:
+            case 3:
 //                transaction.add(R.id.,f);more TODO
                 break;
         }
