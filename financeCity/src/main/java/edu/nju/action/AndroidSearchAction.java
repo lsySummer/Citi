@@ -135,7 +135,7 @@ public class AndroidSearchAction extends AndroidAction {
                 }
             }
 
-            searchResult.setData(productVOFactory.getResultList(order));
+            searchResult.setData(productVOFactory.getResultList());
             setResult(searchResult);
         }
         catch (Exception i) {

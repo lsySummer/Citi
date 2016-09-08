@@ -15,8 +15,8 @@
 			<result name="error">/jsp/signup_step1.jsp</result>
 		</action>
 
-		<action name="searchResult" class="edu.nju.action.SearchResultAction" method="search">
-			<result name="success">/jsp/search-result.jsp</result>
+		<action name="search" class="edu.nju.action.SearchAction" method="getInstitutionList">
+			<result name="success">/jsp/searchFilter.jsp</result>
 		</action>
 
 		<action name="searchFilter" class="edu.nju.action.SearchFilterAction" method="filter">
@@ -52,6 +52,10 @@
 			<result name="success">/jsp/searchFilter.jsp</result>
 			<result name="error">/jsp/signup_step4.jsp</result>
 			<result name="login">/jsp/login.jsp</result>
+		</action>
+
+		<action name="orderConfirm" class="edu.nju.action.OrderAction" method="">
+			<result name="success">/jsp/order-confirm.jsp</result>
 		</action>
 	</package>
 	

@@ -29,11 +29,6 @@ public class UserServiceImpl implements UserService {
     private BaseDao DAO;
 
     @Override
-    public FinanceCityUser register(RegisterInfo regInfo) {
-        return null;
-    }
-
-    @Override
     public FinanceCityUser login(String userName, String password) {
         /** match username and password */
         List list;

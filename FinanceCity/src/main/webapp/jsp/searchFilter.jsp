@@ -34,6 +34,10 @@
     <link type="text/css" rel="stylesheet" href="${basePath}css/searchResult.css"/>
     <link type="text/css" rel="stylesheet" href="${basePath}css/searchFilter.css"/>
 
+    <script>
+        var search_list = ${institutionList};
+    </script>
+
     <script type="text/javascript" rel="script" src="js/jquery.min.js"></script>
     <script type="text/javascript" rel="script" src="plugins/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
     <script type="text/javascript" rel="script" src="plugins/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.min.js"></script>
