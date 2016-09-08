@@ -193,7 +193,7 @@ function submitBank(page_num) {
 
     $.ajax({
         type: "post",
-        url: "searchFilter.action",
+        url: "searchFilter",
         data: "data="+JSON.stringify(data),
         cache: false,
         success: function(data) {
@@ -227,7 +227,7 @@ function submitBond(page_num) {
 
     $.ajax({
         type: "post",
-        url: "searchFilter.action",
+        url: "searchFilter",
         data: "data="+JSON.stringify(data),
         cache: false,
         success: function(data) {
@@ -280,7 +280,7 @@ function submitFund(page_num) {
 
     $.ajax({
         type: "post",
-        url: "searchFilter.action",
+        url: "searchFilter",
         data: "data="+JSON.stringify(data),
         cache: false,
         success: function(data) {
@@ -314,7 +314,7 @@ function submitInsurance(page_num) {
 
     $.ajax({
         type: "post",
-        url: "searchFilter.action",
+        url: "searchFilter",
         data: "data="+JSON.stringify(data),
         cache: false,
         success: function(data) {

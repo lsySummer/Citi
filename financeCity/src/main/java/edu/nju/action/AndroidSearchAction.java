@@ -5,16 +5,15 @@ import edu.nju.service.CategoryAndProduct.Category;
 import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.CategoryAndProduct.ProductCategoryManager;
 import edu.nju.service.ExceptionsAndError.ErrorManager;
-import edu.nju.service.ExceptionsAndError.InvalidParametersException;
 import edu.nju.service.POJO.ProductVOFactory;
 import edu.nju.service.POJO.SearchFilterFactory;
 import edu.nju.service.SearchService.ProductFilter;
 import edu.nju.service.SearchService.SearchService;
-import edu.nju.service.ServiceManagerImpl;
 import edu.nju.vo.InstitutionListVO;
 import edu.nju.vo.ProductDetailVO;
 import edu.nju.vo.ProductsDetailVO;
 import edu.nju.vo.SearchResultVO;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Map;
@@ -23,14 +22,16 @@ import java.util.Map;
  * Created by Sun YuHao on 2016/9/3.
  */
 public class AndroidSearchAction extends AndroidAction {
+    @Autowired
+    SearchService searchService;
+
     public String findProductById() {
         Map map = getRequestMap();
 
-        SearchService searchService = ServiceManagerImpl.getInstance().getSearchService();
         ProductDetailVO productDetailVO = new ProductDetailVO();
 
         try {
-            int id = (Integer)map.get("productId");
+            int id = (Integer)map.get("id");
             Product product = searchService.getProductByID(id);
             if (product != null) {
                 ErrorManager.setError(productDetailVO, ErrorManager.errorNormal);
@@ -53,7 +54,6 @@ public class AndroidSearchAction extends AndroidAction {
     public String getProductsByIds() {
         Map map = getRequestMap();
 
-        SearchService searchService = ServiceManagerImpl.getInstance().getSearchService();
         ProductsDetailVO productsDetailVO = new ProductsDetailVO();
 
         try {
@@ -73,14 +73,15 @@ public class AndroidSearchAction extends AndroidAction {
                 return SUCCESS;
             }
 
-            Object[] data = new Object[products.length];
+            ProductDetailVO[] data = new ProductDetailVO[products.length];
 
             for (int i = 0; i < data.length; ++i) {
-                data[i] = products[i].getProduct();
+                data[i].setData(products[i].getProduct());
+                data[i].setType(products[i].getName());
             }
             productsDetailVO.setData(data);
 
-            productsDetailVO.setData(new Object[0]);
+            productsDetailVO.setData(null);
             ErrorManager.setError(productsDetailVO, ErrorManager.errorNormal);
             setResult(productsDetailVO);
         }
@@ -96,7 +97,6 @@ public class AndroidSearchAction extends AndroidAction {
     public String searchProducts() {
         Map map = getRequestMap();
 
-        SearchService searchService = ServiceManagerImpl.getInstance().getSearchService();
         SearchResultVO searchResult = new SearchResultVO();
 
         try {
@@ -135,7 +135,7 @@ public class AndroidSearchAction extends AndroidAction {
                 }
             }
 
-            searchResult.setData(productVOFactory.getResultList(order));
+            searchResult.setData(productVOFactory.getResultList());
             setResult(searchResult);
         }
         catch (Exception i) {
@@ -153,7 +153,6 @@ public class AndroidSearchAction extends AndroidAction {
 
         try {
             String category = (String)map.get("type");
-            SearchService searchService = ServiceManagerImpl.getInstance().getSearchService();
             List<String> institutions = searchService.getInstitutionNameList(category);
 
             if (institutions == null) {

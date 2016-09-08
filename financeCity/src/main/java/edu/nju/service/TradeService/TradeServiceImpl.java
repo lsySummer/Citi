@@ -1,9 +1,10 @@
 package edu.nju.service.TradeService;
 
 import edu.nju.model.UnpaidItem;
-import edu.nju.service.BaseService.BaseFunctionServiceAdaptor;
 import edu.nju.service.ExceptionsAndError.NotLoginException;
 import edu.nju.service.Sessions.FinanceCityUser;
+import edu.nju.service.UserService.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -15,7 +16,10 @@ import java.util.List;
  * Created by Sun YuHao on 2016/7/25.
  */
 @Service
-public class TradeServiceImpl extends BaseFunctionServiceAdaptor implements TradeService {
+public class TradeServiceImpl implements TradeService {
+    @Autowired
+    UserService userService;
+    
     //10 minutes
     private final long expiration = 10 * 60 * 1000;
 
@@ -36,7 +40,7 @@ public class TradeServiceImpl extends BaseFunctionServiceAdaptor implements Trad
                 String checkCode = tradeItem.generateMD5(financeCityUser.getID(), expiration_time.toString());
                 unpaidItem.setCheckCode(checkCode);
 
-                getUserService().getUserDao(financeCityUser).save(unpaidItem);
+                userService.getUserDao(financeCityUser).save(unpaidItem);
                 checkCodeList.add(checkCode);
             }
 
@@ -52,12 +56,12 @@ public class TradeServiceImpl extends BaseFunctionServiceAdaptor implements Trad
     @Override
     public boolean cancelUnpaid(String checkCode, FinanceCityUser financeCityUser) {
         try {
-            List list = getUserService().getUserDao(financeCityUser).find("FROM UnpaidItem unpaidItem WHERE unpaidItem.checkCode=" +
+            List list = userService.getUserDao(financeCityUser).find("FROM UnpaidItem unpaidItem WHERE unpaidItem.checkCode=" +
             checkCode + " AND unpaidItem.userId=" + financeCityUser.getID());
 
             if (!(list == null || list.size() == 0)) {
                 UnpaidItem unpaidItem = (UnpaidItem)list.get(0);
-                getUserService().getUserDao(financeCityUser).delete(unpaidItem);
+                userService.getUserDao(financeCityUser).delete(unpaidItem);
             }
 
             return true;
@@ -71,7 +75,7 @@ public class TradeServiceImpl extends BaseFunctionServiceAdaptor implements Trad
     @Override
     public boolean cancelAllUnpaid(FinanceCityUser financeCityUser) {
         try {
-            getUserService().getUserDao(financeCityUser).query("DELETE UnpaidItem u WHERE u.userId=" + financeCityUser.getID());
+            userService.getUserDao(financeCityUser).query("DELETE UnpaidItem u WHERE u.userId=" + financeCityUser.getID());
             return true;
         }
         catch (NotLoginException n) {

@@ -1,7 +1,6 @@
 package edu.nju.service.AssetManagementService;
 
 import edu.nju.model.*;
-import edu.nju.service.BaseService.BaseFunctionServiceAdaptor;
 import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.CategoryAndProduct.ProductCategoryManager;
 import edu.nju.service.ExceptionsAndError.DataNotFoundException;
@@ -10,8 +9,10 @@ import edu.nju.service.ExceptionsAndError.NoSuchProductException;
 import edu.nju.service.ExceptionsAndError.NotLoginException;
 import edu.nju.service.SearchService.SearchService;
 import edu.nju.service.Sessions.FinanceCityUser;
+import edu.nju.service.UserService.UserService;
 import edu.nju.service.Utils.TimeTransformation;
 import edu.nju.vo.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -24,8 +25,11 @@ import java.util.List;
  * Created by Sun YuHao on 2016/7/25.
  */
 @Service
-public class AssetManagementServiceImpl extends BaseFunctionServiceAdaptor implements AssetManagementService {
+public class AssetManagementServiceImpl implements AssetManagementService {
+    @Autowired
     private SearchService searchService;
+    @Autowired
+    private UserService userService;
 
     @SuppressWarnings("unchecked")
     @Override
@@ -33,7 +37,7 @@ public class AssetManagementServiceImpl extends BaseFunctionServiceAdaptor imple
         CurrentInvestmentVO currentInvestmentVO = new CurrentInvestmentVO();
 
         try {
-            List<InvestStatus> list = getUserService().getUserDao(financeCityUser).
+            List<InvestStatus> list = userService.getUserDao(financeCityUser).
                     find("FROM InvestStatus investStatus WHERE investHistory.id=" + financeCityUser.getID());
             if (list == null || list.size() == 0) {
                 return null;
@@ -76,11 +80,6 @@ public class AssetManagementServiceImpl extends BaseFunctionServiceAdaptor imple
         }
 
         return currentInvestmentVO;
-    }
-
-    @Override
-    public void bindSearchService(SearchService searchService) {
-        this.searchService = searchService;
     }
 
     private double getCurrentValue(double trading_volume, Product product, InvestStatus investStatus) {
@@ -139,7 +138,7 @@ public class AssetManagementServiceImpl extends BaseFunctionServiceAdaptor imple
 
         try {
             List<TradeHistoryVO> tradeHistoryVOList = new ArrayList<>();
-            List<TradeHistory> tradeHistoryList = getUserService().getUserDao(financeCityUser).find("FROM TradHistory t WHERE t.userId=" + financeCityUser.getID());
+            List<TradeHistory> tradeHistoryList = userService.getUserDao(financeCityUser).find("FROM TradHistory t WHERE t.userId=" + financeCityUser.getID());
 
             if (tradeHistoryList == null || tradeHistoryList.size() == 0) {
                 throw new DataNotFoundException("Trade History");

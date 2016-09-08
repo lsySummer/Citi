@@ -3,7 +3,6 @@ package edu.nju.service.UserService;
 import edu.nju.dao.UserDao;
 import edu.nju.dao.impl.CommonDao;
 import edu.nju.model.UserTemperPrefer;
-import edu.nju.service.BaseService.BaseService;
 import edu.nju.service.ExceptionsAndError.*;
 import edu.nju.service.POJO.RegisterInfo;
 import edu.nju.service.Sessions.FinanceCityUser;
@@ -14,15 +13,7 @@ import org.springframework.stereotype.Service;
  * Created by Sun YuHao on 2016/7/25.
  */
 @Service
-public interface UserService extends BaseService {
-
-    /**
-     * register
-     * @param regInfo .
-     * @return user info
-     */
-    FinanceCityUser register(RegisterInfo regInfo);
-
+public interface UserService {
     /**
      * register
      * @param mobile .

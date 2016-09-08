@@ -18,12 +18,12 @@
 <div class="main">
     <div class="container">
         <div class="top-bar white-bg">
-            <a href="./" class="select-section current">
+            <a href="./" class="select-section">
                 <div class="circle">1</div>
                 <span class="title">确认订单信息</span>
             </a>
             <div class="line"></div>
-            <a href="./" class="select-section">
+            <a href="./" class="select-section current">
                 <div class="circle">2
                 </div>
                 <span class="title">完成支付</span>
