@@ -26,7 +26,7 @@ public class AndroidUserAction extends AndroidAction {
             FinanceCityUser financeCityUser = userService.register((String) map.get("mobile"), (String) map.get("password"), (String)map.get("username"));
 
             if (financeCityUser != null) {
-                sessionIdVO.setSessionId(financeCityUser.getID());
+                sessionIdVO.setSessionId(financeCityUser.getLoginSession());
                 ErrorManager.setError(sessionIdVO, ErrorManager.errorNormal);
                 setResult(sessionIdVO);
 
@@ -154,7 +154,7 @@ public class AndroidUserAction extends AndroidAction {
                 setResult(ret);
             } else {
                 ErrorManager.setError(ret, ErrorManager.errorNormal);
-                ret.setSessionId(financeCityUser.getID());
+                ret.setSessionId(financeCityUser.getLoginSession());
                 setResult(ret);
             }
         }
