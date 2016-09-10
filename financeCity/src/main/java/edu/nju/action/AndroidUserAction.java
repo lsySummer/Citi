@@ -27,6 +27,7 @@ public class AndroidUserAction extends AndroidAction {
 
             if (financeCityUser != null) {
                 sessionIdVO.setSessionId(financeCityUser.getLoginSession());
+                sessionIdVO.setId(financeCityUser.getID());
                 ErrorManager.setError(sessionIdVO, ErrorManager.errorNormal);
                 setResult(sessionIdVO);
 
@@ -62,6 +63,7 @@ public class AndroidUserAction extends AndroidAction {
 
     private String getUserVO() {
         Map map = getRequestMap();
+        String url = request.getRequestURL().toString();
 
         try {
             FinanceCityUser financeCityUser = new FinanceCityUser();
@@ -133,13 +135,11 @@ public class AndroidUserAction extends AndroidAction {
 
     @SuppressWarnings("unchecked")
     public String login() {
-        Map map = getRequestMap();
-
         SessionIdVO ret = new SessionIdVO();
         try {
 
-            String username = (String) map.get("username");
-            String password = (String) map.get("password");
+            String username = (String) request.getParameter("username");
+            String password = (String) request.getParameter("password");
             if (username == null || password == null) {
                 ErrorManager.setError(ret, ErrorManager.errorInvalidParameter);
 
@@ -155,6 +155,7 @@ public class AndroidUserAction extends AndroidAction {
             } else {
                 ErrorManager.setError(ret, ErrorManager.errorNormal);
                 ret.setSessionId(financeCityUser.getLoginSession());
+                ret.setId(financeCityUser.getID());
                 setResult(ret);
             }
         }

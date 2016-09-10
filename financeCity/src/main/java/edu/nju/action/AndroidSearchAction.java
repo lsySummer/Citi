@@ -27,6 +27,7 @@ public class AndroidSearchAction extends AndroidAction {
 
     public String findProductById() {
         Map map = getRequestMap();
+        String url = request.getRequestURL().toString();
 
         ProductDetailVO productDetailVO = new ProductDetailVO();
 

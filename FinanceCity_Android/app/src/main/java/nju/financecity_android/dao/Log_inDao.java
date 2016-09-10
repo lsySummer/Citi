@@ -96,10 +96,10 @@ public class Log_inDao {
 //                            .setRequestProperty("User-Agent",
 //                                    "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0");
             connection.connect();
-            Log.i("testss", "try0");
+//            Log.i("testss", "try0");
             DataOutputStream out = new DataOutputStream(connection.getOutputStream());
             out.writeBytes(data);
-            Log.i("testss", "try1");
+//            Log.i("testss", "try1");
             if (connection.getResponseCode() == 200) {
                 InputStream in = connection.getInputStream();
                 BufferedReader reader = new BufferedReader(new InputStreamReader(in));

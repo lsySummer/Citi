@@ -1,13 +1,14 @@
 package nju.financecity_android.util;
 
+import nju.financecity_android.dao.CommonDao;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.Scanner;
 
 /**
@@ -30,7 +31,7 @@ public class HttpUtil {
         try {
             String urlNameString = url;
             URL realUrl = new URL(urlNameString);
-            URLConnection connection = realUrl.openConnection();
+            HttpURLConnection connection = (HttpURLConnection) realUrl.openConnection();
             connection.setRequestProperty("Accept", "*/*");
             connection.setRequestProperty("Connection", "Keep-Alive");
             connection.connect();
@@ -41,7 +42,6 @@ public class HttpUtil {
                 result += line;
             }
         } catch (Exception e) {
-            System.out.println("发送GET请求出现异常！" + e);
             e.printStackTrace();
         }
 
@@ -57,4 +57,39 @@ public class HttpUtil {
         return result;
     }
 
+    public static String sendRequest(String url, String requestBody, String method) {
+        String result = "";
+        try {
+            URL realUrl = new URL(url);
+            HttpURLConnection connection = (HttpURLConnection) realUrl.openConnection();
+            connection.setDoInput(true);
+            connection.setDoOutput(true);
+            connection.setUseCaches(false);
+            connection.setRequestMethod(method);
+            connection.setRequestProperty("Accept", "*/*");
+            connection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+            connection.connect();
+
+            PrintWriter pw = new PrintWriter(connection.getOutputStream());
+            pw.print(requestBody);
+            pw.flush();
+            pw.close();
+
+            Scanner scanner = new Scanner(connection.getInputStream());
+            while (scanner.hasNextLine()) {
+                result += new String(scanner.nextLine().getBytes("UTF-8"), "UTF-8") + "\n";
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public static String sendJson(String url, JSONObject jsonData, String method) {
+        return sendRequest(url, jsonData.toString(), method);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(sendRequest(CommonDao.host + "/api/user", "{'id': 18187459874, 'session': '489c50b7a1171376ec41c4730e24c27b'}", "GET"));
+    }
 }

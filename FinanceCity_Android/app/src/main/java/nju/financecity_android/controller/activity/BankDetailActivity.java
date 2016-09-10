@@ -25,11 +25,10 @@ public class BankDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bank_detail);
         initComponents();
 
-        /*Intent intent = getIntent();
+        Intent intent = getIntent();
         String productId = intent.getStringExtra("productId");
         Map data = (new ProductBank(productId)).getProperties();
-        processData(data);*/
-        listProperties.addFooterView(new Button(this));
+        processData(data);
     }
 
     protected void setProperties(List<PropertyVO> properties) {

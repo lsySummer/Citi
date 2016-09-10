@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import nju.financecity_android.R;
-import nju.financecity_android.controller.widget.ProductItem;
+import nju.financecity_android.controller.widget.InvstPrdtAdapter;
 import nju.financecity_android.vo.ProductInfo;
 
 import java.util.*;
@@ -38,7 +38,7 @@ public class Investment extends Fragment {
     }
 
     private void setProductListData(List<ProductInfo> productInfos) {
-        ListAdapter adapter = new ProductItem.InvstPrdtAdapter(getActivity(), productInfos);
+        ListAdapter adapter = new InvstPrdtAdapter(getActivity(), productInfos);
         listInvstProducts.setAdapter(adapter);
     }
 

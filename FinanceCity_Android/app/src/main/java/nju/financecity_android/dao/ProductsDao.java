@@ -4,22 +4,22 @@ import nju.financecity_android.util.HttpUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
 /**
- * Created by coral on 16-9-3.
+ * Created by coral on 16-9-9.
  */
-public class ProductDao extends CommonDao {
+public class ProductsDao extends CommonDao {
 
-    public ProductDao(String productId) {
-        setProductId(productId);
+    public ProductsDao(List<String> ids) {
+        this.ids = ids;
     }
 
-    public void setProductId(String productId) {
-        this.productId = productId;
-    }
+    private List<String> ids;
 
     @Override
     public String getAction() {
-        return "/api/product/info";
+        return "/api/product/infos";
     }
 
     @Override
@@ -29,14 +29,20 @@ public class ProductDao extends CommonDao {
 
     @Override
     public String sendRequest() {
+        String paramStr = "";
+        for (String id: ids) {
+            if (!paramStr.equals("")) {
+                paramStr += ":" + id;
+            } else {
+                paramStr = id;
+            }
+        }
         JSONObject jo = new JSONObject();
         try {
-            jo.put("id", productId);
+            jo.put("ids", paramStr);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return HttpUtil.sendJson(getFullUrl(), jo, "POST");
     }
-
-    private String productId;
 }
