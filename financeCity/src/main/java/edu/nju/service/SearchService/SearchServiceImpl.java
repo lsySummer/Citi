@@ -6,6 +6,7 @@ import edu.nju.service.CategoryAndProduct.ProductFactory;
 import edu.nju.service.ExceptionsAndError.NoSuchProductException;
 import edu.nju.service.CategoryAndProduct.Category;
 import edu.nju.service.CategoryAndProduct.ProductCategoryManager;
+import edu.nju.service.POJO.FundValueHistory;
 import edu.nju.service.UserService.UserService;
 import edu.nju.service.Utils.ListUtils;
 import edu.nju.service.Utils.UnitTransformation;
@@ -13,6 +14,7 @@ import edu.nju.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -274,6 +276,27 @@ public class SearchServiceImpl implements SearchService {
         catch (Exception e) {
             e.printStackTrace();
             return -1;
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public FundValueHistory[] getFundValueHistory(Integer id) throws NoSuchProductException {
+        List<FundDailyHistory> list = userService.getCommonDao().find("FROM FundDailyHistory p ORDER BY p.date DESC");
+
+        if (list == null) {
+            throw new NoSuchProductException(id);
+        }
+        else {
+            FundValueHistory[] fundValueHistories = new FundValueHistory[list.size()];
+
+            for (int i = 0; i < list.size(); ++i) {
+                fundValueHistories[i] = new FundValueHistory();
+                fundValueHistories[i].setNAV(list.get(i).getNav().doubleValue());
+                fundValueHistories[i].setDate(list.get(i).getDate().toString());
+            }
+
+            return fundValueHistories;
         }
     }
 

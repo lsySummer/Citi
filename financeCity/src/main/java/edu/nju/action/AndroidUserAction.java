@@ -62,13 +62,10 @@ public class AndroidUserAction extends AndroidAction {
     }
 
     private String getUserVO() {
-        Map map = getRequestMap();
-        String url = request.getRequestURL().toString();
-
         try {
             FinanceCityUser financeCityUser = new FinanceCityUser();
-            financeCityUser.setID((Integer)map.get("id"));
-            financeCityUser.setLoginSession((String)map.get("session"));
+            financeCityUser.setID(Integer.valueOf(request.getParameter("id")));
+            financeCityUser.setLoginSession(request.getParameter("sessionId"));
 
             setResult(userService.getUserVO(financeCityUser));
         }
@@ -90,7 +87,7 @@ public class AndroidUserAction extends AndroidAction {
         try {
             FinanceCityUser financeCityUser = new FinanceCityUser();
             financeCityUser.setID((Integer)map.get("id"));
-            financeCityUser.setLoginSession((String)map.get("session"));
+            financeCityUser.setLoginSession((String)map.get("sessionId"));
 
             userService.modifyUserInfo((String)map.get("birthday"), (Integer)map.get("income"),
                     (Integer)map.get("isUrben") == 1, (Integer)map.get("expense"),
@@ -135,11 +132,13 @@ public class AndroidUserAction extends AndroidAction {
 
     @SuppressWarnings("unchecked")
     public String login() {
+        Map map = getRequestMap();
+
         SessionIdVO ret = new SessionIdVO();
         try {
 
-            String username = (String) request.getParameter("username");
-            String password = (String) request.getParameter("password");
+            String username = (String) map.get("username");
+            String password = (String) map.get("password");
             if (username == null || password == null) {
                 ErrorManager.setError(ret, ErrorManager.errorInvalidParameter);
 

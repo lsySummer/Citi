@@ -20,11 +20,15 @@ public class TimeTransformation {
         return ((double)timestamp.getTime() - System.currentTimeMillis()) / type;
     }
 
-    static public double getTimeFromNow(Date date, char type) {
+    static public double getTimeFromNow(Date date, long type) {
         String time = date.toString() + " 00:00:00";
         Timestamp timestamp = Timestamp.valueOf(time);
 
         return getTimeFromNow(timestamp, type);
+    }
+
+    static public double getTimeFromDate(Date start, Date end, long type) {
+        return getTimeFromNow(end, type) - getTimeFromNow(start, type);
     }
 
     static public double getTimeAfter(Timestamp timestamp, double length, long lengthType, long resultType) {

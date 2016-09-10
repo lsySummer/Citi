@@ -24,4 +24,6 @@ public interface AssetManagementService {
      * @throws NotLoginException
      */
     TradeHistoryListVO getTradeHistory(FinanceCityUser financeCityUser);
+
+
 }
