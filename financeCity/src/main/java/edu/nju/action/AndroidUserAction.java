@@ -27,6 +27,7 @@ public class AndroidUserAction extends AndroidAction {
 
             if (financeCityUser != null) {
                 sessionIdVO.setSessionId(financeCityUser.getLoginSession());
+                sessionIdVO.setId(financeCityUser.getID());
                 ErrorManager.setError(sessionIdVO, ErrorManager.errorNormal);
                 setResult(sessionIdVO);
 
@@ -155,6 +156,7 @@ public class AndroidUserAction extends AndroidAction {
             } else {
                 ErrorManager.setError(ret, ErrorManager.errorNormal);
                 ret.setSessionId(financeCityUser.getLoginSession());
+                ret.setId(financeCityUser.getID());
                 setResult(ret);
             }
         }
