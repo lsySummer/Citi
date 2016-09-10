@@ -5,14 +5,13 @@ import edu.nju.service.CategoryAndProduct.Category;
 import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.CategoryAndProduct.ProductCategoryManager;
 import edu.nju.service.ExceptionsAndError.ErrorManager;
+import edu.nju.service.ExceptionsAndError.NoSuchProductException;
+import edu.nju.service.POJO.FundValueHistory;
 import edu.nju.service.POJO.ProductVOFactory;
 import edu.nju.service.POJO.SearchFilterFactory;
 import edu.nju.service.SearchService.ProductFilter;
 import edu.nju.service.SearchService.SearchService;
-import edu.nju.vo.InstitutionListVO;
-import edu.nju.vo.ProductDetailVO;
-import edu.nju.vo.ProductsDetailVO;
-import edu.nju.vo.SearchResultVO;
+import edu.nju.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -169,6 +168,29 @@ public class AndroidSearchAction extends AndroidAction {
         }
 
         setResult(institutionListVO);
+        return SUCCESS;
+    }
+
+    public String getFundValueHistory() {
+        FundHistoryVO fundHistoryVO = new FundHistoryVO();
+
+        try {
+            Integer id = Integer.valueOf(request.getParameter("id"));
+
+            FundValueHistory[] fundValueHistories = searchService.getFundValueHistory(id);
+            ErrorManager.setError(fundHistoryVO, ErrorManager.errorNormal);
+            fundHistoryVO.setData(fundValueHistories);
+        }
+        catch (NoSuchProductException n) {
+            n.printStackTrace();
+            ErrorManager.setError(fundHistoryVO, ErrorManager.errorNoSuchProduct);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            ErrorManager.setError(fundHistoryVO, ErrorManager.errorInvalidParameter);
+        }
+
+        setResult(fundHistoryVO);
         return SUCCESS;
     }
 

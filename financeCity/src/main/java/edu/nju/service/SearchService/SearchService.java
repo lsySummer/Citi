@@ -3,6 +3,7 @@ package edu.nju.service.SearchService;
 import edu.nju.model.CategoryIndex;
 import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.ExceptionsAndError.NoSuchProductException;
+import edu.nju.service.POJO.FundValueHistory;
 import edu.nju.vo.*;
 import org.springframework.stereotype.Service;
 
@@ -109,6 +110,13 @@ public interface SearchService {
      * @return cost
      */
     double getCost(int[] id, int[] amount);
+
+    /**
+     * get fund value history
+     * @param id .
+     * @return .
+     */
+    FundValueHistory[] getFundValueHistory(Integer id) throws NoSuchProductException;
 
     /**
      * get institution list

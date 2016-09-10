@@ -116,6 +116,13 @@
 				<param name="ignoreHierarchy">false</param>
 			</result>
 		</action>
+
+		<action name="history" class="edu.nju.action.AndroidSearchAction" method="getFundValueHistory">
+			<result name="success" type="json">
+				<param name="root">result</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
 	</package>
 
 	<package name="androidPay" extends="json-default" namespace="/api/payment">
