@@ -9,22 +9,20 @@ import java.util.HashMap;
 
 import nju.financecity_android.dao.Log_inDao;
 
-/**
- * Created by sam on 16/9/6.
- */
-public class Log_in {
 
-    public HashMap<String,Object> analyse(String username, String passwd){
+public class Log_inEdit {
+    public HashMap<String,Object> analyse(String mobile, String secure,String password){
         JSONObject root = new JSONObject();
         try {
-            root.put("username",username);
-            root.put("passwd",passwd);
+            root.put("mobile",mobile);
+            root.put("secure_code",secure);
+            root.put("password",password);
         } catch (JSONException e) {
             e.printStackTrace();
             Log.d("bug","root put wrong");
         }
 
-        String mRawData = new Log_inDao().sendPost(root,"login");
+        String mRawData = new Log_inDao().sendPost(root,"user");
 
         return DetailPost(mRawData);
     }
@@ -40,9 +38,6 @@ public class Log_in {
             //message
             String message = Root.getString("message");
             Result.put("message",message);
-            //session
-            String session = Root.getString("session");
-            Result.put("session",session);
 
         } catch (JSONException e) {
             e.printStackTrace();

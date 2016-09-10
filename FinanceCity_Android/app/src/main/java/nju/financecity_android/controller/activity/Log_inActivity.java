@@ -76,20 +76,44 @@ public class Log_inActivity extends Activity {
             public void onClick(View v) {
                 Account = accountText.getText().toString();
                 Password = pswText.getText().toString();
-                HashMap<String,Object> res = log_inModel.analyse(Account,Password);
-                int error = (int) res.get("error");
-                String mess = (String) res.get("message");
-                String sess = (String) res.get("session");
-                if (error!=0){
-                    UserSession.setCurrUser(new UserSession(Account,sess));
-                    Intent intent = new Intent(Log_inActivity.this,MainActivity.class);
-                    startActivity(intent);
-                }else {
-                    Toast.makeText(Log_inActivity.this,mess,Toast.LENGTH_SHORT).show();
-                }
+                SendPost(Account,Password);
+//                HashMap<String,Object> res = log_inModel.analyse(Account,Password);
+//                int error = (int) res.get("error");
+//                String mess = (String) res.get("message");
+//                String sess = (String) res.get("session");
+//                if (error!=0){
+//                    UserSession.setCurrUser(new UserSession(Account,sess));
+//                    Intent intent = new Intent(Log_inActivity.this,MainActivity.class);
+//                    startActivity(intent);
+//                }else {
+//                    Toast.makeText(Log_inActivity.this,mess,Toast.LENGTH_SHORT).show();
+//                }
 //                Log.d("account",Account);
 //                Log.d("account",Password);
             }
         });
+    }
+
+    private void SendPost(String Acc,String Pass){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    HashMap<String,Object> res = log_inModel.analyse(Account,Password);
+                    int error = (int) res.get("error");
+                    String mess = (String) res.get("message");
+                    String sess = (String) res.get("session");
+                    if (error==0){
+                        UserSession.setCurrUser(new UserSession(Account,sess));
+                        Intent intent = new Intent(Log_inActivity.this,MainActivity.class);
+                        startActivity(intent);
+                    }else {
+                        Toast.makeText(Log_inActivity.this,mess,Toast.LENGTH_SHORT).show();
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 }
