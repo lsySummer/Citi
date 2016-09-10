@@ -22,6 +22,7 @@ import nju.financecity_android.controller.widget.Footer;
 public class MainActivity extends Activity{
     private static FragmentManager fragmentManager;
     private static ProductSearch productSearchFragment;
+    private static Products products;
     private static Fragment productDetailFragment;//TODO
     private static Fragment investmentFragment;//TODO
     private static Assets assetsFragment;
@@ -38,7 +39,7 @@ public class MainActivity extends Activity{
         setContentView(R.layout.main);
         initComponents();
         fragmentManager=getFragmentManager();
-        setFragment(0);
+        setFragment(0,null);
     }
 
     private void initComponents() {
@@ -53,13 +54,13 @@ public class MainActivity extends Activity{
 
                 @Override
                     public void onClick(View v) {
-                    MainActivity.setFragment(tempi);
+                    MainActivity.setFragment(tempi,null);
                 }
             });
         }
     }
 
-    public static void setFragment(int i)
+    public static void setFragment(int i,String productId)
     {
         // 每次选中之前先清楚掉上次的选中状态
         clearSelection();
@@ -70,13 +71,22 @@ public class MainActivity extends Activity{
         switch(i)
         {
             case 0:
-                banner.setDisplayText(footer.getText(0));
-                footer.setSelectedById(0);
-                productSearchFragment=new ProductSearch();
-                transaction.add(R.id.main_mid_layout,productSearchFragment);
-                if(productSearchFragment!=null)
+                if(productId!=null)
                 {
-                    transaction.show(productSearchFragment);
+                    products=new Products();//TODO 如何传入productId
+                    transaction.add(R.id.main_mid_layout, products);
+                    if (products != null) {
+                        transaction.show(products);
+                    }
+                }
+                else {
+                    banner.setDisplayText(footer.getText(0));
+                    footer.setSelectedById(0);
+                    productSearchFragment = new ProductSearch();
+                    transaction.add(R.id.main_mid_layout, productSearchFragment);
+                    if (productSearchFragment != null) {
+                        transaction.show(productSearchFragment);
+                    }
                 }
                 break;
             case 1:
@@ -113,6 +123,10 @@ public class MainActivity extends Activity{
     }
     private static void hideFragments(FragmentTransaction transaction) {
         //将所有的fragment设置为隐藏状态
+        if(products!=null)
+        {
+            transaction.hide(products);
+        }
         if (productSearchFragment != null)
         {
             transaction.hide(productSearchFragment);
