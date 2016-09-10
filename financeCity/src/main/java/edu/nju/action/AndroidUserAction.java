@@ -63,6 +63,7 @@ public class AndroidUserAction extends AndroidAction {
 
     private String getUserVO() {
         Map map = getRequestMap();
+        String url = request.getRequestURL().toString();
 
         try {
             FinanceCityUser financeCityUser = new FinanceCityUser();
@@ -134,13 +135,11 @@ public class AndroidUserAction extends AndroidAction {
 
     @SuppressWarnings("unchecked")
     public String login() {
-        Map map = getRequestMap();
-
         SessionIdVO ret = new SessionIdVO();
         try {
 
-            String username = (String) map.get("username");
-            String password = (String) map.get("password");
+            String username = (String) request.getParameter("username");
+            String password = (String) request.getParameter("password");
             if (username == null || password == null) {
                 ErrorManager.setError(ret, ErrorManager.errorInvalidParameter);
 
