@@ -24,7 +24,7 @@ import java.net.URL;
  * Created by sam on 16/9/6.
  */
 public class Log_inDao {
-    private static String mainurl = "http://172.26.99.26:8080/api／";
+    private static String mainurl = "http://172.28.3.163:8080/api/";
 
 //    private static String url = "http://192.168.1.102:8080/api/login";
 
@@ -72,6 +72,7 @@ public class Log_inDao {
 //        }).start();
 
         HttpURLConnection connection = null;
+        Log.i("testt",mainurl+Api);
         try {
             URL url = new URL(mainurl+Api);
             connection = (HttpURLConnection) url.openConnection();
@@ -81,7 +82,7 @@ public class Log_inDao {
             connection.setDoOutput(true);
             connection.setDoInput(true);
             connection.setRequestMethod("POST");
-            connection.setConnectTimeout(20000);
+            connection.setConnectTimeout(8000);
             connection.setReadTimeout(8000);
             // 设置请求的头
             connection.setRequestProperty("Connection", "keep-alive");

@@ -103,12 +103,12 @@ public class Log_inActivity extends Activity {
                     int error = (int) res.get("error");
                     String mess = (String) res.get("message");
                     String sess = (String) res.get("session");
-                    if (error==0){
+                    if (error!=0){
                         UserSession.setCurrUser(new UserSession(Account,sess));
                         Intent intent = new Intent(Log_inActivity.this,MainActivity.class);
                         startActivity(intent);
                     }else {
-                        Toast.makeText(Log_inActivity.this,mess,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Log_inActivity.this,"asdasd",Toast.LENGTH_SHORT).show();
                     }
                 }catch (Exception e){
                     e.printStackTrace();
