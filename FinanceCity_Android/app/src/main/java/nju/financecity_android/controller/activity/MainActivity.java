@@ -6,6 +6,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.LinearLayout;
@@ -13,6 +14,7 @@ import android.widget.RelativeLayout;
 
 import android.widget.Toast;
 import nju.financecity_android.R;
+import nju.financecity_android.controller.info.FragmentName;
 import nju.financecity_android.controller.widget.Banner;
 import nju.financecity_android.controller.widget.Bar;
 import nju.financecity_android.controller.widget.Footer;
@@ -22,6 +24,7 @@ import nju.financecity_android.controller.widget.Footer;
  */
 public class MainActivity extends Activity{
     private static FragmentManager fragmentManager;
+    private static FragmentTransaction transaction;
     private static ProductSearch productSearchFragment;
     private static Products products;
     private static Fragment productDetailFragment;//TODO
@@ -29,7 +32,7 @@ public class MainActivity extends Activity{
     private static Assets assetsFragment;
     private static Persons personFragment;//TODO
 
-    private static Banner banner;
+//    private static Banner banner;
     private static LinearLayout main_mid_layout;
     private static Footer footer;
 
@@ -40,11 +43,11 @@ public class MainActivity extends Activity{
         setContentView(R.layout.main);
         initComponents();
         fragmentManager=getFragmentManager();
-        setFragment(0,null);
+        setFragment(0);
     }
 
     private void initComponents() {
-        banner = (Banner) findViewById(R.id.banner);
+//        banner = (Banner) findViewById(R.id.banner);
         main_mid_layout=(LinearLayout) findViewById(R.id.main_mid_layout);
         footer = (Footer) findViewById(R.id.footer);
 
@@ -56,43 +59,34 @@ public class MainActivity extends Activity{
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(MainActivity.this, tempi + "", Toast.LENGTH_SHORT).show();
-                    MainActivity.setFragment(tempi,null);
+                    MainActivity.setFragment(tempi);
                 }
             });
         }
     }
 
-    public static void setFragment(int i,String productId)
+    /**只负责三个一级界面的显示*/
+    public static void setFragment(int i)
     {
         // 每次选中之前先清楚掉上次的选中状态
         clearSelection();
         // 开启一个Fragment事务
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction = fragmentManager.beginTransaction();
         // 先隐藏掉所有的Fragment，以防止有多个Fragment显示在界面上的情况
         hideFragments(transaction);
         switch(i)
         {
-            case 0:
-                if(productId!=null)
-                {
-                    products=new Products();//TODO 如何传入productId
-                    transaction.add(R.id.main_mid_layout, products);
-                    if (products != null) {
-                        transaction.show(products);
-                    }
-                }
-                else {
-                    banner.setDisplayText(footer.getText(0));
-                    footer.setSelectedById(0);
-                    productSearchFragment = new ProductSearch();
-                    transaction.add(R.id.main_mid_layout, productSearchFragment);
-                    if (productSearchFragment != null) {
-                        transaction.show(productSearchFragment);
-                    }
+            case 0://产品
+//                banner.setDisplayText(footer.getText(0));
+                footer.setSelectedById(0);
+                productSearchFragment = new ProductSearch();
+                transaction.add(R.id.main_mid_layout, productSearchFragment);
+                if (productSearchFragment != null) {
+                    transaction.show(productSearchFragment);
                 }
                 break;
-            case 1:
-                banner.setDisplayText(footer.getText(1));
+            case 1://资产（暂时是资产变化信息二级界面）
+//                banner.setDisplayText(footer.getText(1));
                 footer.setSelectedById(1);
                 assetsFragment=new Assets();
                 transaction.add(R.id.main_mid_layout,assetsFragment);
@@ -101,22 +95,35 @@ public class MainActivity extends Activity{
                     transaction.show(assetsFragment);
                 }
                 break;
-            case 2:
-                banner.setDisplayText(footer.getText(2));
+            case 2://个人中心
+//                banner.setDisplayText(footer.getText(2));
                 footer.setSelectedById(2);
                 personFragment = new Persons();
                 transaction.add(R.id.main_mid_layout,personFragment);
                 if(personFragment!=null){
                     transaction.show(personFragment);
                 }
-//                transaction.add(R.id.,f);person TODO
-                break;
-            case 3:
-//                transaction.add(R.id.,f);more TODO
                 break;
         }
         transaction.commit();
     }
+
+    public static void showProductDetail(String productId)
+    {
+        if(productId!=null) {
+            transaction=fragmentManager.beginTransaction();
+            products = new Products();//TODO 如何传入productId
+            transaction.add(R.id.main_mid_layout, products);
+            if (products != null) {
+                transaction.show(products);
+            }
+            transaction.commit();
+        }
+        else{
+            Log.e("test","no productId for detail");
+        }
+    }
+
     private static void clearSelection() {
         //消除所有选中状态
     }

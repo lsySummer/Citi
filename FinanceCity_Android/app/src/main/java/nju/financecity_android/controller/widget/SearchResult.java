@@ -54,8 +54,7 @@ public class SearchResult extends ScrollView {
             single.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    MainActivity.setFragment(0,((SingleSearchResult)view.);
-                    MainActivity.setFragment(0,"test");
+                    MainActivity.showProductDetail("test");//TODO
                 }
             });
             listLayout.addView(single);

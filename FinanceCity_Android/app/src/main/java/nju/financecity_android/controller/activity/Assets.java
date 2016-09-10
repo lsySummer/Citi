@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -29,8 +30,7 @@ import nju.financecity_android.R;
  * Created by Administrator on 2016/8/25.
  */
 public class Assets extends Fragment {
-
-    public LinearLayout linearLayout;
+    private ImageButton back;
     public LineChartView chart;
     public ListView timeline;
 
@@ -46,6 +46,14 @@ public class Assets extends Fragment {
         super.onStart();
         setChart();
         setTimeline();
+
+        back=(ImageButton)getView().findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //切换到资产一级界面
+            }
+        });
 
     }
 
@@ -94,16 +102,23 @@ public class Assets extends Fragment {
         HashMap<String, Object> mapTitle = new HashMap<String, Object>();
         mapTitle.put("time", "时间");
         mapTitle.put("history", "事件");
-        for(int i=0;i<10;i++)
+        for(int i=0;i<2;i++)
         {
             HashMap<String, Object> map = new HashMap<String, Object>();
-            map.put("time", "2016年1月"+i+""+"日");
+            map.put("time", "2016-01-"+i+"");
             map.put("history", "购买。。。。。。。。。。。。。。。。。");
+            listItem.add(map);
+        }
+        for(int i=2;i<4;i++)
+        {
+            HashMap<String, Object> map = new HashMap<String, Object>();
+            map.put("time", "2016-01-"+i+"");
+            map.put("history", "购买。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。");
             listItem.add(map);
         }
         SimpleAdapter mSimpleAdapter = new SimpleAdapter(this.getActivity(),listItem,R.layout.assets_history,new String[]{"time", "history"},new int[] {R.id.time,R.id.history});
         //需要绑定的数据//每一行的布局//动态数组中的数据源的键对应到定义布局的View中new String[] {"ItemImage"
-        timeline.setAdapter(mSimpleAdapter);//为ListView绑定适配器 lv.setOnItemClickListener(new
+        timeline.setAdapter(mSimpleAdapter);//为ListView绑定适配器
         timeline.setVisibility(View.VISIBLE);
     }
 }
