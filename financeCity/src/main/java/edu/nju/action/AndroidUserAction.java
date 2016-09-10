@@ -1,12 +1,12 @@
 package edu.nju.action;
 
 import edu.nju.service.ExceptionsAndError.*;
-import edu.nju.service.ServiceManagerImpl;
 import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.service.UserService.UserService;
 import edu.nju.vo.BaseVO;
 import edu.nju.vo.SessionIdVO;
 import edu.nju.vo.UserVO;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Map;
 
@@ -15,16 +15,19 @@ import java.util.Map;
  */
 @SuppressWarnings("unchecked")
 public class AndroidUserAction extends AndroidAction {
+    @Autowired
+    UserService userService;
+
     private String register() {
         Map map = getRequestMap();
-        UserService userService = ServiceManagerImpl.getInstance().getUserService();
         SessionIdVO sessionIdVO = new SessionIdVO();
 
         try {
             FinanceCityUser financeCityUser = userService.register((String) map.get("mobile"), (String) map.get("password"), (String)map.get("username"));
 
             if (financeCityUser != null) {
-                sessionIdVO.setSessionId(financeCityUser.getID());
+                sessionIdVO.setSessionId(financeCityUser.getLoginSession());
+                sessionIdVO.setId(financeCityUser.getID());
                 ErrorManager.setError(sessionIdVO, ErrorManager.errorNormal);
                 setResult(sessionIdVO);
 
@@ -60,8 +63,7 @@ public class AndroidUserAction extends AndroidAction {
 
     private String getUserVO() {
         Map map = getRequestMap();
-
-        UserService userService = ServiceManagerImpl.getInstance().getUserService();
+        String url = request.getRequestURL().toString();
 
         try {
             FinanceCityUser financeCityUser = new FinanceCityUser();
@@ -82,7 +84,6 @@ public class AndroidUserAction extends AndroidAction {
     }
 
     private String setUserInfo() {
-        UserService userService = ServiceManagerImpl.getInstance().getUserService();
         Map map = getRequestMap();
 
         BaseVO baseVO = new BaseVO();
@@ -134,14 +135,11 @@ public class AndroidUserAction extends AndroidAction {
 
     @SuppressWarnings("unchecked")
     public String login() {
-        Map map = getRequestMap();
-
         SessionIdVO ret = new SessionIdVO();
-        UserService userService = ServiceManagerImpl.getInstance().getUserService();
         try {
 
-            String username = (String) map.get("username");
-            String password = (String) map.get("password");
+            String username = (String) request.getParameter("username");
+            String password = (String) request.getParameter("password");
             if (username == null || password == null) {
                 ErrorManager.setError(ret, ErrorManager.errorInvalidParameter);
 
@@ -156,7 +154,8 @@ public class AndroidUserAction extends AndroidAction {
                 setResult(ret);
             } else {
                 ErrorManager.setError(ret, ErrorManager.errorNormal);
-                ret.setSessionId(financeCityUser.getID());
+                ret.setSessionId(financeCityUser.getLoginSession());
+                ret.setId(financeCityUser.getID());
                 setResult(ret);
             }
         }

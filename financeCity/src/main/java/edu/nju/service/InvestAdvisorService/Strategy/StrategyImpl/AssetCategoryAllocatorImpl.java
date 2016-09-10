@@ -2,21 +2,19 @@ package edu.nju.service.InvestAdvisorService.Strategy.StrategyImpl;
 
 import com.mathworks.toolbox.javabuilder.MWClassID;
 import com.mathworks.toolbox.javabuilder.MWLogicalArray;
-import com.mathworks.toolbox.javabuilder.MWMatrixRef;
 import com.mathworks.toolbox.javabuilder.MWNumericArray;
 import edu.nju.model.CategoryIndex;
 import edu.nju.model.UserTemperPrefer;
 import edu.nju.service.CategoryAndProduct.Category;
 import edu.nju.service.POJO.AssetCategoryAllocation;
 import edu.nju.service.SearchService.SearchService;
-import edu.nju.service.ServiceManagerImpl;
 import edu.nju.service.Utils.ARIMA;
 import edu.nju.service.CategoryAndProduct.ProductCategoryManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import process3.ClassProcess3;
 
 import java.lang.reflect.Field;
-import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -24,6 +22,9 @@ import java.util.*;
  */
 @Component
 public class AssetCategoryAllocatorImpl implements AssetCategoryAllocator {
+    @Autowired
+    SearchService searchService;
+
     static public final int arimaHistory = 30;
     private Map<String, AssetCategoryAllocation> assetCategoryAllocationList;
 
@@ -190,8 +191,6 @@ public class AssetCategoryAllocatorImpl implements AssetCategoryAllocator {
 
     private double[][] getHS_300() {
         double[][] ret;
-
-        SearchService searchService = ServiceManagerImpl.getInstance().getSearchService();
 
         double[] hs300 = searchService.getHS_300ByTime();
         if (hs300.length > 0) {

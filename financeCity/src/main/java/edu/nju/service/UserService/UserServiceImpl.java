@@ -6,12 +6,10 @@ import edu.nju.dao.impl.CommonDao;
 import edu.nju.model.User;
 import edu.nju.model.UserLogin;
 import edu.nju.model.UserTemperPrefer;
-import edu.nju.service.BaseService.BaseServiceAdaptor;
 import edu.nju.service.ExceptionsAndError.*;
 import edu.nju.service.POJO.RegisterInfo;
 import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.vo.UserVO;
-import org.python.antlr.ast.Str;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -26,14 +24,9 @@ import java.util.List;
  * Created by Sun YuHao on 2016/7/25.
  */
 @Service
-public class UserServiceImpl extends BaseServiceAdaptor implements UserService {
+public class UserServiceImpl implements UserService {
     @Autowired
     private BaseDao DAO;
-
-    @Override
-    public FinanceCityUser register(RegisterInfo regInfo) {
-        return null;
-    }
 
     @Override
     public FinanceCityUser login(String userName, String password) {

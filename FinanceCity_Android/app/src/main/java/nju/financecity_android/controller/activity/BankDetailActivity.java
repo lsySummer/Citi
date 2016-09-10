@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import nju.financecity_android.R;
@@ -40,6 +41,10 @@ public class BankDetailActivity extends AppCompatActivity {
         txtInterestRate.setText(interestRate);
         txtStartBuyMoney.setText(startBuyMoney);
         txtOpenDate.setText(openDate);
+    }
+
+    private void checkAvtivity(String productId) {
+
     }
 
     private void processData(Map data) {

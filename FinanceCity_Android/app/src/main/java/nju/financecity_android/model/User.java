@@ -16,7 +16,32 @@ public class User {
         return null;
     }
 
+    public String getEmailAddr() {
+        return emailAddr;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setEmailAddr(String emailAddr) {
+        this.emailAddr = emailAddr;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     String username;
     String mobile;
     String emailAddr;
+    String sessionId;
 }

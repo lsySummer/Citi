@@ -3,10 +3,10 @@ package edu.nju.action;
 import edu.nju.model.PayWay;
 import edu.nju.service.ExceptionsAndError.ErrorManager;
 import edu.nju.service.PayService.PayService;
-import edu.nju.service.ServiceManagerImpl;
 import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.vo.BaseVO;
 import edu.nju.vo.PayWayVO;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Map;
@@ -15,6 +15,9 @@ import java.util.Map;
  * Created by Sun YuHao on 2016/9/3.
  */
 public class AndroidPayAction extends AndroidAction {
+    @Autowired
+    PayService payService;
+
     private String bindPayWay() {
         BaseVO baseVO = new BaseVO();
         ErrorManager.setError(baseVO, ErrorManager.errorNormal);
@@ -30,7 +33,6 @@ public class AndroidPayAction extends AndroidAction {
         PayWayVO payWayVO = new PayWayVO();
 
         try {
-            PayService payService = ServiceManagerImpl.getInstance().getPayService();
 
             FinanceCityUser financeCityUser = new FinanceCityUser();
             financeCityUser.setID((Integer)map.get("id"));

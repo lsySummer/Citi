@@ -2,11 +2,10 @@ package edu.nju.action;
 
 import edu.nju.service.AssetManagementService.AssetManagementService;
 import edu.nju.service.ExceptionsAndError.ErrorManager;
-import edu.nju.service.ServiceManagerImpl;
 import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.vo.CurrentInvestmentVO;
 import edu.nju.vo.TradeHistoryListVO;
-import edu.nju.vo.TradeHistoryVO;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Map;
 
@@ -14,6 +13,9 @@ import java.util.Map;
  * Created by Sun YuHao on 2016/9/3.
  */
 public class AndroidAssetAction extends AndroidAction {
+    @Autowired
+    AssetManagementService assetManagementService;
+
     public String getHistoryVO() {
         Map map = getRequestMap();
 
@@ -23,8 +25,6 @@ public class AndroidAssetAction extends AndroidAction {
             return SUCCESS;
 
         }
-
-        AssetManagementService assetManagementService = ServiceManagerImpl.getInstance().getAssetManagementService();
 
         try {
             FinanceCityUser financeCityUser = new FinanceCityUser();
@@ -51,8 +51,6 @@ public class AndroidAssetAction extends AndroidAction {
             return SUCCESS;
 
         }
-
-        AssetManagementService assetManagementService = ServiceManagerImpl.getInstance().getAssetManagementService();
 
         try {
             FinanceCityUser financeCityUser = new FinanceCityUser();

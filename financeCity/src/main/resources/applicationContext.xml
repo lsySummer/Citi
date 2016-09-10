@@ -69,29 +69,6 @@
 	</bean>
 
 	<!--services-->
-	<bean id="serviceManager" class="edu.nju.service.ServiceManagerImpl">
-		<constructor-arg name="assetManagementService" ref="assetManagementService">
-		</constructor-arg>
-		<constructor-arg name="investAdvisorService" ref="investAdvisorService">
-		</constructor-arg>
-		<constructor-arg name="invokerManager" ref="invokerManager">
-		</constructor-arg>
-		<constructor-arg name="payService" ref="payService">
-		</constructor-arg>
-		<constructor-arg name="pushService" ref="pushService">
-		</constructor-arg>
-		<constructor-arg name="searchService" ref="searchService">
-		</constructor-arg>
-		<constructor-arg name="tradeService" ref="tradeService">
-		</constructor-arg>
-		<constructor-arg name="userService" ref="userService">
-		</constructor-arg>
-	</bean>
-
-	<bean id="invokerManager"
-		  class="edu.nju.service.Invoker.InvokerManagerImpl">
-	</bean>
-
 	<bean id="assetManagementService" class="edu.nju.service.AssetManagementService.AssetManagementServiceImpl">
 	</bean>
 

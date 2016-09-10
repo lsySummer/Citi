@@ -10,9 +10,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.HashMap;
 import java.util.zip.Inflater;
 
 import nju.financecity_android.R;
+import nju.financecity_android.model.Log_inEdit;
 
 /**
  * Created by sam on 16/9/4.
@@ -31,6 +33,8 @@ public class RegisterActivity extends Activity {
     private String security;
     private String Password;
 
+    private Log_inEdit LogEditModle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +51,8 @@ public class RegisterActivity extends Activity {
         Btnreg = (TextView) findViewById(R.id.Btnregister);
         BtnSub = (Button) findViewById(R.id.BtnSub);
         BtnGet = (Button) findViewById(R.id.messageGet);
+
+        LogEditModle = new Log_inEdit();
     }
 
     public void addListener(){
@@ -73,6 +79,7 @@ public class RegisterActivity extends Activity {
                 Account = accountText.getText().toString();
                 security = securityText.getText().toString();
                 Password = pswText.getText().toString();
+                sendPost(Account,security,Password);
 //                Log.d("account",Account);
 //                Log.d("account",Password);
             }
@@ -84,5 +91,27 @@ public class RegisterActivity extends Activity {
                 Toast.makeText(RegisterActivity.this,"短信已发送",Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void sendPost(String Acc,String Ser,String pass){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    HashMap<String,Object> res = LogEditModle.analyse(Account,security,Password);
+                    int error = (int) res.get("error");
+                    String mess = (String) res.get("message");
+                    if (error!=0){
+                        Toast.makeText(RegisterActivity.this,mess,Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(RegisterActivity.this,"注册成功",Toast.LENGTH_SHORT).show();
+                    }
+
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 }

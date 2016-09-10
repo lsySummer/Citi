@@ -5,10 +5,17 @@ package nju.financecity_android.model;
  */
 public class UserSession {
 
-    private UserSession() { }
+    public UserSession(String Userid,String Sessionid) {
+        this.userId = Userid;
+        this.sessionId = Sessionid;
+    }
 
     public static UserSession getCurrUser() {
         return currUser;
+    }
+
+    public static void setCurrUser(UserSession CurrUser){
+        currUser = CurrUser;
     }
 
     public String getUserId() {

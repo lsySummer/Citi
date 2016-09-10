@@ -47,6 +47,7 @@ p {
     width: 49%;
     height: 100%;
     color: #898989;
+    cursor: pointer;
 }
 .top-bar .circle {
     float: left;
