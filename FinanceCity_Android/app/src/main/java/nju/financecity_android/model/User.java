@@ -43,4 +43,5 @@ public class User {
     String username;
     String mobile;
     String emailAddr;
+    String sessionId;
 }
