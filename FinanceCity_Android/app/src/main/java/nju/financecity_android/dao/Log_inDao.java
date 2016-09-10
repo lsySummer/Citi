@@ -24,7 +24,7 @@ public class Log_inDao {
             // 绑定到请求的Entry
             StringEntity StringEn = new StringEntity(param.toString());
 
-            Log.i("test","sendPost: StringEntity="+param.toString());
+            Log.i("test","sendRequest: StringEntity="+param.toString());
 
             StringEn.setContentType("application/json");
             request.setEntity(StringEn);
@@ -33,11 +33,11 @@ public class Log_inDao {
             httpResponse = new DefaultHttpClient().execute(request);
             // 得到应答的字符串，这也是一个 JSON 格式保存的数据
             String retSrc = EntityUtils.toString(httpResponse.getEntity());
-            Log.d("test","sendPost: retSrc="+retSrc);
+            Log.d("test","sendRequest: retSrc="+retSrc);
             return retSrc;
         } catch (Exception e)
         {
-            Log.e("test", "sendPost: Exception");
+            Log.e("test", "sendRequest: Exception");
             e.printStackTrace();
         }
         return null;

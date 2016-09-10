@@ -4,8 +4,6 @@ import nju.financecity_android.util.HttpUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Map;
-
 /**
  * Created by coral on 16-9-3.
  */
@@ -37,7 +35,7 @@ public class ProductDao extends CommonDao {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return HttpUtil.postJson(getFullUrl(), jo);
+        return HttpUtil.sendJson(getFullUrl(), jo, "POST");
     }
 
     private String productId;

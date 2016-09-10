@@ -57,7 +57,7 @@ public class HttpUtil {
         return result;
     }
 
-    public static String sendPost(String url, String requestBody) {
+    public static String sendRequest(String url, String requestBody, String method) {
         String result = "";
         try {
             URL realUrl = new URL(url);
@@ -65,7 +65,7 @@ public class HttpUtil {
             connection.setDoInput(true);
             connection.setDoOutput(true);
             connection.setUseCaches(false);
-            connection.setRequestMethod("GET");
+            connection.setRequestMethod(method);
             connection.setRequestProperty("Accept", "*/*");
             connection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
             connection.connect();
@@ -85,12 +85,11 @@ public class HttpUtil {
         return result;
     }
 
-    public static String postJson(String url, JSONObject jsonData) {
-        return sendPost(url, jsonData.toString());
+    public static String sendJson(String url, JSONObject jsonData, String method) {
+        return sendRequest(url, jsonData.toString(), method);
     }
 
     public static void main(String[] args) {
-        System.out.println(sendPost(CommonDao.host + "/api/login", "{'username': '18187459874', 'password':'00000000'}"));
-        System.out.println(sendPost(CommonDao.host + "/api/user", "{'id': '18187459874', 'session': '4'}"));
+        System.out.println(sendRequest(CommonDao.host + "/api/user", "{'id': 18187459874, 'session': '489c50b7a1171376ec41c4730e24c27b'}", "GET"));
     }
 }

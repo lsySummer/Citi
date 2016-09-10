@@ -43,6 +43,6 @@ public class ProductsDao extends CommonDao {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return HttpUtil.postJson(getFullUrl(), jo);
+        return HttpUtil.sendJson(getFullUrl(), jo, "POST");
     }
 }
