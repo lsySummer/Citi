@@ -45,6 +45,35 @@ public class UpdateUtils {
         }
     }
 
+    static public void updateFundDaily() {
+        Connection connection = getConn();
+
+        String sql_select = "SELECT * FROM product_fund";
+        String sql_insert = "UPDATE fund_daily_history SET fund_id = ? WHERE fund_id = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql_select);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Category category = ProductCategoryManager.getFundCategory(resultSet.getByte("category"));
+                Integer id = resultSet.getInt("id");
+                String product_code = resultSet.getString("product_code");
+                int pid = ProductCategoryManager.generateProductID(id, category.getCategoryName());
+
+                //System.out.print(resultSet.getString("name"));
+                PreparedStatement prep = connection.prepareStatement(sql_insert);
+                prep.setInt(2, Integer.valueOf(product_code));
+                prep.setInt(1, pid);
+
+                prep.executeUpdate();
+
+            }
+        }
+        catch (SQLException s) {
+            s.printStackTrace();
+        }
+    }
+
     static private Connection getConn() {
         Connection conn = null;
         try {
@@ -59,6 +88,6 @@ public class UpdateUtils {
     }
 
     static public void main(String[] args) {
-        UpdateUtils.updateNameToId_Fund();
+        UpdateUtils.updateFundDaily();
     }
 }

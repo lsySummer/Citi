@@ -74,6 +74,13 @@
 			</result>
 		</action>
 
+		<action name="prefer" class="edu.nju.action.AndroidUserAction" method="setTemperPrefer">
+			<result name="success" type="json">
+				<param name="root">result</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+
 		<action name="investment" class="edu.nju.action.AndroidAssetAction" method="getCurrentInvestmentVO">
 			<result name="success" type="json">
 				<param name="root">result</param>
@@ -88,9 +95,10 @@
 			</result>
 		</action>
 
-		<action name="order" class="edu.nju.action.AndroidBuyAction" method="getOrderPrice">
-			<result name="success" type="plainText">
-				<param name="root">resultText</param>
+		<action name="order" class="edu.nju.action.AndroidBuyAction" method="order">
+			<result name="success" type="json">
+				<param name="root">result</param>
+				<param name="ignoreHierarchy">false</param>
 			</result>
 		</action>
 	</package>

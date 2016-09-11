@@ -55,21 +55,21 @@ public class AssetManagementServiceImpl implements AssetManagementService {
                     InvestmentPortfolio investmentPortfolio = (InvestmentPortfolio)userService.getUserDao(financeCityUser).
                             find("FROM InvestmentPortfolio i WHERE i.id=" + investStatus.getPortfolioId()).get(0);
 
-                    List<TradeHistory> tradeHistoryList = userService.getUserDao(financeCityUser).
-                            find("FROM TradHistory t WHERE t.portfolioId=" + investmentPortfolio.getId());
+                    List<InvestedProducts> investedProductList = userService.getUserDao(financeCityUser).
+                            find("FROM InvestedProducts t WHERE t.portfolioId=" + investmentPortfolio.getId());
 
                     List<ProductVO> productList = new ArrayList<>();
-                    for (TradeHistory tradeHistory : tradeHistoryList) {
+                    for (InvestedProducts investedProducts : investedProductList) {
                         try {
-                            Product product = searchService.getProductByID(tradeHistory.getId());
+                            Product product = searchService.getProductByID(investedProducts.getId());
                             ProductVO productVO = new ProductVO();
                             productVO.setId(product.getID());
                             productVO.setType(product.getCategory().getChineseName());
-                            productVO.setBuyingDate(tradeHistory.getDate().toString());
-                            productVO.setCurrentValue(getCurrentValue(product, tradeHistory));
-                            productVO.setBuyingValue(tradeHistory.getTradingVolume().doubleValue());
+                            productVO.setBuyingDate(investedProducts.getBuyingDate().toString());
+                            productVO.setCurrentValue(getCurrentValue(product, investedProducts));
+                            productVO.setBuyingValue(investedProducts.getTotalAmount().doubleValue());
                             productVO.setName(product.getName());
-                            productVO.setEndDate(getEndDate(tradeHistory, product));
+                            productVO.setEndDate(investedProducts.getEndDate().toString());
                             //TODO:set redeem date
                             productVO.setCanRedeemDate("");
 
@@ -96,36 +96,60 @@ public class AssetManagementServiceImpl implements AssetManagementService {
         return currentInvestmentVO;
     }
 
-    private double getCurrentValue(Product product, TradeHistory tradeHistory) {
+    private double getCurrentValue(Product product, InvestedProducts investedProducts) {
         double current_value;
         if (product.getCategory().belongTo(ProductCategoryManager.categoryBond) ||
                 product.getCategory().belongTo(ProductCategoryManager.categoryBank) ||
                 product.getCategory().belongTo(ProductCategoryManager.categoryInsurance)) {
-            double ret_rate = TimeTransformation.getTimeFromNow(tradeHistory.getDate(), 'd') / 365;
-            current_value = (ret_rate + 1) * tradeHistory.getTradingVolume().doubleValue();
+            double ret_rate = TimeTransformation.getTimeFromNow(investedProducts.getBuyingDate(), 'd') / 365;
+            current_value = (ret_rate + 1) * investedProducts.getTotalAmount().doubleValue();
         }
         else if (product.getCategory().belongTo(ProductCategoryManager.categoryFund)) {
             ProductFund productFund = (ProductFund)product.getProduct();
-            current_value = (productFund.getNav().doubleValue() / tradeHistory.getNav().doubleValue()) * tradeHistory.getTradingVolume().doubleValue();
+            try {
+                double nav = getNavOnDate(product.getID(), investedProducts.getBuyingDate());
+                current_value = (productFund.getNav().doubleValue() / nav) * investedProducts.getTotalAmount().doubleValue();
+            }
+            catch (DataNotFoundException d) {
+                d.printStackTrace();
+                return investedProducts.getTotalAmount().doubleValue();
+            }
         }
         else {
             //exception
-            return tradeHistory.getTradingVolume().doubleValue();
+            return investedProducts.getTotalAmount().doubleValue();
         }
 
         return current_value;
     }
 
-    private double getProductValueOnDate(double tradingVolume, Category category, TradeHistory tradeHistory, Date date, double NAVOnDate) {
+    private double getNavOnDate(int product_id, Date date) throws DataNotFoundException {
+        try {
+            BigDecimal bigDecimal = (BigDecimal)userService.getCommonDao().find("SELECT p.nav FROM FundDailyHistory p WHERE p.fundId=" + product_id).get(0);
+            return bigDecimal.doubleValue();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            throw new DataNotFoundException("NAV");
+        }
+    }
+
+    private double getProductValueOnDate(double tradingVolume, Product product, InvestedProducts investedProducts, Date date) {
         double value;
-        if (category.belongTo(ProductCategoryManager.categoryBond) ||
-                category.belongTo(ProductCategoryManager.categoryBank) ||
-                category.belongTo(ProductCategoryManager.categoryInsurance)) {
-            double ret_rate = TimeTransformation.getTimeFromDate(new Date(tradeHistory.getDate().getTime()), date, TimeTransformation.year);
+        if (product.getCategory().belongTo(ProductCategoryManager.categoryBond) ||
+                product.getCategory().belongTo(ProductCategoryManager.categoryBank) ||
+                product.getCategory().belongTo(ProductCategoryManager.categoryInsurance)) {
+            double ret_rate = TimeTransformation.getTimeFromDate(investedProducts.getBuyingDate(), date, TimeTransformation.year);
             value = (ret_rate + 1) * tradingVolume;
         }
-        else if (category.belongTo(ProductCategoryManager.categoryFund)) {
-            value = (NAVOnDate / tradeHistory.getNav().doubleValue()) * tradingVolume;
+        else if (product.getCategory().belongTo(ProductCategoryManager.categoryFund)) {
+            try {
+                value = (getNavOnDate(product.getID(), date) / getNavOnDate(product.getID(), date)) * tradingVolume;
+            }
+            catch (DataNotFoundException d) {
+                d.printStackTrace();
+                return tradingVolume;
+            }
         }
         else {
             //exception
@@ -133,35 +157,6 @@ public class AssetManagementServiceImpl implements AssetManagementService {
         }
 
         return value;
-    }
-
-    private String getEndDate(TradeHistory tradeHistory, Product product) {
-        double endtime = 0;
-
-        if (product.getCategory().belongTo(ProductCategoryManager.categoryInsurance)) {
-            ProductInsurance productInsurance = (ProductInsurance)product.getProduct();
-            endtime = TimeTransformation.getTimeAfter(tradeHistory.getDate(), productInsurance.getWarrantyPeriod().doubleValue(),
-                    TimeTransformation.year, TimeTransformation.microSecond);
-        }
-        else if (product.getCategory().belongTo(ProductCategoryManager.categoryFund)) {
-            ProductFund productFund = (ProductFund)product.getProduct();
-            endtime = TimeTransformation.getTimeAfter(tradeHistory.getDate(), productFund.getLength().doubleValue(),
-                    TimeTransformation.year, TimeTransformation.microSecond);
-        }
-        else if (product.getCategory().belongTo(ProductCategoryManager.categoryBank)) {
-            ProductBank productBank = (ProductBank) product.getProduct();
-            endtime = TimeTransformation.getTimeAfter(tradeHistory.getDate(), productBank.getLength().doubleValue(),
-                    TimeTransformation.year, TimeTransformation.microSecond);
-        }
-        else if (product.getCategory().belongTo(ProductCategoryManager.categoryBond)) {
-            ProductBond productBond = (ProductBond) product.getProduct();
-            endtime = TimeTransformation.getTimeAfter(tradeHistory.getDate(), productBond.getLength().doubleValue(),
-                    TimeTransformation.year, TimeTransformation.microSecond);
-        }
-
-
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        return dateFormat.format(new Timestamp((long)endtime));
     }
 
     @SuppressWarnings("unchecked")
@@ -226,12 +221,12 @@ public class AssetManagementServiceImpl implements AssetManagementService {
                     InvestmentPortfolio investmentPortfolio = (InvestmentPortfolio)userService.getUserDao(financeCityUser).
                             find("FROM InvestmentPortfolio i WHERE i.id=" + investStatus.getPortfolioId()).get(0);
 
-                    List<TradeHistory> tradeHistoryList = userService.getUserDao(financeCityUser).
-                            find("FROM TradHistory t WHERE t.portfolioId=" + investmentPortfolio.getId());
+                    List<InvestedProducts> investedProductses = userService.getUserDao(financeCityUser).
+                            find("FROM InvestedProducts t WHERE t.portfolioId=" + investmentPortfolio.getId());
 
-                    for (TradeHistory tradeHistory : tradeHistoryList) {
-                        Product product = searchService.getProductByID(tradeHistory.getProductId());
-                        current_value += getCurrentValue(product, tradeHistory);
+                    for (InvestedProducts investedProducts : investedProductses) {
+                        Product product = searchService.getProductByID(investedProducts.getProductId());
+                        current_value += getCurrentValue(product, investedProducts);
                     }
                 }
             }

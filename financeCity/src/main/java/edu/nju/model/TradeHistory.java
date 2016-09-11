@@ -5,22 +5,32 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
- * Created by Sun YuHao on 2016/9/10.
+ * Created by Sun YuHao on 2016/9/11.
  */
 @Entity
 @Table(name = "trade_history", schema = "citi", catalog = "")
 public class TradeHistory {
+    private int id;
     private int userId;
     private int productId;
     private String checkCode;
     private Timestamp tradeAt;
     private String tradeType;
     private BigDecimal tradingVolume;
-    private BigDecimal nav;
-    private Timestamp date;
     private BigDecimal buyingPrice;
-    private int id;
+    private Timestamp date;
+    private BigDecimal nav;
     private Integer portfolioId;
+
+    @Id
+    @Column(name = "id")
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     @Basic
     @Column(name = "user_id")
@@ -83,13 +93,13 @@ public class TradeHistory {
     }
 
     @Basic
-    @Column(name = "NAV")
-    public BigDecimal getNav() {
-        return nav;
+    @Column(name = "buying_price")
+    public BigDecimal getBuyingPrice() {
+        return buyingPrice;
     }
 
-    public void setNav(BigDecimal nav) {
-        this.nav = nav;
+    public void setBuyingPrice(BigDecimal buyingPrice) {
+        this.buyingPrice = buyingPrice;
     }
 
     @Basic
@@ -103,23 +113,13 @@ public class TradeHistory {
     }
 
     @Basic
-    @Column(name = "buying_price")
-    public BigDecimal getBuyingPrice() {
-        return buyingPrice;
+    @Column(name = "NAV")
+    public BigDecimal getNav() {
+        return nav;
     }
 
-    public void setBuyingPrice(BigDecimal buyingPrice) {
-        this.buyingPrice = buyingPrice;
-    }
-
-    @Id
-    @Column(name = "id")
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public void setNav(BigDecimal nav) {
+        this.nav = nav;
     }
 
     @Basic
@@ -139,17 +139,17 @@ public class TradeHistory {
 
         TradeHistory that = (TradeHistory) o;
 
+        if (id != that.id) return false;
         if (userId != that.userId) return false;
         if (productId != that.productId) return false;
-        if (id != that.id) return false;
         if (checkCode != null ? !checkCode.equals(that.checkCode) : that.checkCode != null) return false;
         if (tradeAt != null ? !tradeAt.equals(that.tradeAt) : that.tradeAt != null) return false;
         if (tradeType != null ? !tradeType.equals(that.tradeType) : that.tradeType != null) return false;
         if (tradingVolume != null ? !tradingVolume.equals(that.tradingVolume) : that.tradingVolume != null)
             return false;
-        if (nav != null ? !nav.equals(that.nav) : that.nav != null) return false;
-        if (date != null ? !date.equals(that.date) : that.date != null) return false;
         if (buyingPrice != null ? !buyingPrice.equals(that.buyingPrice) : that.buyingPrice != null) return false;
+        if (date != null ? !date.equals(that.date) : that.date != null) return false;
+        if (nav != null ? !nav.equals(that.nav) : that.nav != null) return false;
         if (portfolioId != null ? !portfolioId.equals(that.portfolioId) : that.portfolioId != null) return false;
 
         return true;
@@ -157,16 +157,16 @@ public class TradeHistory {
 
     @Override
     public int hashCode() {
-        int result = userId;
+        int result = id;
+        result = 31 * result + userId;
         result = 31 * result + productId;
         result = 31 * result + (checkCode != null ? checkCode.hashCode() : 0);
         result = 31 * result + (tradeAt != null ? tradeAt.hashCode() : 0);
         result = 31 * result + (tradeType != null ? tradeType.hashCode() : 0);
         result = 31 * result + (tradingVolume != null ? tradingVolume.hashCode() : 0);
-        result = 31 * result + (nav != null ? nav.hashCode() : 0);
-        result = 31 * result + (date != null ? date.hashCode() : 0);
         result = 31 * result + (buyingPrice != null ? buyingPrice.hashCode() : 0);
-        result = 31 * result + id;
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + (nav != null ? nav.hashCode() : 0);
         result = 31 * result + (portfolioId != null ? portfolioId.hashCode() : 0);
         return result;
     }

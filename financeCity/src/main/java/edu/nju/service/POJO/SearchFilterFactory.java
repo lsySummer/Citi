@@ -12,6 +12,7 @@ import edu.nju.service.SearchService.ProductFilter;
 import org.python.antlr.ast.Str;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -144,7 +145,7 @@ public class SearchFilterFactory {
     static private ProductFilter createBondFilter(Map map) throws InvalidParametersException {
         double[] year_rate = new double[2];
         int[] expiration = new int[2];
-        Timestamp expiration_date;
+        Date expiration_date;
         Byte state;
 
         try {
@@ -164,7 +165,7 @@ public class SearchFilterFactory {
                 expiration_date = null;
             }
             else {
-                expiration_date = Timestamp.valueOf(expiration_date_s);
+                expiration_date = Date.valueOf(expiration_date_s);
             }
 
             String state_s = (String)option.get("state");
@@ -183,7 +184,7 @@ public class SearchFilterFactory {
         ProductFilter productFilter = new ProductFilter() {
             double[] year_rate = new double[2];
             int[] expiration = new int[2];
-            Timestamp expiration_date;
+            Date expiration_date;
             Byte state;
 
             @Override
@@ -207,7 +208,7 @@ public class SearchFilterFactory {
                 return list;
             }
 
-            private ProductFilter setParam(double[] year_rate, int[] expiration, Timestamp expiration_date, Byte state) {
+            private ProductFilter setParam(double[] year_rate, int[] expiration, Date expiration_date, Byte state) {
                 this.year_rate = year_rate;
                 this.expiration = expiration;
                 this.expiration_date = expiration_date;
@@ -227,7 +228,7 @@ public class SearchFilterFactory {
         Byte state;
         int[] net_value = new int[2];
         Boolean is_close_ended;
-        Byte sort_type = 0;
+        Byte sort_type;
         int[] expiration = new int[2];
 
         try {
@@ -531,6 +532,17 @@ public class SearchFilterFactory {
         }
         else {
             return integer;
+        }
+    }
+
+    static public void main(String[] args) {
+        try {
+            Map map = new HashMap();
+            map.put("options", new HashMap<>());
+            SearchFilterFactory.createFilter("Bond", map);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

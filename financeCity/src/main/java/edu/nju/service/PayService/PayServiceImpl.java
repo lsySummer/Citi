@@ -5,6 +5,7 @@ import edu.nju.service.ExceptionsAndError.NotLoginException;
 import edu.nju.service.POJO.Payment;
 import edu.nju.service.POJO.SimplePayWay;
 import edu.nju.service.Sessions.FinanceCityUser;
+import edu.nju.service.TradeService.TradeService;
 import edu.nju.service.UserService.UserService;
 import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,14 +20,11 @@ import java.util.List;
 public class PayServiceImpl implements PayService {
     @Autowired
     UserService userService;
+    @Autowired
+    TradeService tradeService;
 
     @Override
     public boolean bindCards(String cardNumber) {
-        return false;
-    }
-
-    @Override
-    public boolean payForProducts(List<Payment> payments) {
         return false;
     }
 
@@ -49,5 +47,17 @@ public class PayServiceImpl implements PayService {
         }
 
         return list;
+    }
+
+    @Override
+    public boolean payForPortfolio(String checkCode, FinanceCityUser financeCityUser) {
+        try {
+            tradeService.ackPayment(checkCode, financeCityUser);
+            return true;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

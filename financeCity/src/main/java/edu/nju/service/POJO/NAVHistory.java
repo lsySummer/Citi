@@ -3,7 +3,7 @@ package edu.nju.service.POJO;
 /**
  * Created by Sun YuHao on 2016/9/10.
  */
-public class FundValueHistory {
+public class NAVHistory {
     private String date;
     private double NAV;
 
