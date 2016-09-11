@@ -7,8 +7,8 @@
 	<TextView
 			android:layout_width="45dp"
 			android:layout_height="45dp"
-			android:text="理"
-			android:id="@+id/txtSimpleType" android:background="@drawable/bank_background" android:gravity="center"
+			android:text="保"
+			android:id="@+id/txtSimpleType" android:background="@drawable/insurance_background" android:gravity="center"
 			android:textColor="#ffffff" android:textSize="24sp"/>
 	<TextView
 			android:layout_width="wrap_content"
@@ -28,11 +28,10 @@
 	<TextView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="￥500"
-			android:id="@+id/txtPrice"
-			android:textSize="16dp" android:textColor="@color/increasingRed" android:layout_alignTop="@+id/btMinus"
-			android:layout_toLeftOf="@+id/btMinus" android:layout_toStartOf="@+id/btMinus"
-			android:layout_marginRight="12dp" android:layout_marginEnd="12dp" android:layout_centerVertical="true"/>
+			android:text="￥"
+			android:textSize="16dp" android:textColor="@color/increasingRed"
+			android:layout_centerVertical="true" android:layout_toLeftOf="@+id/txtPrice"
+	/>
 	<EditText
 			android:layout_width="45dp"
 			android:layout_height="wrap_content"
@@ -65,4 +64,11 @@
 			android:textSize="10sp"
 			android:layout_alignParentBottom="true" android:layout_alignRight="@+id/txtPrice"
 			android:layout_alignEnd="@+id/txtPrice"/>
+	<EditText android:layout_width="45dp" android:layout_height="wrap_content" android:inputType="number"
+	          android:ems="10" android:id="@+id/txtPrice"
+	          android:singleLine="false"
+	          android:textSize="16sp" android:text="1" android:textColor="@color/WordBlack" android:gravity="center"
+	          android:layout_centerVertical="true" android:layout_toRightOf="@+id/txtCategories"
+	          android:layout_toLeftOf="@+id/btMinus" android:layout_toStartOf="@+id/btMinus"
+	          android:layout_marginRight="12dp"/>
 </RelativeLayout>

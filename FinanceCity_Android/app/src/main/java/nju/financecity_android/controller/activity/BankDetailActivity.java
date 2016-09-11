@@ -4,11 +4,10 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import nju.financecity_android.R;
-import nju.financecity_android.controller.widget.SimpleProperty;
+import nju.financecity_android.controller.widget.item.adapter.PropertyListAdapter;
 import nju.financecity_android.model.ProductBank;
 import nju.financecity_android.vo.PropertyVO;
 
@@ -17,6 +16,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @param pri
+ */
 public class BankDetailActivity extends AppCompatActivity {
 
     @Override
@@ -32,7 +34,7 @@ public class BankDetailActivity extends AppCompatActivity {
     }
 
     protected void setProperties(List<PropertyVO> properties) {
-        SimpleProperty.PropertyListAdapter adapter = new SimpleProperty.PropertyListAdapter(this, properties);
+        PropertyListAdapter adapter = new PropertyListAdapter(this, properties);
         listProperties.setAdapter(adapter);
     }
 

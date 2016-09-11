@@ -31,6 +31,7 @@ public class JsonUtil {
     public Map getMap() {
         if (result != null) {
             try {
+                System.out.println(result);
                 JSONObject jsonObject = JSONObject.fromObject(result);
                 return jsonObject;
             }catch (Exception e) {

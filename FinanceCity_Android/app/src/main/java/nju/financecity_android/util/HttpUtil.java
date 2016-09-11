@@ -90,6 +90,8 @@ public class HttpUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(sendRequest(CommonDao.host + "/api/user", "{'id': 18187459874, 'session': '489c50b7a1171376ec41c4730e24c27b'}", "GET"));
+        //System.out.println(sendRequest(CommonDao.host + "/api/login", "{'username': '18187459874', 'password':'00000000' }", "POST"));
+        //System.out.println(sendRequest(CommonDao.host + "/api/user", "{'id': 4, 'session': 'bae11f9a5a0b8c29ea327adb06609f94'}", "GET"));
+        System.out.println(sendGet(CommonDao.host + "/api/user?id=4&&sessionId=a74739ceefa71db663907dfe82fb3728"));
     }
 }

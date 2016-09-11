@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.widget.ListView;
 import android.widget.TextView;
 import nju.financecity_android.R;
-import nju.financecity_android.controller.widget.SimpleProperty;
+import nju.financecity_android.controller.widget.item.adapter.PropertyListAdapter;
 import nju.financecity_android.model.ProductBond;
 import nju.financecity_android.vo.PropertyVO;
 
@@ -124,7 +124,7 @@ public class BondDetailActivity extends AppCompatActivity {
     }
 
     protected void setProperties(List<PropertyVO> properties) {
-        SimpleProperty.PropertyListAdapter adapter = new SimpleProperty.PropertyListAdapter(this, properties);
+        PropertyListAdapter adapter = new PropertyListAdapter(this, properties);
         listProperties.setAdapter(adapter);
     }
 
