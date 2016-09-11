@@ -12,13 +12,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import nju.financecity_android.R;
+import nju.financecity_android.controller.activity.MainActivity;
 import nju.financecity_android.vo.ProductInfo;
 import nju.financecity_android.vo.ProductVO;
 
 /**
  * Created by Administrator on 2016/9/6.
  */
-public class SingleSearchResult extends RelativeLayout implements View.OnClickListener{
+public class SingleSearchResult extends RelativeLayout {
     private ImageView background;
     private TextView year_rate;
     private TextView year_text;
@@ -87,10 +88,5 @@ public class SingleSearchResult extends RelativeLayout implements View.OnClickLi
         type.setText(info.getType());
         product.setText(info.getName());
         introduction.setText(info.getIntroduction());
-    }
-
-    @Override
-    public void onClick(View view) {
-        //链接到相关页面
     }
 }

@@ -18,10 +18,10 @@ function initSlider() {
         type: "double",
         grid: true,
         min: 0,
-        max: 1000,
-        from: 200,
-        to: 800,
-        prefix: "$"
+        max: 100,
+        from: 20,
+        to: 80,
+        prefix: ""
     });
     $(".annualized-return").ionRangeSlider({
         type: "double",

@@ -34,9 +34,10 @@
     <link type="text/css" rel="stylesheet" href="${basePath}css/searchResult.css"/>
     <link type="text/css" rel="stylesheet" href="${basePath}css/searchFilter.css"/>
 
-    <script>
-        var search_list = ${institutionList};
-    </script>
+    <%--<script>--%>
+        <%--var search_list = "<s:property value="#request.bondStateList"/>";--%>
+        <%--console.log(search_list);--%>
+    <%--</script>--%>
 
     <script type="text/javascript" rel="script" src="js/jquery.min.js"></script>
     <script type="text/javascript" rel="script" src="plugins/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
@@ -150,7 +151,11 @@
             <div class="income-wrapper">
                 <div class="input-add-on income-item">
                     <span class="tag">管理机构&nbsp;&nbsp;</span>
-                    <select id="bank_institution_manage" class="input-add-on-field"></select>
+                    <select id="bank_institution_manage" class="input-add-on-field">
+                        <s:iterator id="bond" value="#request.bankInstitutionList">
+                            <option><s:property value="#bank"/></option>
+                        </s:iterator>
+                    </select>
                 </div>
                 <div class="input-add-on income-item">
                     <span class="tag">收益类型</span>
@@ -215,13 +220,17 @@
                     <span class="tag">到期日</span>
                     &nbsp;&nbsp;
                     &nbsp;&nbsp;
-                    <select id="bond_expiration_date" class="input-add-on-field form_datetime" readonly></select>
+                    <input type="text" id="bond_expiration_date" class="input-add-on-field form_datetime" readonly/>
                 </div>
                 <div class="input-add-on income-item">
                     <span class="tag">状态</span>
                     &nbsp;&nbsp;
                     &nbsp;&nbsp;
-                    <select id="bond_state" class="input-add-on-field"></select>
+                    <select id="bond_state" class="input-add-on-field">
+                        <s:iterator id="state" value="#request.bondStateList">
+                            <option><s:property value="#state"/></option>
+                        </s:iterator>
+                    </select>
                 </div>
                 <div class="input-add-on income-item u1of4">
 
@@ -259,22 +268,41 @@
             <div class="income-wrapper">
                 <div class="input-add-on income-item">
                     <span class="tag">管理机构</span>
-                    <select id="fund_institution_manage" class="input-add-on-field"></select>
+                    <select id="fund_institution_manage" class="input-add-on-field">
+                        <s:iterator id="fund" value="#request.fundInstitutionList">
+                            <option><s:property value="#fund"/></option>
+                        </s:iterator>
+                    </select>
                 </div>
                 <div class="input-add-on income-item">
                     <span class="tag">目标类型</span>
-                    <select id="fund_type" class="input-add-on-field"></select>
+                    <select id="fund_type" class="input-add-on-field">
+                        <s:iterator id="target" value="#request.fundTargetList">
+                            <option><s:property value="#target"/></option>
+                        </s:iterator>
+                    </select>
                 </div>
                 <div class="input-add-on income-item">
                     <span class="tag">状态</span>
-                    <select id="fund_state" class="input-add-on-field"></select>
+                    <select id="fund_state" class="input-add-on-field">
+                        <s:iterator id="state" value="#request.fundStateList">
+                            <option><s:property value="#state"/></option>
+                        </s:iterator>
+                    </select>
                 </div>
             </div>
             <div class="income-wrapper">
-                <div class="input-add-on income-item u1of3">
+                <div class="input-add-on income-item u1of4">
                     <span class="tag">最新净值</span>
                     <div class="slider-wrapper input-add-on-field">
                         <input id="fund_net_value" type="text" name="annualized_return" value="" class="input-add-on-field annualized-return"/>
+                    </div>
+                </div>
+                <div class="input-add-on income-item u1of4">
+                    <span class="tag">期限</span>
+                    &nbsp;&nbsp;
+                    <div class="slider-wrapper input-add-on-field">
+                        <input id="fund_expiration" type="text" name="range" value="" class="input-add-on-field range"/>
                     </div>
                 </div>
                 <div class="input-add-on income-item">
@@ -289,13 +317,6 @@
                     &nbsp;&nbsp;
                     <div class="toggle-wrapper">
                         <input id="fund_sort_open" type="checkbox" checked data-toggle="toggle" data-size="small" data-height="30px" data-on="是" data-off="否" data-onstyle="info">
-                    </div>
-                </div>
-                <div class="input-add-on income-item">
-                    <span class="tag">期限</span>
-                    &nbsp;&nbsp;
-                    <div class="toggle-wrapper">
-                        <input id="fund_expiration" class="input-add-on-field form_datetime" readonly/>
                     </div>
                 </div>
                 <div class="input-add-on income-item u1of20">
@@ -352,11 +373,15 @@
             <div class="income-wrapper">
                 <div class="input-add-on income-item">
                     <span class="tag">发行公司</span>
-                    <select id="insurance_distributor" class="input-add-on-field"></select>
+                    <select id="insurance_distributor" class="input-add-on-field">
+                        <s:iterator id="insurance" value="#request.insuranceInstitutionList">
+                            <option><s:property value="#insurance"/></option>
+                        </s:iterator>
+                    </select>
                 </div>
                 <div class="input-add-on income-item">
                     <span class="tag">保险产品面额</span>
-                    <select id="insurance_price" class="input-add-on-field"></select>
+                    <input id="insurance_price" class="input-add-on-field" type="text"/>
                 </div>
                 <div class="income-item u1of4">
 
