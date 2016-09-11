@@ -139,8 +139,8 @@ public class SearchFilterAction extends BaseAction {
 
             page_length = productList.size()/8+1;
 
-            context.put("searchResultJSON", JSON.toJSON(resultFactory.getResultList((byte) 1)));
-            context.put("searchResult", resultFactory.getResultList((byte) 1));
+            context.put("searchResultJSON", JSON.toJSON(resultFactory.getResultList()));
+            context.put("searchResult", resultFactory.getResultList());
 
         } catch (InvalidParametersException e) {
             e.printStackTrace();
