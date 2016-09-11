@@ -8,15 +8,18 @@ import edu.nju.service.ExceptionsAndError.DataNotFoundException;
 import edu.nju.service.ExceptionsAndError.ErrorManager;
 import edu.nju.service.ExceptionsAndError.NoSuchProductException;
 import edu.nju.service.ExceptionsAndError.NotLoginException;
+import edu.nju.service.POJO.AssetValue;
 import edu.nju.service.POJO.Investment_portfolio;
 import edu.nju.service.SearchService.SearchService;
 import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.service.UserService.UserService;
 import edu.nju.service.Utils.TimeTransformation;
 import edu.nju.vo.*;
+import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -63,7 +66,7 @@ public class AssetManagementServiceImpl implements AssetManagementService {
                             productVO.setId(product.getID());
                             productVO.setType(product.getCategory().getChineseName());
                             productVO.setBuyingDate(tradeHistory.getDate().toString());
-                            productVO.setCurrentValue(getCurrentValue(tradeHistory.getTradingVolume().doubleValue(), product, tradeHistory));
+                            productVO.setCurrentValue(getCurrentValue(product, tradeHistory));
                             productVO.setBuyingValue(tradeHistory.getTradingVolume().doubleValue());
                             productVO.setName(product.getName());
                             productVO.setEndDate(getEndDate(tradeHistory, product));
@@ -93,21 +96,21 @@ public class AssetManagementServiceImpl implements AssetManagementService {
         return currentInvestmentVO;
     }
 
-    private double getCurrentValue(double trading_volume, Product product, TradeHistory tradeHistory) {
+    private double getCurrentValue(Product product, TradeHistory tradeHistory) {
         double current_value;
         if (product.getCategory().belongTo(ProductCategoryManager.categoryBond) ||
                 product.getCategory().belongTo(ProductCategoryManager.categoryBank) ||
                 product.getCategory().belongTo(ProductCategoryManager.categoryInsurance)) {
             double ret_rate = TimeTransformation.getTimeFromNow(tradeHistory.getDate(), 'd') / 365;
-            current_value = (ret_rate + 1) * trading_volume;
+            current_value = (ret_rate + 1) * tradeHistory.getTradingVolume().doubleValue();
         }
         else if (product.getCategory().belongTo(ProductCategoryManager.categoryFund)) {
             ProductFund productFund = (ProductFund)product.getProduct();
-            current_value = (productFund.getNav().doubleValue() / tradeHistory.getNav().doubleValue()) * trading_volume;
+            current_value = (productFund.getNav().doubleValue() / tradeHistory.getNav().doubleValue()) * tradeHistory.getTradingVolume().doubleValue();
         }
         else {
             //exception
-            return trading_volume;
+            return tradeHistory.getTradingVolume().doubleValue();
         }
 
         return current_value;
@@ -206,5 +209,64 @@ public class AssetManagementServiceImpl implements AssetManagementService {
         }
 
         return tradeHistoryListVO;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void updateAssetValue(FinanceCityUser financeCityUser) throws NotLoginException {
+        try {
+            double current_value = 0;
+            List<InvestStatus> list = userService.getUserDao(financeCityUser).
+                    find("FROM InvestStatus investStatus WHERE investStatus.userId=" + financeCityUser.getID());
+            if (list == null || list.size() == 0) {
+                return;
+            }
+            else {
+                for (InvestStatus investStatus : list) {
+                    InvestmentPortfolio investmentPortfolio = (InvestmentPortfolio)userService.getUserDao(financeCityUser).
+                            find("FROM InvestmentPortfolio i WHERE i.id=" + investStatus.getPortfolioId()).get(0);
+
+                    List<TradeHistory> tradeHistoryList = userService.getUserDao(financeCityUser).
+                            find("FROM TradHistory t WHERE t.portfolioId=" + investmentPortfolio.getId());
+
+                    for (TradeHistory tradeHistory : tradeHistoryList) {
+                        Product product = searchService.getProductByID(tradeHistory.getProductId());
+                        current_value += getCurrentValue(product, tradeHistory);
+                    }
+                }
+            }
+
+            UserAsset userAsset = new UserAsset();
+            userAsset.setUserId(financeCityUser.getID());
+            userAsset.setDate(new Date(System.currentTimeMillis()));
+            userAsset.setCurrentPrice(new BigDecimal(current_value));
+
+            userService.getUserDao(financeCityUser).saveOrUpdate(userAsset);
+        }
+        catch (NoSuchProductException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<AssetValue> getAssetValueHistory(FinanceCityUser financeCityUser, int days) throws NotLoginException {
+
+        List<UserAsset> list = userService.getUserDao(financeCityUser).find("FROM UserAsset u WHERE u.userId=" + financeCityUser.getID()
+                + " ORDER BY u.date DESC");
+
+        if (list == null || list.size() == 0) {
+            return null;
+        }
+
+        List<AssetValue> assetValues = new ArrayList<>();
+        for (int i = 0; i < list.size() && i < days; ++i) {
+            AssetValue assetValue = new AssetValue();
+            assetValue.setDate(list.get(i).getDate().toString());
+            assetValue.setValue(list.get(i).getCurrentPrice().doubleValue());
+        }
+
+        return assetValues;
+
     }
 }

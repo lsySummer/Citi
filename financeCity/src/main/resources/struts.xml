@@ -141,6 +141,13 @@
 				<param name="ignoreHierarchy">false</param>
 			</result>
 		</action>
+
+		<action name="value" class="edu.nju.action.AndroidAssetAction" method="getAssetHistoryVO">
+			<result name="success" type="json">
+				<param name="root">result</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
 	</package>
 
 	<constant name="struts.action.extension" value="," />
