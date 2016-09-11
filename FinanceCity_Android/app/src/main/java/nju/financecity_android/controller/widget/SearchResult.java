@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import nju.financecity_android.R;
+import nju.financecity_android.controller.activity.MainActivity;
 import nju.financecity_android.vo.ProductVO;
 
 /**
@@ -53,7 +54,7 @@ public class SearchResult extends ScrollView {
             single.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    MainActivity.showProductDetail("test");//TODO
                 }
             });
             listLayout.addView(single);

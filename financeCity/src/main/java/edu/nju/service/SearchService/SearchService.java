@@ -1,12 +1,9 @@
 package edu.nju.service.SearchService;
 
 import edu.nju.model.CategoryIndex;
-import edu.nju.model.Institution;
-import edu.nju.model.User;
-import edu.nju.model.UserTemperPrefer;
-import edu.nju.service.BaseService.BaseService;
 import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.ExceptionsAndError.NoSuchProductException;
+import edu.nju.service.POJO.FundValueHistory;
 import edu.nju.vo.*;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +13,7 @@ import java.util.List;
  * Created by Sun YuHao on 2016/7/25.
  */
 @Service
-public interface SearchService extends BaseService{
+public interface SearchService {
     /**
      * get product info
      * @param productName .
@@ -115,13 +112,16 @@ public interface SearchService extends BaseService{
     double getCost(int[] id, int[] amount);
 
     /**
+     * get fund value history
+     * @param id .
+     * @return .
+     */
+    FundValueHistory[] getFundValueHistory(Integer id) throws NoSuchProductException;
+
+    /**
      * get institution list
      * @return institution list
      */
-    List<Institution> getInstitutionList();
-
-    List<String> getInstitutionNameList();
-
     List<String> getInstitutionNameList(String category);
 
     List<String> getBondYieldType();

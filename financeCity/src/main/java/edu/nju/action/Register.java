@@ -4,8 +4,6 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 
-import edu.nju.service.ServiceManager;
-import edu.nju.service.ServiceManagerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -17,8 +15,10 @@ import edu.nju.service.UserService.UserService;
 
 @Controller
 public class Register extends BaseAction {
+	@Autowired
+	UserService userService;
+
 	public String execute() throws ServletException, IOException {
-		UserService userService = ServiceManagerImpl.getInstance().getUserService();
 
 		String mobile = request.getParameter("mobile");
 		String verify = request.getParameter("verify");

@@ -1,32 +1,35 @@
 package edu.nju.service.SearchService;
 
 import edu.nju.model.*;
-import edu.nju.service.BaseService.BaseFunctionServiceAdaptor;
 import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.CategoryAndProduct.ProductFactory;
 import edu.nju.service.ExceptionsAndError.NoSuchProductException;
 import edu.nju.service.CategoryAndProduct.Category;
 import edu.nju.service.CategoryAndProduct.ProductCategoryManager;
-import edu.nju.service.ExceptionsAndError.NotLoginException;
+import edu.nju.service.POJO.FundValueHistory;
+import edu.nju.service.UserService.UserService;
 import edu.nju.service.Utils.ListUtils;
 import edu.nju.service.Utils.UnitTransformation;
 import edu.nju.vo.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
  * Created by Sun YuHao on 2016/7/25.
  */
 @Service
-public class SearchServiceImpl extends BaseFunctionServiceAdaptor implements SearchService {
+public class SearchServiceImpl implements SearchService {
+    @Autowired
+    UserService userService;
 
     @SuppressWarnings("unchecked")
     @Override
     public List<Product> getProductByName(String productName) throws NoSuchProductException {
-        List<Integer> list = getUserService().getCommonDao().find("SELECT id FROM NameToId nameToId WHERE nameToId.name='" + productName + "'");
+        List<Integer> list = userService.getCommonDao().find("SELECT id FROM NameToId nameToId WHERE nameToId.name='" + productName + "'");
         if (list == null || list.size() == 0) {
             throw  new NoSuchProductException(productName);
         }
@@ -48,7 +51,7 @@ public class SearchServiceImpl extends BaseFunctionServiceAdaptor implements Sea
         Category biggerCategory = ProductCategoryManager.getCategoryByID(ID).getBiggerCategory();
         int index = ProductCategoryManager.getProductItemIndex(ID);
 
-        List list = getUserService().getCommonDao().find("FROM Product" + biggerCategory + " product WHERE product.id=" + index);
+        List list = userService.getCommonDao().find("FROM Product" + biggerCategory + " product WHERE product.id=" + index);
         if (list == null || list.size() == 0) {
             return null;
         }
@@ -66,10 +69,10 @@ public class SearchServiceImpl extends BaseFunctionServiceAdaptor implements Sea
             Category category = ProductCategoryManager.getCategoryByName(categoryName);
             List productList;
             if (!category.equals(ProductCategoryManager.categoryFund)) {
-                productList = getUserService().getCommonDao().find("FROM Product" + category + " product");
+                productList = userService.getCommonDao().find("FROM Product" + category + " product");
             }
             else {
-                productList = getUserService().getCommonDao().find("FROM Product" + category.getBiggerCategory() + " p WHERE p.category=" + category.getSubTypeIndex());
+                productList = userService.getCommonDao().find("FROM Product" + category.getBiggerCategory() + " p WHERE p.category=" + category.getSubTypeIndex());
             }
 
             for (Object product: productList) {
@@ -89,15 +92,13 @@ public class SearchServiceImpl extends BaseFunctionServiceAdaptor implements Sea
             List<Product> productList = new ArrayList<>();
 
             if (searchType == null) {
-                List<Integer> list = getUserService().getCommonDao().find("SELECT id FROM NameToId nameToId WHERE nameToId.name LIKE '%" +
+                List<Integer> list = userService.getCommonDao().find("SELECT p.id FROM NameToId nameToId WHERE nameToId.name LIKE '%" +
                         keyWord + "%'");
 
-                for (Integer id : list) {
-                    productList.add(getProductByID(id));
-                }
+                productList = getProductsByIds(list);
             }
             else if (!searchType.equals(ProductCategoryManager.categoryBond)) {
-                List<Integer> list = getUserService().getCommonDao().find("SELECT id FROM Product" + searchType +
+                List<Integer> list = userService.getCommonDao().find("SELECT p.id FROM Product" + searchType +
                         " p WHERE p.name LIKE '%" +
                         keyWord + "%'");
 
@@ -107,7 +108,7 @@ public class SearchServiceImpl extends BaseFunctionServiceAdaptor implements Sea
                 }
             }
             else {
-                List<Integer> list = getUserService().getCommonDao().find("SELECT id FROM ProductBond p WHERE p.title LIKE '%" +
+                List<Integer> list = userService.getCommonDao().find("SELECT p.id FROM ProductBond p WHERE p.title LIKE '%" +
                         keyWord + "%'");
 
                 for (Integer id : list) {
@@ -144,10 +145,10 @@ public class SearchServiceImpl extends BaseFunctionServiceAdaptor implements Sea
         try {
             Category category = ProductCategoryManager.getCategoryByName(type);
             if (!category.equals(ProductCategoryManager.categoryFund)) {
-                return getUserService().getCommonDao().find("SELECT MIN(o." + word + ") FROM Product" + category + " o").get(0);
+                return userService.getCommonDao().find("SELECT MIN(o." + word + ") FROM Product" + category + " o").get(0);
             }
             else {
-                return getUserService().getCommonDao().find("SELECT MIN(o." + word + ") FROM Product" + category.getBiggerCategory() + " o WHERE o.category=" + category.getSubTypeIndex()).get(0);
+                return userService.getCommonDao().find("SELECT MIN(o." + word + ") FROM Product" + category.getBiggerCategory() + " o WHERE o.category=" + category.getSubTypeIndex()).get(0);
             }
         }
         catch (Exception e) {
@@ -162,10 +163,10 @@ public class SearchServiceImpl extends BaseFunctionServiceAdaptor implements Sea
         List list;
 
         if (!category.equals(ProductCategoryManager.categoryFund)) {
-            list = getUserService().getCommonDao().find("FROM Product" + category + " p WHERE " + cond);
+            list = userService.getCommonDao().find("FROM Product" + category + " p WHERE " + cond);
         }
         else {
-            list = getUserService().getCommonDao().find("FROM Product" + category.getBiggerCategory() + " p WHERE p.category=" + category.getSubTypeIndex() + " AND " + cond);
+            list = userService.getCommonDao().find("FROM Product" + category.getBiggerCategory() + " p WHERE p.category=" + category.getSubTypeIndex() + " AND " + cond);
         }
 
         List<Product> productList = new ArrayList<>();
@@ -182,10 +183,10 @@ public class SearchServiceImpl extends BaseFunctionServiceAdaptor implements Sea
         List list;
 
         if (!category.equals(ProductCategoryManager.categoryFund)) {
-            list = getUserService().getCommonDao().find("FROM Product" + category + " p ORDER BY " + order);
+            list = userService.getCommonDao().find("FROM Product" + category + " p ORDER BY " + order);
         }
         else {
-            list = getUserService().getCommonDao().find("FROM Product" + category.getBiggerCategory() + " p WHERE p.category=" + category.getSubTypeIndex() + " ORDER BY " + order);
+            list = userService.getCommonDao().find("FROM Product" + category.getBiggerCategory() + " p WHERE p.category=" + category.getSubTypeIndex() + " ORDER BY " + order);
         }
 
         List<Product> productList = new ArrayList<>();
@@ -199,7 +200,7 @@ public class SearchServiceImpl extends BaseFunctionServiceAdaptor implements Sea
 
     @Override
     public CategoryIndex getCategoryIndex() {
-        List list = getUserService().getCommonDao().find("SELECT TOP 1 FROM CategoryIndex c ORDER BY id DESC");
+        List list = userService.getCommonDao().find("SELECT TOP 1 FROM CategoryIndex c ORDER BY id DESC");
         if (list == null || list.size() == 0) {
             return null;
         }
@@ -223,10 +224,32 @@ public class SearchServiceImpl extends BaseFunctionServiceAdaptor implements Sea
             }
         }
         if (list.size() == 0) {
-            return new Product[0];
+            return null;
         }
         else {
             return (Product[]) list.toArray();
+        }
+    }
+
+    private List<Product> getProductsByIds(List<Integer> ids) {
+        List<Product> list = new ArrayList<>();
+
+        for (int id :ids) {
+            try {
+                Product product = getProductByID(id);
+                if (product != null) {
+                    list.add(product);
+                }
+            }
+            catch (NoSuchProductException n) {
+                n.printStackTrace();
+            }
+        }
+        if (list.size() == 0) {
+            return null;
+        }
+        else {
+            return list;
         }
     }
 
@@ -258,19 +281,23 @@ public class SearchServiceImpl extends BaseFunctionServiceAdaptor implements Sea
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<String> getInstitutionNameList() {
-        List<String> list = getUserService().getCommonDao().find("SELECT i.name FROM Institution i");
-        if (list == null || list.size() == 0) {
-            return null;
+    public FundValueHistory[] getFundValueHistory(Integer id) throws NoSuchProductException {
+        List<FundDailyHistory> list = userService.getCommonDao().find("FROM FundDailyHistory p ORDER BY p.date DESC");
+
+        if (list == null) {
+            throw new NoSuchProductException(id);
         }
         else {
-            return list;
-        }
-    }
+            FundValueHistory[] fundValueHistories = new FundValueHistory[list.size()];
 
-    @Override
-    public List<Institution> getInstitutionList() {
-        return null;
+            for (int i = 0; i < list.size(); ++i) {
+                fundValueHistories[i] = new FundValueHistory();
+                fundValueHistories[i].setNAV(list.get(i).getNav().doubleValue());
+                fundValueHistories[i].setDate(list.get(i).getDate().toString());
+            }
+
+            return fundValueHistories;
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -284,7 +311,7 @@ public class SearchServiceImpl extends BaseFunctionServiceAdaptor implements Sea
 
             searchType = "Product" + category;
 
-            List<String> list = getUserService().getCommonDao().find("SELECT p.institutionManage FROM " + searchType + " p");
+            List<String> list = userService.getCommonDao().find("SELECT p.institutionManage FROM " + searchType + " p");
             ListUtils.eliminateDumplicatedString(list);
 
             if (list.size() != 0) {
@@ -301,7 +328,7 @@ public class SearchServiceImpl extends BaseFunctionServiceAdaptor implements Sea
     @SuppressWarnings("unchecked")
     @Override
     public double[] getHS_300ByTime() {
-        List<Hs300> list = getUserService().getCommonDao().find("FROM Hs300 h ORDER by date DESC");
+        List<Hs300> list = userService.getCommonDao().find("FROM Hs300 h ORDER by date DESC");
 
         if (list.size() == 0) {
             return new double[0];

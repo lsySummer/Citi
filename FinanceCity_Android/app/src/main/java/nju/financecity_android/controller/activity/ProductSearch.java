@@ -48,7 +48,6 @@ import nju.financecity_android.vo.ProductVO;
  */
 public class ProductSearch extends Fragment{
     /**产品搜索体*/
-//    private RelativeLayout product_search_layout;
     private RelativeLayout product_search_body;
     private SearchResult searchResult;
 
@@ -66,10 +65,7 @@ public class ProductSearch extends Fragment{
     @Override
     public void onStart() {
         super.onStart();
-//        this.product_search_layout=(RelativeLayout)getView().findViewById(R.id.product_search_layout);
         this.product_search_body=(RelativeLayout)getView().findViewById(R.id.product_search_body);
-//        final RelativeLayout.LayoutParams rlp_result=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.MATCH_PARENT);
-//        rlp_result.addRule(RelativeLayout.BELOW,R.id.slavery_spinner);
 
         //TODO 此处应加载所有产品
         List<ProductVO> list=new ArrayList<ProductVO>();
@@ -82,7 +78,6 @@ public class ProductSearch extends Fragment{
                     /*=======================================================================================*/
         searchResult=new SearchResult(getActivity(),list);
         product_search_body.addView(searchResult);
-//        product_search_layout.addView(searchResult,rlp_result);
 
         //关键字搜索框
         final EditText key=(EditText)getView().findViewById(R.id.key);
@@ -112,8 +107,6 @@ public class ProductSearch extends Fragment{
         final InsuranceSearch insurance = new InsuranceSearch(getActivity());
         final boolean[] isPicked={false};
 
-//        final int count[]={0};//改变几个组件
-//        final ArrayList<View> viewList=new ArrayList<View>();
         master.setOnItemSelectedListener(
                 new Spinner.OnItemSelectedListener()
                 {
@@ -126,80 +119,22 @@ public class ProductSearch extends Fragment{
                         slavery.setAdapter(adapter[0]);
                         switch (selector[0]) {
                             case 0:
-//                                View all = new AllSearch(getActivity());
-//                                all.setLayoutParams(rlp_result);
                                 all.setInit();
                                 filter[0]=all;
-//                                viewList.clear();
-//                                RelativeLayout.LayoutParams rlp_all_year=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
-//                                rlp_all_year.addRule(RelativeLayout.BELOW,R.id.master_spinner);
-//                                Bar all_year=new Bar(getActivity());
-//                                all_year.setStart(0f);
-//                                all_year.setEnd(15f);
-//                                all_year.setInterval(0.0001f);
-//                                all_year.setUnit("%");
-//                                all_year.setBar_text("年化收益率");
-//                                all_year.setId(R.id.all_year);
-//                                all_year.setLayoutParams(rlp_all_year);
-//                                viewList.add(all_year);
-//
-//                                rlp_all_year=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
-//                                rlp_all_year.addRule(RelativeLayout.BELOW,R.id.all_year);
-//                                Bar all_limit=new Bar(getActivity());
-//                                all_limit.setStart(0f);
-//                                all_limit.setEnd(1800f);
-//                                all_limit.setInterval(1f);
-//                                all_limit.setUnit("天");
-//                                all_limit.setBar_text("期限");
-//                                all_limit.setId(R.id.all_limit);
-//                                all_limit.setLayoutParams(rlp_all_year);
-//                                viewList.add(all_limit);
-//
-//                                rlp_all_year=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,40);
-//                                rlp_all_year.addRule(RelativeLayout.BELOW,R.id.all_limit);
-//                                rlp_all_year.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-//                                TextView all_close_name=new TextView(getActivity());
-//                                all_close_name.setText("是否封闭");
-//                                all_close_name.setTextSize(18);//TODO 单位
-//                                all_close_name.setTextColor(getResources().getColor(R.color.WordBlack));
-//                                all_close_name.setGravity(Gravity.CENTER);
-//                                all_close_name.setLayoutParams(rlp_all_year);
-//                                all_close_name.setId(R.id.all_close_name);
-//                                all_close_name.setLayoutParams(rlp_all_year);
-//                                viewList.add(all_close_name);
-//
-//                                rlp_all_year=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,40);
-//                                rlp_all_year.addRule(RelativeLayout.BELOW,R.id.all_limit);
-//                                rlp_all_year.addRule(RelativeLayout.RIGHT_OF,R.id.all_close_name);
-//                                rlp_all_year.setMargins(18,0,0,0);//left top right bottom
-//                                Switch all_close_switch=new Switch(getActivity());
-//                                all_close_switch.setId(R.id.all_close_switch);
-//                                all_close_switch.setLayoutParams(rlp_all_year);
-//                                viewList.add(all_close_switch);
-
                                 break;
                             case 1:
-//                                View bank = new BankSearch(getActivity());
-//                                bank.setLayoutParams(rlp_result);
-//                                bank.set
                                 bank.setInit();
                                 filter[0]=bank;
                                 break;
                             case 2:
-//                                View bond = new BondSearch(getActivity());
-//                                bond.setLayoutParams(rlp_result);
                                 bond.setInit();
                                 filter[0]=bond;
                                 break;
                             case 3:
-//                                View fund = new FundSearch(getActivity());
-//                                fund.setLayoutParams(rlp_result);
                                 fund.setInit();
                                 filter[0]=fund;
                                 break;
                             case 4:
-//                                View insurance = new InsuranceSearch(getActivity());
-//                                insurance.setLayoutParams(rlp_result);
                                 insurance.setInit();
                                 filter[0]=insurance;
                                 break;
@@ -209,8 +144,6 @@ public class ProductSearch extends Fragment{
                             //已经在筛选则直接更改页面
                             product_search_body.removeAllViews();
                             product_search_body.addView(filter[0]);
-////                            product_search_layout.removeViewAt(7);
-////                            product_search_layout.addView(filter[0]);
                         }
                     }
                     @Override
@@ -377,14 +310,6 @@ public class ProductSearch extends Fragment{
 
                 product_search_body.removeAllViews();
                 product_search_body.addView(searchResult);
-////                product_search_layout.removeViewAt(7);
-//                while(count[0]>=0)
-//                {
-//                    product_search_layout.removeViewAt(7+count[0]);
-//                    count[0]--;
-//                }
-//                product_search_layout.addView(searchResult,rlp_result);
-//                count[0]++;
 
             }
         });
@@ -397,19 +322,6 @@ public class ProductSearch extends Fragment{
 
                 product_search_body.removeAllViews();
                 product_search_body.addView(filter[0]);
-//                while(count[0]>=0)
-//                {
-//                    product_search_layout.removeViewAt(7+count[0]);
-//                    count[0]--;
-//                }
-
-////                product_search_layout.removeViewAt(7);
-////                product_search_layout.addView(filter[0]);
-//                for(int i=0;i<viewList.size();i++)
-//                {
-//                    product_search_layout.addView(viewList.get(i));
-//                    count[0]++;
-//                }
             }
         });
         //返回按钮
@@ -419,14 +331,6 @@ public class ProductSearch extends Fragment{
             public void onClick(View view) {
                 product_search_body.removeAllViews();
                 product_search_body.addView(searchResult);
-////                product_search_layout.removeViewAt(7);
-//                while(count[0]>=0)
-//                {
-//                    product_search_layout.removeViewAt(7+count[0]);
-//                    count[0]--;
-//                }
-//                product_search_layout.addView(searchResult,rlp_result);
-//                count[0]++;
             }
         });
     }

@@ -4,9 +4,7 @@ import edu.nju.service.CategoryAndProduct.Category;
 import edu.nju.service.CategoryAndProduct.ProductCategoryManager;
 import org.springframework.stereotype.Component;
 
-import java.awt.*;
 import java.sql.*;
-import java.util.List;
 
 /**
  * Created by Sun YuHao on 2016/9/7.

@@ -26,7 +26,7 @@
             android:textSize="18dp"
             android:textColor="@color/WordBlack"
             android:background="@color/lightGreyPlus"
-            android:layout_width="80dp"
+            android:layout_width="60dp"
             android:layout_height="30dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"/>
@@ -36,21 +36,26 @@
             android:textSize="18dp"
             android:textColor="@color/white"
             android:background="@color/lightBlue"
-            android:layout_width="80dp"
+            android:layout_width="60dp"
             android:layout_height="30dp"
             android:layout_alignParentTop="true"
             android:layout_toLeftOf="@id/pick"
             android:layout_marginRight="5dp"/>
         <EditText
             android:id="@+id/key"
+            android:hint="输入关键字搜索"
             android:textSize="18dp"
             android:textColor="@color/WordBlack"
-            android:textColorLink="@color/darkGrey"
+            android:textColorLink="@color/lightGrey"
+            android:textColorHighlight="@color/darkGrey"
+            android:textColorHint="@color/lightGrey"
             android:layout_width="fill_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@id/back"
-            android:layout_toLeftOf="@id/search"/>
+            android:layout_toLeftOf="@id/search"
+            android:layout_marginTop="-10dp"
+            android:layout_marginBottom="-10dp"/>
 
         <!--<TextView
             android:id="@+id/placeholder"
@@ -64,7 +69,7 @@
             android:layout_height="40dp"
             android:layout_below="@id/key"
             android:layout_alignParentRight="true"
-            android:spinnerMode="dropdown"/>
+            android:spinnerMode="dialog"/>
         <TextView
             android:id="@+id/spinner_name"
             android:text="投资标的"
@@ -85,7 +90,8 @@
             android:layout_toRightOf="@id/spinner_name"
             android:layout_toLeftOf="@id/slavery_spinner"
             android:layout_below="@id/key"
-            android:spinnerMode="dropdown"/>
+            android:layout_marginLeft="5dp"
+            android:spinnerMode="dialog"/>
 
 
     <!--</RelativeLayout>-->

@@ -2,20 +2,15 @@ package edu.nju.action;
 
 import edu.nju.model.UserTemperPrefer;
 import edu.nju.service.ExceptionsAndError.*;
-import edu.nju.service.ServiceManagerImpl;
 import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.service.UserService.UserService;
-import edu.nju.service.Utils.JsonUtil;
-import edu.nju.vo.BaseVO;
 import edu.nju.vo.UserVO;
-import net.sf.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.util.Map;
 
 /**
  * Created by Sun YuHao on 2016/9/2.
@@ -24,6 +19,9 @@ import java.util.Map;
 public class UserAction extends BaseAction {
     private final String default_after_login = "/jsp/searchFilter.jsp";
     private final String server = "http://localhost:8080";
+
+    @Autowired
+    UserService userService;
 
     @SuppressWarnings("unchecked")
     public String register() {
@@ -34,7 +32,6 @@ public class UserAction extends BaseAction {
         if (mobile == null || password == null || username == null) {
             return ERROR;
         }
-        UserService userService = ServiceManagerImpl.getInstance().getUserService();
         try {
             FinanceCityUser financeCityUser = userService.register(mobile, password, username);
             session.put("user", financeCityUser);
@@ -68,7 +65,6 @@ public class UserAction extends BaseAction {
             return ERROR;
         }
 
-        UserService userService = ServiceManagerImpl.getInstance().getUserService();
         FinanceCityUser financeCityUser = userService.login(username, password);
         if (financeCityUser == null) {
             ErrorManager.setError(request, ErrorManager.errorLoginFailed);
@@ -84,7 +80,6 @@ public class UserAction extends BaseAction {
 
     @SuppressWarnings("unchecked")
     public String getUserVO() {
-        UserService userService = ServiceManagerImpl.getInstance().getUserService();
 
         FinanceCityUser financeCityUser = (FinanceCityUser) session.get("user");
         if (financeCityUser == null) {
@@ -112,7 +107,6 @@ public class UserAction extends BaseAction {
             return ERROR;
         }
 
-        UserService userService = ServiceManagerImpl.getInstance().getUserService();
         try {
             int income_i = Integer.valueOf(income);
             int expense_i = Integer.valueOf(expense);
@@ -231,7 +225,6 @@ public class UserAction extends BaseAction {
             userTemperPrefer.setExpectedProfitMax(new BigDecimal(income_rate[1]));
             userTemperPrefer.setChosenProducts(preferType_En);
 
-            UserService userService = ServiceManagerImpl.getInstance().getUserService();
             userService.setUserTemperPrefer(userTemperPrefer, (FinanceCityUser)session.get("user"));
 
             ErrorManager.setError(request, ErrorManager.errorNormal);

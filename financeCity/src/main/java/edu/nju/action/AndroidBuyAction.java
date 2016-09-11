@@ -1,7 +1,7 @@
 package edu.nju.action;
 
 import edu.nju.service.SearchService.SearchService;
-import edu.nju.service.ServiceManagerImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Map;
@@ -10,10 +10,11 @@ import java.util.Map;
  * Created by Sun YuHao on 2016/9/3.
  */
 public class AndroidBuyAction extends AndroidAction {
+    @Autowired
+    SearchService searchService;
+
     public String getOrderPrice() {
         Map map = getRequestMap();
-
-        SearchService searchService = ServiceManagerImpl.getInstance().getSearchService();
 
         try {
             List<Map> productList = (List<Map>)map.get("product_list");

@@ -56,18 +56,18 @@ public class Footer extends LinearLayout{
     }
 
     public void setSelectedById(int id) {
-        imgs[0].setImageResource(R.mipmap.products_unselected);
-        imgs[1].setImageResource(R.mipmap.asset_unselected);
-        imgs[2].setImageResource(R.mipmap.personal_unselected);
+        imgs[0].setImageResource(R.mipmap.home_line);
+        imgs[1].setImageResource(R.mipmap.journey_line);
+        imgs[2].setImageResource(R.mipmap.my_line);
         switch (id) {
             case 0:
-                imgs[0].setImageResource(R.mipmap.products_selected);
+                imgs[0].setImageResource(R.mipmap.home_shape);
                 break;
             case 1:
-                imgs[1].setImageResource(R.mipmap.asset_selected);
+                imgs[1].setImageResource(R.mipmap.journey_shape);
                 break;
             case 2:
-                imgs[2].setImageResource(R.mipmap.personal_selected);
+                imgs[2].setImageResource(R.mipmap.my_shape);
                 break;
             default:
         }

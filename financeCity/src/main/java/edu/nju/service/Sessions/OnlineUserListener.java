@@ -1,6 +1,7 @@
 package edu.nju.service.Sessions;
 
-import edu.nju.service.ServiceManagerImpl;
+import edu.nju.service.UserService.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
@@ -10,6 +11,9 @@ import javax.servlet.http.HttpSessionListener;
  * Created by Sun YuHao on 2016/9/2.
  */
 public class OnlineUserListener implements HttpSessionListener {
+    @Autowired
+    UserService userService;
+
     @Override
     public void sessionCreated(HttpSessionEvent httpSessionEvent) {
 
@@ -22,7 +26,7 @@ public class OnlineUserListener implements HttpSessionListener {
 
         try {
             if (financeCityUser != null) {
-                ServiceManagerImpl.getInstance().getUserService().logout(financeCityUser);
+                userService.logout(financeCityUser);
             }
         }
         catch (Exception e) {
