@@ -4,8 +4,7 @@
 	"http://struts.apache.org/dtds/struts-2.3.dtd">
 
 <struts>
-	
-	<package name="struts2" extends="struts-default" namespace="/jsp">
+	<package name="struts2" extends="struts-default" namespace="">
 		<action name="test" class="TestAction">
 			<result name="success">/new.jsp</result>
 		</action>
@@ -56,6 +55,18 @@
 
 		<action name="orderConfirm" class="edu.nju.action.OrderAction" method="">
 			<result name="success">/jsp/order-confirm.jsp</result>
+		</action>
+		
+		<action name="assets" class="edu.nju.action.Assets" method="">
+			<result name="success">/jsp/asset.jsp</result>
+		</action>
+		
+		<action name="recommend" class="edu.nju.action.Assets" method="getRecommend">
+			<result name="success">/jsp/recommendation.jsp</result>
+		</action>
+		
+		<action name="product" class="edu.nju.action.Assets" method="getProduct">
+			<result name="success">/jsp/searchFilter.jsp</result>
 		</action>
 	</package>
 	
