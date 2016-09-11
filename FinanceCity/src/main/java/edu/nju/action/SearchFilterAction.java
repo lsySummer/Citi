@@ -124,7 +124,7 @@ public class SearchFilterAction extends BaseAction {
 
         try {
             ProductFilter productFilter = SearchFilterFactory.createFilter(type, map);
-            List<Product> productList = searchService.searchProductsByKey(key);
+            List<Product> productList = searchService.searchProductsByKey(key, type);
 
             int index = 0;
 
@@ -140,8 +140,8 @@ public class SearchFilterAction extends BaseAction {
 
             page_length = productList.size()/8+1;
 
-            context.put("searchResultJSON", JSON.toJSON(resultFactory.getResultList()));
-            context.put("searchResult", resultFactory.getResultList());
+            context.put("searchResultJSON", JSON.toJSON(resultFactory.getResultList((byte) 1)));
+            context.put("searchResult", resultFactory.getResultList((byte) 1));
 
         } catch (InvalidParametersException e) {
             e.printStackTrace();
