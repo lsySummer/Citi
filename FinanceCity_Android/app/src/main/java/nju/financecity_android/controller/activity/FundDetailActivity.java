@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.TextView;
 import nju.financecity_android.R;
+import nju.financecity_android.controller.widget.item.adapter.PropertyListAdapter;
 import nju.financecity_android.model.ProductFund;
 import nju.financecity_android.vo.PropertyVO;
 
@@ -82,7 +83,15 @@ public class FundDetailActivity extends AppCompatActivity {
                 new PropertyVO("基金经理", data.get("基金经理")),
                 new PropertyVO("基金规模", data.get("基金规模")),
                 new PropertyVO("份额规模", data.get("份额规模")));
+        setProperties(properties);
     }
+
+    protected void setProperties(List<PropertyVO> properties) {
+        PropertyListAdapter adapter = new PropertyListAdapter(this, properties);
+        listProperties.setAdapter(adapter);
+    }
+
+
 
     private void initComponents() {
         txtInterestRate = (TextView) findViewById(R.id.txtInterestRate);

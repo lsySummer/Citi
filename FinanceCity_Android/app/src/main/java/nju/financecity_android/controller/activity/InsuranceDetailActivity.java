@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.TextView;
 import nju.financecity_android.R;
+import nju.financecity_android.controller.widget.item.adapter.PropertyListAdapter;
 import nju.financecity_android.model.ProductInsurance;
 import nju.financecity_android.vo.PropertyVO;
 
@@ -58,9 +59,14 @@ public class InsuranceDetailActivity extends AppCompatActivity {
                 new PropertyVO("保险年限", data.get("保险年限")),
                 new PropertyVO("购买日", data.get("购买日")),
                 new PropertyVO("到期日", data.get("到期日")),
-                new PropertyVO("期限", data.get("期限")),
-                new PropertyVO("", "")
+                new PropertyVO("期限", data.get("期限"))
                 );
+        setProperties(properties);
+    }
+
+    protected void setProperties(List<PropertyVO> properties) {
+        PropertyListAdapter adapter = new PropertyListAdapter(this, properties);
+        listProperties.setAdapter(adapter);
     }
 
     protected void setHeaderInfo(String productName, String age, String length, String interestRate) {

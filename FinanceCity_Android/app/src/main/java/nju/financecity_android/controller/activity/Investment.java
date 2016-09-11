@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import nju.financecity_android.R;
-import nju.financecity_android.controller.widget.InvstPrdtAdapter;
+import nju.financecity_android.controller.widget.item.adapter.InvstPrdtAdapter;
 import nju.financecity_android.vo.ProductInfo;
 
 import java.util.*;

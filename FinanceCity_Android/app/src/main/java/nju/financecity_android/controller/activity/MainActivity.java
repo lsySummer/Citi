@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.util.Log;
@@ -18,6 +19,7 @@ import nju.financecity_android.controller.info.FragmentName;
 import nju.financecity_android.controller.widget.Banner;
 import nju.financecity_android.controller.widget.Bar;
 import nju.financecity_android.controller.widget.Footer;
+import nju.financecity_android.vo.GoodsInfo;
 
 /**
  * Created by Administrator on 2016/8/25.
@@ -44,6 +46,28 @@ public class MainActivity extends Activity{
         initComponents();
         fragmentManager=getFragmentManager();
         setFragment(0);
+
+        Intent intent = new Intent(this, OrderConfirmActivity.class);
+        for (int i = 0; i < 10; i++) {
+            GoodsInfo info = new GoodsInfo("123", "这是第" + i + "个产品", 10000 / (i + 1), i);
+            switch (i % 4) {
+                case 0:
+                    info.type = "银行理财";
+                    break;
+                case 1:
+                    info.type = "保险";
+                    break;
+                case 2:
+                    info.type = "基金";
+                    break;
+                case 3:
+                    info.type = "债券";
+                    break;
+            }
+
+            intent.putExtra("product" + i, info);
+        }
+        startActivity(intent);
     }
 
     private void initComponents() {
