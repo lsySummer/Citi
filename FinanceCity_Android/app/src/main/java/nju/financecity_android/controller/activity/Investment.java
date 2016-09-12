@@ -30,6 +30,8 @@ public class Investment extends Fragment {
         thisView = getView();
 
         initComponents();
+
+
     }
 
     private void initComponents() {
