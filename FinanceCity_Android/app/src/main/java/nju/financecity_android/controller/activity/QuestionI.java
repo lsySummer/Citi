@@ -6,7 +6,9 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import nju.financecity_android.R;
 
 /**
@@ -17,7 +19,30 @@ public class QuestionI extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.question_i, container, false);
     }
+    @Override
+    public void onStart() {
+        super.onStart();
+        initComponents();
+    }
+
+    private void initComponents() {
+        txtInvestmentAmount = (EditText) findViewById(R.id.txtInvestmentAmount);
+        txtExpiration = (EditText) findViewById(R.id.txtExpiration);
+        txtFetchBack = (EditText) findViewById(R.id.txtFetchBack);
+        rbOutcomeYes = (RadioButton) findViewById(R.id.rbOutcomeYes);
+        rbOutcomeNo = (RadioButton) findViewById(R.id.rbOutcomeNo);
+        rbPrepareYes = (RadioButton) findViewById(R.id.rbPrepareYes);
+        rbPrepareNo = (RadioButton) findViewById(R.id.rbPrepareNo);
+        chkInsurance = (CheckBox) findViewById(R.id.chkInsurance);
+        chkMassFund = (CheckBox) findViewById(R.id.chkMassFund);
+    }
+
+    public View findViewById(int resId) {
+        return getView().findViewById(resId);
+    }
 
     private EditText txtInvestmentAmount, txtExpiration, txtFetchBack;
+    private RadioButton rbOutcomeYes, rbOutcomeNo, rbPrepareYes, rbPrepareNo;
+    private CheckBox chkInsurance, chkMassFund;
 
 }
