@@ -77,6 +77,7 @@ public class Log_inActivity extends Activity {
                 Account = accountText.getText().toString();
                 Password = pswText.getText().toString();
                 SendPost(Account,Password);
+//                Toast.makeText(Log_inActivity.this,"click",Toast.LENGTH_SHORT).show();
 //                HashMap<String,Object> res = log_inModel.analyse(Account,Password);
 //                int error = (int) res.get("error");
 //                String mess = (String) res.get("message");
@@ -101,14 +102,16 @@ public class Log_inActivity extends Activity {
                 try{
                     HashMap<String,Object> res = log_inModel.analyse(Account,Password);
                     int error = (int) res.get("error");
+                    Log.d("SeeErr","error为"+error+"");
                     String mess = (String) res.get("message");
+                    Log.d("SeeErr","mess为"+mess);
                     String sess = (String) res.get("session");
-                    if (error!=0){
+                    if (error==0){
                         UserSession.setCurrUser(new UserSession(Account,sess));
                         Intent intent = new Intent(Log_inActivity.this,MainActivity.class);
                         startActivity(intent);
-                    }else {
-                        Toast.makeText(Log_inActivity.this,"asdasd",Toast.LENGTH_SHORT).show();
+                    }else if(error!=0){
+                        Toast.makeText(Log_inActivity.this,mess,Toast.LENGTH_SHORT).show();
                     }
                 }catch (Exception e){
                     e.printStackTrace();
