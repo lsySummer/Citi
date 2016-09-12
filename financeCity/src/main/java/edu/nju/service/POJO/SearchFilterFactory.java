@@ -24,6 +24,7 @@ import java.util.Map;
  */
 public class SearchFilterFactory {
     static public ProductFilter createFilter(String type, Map map) throws InvalidParametersException {
+        System.out.println(type+" createFilter");
         try {
             if (type.equals("Bond")) {
                 return createBondFilter(map);
