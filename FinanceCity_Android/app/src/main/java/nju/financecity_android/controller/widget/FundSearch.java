@@ -68,7 +68,7 @@ public class FundSearch extends RelativeLayout {
         Thread agentThread=new Thread(new Runnable() {
             @Override
             public void run() {
-                ArrayList<String> fundAgent= SearchAgent.getAgent("Fund");
+                ArrayList<String> fundAgent=new SearchAgent().getAgent("Fund");
                 fundAgent.add(0,"所有");
                 try {
                     if(fundAgent.size()!=0)

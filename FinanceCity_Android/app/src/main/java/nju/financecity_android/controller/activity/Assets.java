@@ -3,6 +3,7 @@ package nju.financecity_android.controller.activity;
 import android.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+
+import org.json.JSONObject;
 
 import java.text.DateFormat;
 import java.text.FieldPosition;
@@ -32,6 +35,8 @@ import lecho.lib.hellocharts.model.PointValue;
 import lecho.lib.hellocharts.model.Viewport;
 import lecho.lib.hellocharts.view.LineChartView;
 import nju.financecity_android.R;
+import nju.financecity_android.dao.AssetValueDao;
+import nju.financecity_android.model.UserSession;
 
 /**
  * Created by Administrator on 2016/8/25.
@@ -71,6 +76,25 @@ public class Assets extends Fragment {
         List<PointValue> mPointValues=new ArrayList<PointValue>();
         List<AxisValue> mAxisValues=new ArrayList<AxisValue>();
 
+        JSONObject jObject=new JSONObject();
+        UserSession user=UserSession.getCurrUser();
+        try {
+            jObject.put("id", "12");
+            jObject.put("session", "0d3fbeda72f78234354085b94feb4355");
+        }catch(Exception e)
+        {
+            Log.i("test","user session or json exception");
+            e.printStackTrace();
+        }
+        String result=new AssetValueDao().sendPost(jObject);
+        JSONObject jResult=null;
+        try{
+            jResult=new JSONObject(result);
+        }catch(Exception e)
+        {
+            Log.i("test","asset value result exception");
+            e.printStackTrace();
+        }
         /*==============================================================================*/
         List<Date> dates=new ArrayList<Date>();
         for(int i=0;i<20;i++)

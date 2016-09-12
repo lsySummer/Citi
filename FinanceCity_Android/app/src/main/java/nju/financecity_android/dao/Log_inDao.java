@@ -25,7 +25,7 @@ import java.net.URL;
  */
 public class Log_inDao {
     private static String mainurl = "http://10.0.2.2:8080/api/";
-
+//    private static String mainurl = "http://192.168.1.111:8888/api/";
 //    private static String url = "http://192.168.1.102:8080/api/login";
 
     public String sendPost(JSONObject param,String Api) {

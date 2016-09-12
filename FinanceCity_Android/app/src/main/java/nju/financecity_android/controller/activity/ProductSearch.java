@@ -258,11 +258,11 @@ public class ProductSearch extends Fragment{
                                     if(!fund_state.equals("所有")) {
                                         optionJObject.put("state", fund_state);
                                     }
-                                    optionJObject.put("net_value",new JSONArray(fund_net_value));
-                                    optionJObject.put("is_close_ended",fund_is_close_ended);
-                                    optionJObject.put("sort_type",fund_sort_type);
-                                    if(fund_expiration!=-1)
-                                        optionJObject.put("expiration",fund_expiration);
+                                    optionJObject.put("net_value",new JSONArray(fund_net_value).toString());
+                                    optionJObject.put("is_close_ended",fund_is_close_ended+"");
+//                                    optionJObject.put("sort_type",fund_sort_type);
+//                                    if(fund_expiration!=-1)
+//                                        optionJObject.put("expiration",fund_expiration);
                                     break;
                                 case 4:
                                     InsuranceSearch insuranceSearch=(InsuranceSearch)filter[0];

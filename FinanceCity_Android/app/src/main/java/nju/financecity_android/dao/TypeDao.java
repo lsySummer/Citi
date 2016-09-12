@@ -12,33 +12,22 @@ import org.json.JSONObject;
 /**
  * Created by Administrator on 2016/9/8.
  */
-public class TypeDao {
+public class TypeDao extends CommonDao{
 //    private static String url="http://172.19.105.116:8888/Citi/api/institution";//TODO 使用服务器URL
-    private static String url="http://192.168.1.111:8888/Citi/api/institution";
-    public static String readData(String type) {
-        JSONObject param=new JSONObject();
-        try {
-            param.put("type",type);
-            HttpPost request = new HttpPost(url);
-            // 绑定到请求 Entry
-            StringEntity se = new StringEntity(param.toString());
+//    private static String url="http://192.168.1.111:8888/Citi/api/institution";
+    @Override
+    public String getAction() {
+        return host+"/Citi/api/institution";
+    }
 
-            Log.i("test","sendRequest: StringEntity="+param.toString());
+    @Override
+    public String getFullUrl() {
+        return getAction();
+    }
 
-            se.setContentType("application/json");
-            request.setEntity(se);
-            // 发送请求
-            HttpResponse httpResponse = null;
-            httpResponse = new DefaultHttpClient().execute(request);
-            // 得到应答的字符串，这也是一个 JSON 格式保存的数据
-            String retSrc = EntityUtils.toString(httpResponse.getEntity());
-            Log.i("test","sendRequest: retSrc="+retSrc);
-            return retSrc;
-        } catch (Exception e)
-        {
-            Log.e("test", "sendRequest: Exception");
-            e.printStackTrace();
-        }
+    @Override
+    public String sendRequest() {
         return null;
     }
+
 }
