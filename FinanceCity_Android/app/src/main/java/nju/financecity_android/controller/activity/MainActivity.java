@@ -22,10 +22,13 @@ import nju.financecity_android.controller.widget.Footer;
 import nju.financecity_android.model.ProductFund;
 import nju.financecity_android.vo.GoodsInfo;
 
+import java.util.Observable;
+import java.util.Observer;
+
 /**
  * Created by Administrator on 2016/8/25.
  */
-public class MainActivity extends Activity{
+public class MainActivity extends Activity {
     private static FragmentManager fragmentManager;
     private static FragmentTransaction transaction;
     private static ProductSearch productSearchFragment;
@@ -222,4 +225,5 @@ public class MainActivity extends Activity{
         {
             transaction.hide(personFragment);
         }
-    }}
+    }
+}
