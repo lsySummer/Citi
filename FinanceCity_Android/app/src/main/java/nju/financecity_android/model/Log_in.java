@@ -18,7 +18,7 @@ public class Log_in {
         JSONObject root = new JSONObject();
         try {
             root.put("username",username);
-            root.put("passwd",passwd);
+            root.put("password",passwd);
         } catch (JSONException e) {
             e.printStackTrace();
             Log.d("bug","root put wrong");

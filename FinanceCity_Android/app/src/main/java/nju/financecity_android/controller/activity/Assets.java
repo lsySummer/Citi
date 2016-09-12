@@ -76,20 +76,29 @@ public class Assets extends Fragment {
         List<PointValue> mPointValues=new ArrayList<PointValue>();
         List<AxisValue> mAxisValues=new ArrayList<AxisValue>();
 
-        JSONObject jObject=new JSONObject();
+        final JSONObject[] jsonObjects=new JSONObject[1];
+        jsonObjects[0]=new JSONObject();
         UserSession user=UserSession.getCurrUser();
         try {
-            jObject.put("id", "12");
-            jObject.put("session", "0d3fbeda72f78234354085b94feb4355");
+            jsonObjects[0].put("id", 6);
+            jsonObjects[0].put("session","a482dd91fc6dd55b5a1b74f103f48717");
+//            jsonObjects[0].put("days",20);//TODO
         }catch(Exception e)
         {
             Log.i("test","user session or json exception");
             e.printStackTrace();
         }
-        String result=new AssetValueDao().sendPost(jObject);
+        final String[] result={""};
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                result[0]=new AssetValueDao().sendPost(jsonObjects[0]);
+            }
+        }).start();
         JSONObject jResult=null;
         try{
-            jResult=new JSONObject(result);
+            jResult=new JSONObject(result[0]);
         }catch(Exception e)
         {
             Log.i("test","asset value result exception");

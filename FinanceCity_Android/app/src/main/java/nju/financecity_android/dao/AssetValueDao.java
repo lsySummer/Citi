@@ -7,7 +7,7 @@ public class AssetValueDao extends CommonDao{
 //    private static String url="http://192.168.1.111:8888/Citi/api/asset/value";
     @Override
     public String getAction() {
-        return host+"/Citi/api/asset/value";
+        return host+"/Citi/api/asset/history";
     }
 
     @Override
