@@ -33,6 +33,7 @@ public class MainActivity extends Activity{
     private static Fragment productDetailFragment;//TODO
     private static Fragment investmentFragment;//TODO
     private static Assets assetsFragment;
+    private static AssetsTop assetsTop;
     private static Persons personFragment;//TODO
     private static Fragment testFrag = new QuestionI();
 //    private static Banner banner;
@@ -116,8 +117,10 @@ public class MainActivity extends Activity{
             case 1://资产（暂时是资产变化信息二级界面）
 //                banner.setDisplayText(footer.getText(1));
                 footer.setSelectedById(1);
-                assetsFragment=new Assets();
-                transaction.add(R.id.main_mid_layout,assetsFragment);
+                assetsTop=new AssetsTop();
+                transaction.add(R.id.main_mid_layout,assetsTop);
+//                assetsFragment=new Assets();
+//                transaction.add(R.id.main_mid_layout,assetsFragment);
                 if(assetsFragment!=null)
                 {
                     transaction.show(assetsFragment);
@@ -138,6 +141,10 @@ public class MainActivity extends Activity{
 
     public static void showProductDetail(String productId)
     {
+        // 每次选中之前先清楚掉上次的选中状态
+        clearSelection();
+        // 先隐藏掉所有的Fragment，以防止有多个Fragment显示在界面上的情况
+        hideFragments(transaction);
         if(productId!=null) {
             transaction=fragmentManager.beginTransaction();
             products = new Products();//TODO 如何传入productId
@@ -149,6 +156,36 @@ public class MainActivity extends Activity{
         }
         else{
             Log.e("test","no productId for detail");
+        }
+    }
+
+    public static void nextAssets(int id)
+    {
+        // 每次选中之前先清楚掉上次的选中状态
+        clearSelection();
+        transaction=fragmentManager.beginTransaction();
+        // 先隐藏掉所有的Fragment，以防止有多个Fragment显示在界面上的情况
+        hideFragments(transaction);
+        if(id==R.id.pie)
+        {
+            Log.i("test","pie in");
+            //TODO
+            assetsFragment=new Assets();
+            transaction.add(R.id.main_mid_layout,assetsFragment);
+            if (assetsFragment != null) {
+                transaction.show(assetsFragment);
+            }
+            transaction.commit();
+        }
+        else if(id==R.id.line)
+        {
+            Log.i("test","line in");
+            assetsFragment=new Assets();
+            transaction.add(R.id.main_mid_layout,assetsFragment);
+            if (assetsFragment != null) {
+                transaction.show(assetsFragment);
+            }
+            transaction.commit();
         }
     }
 
@@ -176,6 +213,10 @@ public class MainActivity extends Activity{
         if (assetsFragment != null)
         {
             transaction.hide(assetsFragment);
+        }
+        if (assetsTop != null)
+        {
+            transaction.hide(assetsTop);
         }
         if(personFragment!=null)
         {
