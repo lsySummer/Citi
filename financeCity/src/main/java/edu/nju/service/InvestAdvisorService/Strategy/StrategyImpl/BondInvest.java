@@ -4,6 +4,7 @@ import edu.nju.model.ProductBond;
 import edu.nju.model.UserTemperPrefer;
 import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.POJO.AmountAndLeft;
+import edu.nju.service.POJO.AssetCategoryAllocation;
 import edu.nju.service.POJO.InvestResult;
 import edu.nju.service.CategoryAndProduct.ProductCategoryManager;
 import edu.nju.service.SearchService.SearchService;
@@ -20,7 +21,7 @@ public class BondInvest implements CategoryInvest{
     public static final String categoryName = "Bond";
 
     @Override
-    public InvestResult invest(UserTemperPrefer userInfo, SearchService searchService) {
+    public InvestResult invest(UserTemperPrefer userInfo, SearchService searchService, AssetCategoryAllocation allocation) {
         boolean mayRedeem;
         double investTime;
         double capital;
@@ -73,7 +74,7 @@ public class BondInvest implements CategoryInvest{
 
         AmountAndLeft amountAndLeft = UnitTransformation.getAmountAndLeft(capital, investProduct);
 
-        investResult.addTradItem(new TradeItem(amountAndLeft.getTradingVolume(), categoryName, investProduct, null));
+        investResult.addTradItem(new TradeItem(amountAndLeft.getTradingVolume(), investProduct, null));
         investResult.addUnusedCapital(amountAndLeft.getLeft(), categoryName);
 
         return investResult;

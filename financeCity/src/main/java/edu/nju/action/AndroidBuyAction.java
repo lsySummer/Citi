@@ -42,11 +42,13 @@ public class AndroidBuyAction extends AndroidAction {
             List<SimpleTradeInfo> simpleTradeInfoList = new ArrayList<>();
             for (Map tradeMap : productList) {
                 int pid = (Integer)tradeMap.get("pid");
-                double amount = (Double)tradeMap.get("amount");
+                double amount = getDouble(tradeMap.get("amount"));
 
                 SimpleTradeInfo simpleTradeInfo = new SimpleTradeInfo();
                 simpleTradeInfo.setAmount(amount);
                 simpleTradeInfo.setProductId(pid);
+
+                simpleTradeInfoList.add(simpleTradeInfo);
             }
 
             FinanceCityUser financeCityUser = new FinanceCityUser();
@@ -69,6 +71,19 @@ public class AndroidBuyAction extends AndroidAction {
             ErrorManager.setError(orderResultVO, ErrorManager.errorInvalidParameter);
         }
 
+        setResult(orderResultVO);
+
         return SUCCESS;
+    }
+
+    private Double getDouble(Object object) {
+        if (object instanceof Integer) {
+            return Double.valueOf((Integer)object);
+        }
+        else if (object instanceof Double) {
+            return (Double)object;
+        }
+
+        return null;
     }
 }

@@ -7,6 +7,10 @@ import org.springframework.util.DigestUtils;
  */
 public class MD5Utils {
     static public String generateMD5(int id, String timestamp, String meta) {
-        return DigestUtils.md5DigestAsHex((timestamp + id + meta).getBytes());
+        return DigestUtils.md5DigestAsHex((timestamp + id + meta).getBytes()).substring(0, 32);
+    }
+
+    static public String generateMD5(String info) {
+        return DigestUtils.md5DigestAsHex(info.getBytes()).substring(0, 32);
     }
 }

@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 
 /**
- * Created by Sun YuHao on 2016/9/11.
+ * Created by Sun YuHao on 2016/9/12.
  */
 @Entity
 @Table(name = "product_bank", schema = "citi", catalog = "")
@@ -22,7 +22,7 @@ public class ProductBank {
     private String salesRegion;
     private String productCode;
     private String registerCode;
-    private Byte currency;
+    private String currency;
     private String investField;
     private String investRatio;
     private Byte riskLevel;
@@ -166,11 +166,11 @@ public class ProductBank {
 
     @Basic
     @Column(name = "currency")
-    public Byte getCurrency() {
+    public String getCurrency() {
         return currency;
     }
 
-    public void setCurrency(Byte currency) {
+    public void setCurrency(String currency) {
         this.currency = currency;
     }
 

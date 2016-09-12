@@ -24,6 +24,7 @@ import java.util.Map;
  */
 public class SearchFilterFactory {
     static public ProductFilter createFilter(String type, Map map) throws InvalidParametersException {
+        System.out.println(type+" createFilter");
         try {
             if (type.equals("Bond")) {
                 return createBondFilter(map);
@@ -94,22 +95,18 @@ public class SearchFilterFactory {
                             (is_closed_ended == null || ProductCategoryManager.ifClosedBankProduct(productBank) == is_closed_ended));
                 }
                 else if (product instanceof ProductBond) {
-                    //TODO:if close
                     ProductBond productBond = (ProductBond)(product);
                     double yearRate = getValue(productBond.getAdjustYearlyRate());
                     int length = getValue(productBond.getLength());
                     return  (yearRate >= year_rate[0] && yearRate <= year_rate[1] &&
-                            length >= expiration[0] && length <= expiration[1] &&
-                            (is_closed_ended == null || true));
+                            length >= expiration[0] && length <= expiration[1]);
                 }
                 else if (product instanceof ProductInsurance) {
-                    //TODO:if close
                     ProductInsurance productInsurance = (ProductInsurance)(product);
                     double yearRate = getValue(productInsurance.getExpectedRate());
                     int length = getValue(productInsurance.getWarrantyPeriod());
                     return  (yearRate >= year_rate[0] && yearRate <= year_rate[1] &&
-                            length >= expiration[0] && length <= expiration[1] &&
-                            (is_closed_ended == null || true));
+                            length >= expiration[0] && length <= expiration[1]);
                 }
                 else if (product instanceof ProductFund) {
                     ProductFund productFund = (ProductFund)(product);
@@ -532,17 +529,6 @@ public class SearchFilterFactory {
         }
         else {
             return integer;
-        }
-    }
-
-    static public void main(String[] args) {
-        try {
-            Map map = new HashMap();
-            map.put("options", new HashMap<>());
-            SearchFilterFactory.createFilter("Bond", map);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }

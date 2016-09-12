@@ -4,10 +4,14 @@ import edu.nju.model.UserTemperPrefer;
 import edu.nju.service.ExceptionsAndError.NotAllConfigurationSetException;
 import edu.nju.service.ExceptionsAndError.NotLoginException;
 import edu.nju.service.POJO.InvestResult;
+import edu.nju.service.POJO.SimpleTradeInfo;
+import edu.nju.service.POJO.TradeInfoWithCheckCode;
 import edu.nju.service.SearchService.SearchService;
 import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.vo.TemperPreferVO;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 /**
@@ -35,11 +39,5 @@ public interface InvestAdvisorService {
      * @return invest result
      * @throws NotAllConfigurationSetException
      */
-    InvestResult createInvestmentPortFolio(UserTemperPrefer preference) throws NotAllConfigurationSetException;
-
-    /**
-     * bind search service
-     * @param searchService .
-     */
-    void bindSearchService(SearchService searchService);
+    List<TradeInfoWithCheckCode> createInvestmentPortFolio(UserTemperPrefer preference) throws NotAllConfigurationSetException;
 }

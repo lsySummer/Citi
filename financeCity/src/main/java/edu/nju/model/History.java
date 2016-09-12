@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
- * Created by Sun YuHao on 2016/9/11.
+ * Created by Sun YuHao on 2016/9/12.
  */
 @Entity
 public class History {
