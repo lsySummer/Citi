@@ -73,7 +73,8 @@ public class GoodsItemInsurance extends Observable implements ICommonItem{
             public void onClick(View v) {
                 int incUnit = (mData.increasingUnit == 0) ? 1 : mData.increasingUnit;
                 int amount = Integer.parseInt(txtAmount.getText().toString().trim());
-                amount -= incUnit;
+                if (amount - incUnit >= mData.initialAmount)
+                    amount -= incUnit;
                 txtAmount.setText(amount + "");
             }
         });
@@ -87,7 +88,7 @@ public class GoodsItemInsurance extends Observable implements ICommonItem{
             @Override
             public void afterTextChanged(Editable s) {
                 String valueStr = txtAmount.getText().toString().trim();
-                if (valueStr.matches("[0-9]+")) {
+                if (valueStr.matches("[-]?[0-9]+")) {
                     mData.amount = Integer.parseInt(txtAmount.getText().toString().trim());
                     if (mData.amount < mData.initialAmount) mData.amount = mData.initialAmount;
                     setChanged();
@@ -105,7 +106,7 @@ public class GoodsItemInsurance extends Observable implements ICommonItem{
             @Override
             public void afterTextChanged(Editable s) {
                 String valueStr = txtPrice.getText().toString().trim();
-                if (valueStr.matches("[0-9]+")) {
+                if (valueStr.matches("[-]?[0-9]+")) {
                     mData.price = Integer.parseInt(txtPrice.getText().toString().trim());
                     setChanged();
                     notifyObservers();

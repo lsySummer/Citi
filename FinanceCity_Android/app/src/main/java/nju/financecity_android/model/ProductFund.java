@@ -1,5 +1,7 @@
 package nju.financecity_android.model;
 
+import nju.financecity_android.util.DataParser;
+
 /**
  * Created by coral on 16-9-3.
  */
@@ -9,12 +11,62 @@ public class ProductFund extends BaseProduct {
         super(productId);
     }
 
+    public static String getFundType(int type) {
+        switch (type) {
+            case 0:
+                return "股票型";
+            case 1:
+                return "债券型";
+            case 2:
+                return "货币型";
+            case 3:
+                return "混合型";
+            case 4:
+                return "eft";
+            case 5:
+                return "lof";
+            case 6:
+                return "fof";
+            case 7:
+                return "QDII";
+            case 8:
+                return "指数型";
+            case 9:
+                return "保本型";
+            default:
+                return "--";
+        }
+    }
+
+    public static String getFundState(int state) {
+        switch (state) {
+            case 0:
+                return "申购中";
+            case 1:
+                return "认购中";
+            case 2:
+                return "已关闭";
+            default:
+                return "--";
+        }
+    }
+
+    public static String getYesNo(int yesno) {
+        switch (yesno) {
+            case 0:
+                return "否";
+            case 1:
+                return "是";
+            default:
+                return "";
+        }
+    }
+
     @Override
     protected void processData() {
         String fadingmingcheng;
         String jijinbianhao;
         String guanlijigou;
-        String tuoguanjigou;
         double jinyinianshouyilv;
         int zuixinjinzhi;
         int jijintouzimubiaoleixing;
@@ -37,105 +89,51 @@ public class ProductFund extends BaseProduct {
         int rengousudu;
         int shuhuisudu;
         String jijinjingli;
-        int jijingguimo;
-        int feneguimo;
-
-        fadingmingcheng = mRawData.get("name").toString();
-        jijinbianhao = mRawData.get("product_code").toString();
-        guanlijigou = mRawData.get("institution_manage").toString();
-        tuoguanjigou = mRawData.get("institution_trusteeship").toString();
-        jinyinianshouyilv = Double.parseDouble(mRawData.get("last_year_rate").toString());
-        zuixinjinzhi = Integer.parseInt(mRawData.get("NAV").toString());
-        jijintouzimubiaoleixing = Integer.parseInt(mRawData.get("fund_type").toString());
-        yejibijiaojizhun = mRawData.get("perf_benchmark").toString();
-        genzongbiaodi = mRawData.get("target_ID").toString();
-        fengxiandengji = mRawData.get("risk_level").toString();
-        zhuangtai = Integer.parseInt(mRawData.get("state").toString());
-        shifoufengbi = Integer.parseInt(mRawData.get("operation_mode").toString());
-        shengoufeilv = Integer.parseInt(mRawData.get("rate_purchase").toString());
-        rengoufeilv = Integer.parseInt(mRawData.get("rate_subscribe").toString());
-        shuhuifeilv = Integer.parseInt(mRawData.get("rate_redem").toString());
-        guangyiguanlifeilv = Double.parseDouble(mRawData.get("rate_manage").toString());
-        qigoujine = Integer.parseInt(mRawData.get("purchase_threshold").toString());
-        dizenggoumaizuixiaodanwei = Integer.parseInt(mRawData.get("increasing_unit").toString());
-        mujikaishiri = mRawData.get("on_purchase_day").toString();
-        mujijiezhiri = mRawData.get("off_purchase_day").toString();
-        qixiri = mRawData.get("first_accr_date").toString();
-        kaifangri = mRawData.get("on_redemption_date").toString();
-        qixian = Integer.parseInt(mRawData.get("length").toString());
-        rengousudu = Integer.parseInt(mRawData.get("subscribe_speed").toString());
-        shuhuisudu = Integer.parseInt(mRawData.get("redem_speed").toString());
-        jijinjingli = mRawData.get("manager_name").toString();
-        jijingguimo = Integer.parseInt(mRawData.get("fund_size").toString());
-        feneguimo = Integer.parseInt(mRawData.get("share_size").toString());
+        double jijingguimo;
+        double feneguimo;
+        fadingmingcheng = mRawData.get("name") + "";
+        jijinbianhao = mRawData.get("productCode") + "";
+        guanlijigou = mRawData.get("institutionManage") + "";
+        jinyinianshouyilv = DataParser.parseDouble(mRawData.get("yearlyRtnRate") + "");
+        zuixinjinzhi = DataParser.parseInt(mRawData.get("nav") + "");
+        jijintouzimubiaoleixing = DataParser.parseInt(mRawData.get("category") + "");
+        yejibijiaojizhun = mRawData.get("perfBenchmark") + "";
+        genzongbiaodi = mRawData.get("targetID") + "";
+        fengxiandengji = mRawData.get("riskLevel") + "";
+        zhuangtai = DataParser.parseInt(mRawData.get("state") + "");
+        shifoufengbi = DataParser.parseInt(mRawData.get("operationMode") + "");
+        shengoufeilv = DataParser.parseDouble(mRawData.get("ratePurchase") + "");
+        rengoufeilv = DataParser.parseDouble(mRawData.get("rateSubscribe") + "");
+        shuhuifeilv = DataParser.parseDouble(mRawData.get("rateRedem") + "");
+        guangyiguanlifeilv = DataParser.parseDouble(mRawData.get("rateManage") + "");
+        qigoujine = DataParser.parseInt(mRawData.get("purchaseThreshold") + "");
+        dizenggoumaizuixiaodanwei = DataParser.parseInt(mRawData.get("increasingUnit") + "");
+        mujikaishiri = mRawData.get("onPurchaseDay") + "";
+        mujijiezhiri = mRawData.get("offPurchaseDay") + "";
+        qixiri = mRawData.get("firstAccrDate") + "";
+        kaifangri = mRawData.get("onRedemptionDate") + "";
+        qixian = DataParser.parseInt(mRawData.get("length") + "");
+        rengousudu = DataParser.parseInt(mRawData.get("subscribeSpeed") + "");
+        shuhuisudu = DataParser.parseInt(mRawData.get("redemptionSpeed") + "");
+        jijinjingli = mRawData.get("managerName") + "";
+        jijingguimo = DataParser.parseDouble(mRawData.get("fundSize") + "");
+        feneguimo = DataParser.parseDouble(mRawData.get("shareSize") + "");
 
         mData.put("法定名称", fadingmingcheng);
         mData.put("基金编号", jijinbianhao);
         mData.put("管理机构", guanlijigou);
-        mData.put("托管机构", tuoguanjigou);
         mData.put("近一年收益率", jinyinianshouyilv);
         mData.put("最新净值", zuixinjinzhi + "元");
-        mData.put("基金投资目标类型", jijintouzimubiaoleixing);
-        switch (jijintouzimubiaoleixing) {
-            case 0:
-                mData.put("基金投资目标类型", "股票型");
-                break;
-            case 1:
-                mData.put("基金投资目标类型", "债券型");
-                break;
-            case 2:
-                mData.put("基金投资目标类型", "货币型");
-                break;
-            case 3:
-                mData.put("基金投资目标类型", "混合型");
-                break;
-            case 4:
-                mData.put("基金投资目标类型", "eft");
-                break;
-            case 5:
-                mData.put("基金投资目标类型", "lof");
-                break;
-            case 6:
-                mData.put("基金投资目标类型", "fof");
-                break;
-            case 7:
-                mData.put("基金投资目标类型", "QDII");
-                break;
-            case 8:
-                mData.put("基金投资目标类型", "指数型");
-                break;
-            case 9:
-                mData.put("基金投资目标类型", "保本型");
-                break;
-            default:
-                mData.put("基金投资目标类型", "--");
-        }
+        String strjijinleixing = getFundType(jijintouzimubiaoleixing);
+        mData.put("基金投资目标类型", strjijinleixing);
+
         mData.put("业绩比较标准", yejibijiaojizhun);
         mData.put("跟踪标的", genzongbiaodi);
         mData.put("风险等级", fengxiandengji + "级");
-        switch (zhuangtai) {
-            case 0:
-                mData.put("状态", "申购中");
-                break;
-            case 1:
-                mData.put("状态", "认购中");
-                break;
-            case 2:
-                mData.put("状态", "已关闭");
-                break;
-            default:
-                mData.put("状态", "--");
-        }
-        switch (shifoufengbi) {
-            case 0:
-                mData.put("是否封闭", "否");
-                break;
-            case 1:
-                mData.put("是否封闭", "是");
-                break;
-            default:
-                mData.put("是否封闭", "--");
-        }
+        mData.put("状态", getFundState(zhuangtai));
+
+        mData.put("是否封闭", getYesNo(shifoufengbi));
+
         mData.put("申购费率", String.valueOf(shengoufeilv * 100) + "%");
         mData.put("赎回费率", String.valueOf(shuhuifeilv * 100) + "%");
         mData.put("认购费率", String.valueOf(rengoufeilv * 100) + "%");
@@ -152,5 +150,6 @@ public class ProductFund extends BaseProduct {
         mData.put("基金经理", jijinjingli);
         mData.put("基金规模", "￥" + jijingguimo);
         mData.put("份额规模", "￥" + feneguimo);
+        mData.put("历史净值", mRawData.get("history"));
     }
 }

@@ -4,8 +4,6 @@
 	android:id="@+id/search_result_element_layout"
 	android:layout_width="match_parent"
 	android:layout_height="110dp"
-	android:layout_marginTop="5dp"
-	android:layout_marginBottom="5dp"
 	android:clickable="true">
 
     <!--产品名称-->
@@ -13,6 +11,7 @@
 		android:id="@+id/background"
 		android:layout_width="110dp"
 		android:layout_height="110dp"
+		android:layout_marginTop="5dp"
 		android:layout_alignParentLeft="true"/>
 	<TextView
 		android:id="@+id/type"
@@ -61,13 +60,43 @@
 	<TextView
 		android:id="@+id/product"
 		android:text="产品名称"
-		android:textSize="18dp"
+		android:textSize="15dp"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_toRightOf="@id/background"
 		android:gravity="left"
 		android:layout_gravity="right"
 		android:layout_marginLeft="5dp" />
+	<TextView
+		android:id="@+id/top"
+		android:textSize="12dp"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_toRightOf="@id/background"
+		android:gravity="left"
+		android:layout_gravity="right"
+		android:layout_marginLeft="5dp"
+		android:layout_below="@id/product"/>
+	<TextView
+		android:id="@+id/middle"
+		android:textSize="12dp"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_toRightOf="@id/background"
+		android:gravity="left"
+		android:layout_gravity="right"
+		android:layout_marginLeft="5dp"
+		android:layout_below="@id/top" />
+	<TextView
+		android:id="@+id/bottom"
+		android:textSize="12dp"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_toRightOf="@id/background"
+		android:gravity="left"
+		android:layout_gravity="right"
+		android:layout_marginLeft="5dp"
+		android:layout_below="@id/middle" />
     <TextView
 		android:id="@+id/introduction"
 		android:text="介绍。。。。。。。。。。。。。。"

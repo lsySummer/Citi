@@ -5,7 +5,7 @@ android {
     buildToolsVersion "24.0.0"
 
     defaultConfig {
-        applicationId "nju.financecity_android"
+        applicationId "nju.financecityAndroid"
         minSdkVersion 15
         targetSdkVersion 22
         versionCode 1

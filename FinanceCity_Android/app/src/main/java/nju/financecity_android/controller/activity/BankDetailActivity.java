@@ -4,21 +4,25 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import lecho.lib.hellocharts.gesture.ContainerScrollType;
+import lecho.lib.hellocharts.gesture.ZoomType;
+import lecho.lib.hellocharts.model.*;
+import lecho.lib.hellocharts.view.LineChartView;
 import nju.financecity_android.R;
+import nju.financecity_android.controller.widget.Banner;
 import nju.financecity_android.controller.widget.item.adapter.PropertyListAdapter;
 import nju.financecity_android.model.ProductBank;
+import nju.financecity_android.vo.GoodsInfo;
 import nju.financecity_android.vo.PropertyVO;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-/**
- * @param pri
- */
+import static nju.financecity_android.controller.activity.FundDetailActivity.COLOR_LIGHT_BLUE;
+
 public class BankDetailActivity extends AppCompatActivity {
 
     @Override
@@ -28,9 +32,9 @@ public class BankDetailActivity extends AppCompatActivity {
         initComponents();
 
         Intent intent = getIntent();
-        String productId = intent.getStringExtra("productId");
-        Map data = (new ProductBank(productId)).getProperties();
-        processData(data);
+        productId = intent.getStringExtra("productId");
+        mData = (new ProductBank(productId)).getProperties();
+        processData(mData);
     }
 
     protected void setProperties(List<PropertyVO> properties) {
@@ -101,19 +105,92 @@ public class BankDetailActivity extends AppCompatActivity {
                 new PropertyVO("理财本金及收益支付", data.get("理财本金及收益支付")),
                 new PropertyVO("发行对象", data.get("发行对象")));
         setProperties(properties);
+
+        // chart
+        if (mData.get("是否净值型").toString().equals("是")) {
+            linechart.setVisibility(View.VISIBLE);
+            List chartPoints = (List) data.get("历史净值");
+            List<AxisValue> mAxisValues = new ArrayList<>();
+            List<PointValue> mPointValues = new ArrayList<>();
+            if (chartPoints == null) {
+                chartPoints = new ArrayList();
+            }
+            //---------------------for test--------------------
+            for (int i = 0; i < 100; i++) {
+                Map map = new HashMap();
+                map.put("nav", new Random().nextInt(i + 1));
+                map.put("date", i + "天");
+                chartPoints.add(map);
+            }
+            //---------------------------------------------------
+            for (int i = 0; i < chartPoints.size(); i++) {
+                mPointValues.add(new PointValue(i, Float.valueOf(((Map) chartPoints.get(i)).get("nav").toString())));
+                mAxisValues.add(new AxisValue(i).setLabel(i + "天")); //为每个对应的i设置相应的label(显示在X轴)
+            }
+            Line line = new Line(mPointValues).setColor(COLOR_LIGHT_BLUE).setCubic(true);
+            line.setPointRadius(1);
+            line.setStrokeWidth(1);
+            List<Line> lines = new ArrayList<>();
+            lines.add(line);
+            LineChartData lineChartData = new LineChartData();
+            lineChartData.setLines(lines);
+
+
+            Axis ax = new Axis();
+            ax.setHasTiltedLabels(false);
+            ax.setTextColor(COLOR_LIGHT_BLUE);
+            ax.setValues(mAxisValues);
+            lineChartData.setAxisXBottom(ax);
+
+            Axis ay = new Axis();
+            ay.setMaxLabelChars(5);
+            lineChartData.setLines(lines);
+            lineChartData.setAxisYLeft(ay);
+
+            linechart.setInteractive(true);
+            linechart.setZoomType(ZoomType.HORIZONTAL);
+            linechart.setContainerScrollEnabled(true, ContainerScrollType.HORIZONTAL);
+            linechart.setLineChartData(lineChartData);
+            linechart.setVisibility(View.VISIBLE);
+        } else {
+            linechart.setVisibility(View.GONE);
+        }
     }
 
     private void initComponents() {
         mInflater = LayoutInflater.from(this);
-
+        banner = (Banner) findViewById(R.id.banner);
+        banner.setDisplayText("产品详情");
         listProperties = (ListView) findViewById(R.id.listProperties);
         txtInterestRate = (TextView) findViewById(R.id.txtInterestRate);
         txtOpenDate = (TextView) findViewById(R.id.txtLength);
         txtPrdtName = (TextView) findViewById(R.id.txtPdtName);
         txtStartBuyMoney = (TextView) findViewById(R.id.txt);
+        linechart = (LineChartView) findViewById(R.id.linechart);
+        btPurchase = (Button) findViewById(R.id.btPruchase);
+        btPurchase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GoodsInfo info = new GoodsInfo();
+                info.goodsId = productId;
+                info.goodsName = mData.get("产品名称").toString();
+                info.amount = info.initialAmount = Integer.parseInt(mData.get("起购金额").toString());
+                info.increasingUnit = Integer.parseInt(mData.get("递增购买最小单位").toString());
+                info.type = "银行理财";
+                Intent intent = new Intent(BankDetailActivity.this, OrderConfirmActivity.class);
+                intent.putExtra("0", info);
+                startActivity(intent);
+                BankDetailActivity.this.finish();
+            }
+        });
     }
 
+    private LineChartView linechart;
+    private Map mData;
+    private String productId;
     private TextView txtOpenDate;
+    private Button btPurchase;
+    private Banner banner;
     private TextView txtPrdtName;
     private TextView txtStartBuyMoney;
     private TextView txtInterestRate;

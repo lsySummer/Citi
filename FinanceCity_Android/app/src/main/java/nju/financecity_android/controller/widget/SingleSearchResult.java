@@ -27,6 +27,9 @@ public class SingleSearchResult extends RelativeLayout {
     private TextView type;
     private TextView product;
     private TextView introduction;
+    private TextView top;
+    private TextView middle;
+    private TextView bottom;
     private ProductVO info;
 
     public SingleSearchResult(Context context) {
@@ -59,6 +62,9 @@ public class SingleSearchResult extends RelativeLayout {
         type=(TextView)findViewById(R.id.type);
         product=(TextView)findViewById(R.id.product);
         introduction=(TextView)findViewById(R.id.introduction);
+        top=(TextView)findViewById(R.id.top);
+        middle=(TextView)findViewById(R.id.middle);
+        bottom=(TextView)findViewById(R.id.bottom);
 
         int[] colors={R.color.bank,R.color.bond,R.color.fund,R.color.insurance};
         int[] backgrounds={R.drawable.bank_head,R.drawable.bond_head,R.drawable.fund_head,R.drawable.insurance_head};
@@ -88,5 +94,8 @@ public class SingleSearchResult extends RelativeLayout {
         type.setText(info.getType());
         product.setText(info.getName());
         introduction.setText(info.getIntroduction());
+        top.setText(info.getTop());
+        middle.setText(info.getMiddle());
+        bottom.setText(info.getBottom());
     }
 }
