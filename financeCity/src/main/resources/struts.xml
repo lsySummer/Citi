@@ -151,6 +151,13 @@
 				<param name="ignoreHierarchy">false</param>
 			</result>
 		</action>
+
+		<action name="pay" class="edu.nju.action.AndroidPayAction" method="pay">
+			<result name="success" type="json">
+				<param name="root">result</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
 	</package>
 
 	<package name="androidAsset" extends="json-default" namespace="/api/asset">

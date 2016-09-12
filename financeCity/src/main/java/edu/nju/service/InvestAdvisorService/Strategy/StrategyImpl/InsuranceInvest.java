@@ -3,6 +3,7 @@ package edu.nju.service.InvestAdvisorService.Strategy.StrategyImpl;
 import edu.nju.model.ProductInsurance;
 import edu.nju.model.UserTemperPrefer;
 import edu.nju.service.CategoryAndProduct.Product;
+import edu.nju.service.POJO.AssetCategoryAllocation;
 import edu.nju.service.POJO.InvestResult;
 import edu.nju.service.SearchService.SearchService;
 import edu.nju.service.TradeService.TradeItem;
@@ -20,7 +21,7 @@ public class InsuranceInvest implements CategoryInvest {
     public static final String categoryName = "Insurance";
 
     @Override
-    public InvestResult invest(UserTemperPrefer userInfo, SearchService searchService)  {
+    public InvestResult invest(UserTemperPrefer userInfo, SearchService searchService, AssetCategoryAllocation allocation)  {
         double timeLimit;
         int productAmount;
         double capital;
@@ -73,7 +74,7 @@ public class InsuranceInvest implements CategoryInvest {
 
         investResult.addUnusedCapital(capital, categoryName);
         for (int i = 0; i < 5 && i < productList.size(); ++i) {
-            investResult.addTradItem(new TradeItem(0, categoryName, productList.get(i), null));
+            investResult.addTradItem(new TradeItem(0, productList.get(i), null));
         }
 
         return investResult;

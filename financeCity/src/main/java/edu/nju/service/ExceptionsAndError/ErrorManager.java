@@ -22,6 +22,10 @@ public class ErrorManager {
     static public final int errorLoginFailed = 10;
     static public final int errorInnerDataError = 11;
     static public final int errorUnhandledMethod = 12;
+    static public final int errorNoSuchInvestmentPortfolio = 13;
+    static public final int errorNoSuchOrder = 14;
+    static public final int errorPaymentFailed = 15;
+    static public final int errorUserInfoNotSet = 16;
 
     static private String[] errorDescription;
     static private String[] errorDescriptionCH;
@@ -40,7 +44,11 @@ public class ErrorManager {
                 "Invalid Phone Number",
                 "Login Failed",
                 "Inner Data Error",
-                "Unhandled Method"
+                "Unhandled Method",
+                "No Such Investment Portfolio",
+                "No Such Order",
+                "Payment Failed",
+                "User Info Not Set"
         };
         errorDescriptionCH = new String[] {
                 "",
@@ -55,7 +63,11 @@ public class ErrorManager {
                 "无效的手机号",
                 "登录失败",
                 "内部数据错误",
-                "未处理的提交方式"
+                "未处理的提交方式",
+                "该投资组合不存在",
+                "不存在的订单",
+                "交易失败",
+                "用户信息不完整"
         };
     }
 

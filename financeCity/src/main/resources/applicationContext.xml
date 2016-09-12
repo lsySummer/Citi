@@ -62,12 +62,6 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
-	<!--test-->
-	
-	<bean id="RegisterAction"
-		  class="edu.nju.action.Register">
-	</bean>
-
 	<!--services-->
 	<bean id="assetManagementService" class="edu.nju.service.AssetManagementService.AssetManagementServiceImpl">
 	</bean>

@@ -52,10 +52,16 @@ public class SearchServiceImpl implements SearchService {
 
         List list = userService.getCommonDao().find("FROM Product" + biggerCategory + " product WHERE product.id=" + index);
         if (list == null || list.size() == 0) {
-            return null;
+            throw new NoSuchProductException(ID);
         }
         else {
-            return ProductFactory.createProduct(list.get(0));
+            Product product =  ProductFactory.createProduct(list.get(0));
+            if (!product.getID().equals(ID)) {
+                throw new NoSuchProductException(ID);
+            }
+            else {
+                return product;
+            }
         }
     }
 
@@ -163,7 +169,7 @@ public class SearchServiceImpl implements SearchService {
         Category category = ProductCategoryManager.getCategoryByName(type);
         List list;
 
-        if (!category.equals(ProductCategoryManager.categoryFund)) {
+        if (!category.belongTo(ProductCategoryManager.categoryFund)) {
             list = userService.getCommonDao().find("FROM Product" + category + " p WHERE " + cond);
         }
         else {
@@ -183,11 +189,32 @@ public class SearchServiceImpl implements SearchService {
         Category category = ProductCategoryManager.getCategoryByName(type);
         List list;
 
-        if (!category.equals(ProductCategoryManager.categoryFund)) {
+        if (!category.belongTo(ProductCategoryManager.categoryFund)) {
             list = userService.getCommonDao().find("FROM Product" + category + " p ORDER BY " + order);
         }
         else {
             list = userService.getCommonDao().find("FROM Product" + category.getBiggerCategory() + " p WHERE p.category=" + category.getSubTypeIndex() + " ORDER BY " + order);
+        }
+
+        List<Product> productList = new ArrayList<>();
+
+        for (Object object : list) {
+            productList.add(ProductFactory.createProduct(object));
+        }
+
+        return productList;
+    }
+
+    @Override
+    public List<Product> searchProductsByConditionWithOrder(String type, String cond, String order) {
+        Category category = ProductCategoryManager.getCategoryByName(type);
+        List list;
+
+        if (!category.belongTo(ProductCategoryManager.categoryFund)) {
+            list = userService.getCommonDao().find("FROM Product" + category + " WHERE " + cond + " p ORDER BY " + order);
+        }
+        else {
+            list = userService.getCommonDao().find("FROM Product" + category.getBiggerCategory() + " p WHERE p.category=" + category.getSubTypeIndex() + " AND " + cond + " ORDER BY " + order);
         }
 
         List<Product> productList = new ArrayList<>();

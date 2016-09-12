@@ -51,6 +51,10 @@ public class PayServiceImpl implements PayService {
 
     @Override
     public boolean payForPortfolio(String checkCode, FinanceCityUser financeCityUser) {
+        if (checkCode == null) {
+            return false;
+        }
+
         try {
             tradeService.ackPayment(checkCode, financeCityUser);
             return true;

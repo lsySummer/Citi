@@ -43,26 +43,32 @@ public class TradeServiceImpl implements TradeService {
         String checkCode = generateMD5(financeCityUser, tradeInfoList);
         double total_amount = 0;
 
-        for (SimpleTradeInfo simpleTradeInfo : tradeInfoList) {
-            UnpaidItem unpaidItem = new UnpaidItem();
-            unpaidItem.setUserId(financeCityUser.getID());
-            unpaidItem.setExpirationTime(expiration_time);
-            unpaidItem.setTradingVolume(new BigDecimal(simpleTradeInfo.getAmount()));
-            unpaidItem.setProductId(simpleTradeInfo.getProductId());
-            unpaidItem.setCheckCode(checkCode);
+        try {
+            for (SimpleTradeInfo simpleTradeInfo : tradeInfoList) {
+                UnpaidItem unpaidItem = new UnpaidItem();
+                unpaidItem.setUserId(financeCityUser.getID());
+                unpaidItem.setExpirationTime(expiration_time);
+                unpaidItem.setTradingVolume(new BigDecimal(simpleTradeInfo.getAmount()));
+                unpaidItem.setProductId(simpleTradeInfo.getProductId());
+                unpaidItem.setCheckCode(checkCode);
 
-            searchService.getProductByID(unpaidItem.getProductId());
+                searchService.getProductByID(unpaidItem.getProductId());
 
-            total_amount += unpaidItem.getTradingVolume().doubleValue();
+                total_amount += unpaidItem.getTradingVolume().doubleValue();
 
-            userService.getUserDao(financeCityUser).save(unpaidItem);
+                userService.getUserDao(financeCityUser).save(unpaidItem);
+            }
+
+            OrderResultVO orderResultVO = new OrderResultVO();
+            orderResultVO.setCheckCode(checkCode);
+            orderResultVO.setAmount(String.valueOf(total_amount));
+
+            return orderResultVO;
         }
-
-        OrderResultVO orderResultVO = new OrderResultVO();
-        orderResultVO.setCheckCode(checkCode);
-        orderResultVO.setAmount(String.valueOf(total_amount));
-
-        return orderResultVO;
+        catch (Exception e) {
+            cancelUnpaid(checkCode, financeCityUser);
+            throw e;
+        }
     }
 
 
@@ -153,8 +159,11 @@ public class TradeServiceImpl implements TradeService {
                     tradeHistory.setTradingVolume(unpaidItem.getTradingVolume());
                     tradeHistory.setUserId(financeCityUser.getID());
                     tradeHistory.setTradeType("buy");
+                    setTradHistory(tradeHistory, product);
 
                     userService.getUserDao(financeCityUser).save(tradeHistory);
+                    int tradeId = (Integer)userService.getUserDao(financeCityUser).
+                            find("SELECT t.id FROM TradeHistory t WHERE t.checkCode='" + checkCode + "' AND t.productId=" + product.getID()).get(0);
 
                     InvestedProducts investedProducts = new InvestedProducts();
                     investedProducts.setBuyingDate(new Date(System.currentTimeMillis()));
@@ -163,8 +172,10 @@ public class TradeServiceImpl implements TradeService {
                     investedProducts.setProductId(unpaidItem.getProductId());
                     investedProducts.setTotalAmount(unpaidItem.getTradingVolume());
                     investedProducts.setUserId(financeCityUser.getID());
+                    investedProducts.setTradeId(tradeId);
 
                     userService.getUserDao(financeCityUser).save(investedProducts);
+                    userService.getUserDao(financeCityUser).delete(unpaidItem);
                 }
                 catch (NoSuchProductException n) {
                     n.printStackTrace();
@@ -222,6 +233,15 @@ public class TradeServiceImpl implements TradeService {
             }
 
             return MD5Utils.generateMD5(financeCityUser.getID(), new Timestamp(System.currentTimeMillis()).toString(), stringBuffer.toString());
+        }
+    }
+
+    private void setTradHistory(TradeHistory tradHistory, Product product) {
+        if (product.getCategory().belongTo(ProductCategoryManager.categoryFund)) {
+            tradHistory.setNav(((ProductFund)product.getProduct()).getNav());
+        }
+        else if (product.getCategory().belongTo(ProductCategoryManager.categoryBank)) {
+            tradHistory.setNav(((ProductBank)product.getProduct()).getNav());
         }
     }
 }

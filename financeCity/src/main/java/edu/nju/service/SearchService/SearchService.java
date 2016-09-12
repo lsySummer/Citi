@@ -61,6 +61,8 @@ public interface SearchService {
      */
     List<Product> getProductListByOrder(String type, String order);
 
+    List<Product> searchProductsByConditionWithOrder(String type, String cond, String order);
+
     /**
      * get history data
      * @param productId .
