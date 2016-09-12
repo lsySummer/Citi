@@ -178,7 +178,7 @@ public class ProductSearch extends Fragment{
                         String[] types={"All","Bank","Bond","Fund","Insurance"};
                         JSONObject masterJObject=new JSONObject();
                         try {
-                            if(key.getText()!=null)
+                            if(key.getText()!=null&&!key.getText().equals(""))
                             {
                                 masterJObject.put("keyword", key.getText());
                             }
@@ -252,7 +252,9 @@ public class ProductSearch extends Fragment{
                                     {
                                         optionJObject.put("institution_manage",fund_institution_manage);//TODO
                                     }
-                                    optionJObject.put("type",fund_type);
+                                    if(!fund_type.equals("所有")) {
+                                        optionJObject.put("type", fund_type);
+                                    }
                                     if(!fund_state.equals("所有")) {
                                         optionJObject.put("state", fund_state);
                                     }
@@ -279,7 +281,7 @@ public class ProductSearch extends Fragment{
                             }
                             if(optionJObject.length()!=0)
                             {
-                                masterJObject.put("options",optionJObject);
+//                                masterJObject.put("options",optionJObject);
                             }
                             Log.i("test","optionObject="+optionJObject.toString());
                             Log.i("test","masterObject="+masterJObject.toString());
@@ -291,17 +293,68 @@ public class ProductSearch extends Fragment{
                 List<ProductVO> list = new ArrayList<ProductVO>();
                 try{thread.join();}catch(Exception e){};
 
+                String sid="";
+                String name="";
+                String type="";
+                double year=0;
+                String top="";
+                String middle="";
+                String bottom="";
+                String state="";
                 for(int i=0;i<maps.size();i++) {//TODO 要展现哪些数据
                     HashMap<String, Object> map = maps.get(i);
-                    String sid = (String) map.get("sid");
-                    String name = (String) map.get("name");
-                    String type = (String) map.get("productType");
-                    double year = 0;
-                    try {
-                        year = (double) map.get("expected_income_rate");
-                    }catch(Exception e){}
-                    String state = (String) map.get("type");
-                    list.add(new ProductVO(sid, name, type, year, state));
+                    switch((String)map.get("productType"))
+                    {
+                        case "bank":
+                            sid = (String) map.get("sid");
+                            name = (String) map.get("name");
+                            type = (String) map.get("productType");
+                            try {
+                                year = (double) map.get("expected_income_rate");
+                            }catch(Exception e){}
+                            state = (String) map.get("type");
+                            break;
+                        case "bond":
+                            sid = (String) map.get("sid");
+                            name = (String) map.get("name");
+                            type = (String) map.get("productType");
+                            try {
+                                year = (double) map.get("expected_income_rate");
+                            }catch(Exception e){}
+                            state = (String) map.get("type");
+                            break;
+                        case "fund":
+                            sid = (String) map.get("sid");
+                            name = (String) map.get("name");
+                            type = (String) map.get("productType");
+                            top = "产品状态 ";
+                            middle="到期时间";
+                            bottom="变化率";
+                            try {
+                                year = (double) map.get("expected_income_rate");
+                            }catch(Exception e){}
+                            try {
+                                top+=(String) map.get("state");
+                            }catch(Exception e){}
+                            try {
+                                middle +=(String) map.get("est_date");//TODO 中文翻译
+                            }catch(Exception e){}
+                            try {
+                                bottom +=(String) map.get("mng_charge_rate");//TODO 中文翻译
+                            }catch(Exception e){}
+                            state = (String) map.get("type");
+                            list.add(new ProductVO(sid, name, type, year, state,top,middle,bottom));
+                            break;
+                        case "insurance":
+                            sid = (String) map.get("sid");
+                            name = (String) map.get("name");
+                            type = (String) map.get("productType");
+                            try {
+                                year = (double) map.get("expected_income_rate");
+                            }catch(Exception e){}
+                            state = (String) map.get("type");
+                            break;
+                    }
                 }
                 /*=======================================================================================*/
 
