@@ -60,9 +60,4 @@ public class TradeItem {
         this.product = product;
         this.metaInfo = metaInfo;
     }
-
-    public String generateMD5(int id, String timestamp) {
-        return DigestUtils.md5DigestAsHex((timestamp + id +
-                getProduct().getID() + getAmount()).getBytes());
-    }
 }

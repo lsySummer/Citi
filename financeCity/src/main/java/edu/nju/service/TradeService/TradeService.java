@@ -1,6 +1,11 @@
 package edu.nju.service.TradeService;
 
+import edu.nju.service.ExceptionsAndError.NoSuchProductException;
+import edu.nju.service.ExceptionsAndError.NotLoginException;
+import edu.nju.service.POJO.SimpleTradeInfo;
 import edu.nju.service.Sessions.FinanceCityUser;
+import edu.nju.vo.OrderResultVO;
+import org.aspectj.weaver.ast.Not;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,16 +17,18 @@ import java.util.List;
 public interface TradeService {
     /**
      * buy product
-     * @param tradeItemList .
-     * @return if success
+     * @param tradeInfoList , user info.
+     * @return checkCode
      */
-    List<String> buyProduct(List<TradeItem> tradeItemList, FinanceCityUser financeCityUser);
+    OrderResultVO buyProduct(List<SimpleTradeInfo> tradeInfoList, FinanceCityUser financeCityUser) throws NotLoginException, NoSuchProductException;
 
     /**
      * cancel unpaid product
      * @param checkCode .
      */
     boolean cancelUnpaid(String checkCode, FinanceCityUser financeCityUser);
+
+    boolean cancelUnpaid(int product_id, FinanceCityUser financeCityUser);
 
     /**
      * cancel all unpaid product
@@ -40,4 +47,6 @@ public interface TradeService {
      * @return if success
      */
     boolean enforceInvestmentPlan();
+
+    void ackPayment(String checkCode, FinanceCityUser financeCityUser) throws NotLoginException, NoSuchProductException;
 }

@@ -53,7 +53,6 @@ public class AssetCategoryAllocatorImpl implements AssetCategoryAllocator {
         assetCategoryAllocationList = new HashMap<>();
     }
 
-    //TODO:the third one must be insurance
     private CategoryInfo[] calcuCategoryPortion(double capital, UserTemperPrefer userTemperPrefer,
                                                 CategoryInfo[] categoryInfos, SearchService searchService) {
         int categoryNum = ProductCategoryManager.categoryNum - 1;

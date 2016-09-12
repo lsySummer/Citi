@@ -1,5 +1,6 @@
 package edu.nju.action;
 
+import edu.nju.model.UserTemperPrefer;
 import edu.nju.service.ExceptionsAndError.*;
 import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.service.UserService.UserService;
@@ -8,6 +9,10 @@ import edu.nju.vo.SessionIdVO;
 import edu.nju.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.math.BigDecimal;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -164,5 +169,76 @@ public class AndroidUserAction extends AndroidAction {
         }
 
         return SUCCESS;
+    }
+
+    public String setTemperPrefer() {
+        Map map = getRequestMap();
+        BaseVO baseVO = new BaseVO();
+
+        try {
+            FinanceCityUser financeCityUser = new FinanceCityUser();
+            int id = (Integer)map.get("id");
+            String sessionId = (String)map.get("sessionId");
+
+            financeCityUser.setLoginSession(sessionId);
+            financeCityUser.setID(id);
+
+            int amount = (Integer)map.get("amount");//投资金额
+            String data = (String)map.get("date");//投资期限 yyyy-MM-dd
+            String backDate = null;//预期赎回时间
+            boolean ifPrepare = (Integer)map.get("ifPrepare") == 1;//是否做好意外大额支出准备
+            boolean ifBifPre = false;//是否做好意外大额支出准备
+            byte type = ((Integer)map.get("type")).byteValue();//配置大额支出准备的类型
+            int backAmount = 0;//预期赎回的金额
+            int insurance_amount = 0;//购买保险金额
+            List<Integer> risks = (List<Integer>)map.get("risk");//风险承受能力
+            List<Integer> income_rate = (List<Integer>)map.get("income");//预期收益率
+            String preferType = (String)map.get("preferType");//偏好投资品种
+
+            if (preferType == null || !(preferType.equals("fund") || preferType.equals("insurance"))) {
+                throw new InvalidParametersException("preferType");
+            }
+
+            if (!ifPrepare) {
+                ifBifPre = (Integer)map.get("ifBigPre") == 1;
+                if (ifBifPre) {
+                    if (type == 0) {
+                        insurance_amount = (Integer)map.get("asAmount");
+                    }
+                    else if (type == 1) {
+                        backAmount = (Integer)map.get("backAmount");
+                        backDate = (String)map.get("backDate");
+                    }
+                }
+            }
+
+            UserTemperPrefer userTemperPrefer = new UserTemperPrefer();
+            userTemperPrefer.setExpectedCapital(new BigDecimal(amount));
+            userTemperPrefer.setEndTime(Date.valueOf(data));
+            userTemperPrefer.setIfBigExpense(ifPrepare ? (byte) 1 : 0);
+            userTemperPrefer.setIfConfigBigExpense(ifBifPre ? (byte) 1 : 0);
+            userTemperPrefer.setExpenseType(type);
+            userTemperPrefer.setRedeemTime(backDate == null ? null : Date.valueOf(backDate));
+            userTemperPrefer.setMayRedeemAmount(new BigDecimal(backAmount));
+            userTemperPrefer.setInsuranceAmount(new BigDecimal(insurance_amount));
+            userTemperPrefer.setRiskToleranceMin(new BigDecimal(risks.get(0)));
+            userTemperPrefer.setRiskToleranceMax(new BigDecimal(risks.get(1)));
+            userTemperPrefer.setExpectedProfitMin(new BigDecimal(income_rate.get(0)));
+            userTemperPrefer.setExpectedProfitMax(new BigDecimal(income_rate.get(1)));
+            userTemperPrefer.setChosenProducts(preferType);
+
+            userService.setUserTemperPrefer(userTemperPrefer, financeCityUser);
+
+            ErrorManager.setError(baseVO, ErrorManager.errorNormal);
+            return SUCCESS;
+        } catch (NotLoginException n) {
+            n.printStackTrace();
+            ErrorManager.setError(baseVO, ErrorManager.errorNotLogin);
+            return SUCCESS;
+        } catch (Exception e) {
+            e.printStackTrace();
+            ErrorManager.setError(baseVO, ErrorManager.errorInvalidParameter);
+            return SUCCESS;
+        }
     }
 }

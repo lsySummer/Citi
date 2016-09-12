@@ -1,12 +1,13 @@
 package edu.nju.action;
 
+import edu.nju.model.ProductBank;
 import edu.nju.model.ProductFund;
 import edu.nju.service.CategoryAndProduct.Category;
 import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.CategoryAndProduct.ProductCategoryManager;
 import edu.nju.service.ExceptionsAndError.ErrorManager;
 import edu.nju.service.ExceptionsAndError.NoSuchProductException;
-import edu.nju.service.POJO.FundValueHistory;
+import edu.nju.service.POJO.NAVHistory;
 import edu.nju.service.POJO.ProductVOFactory;
 import edu.nju.service.POJO.SearchFilterFactory;
 import edu.nju.service.SearchService.ProductFilter;
@@ -26,17 +27,25 @@ public class AndroidSearchAction extends AndroidAction {
 
     public String findProductById() {
         Map map = getRequestMap();
-        String url = request.getRequestURL().toString();
 
         ProductDetailVO productDetailVO = new ProductDetailVO();
 
         try {
             int id = (Integer)map.get("id");
+            Integer days = (Integer)map.get("days");
+
             Product product = searchService.getProductByID(id);
             if (product != null) {
                 ErrorManager.setError(productDetailVO, ErrorManager.errorNormal);
                 productDetailVO.setType(product.getCategory().getChineseName());
                 productDetailVO.setData(product.getProduct());
+                if (product.getCategory().belongTo(ProductCategoryManager.categoryBank) &&
+                        ProductCategoryManager.ifNetBankProduct((ProductBank)product.getProduct())) {
+                    productDetailVO.setHistory(searchService.getBankValueHistory(product.getID(), days));
+                }
+                else if (product.getCategory().belongTo(ProductCategoryManager.categoryFund)) {
+                    productDetailVO.setHistory(searchService.getFundValueHistory(product.getID(), days));
+                }
 
                 setResult(productDetailVO);
                 return SUCCESS;
@@ -176,8 +185,13 @@ public class AndroidSearchAction extends AndroidAction {
 
         try {
             Integer id = Integer.valueOf(request.getParameter("id"));
+            String days_s = request.getParameter("days");
+            Integer days = null;
+            if (days_s != null) {
+                days = Integer.valueOf(days_s);
+            }
 
-            FundValueHistory[] fundValueHistories = searchService.getFundValueHistory(id);
+            NAVHistory[] fundValueHistories = searchService.getFundValueHistory(id, days);
             ErrorManager.setError(fundHistoryVO, ErrorManager.errorNormal);
             fundHistoryVO.setData(fundValueHistories);
         }

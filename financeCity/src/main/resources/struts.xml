@@ -4,8 +4,7 @@
 	"http://struts.apache.org/dtds/struts-2.3.dtd">
 
 <struts>
-	
-	<package name="struts2" extends="struts-default" namespace="/jsp">
+	<package name="struts2" extends="struts-default" namespace="">
 		<action name="test" class="TestAction">
 			<result name="success">/new.jsp</result>
 		</action>
@@ -57,6 +56,18 @@
 		<action name="orderConfirm" class="edu.nju.action.OrderAction" method="">
 			<result name="success">/jsp/order-confirm.jsp</result>
 		</action>
+		
+		<action name="assets" class="edu.nju.action.Assets" method="">
+			<result name="success">/jsp/asset.jsp</result>
+		</action>
+		
+		<action name="recommend" class="edu.nju.action.Assets" method="getRecommend">
+			<result name="success">/jsp/recommendation.jsp</result>
+		</action>
+		
+		<action name="product" class="edu.nju.action.Assets" method="getProduct">
+			<result name="success">/jsp/searchFilter.jsp</result>
+		</action>
 	</package>
 	
 	<package name="androidBase" extends="json-default" namespace="/api">
@@ -68,6 +79,13 @@
 		</action>
 
 		<action name="login" class="edu.nju.action.AndroidUserAction" method="login">
+			<result name="success" type="json">
+				<param name="root">result</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+
+		<action name="prefer" class="edu.nju.action.AndroidUserAction" method="setTemperPrefer">
 			<result name="success" type="json">
 				<param name="root">result</param>
 				<param name="ignoreHierarchy">false</param>
@@ -88,9 +106,10 @@
 			</result>
 		</action>
 
-		<action name="order" class="edu.nju.action.AndroidBuyAction" method="getOrderPrice">
-			<result name="success" type="plainText">
-				<param name="root">resultText</param>
+		<action name="order" class="edu.nju.action.AndroidBuyAction" method="order">
+			<result name="success" type="json">
+				<param name="root">result</param>
+				<param name="ignoreHierarchy">false</param>
 			</result>
 		</action>
 	</package>

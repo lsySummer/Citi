@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 
 /**
- * Created by Sun YuHao on 2016/9/5.
+ * Created by Sun YuHao on 2016/9/11.
  */
 @Entity
 @Table(name = "categoryRTR_weekly_history", schema = "citi", catalog = "")

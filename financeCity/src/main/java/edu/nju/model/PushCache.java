@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
- * Created by Sun YuHao on 2016/9/5.
+ * Created by Sun YuHao on 2016/9/11.
  */
 @Entity
 @Table(name = "push_cache", schema = "citi", catalog = "")

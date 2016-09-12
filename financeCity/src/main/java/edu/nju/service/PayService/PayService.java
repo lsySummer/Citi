@@ -19,13 +19,9 @@ public interface PayService {
      */
     boolean bindCards(String cardNumber);
 
-    /**
-     * @param payments .
-     * @return if success
-     */
-    boolean payForProducts(List<Payment> payments);
-
     void bindPayWay(SimplePayWay payWay, FinanceCityUser financeCityUser) throws NotLoginException;
 
     List<PayWay> getPayWayList(FinanceCityUser financeCityUser) throws NotLoginException;
+
+    boolean payForPortfolio(String checkCode, FinanceCityUser financeCityUser);
 }

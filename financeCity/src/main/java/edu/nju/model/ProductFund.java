@@ -6,7 +6,7 @@ import java.sql.Date;
 import java.sql.Timestamp;
 
 /**
- * Created by Sun YuHao on 2016/9/5.
+ * Created by Sun YuHao on 2016/9/11.
  */
 @Entity
 @Table(name = "product_fund", schema = "citi", catalog = "")
