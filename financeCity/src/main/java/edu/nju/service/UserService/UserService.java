@@ -65,4 +65,6 @@ public interface UserService {
     CommonDao getCommonDao();
 
     UserVO getUserVO(FinanceCityUser financeCityUser);
+
+    UserTemperPrefer getUserTemper(FinanceCityUser financeCityUser) throws NotLoginException, NotAllConfigurationSetException;
 }

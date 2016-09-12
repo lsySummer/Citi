@@ -4,6 +4,7 @@ import edu.nju.service.CategoryAndProduct.Category;
 import edu.nju.service.CategoryAndProduct.ProductCategoryManager;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.sql.*;
 
 /**
@@ -45,6 +46,111 @@ public class UpdateUtils {
         }
     }
 
+    static public void updateNameToId_Bank() {
+        Connection connection = getConn();
+
+        String sql_select = "SELECT * FROM product_bank";
+        String sql_insert = "INSERT INTO name_to_id(id, name) values(?,?)";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql_select);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Category category = ProductCategoryManager.getCategoryByName(ProductCategoryManager.categoryBank);
+                Integer id = resultSet.getInt("id");
+                int pid = ProductCategoryManager.generateProductID(id, category.getCategoryName());
+
+                System.out.print(resultSet.getString("name"));
+                PreparedStatement prep = connection.prepareStatement(sql_insert);
+                prep.setInt(1, pid);
+                prep.setString(2, resultSet.getString("name"));
+
+                prep.executeUpdate();
+
+            }
+        }
+        catch (SQLException s) {
+            s.printStackTrace();
+        }
+    }
+
+    static public void updateFundDaily() {
+        Connection connection = getConn();
+
+        String sql_select = "SELECT * FROM product_fund";
+        String sql_insert = "UPDATE fund_daily_history SET fund_id = ? WHERE fund_id = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql_select);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Category category = ProductCategoryManager.getFundCategory(resultSet.getByte("category"));
+                Integer id = resultSet.getInt("id");
+                String product_code = resultSet.getString("product_code");
+                int pid = ProductCategoryManager.generateProductID(id, category.getCategoryName());
+
+                //System.out.print(resultSet.getString("name"));
+                PreparedStatement prep = connection.prepareStatement(sql_insert);
+                prep.setInt(2, Integer.valueOf(product_code));
+                prep.setInt(1, pid);
+
+                prep.executeUpdate();
+
+            }
+        }
+        catch (SQLException s) {
+            s.printStackTrace();
+        }
+    }
+
+    public static void updateIfNav_Bank() {
+        Connection connection = getConn();
+
+        String sql_select = "SELECT * FROM product_bank";
+        String sql_insert = "UPDATE product_bank SET if_NAV_type = ? WHERE id = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql_select);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Integer id = resultSet.getInt("id");
+                BigDecimal nav = resultSet.getBigDecimal("nav");
+
+                System.out.println(resultSet.getString("name"));
+                if (nav != null) {
+                    PreparedStatement prep = connection.prepareStatement(sql_insert);
+                    prep.setInt(2, id);
+                    prep.setByte(1, (byte)1);
+
+                    prep.executeUpdate();
+                }
+            }
+        }
+        catch (SQLException s) {
+            s.printStackTrace();
+        }
+    }
+
+    static public void cleanTradHistory() {
+        Connection connection = getConn();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM citi.trade_history");
+            preparedStatement.executeUpdate();
+            preparedStatement = connection.prepareStatement("DELETE FROM citi.unpaid_item");
+            preparedStatement.executeUpdate();
+            preparedStatement = connection.prepareStatement("DELETE FROM citi.invest_status");
+            preparedStatement.executeUpdate();
+            preparedStatement = connection.prepareStatement("DELETE FROM citi.invested_products");
+            preparedStatement.executeUpdate();
+            preparedStatement = connection.prepareStatement("DELETE FROM citi.investment_portfolio");
+            preparedStatement.executeUpdate();
+        }
+        catch (SQLException s) {
+            s.printStackTrace();
+        }
+    }
+
     static private Connection getConn() {
         Connection conn = null;
         try {
@@ -59,6 +165,6 @@ public class UpdateUtils {
     }
 
     static public void main(String[] args) {
-        UpdateUtils.updateNameToId_Fund();
+        UpdateUtils.cleanTradHistory();
     }
 }

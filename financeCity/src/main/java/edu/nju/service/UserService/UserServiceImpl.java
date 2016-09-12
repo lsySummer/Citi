@@ -256,4 +256,18 @@ public class UserServiceImpl implements UserService {
 
         return true;
     }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public UserTemperPrefer getUserTemper(FinanceCityUser financeCityUser) throws NotLoginException, NotAllConfigurationSetException {
+        List<UserTemperPrefer> userTemperPreferList = getUserDao(financeCityUser).
+                find("FROM UserTemperPrefer u WHERE u.userId=" + financeCityUser.getID() + " ORDER BY u.id DESC");
+
+        if (userTemperPreferList == null || userTemperPreferList.size() == 0) {
+            throw new NotAllConfigurationSetException();
+        }
+        else {
+            return userTemperPreferList.get(0);
+        }
+    }
 }

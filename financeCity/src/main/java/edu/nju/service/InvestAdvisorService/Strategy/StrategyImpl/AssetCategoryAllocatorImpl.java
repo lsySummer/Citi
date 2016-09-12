@@ -39,7 +39,8 @@ public class AssetCategoryAllocatorImpl implements AssetCategoryAllocator {
 
         for (CategoryInfo categoryInfo : categoryInfos) {
             AssetCategoryAllocation assetCategoryAllocation = new AssetCategoryAllocation();
-            assetCategoryAllocation.setCapital(categoryInfo.capital);
+            assetCategoryAllocation.setFlowCapital(categoryInfo.flowCapital);
+            assetCategoryAllocation.setFreeCapital(categoryInfo.freeCapital);
             assetCategoryAllocationList.put(categoryInfo.category, assetCategoryAllocation);
         }
     }
@@ -53,7 +54,6 @@ public class AssetCategoryAllocatorImpl implements AssetCategoryAllocator {
         assetCategoryAllocationList = new HashMap<>();
     }
 
-    //TODO:the third one must be insurance
     private CategoryInfo[] calcuCategoryPortion(double capital, UserTemperPrefer userTemperPrefer,
                                                 CategoryInfo[] categoryInfos, SearchService searchService) {
         int categoryNum = ProductCategoryManager.categoryNum - 1;
@@ -110,10 +110,11 @@ public class AssetCategoryAllocatorImpl implements AssetCategoryAllocator {
             no = 0;
             for (int i  = 0; i < ProductCategoryManager.categoryNum; ++i) {
                 if (categoryInfos[i].category.equals(ProductCategoryManager.categoryInsurance)) {
-                    categoryInfos[i].capital = min_insurance;
+                    categoryInfos[i].freeCapital = min_insurance;
                 }
                 else {
-                    categoryInfos[i].capital = ret[0][no];
+                    categoryInfos[i].freeCapital = ret[0][no];
+                    categoryInfos[i].flowCapital = ret[1][no];
                     ++no;
                 }
             }
@@ -219,7 +220,8 @@ public class AssetCategoryAllocatorImpl implements AssetCategoryAllocator {
         double  W;     //资产的市值
         double  Exp;     //专家预期收益观点
         double  LC;      //观点的置信度
-        double capital; //分到的资金
+        double  flowCapital; //流动资金
+        double  freeCapital; //固定投资资金
     }
 
     static public void main(String[] args) {

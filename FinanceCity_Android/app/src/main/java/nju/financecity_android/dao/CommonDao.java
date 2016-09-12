@@ -3,6 +3,7 @@ package nju.financecity_android.dao;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -10,7 +11,7 @@ import java.util.Map;
  */
 public abstract class CommonDao {
 
-    public static final String host = "http://10.0.2.2:8080";
+    public static final String host = "http://172.19.115.96:8080";
 
     /**
      * 指定接口。
@@ -41,7 +42,11 @@ public abstract class CommonDao {
         try {
             data = objectMapper.readValue(jsonString, Map.class);
         } catch (IOException e) {
-            System.err.println("读取到了数据，但是在解析为json的时候出现了错误。");
+            System.err.println("读取到了数据，但是在解析为json的时候出现了错误。将结果包装为默认对象。");
+            data = new HashMap();
+            data.put("error", 1);
+            data.put("message", "Error parsing Json string");
+            data.put("data", jsonString);
         }
         return data;
     }

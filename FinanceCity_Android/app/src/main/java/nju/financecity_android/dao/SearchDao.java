@@ -11,7 +11,7 @@ import org.json.JSONObject;
 
 public class SearchDao {
 //    private String url="http://172.19.105.116:8888/Citi/api/product/s";//TODO 使用服务器URL
-    private static String url="http://192.168.1.111:8888/Citi/api/institution";
+    private static String url="http://192.168.1.111:8888/Citi/api/product/s";
 
     public String sendPost(JSONObject param)
     {

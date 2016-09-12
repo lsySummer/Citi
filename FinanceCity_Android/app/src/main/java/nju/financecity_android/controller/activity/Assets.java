@@ -11,7 +11,13 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import java.text.DateFormat;
+import java.text.FieldPosition;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -23,6 +29,7 @@ import lecho.lib.hellocharts.model.AxisValue;
 import lecho.lib.hellocharts.model.Line;
 import lecho.lib.hellocharts.model.LineChartData;
 import lecho.lib.hellocharts.model.PointValue;
+import lecho.lib.hellocharts.model.Viewport;
 import lecho.lib.hellocharts.view.LineChartView;
 import nju.financecity_android.R;
 
@@ -63,11 +70,24 @@ public class Assets extends Fragment {
         chart = (LineChartView) getView().findViewById(R.id.chart);
         List<PointValue> mPointValues=new ArrayList<PointValue>();
         List<AxisValue> mAxisValues=new ArrayList<AxisValue>();
-        for (int i = 0; i < 10 ; i++) {
-            mPointValues.add(new PointValue(i, new Random().nextInt(10)));
-            mAxisValues.add(new AxisValue(i).setLabel(i+"")); //为每个对应的i设置相应的label(显示在X轴)
+
+        /*==============================================================================*/
+        List<Date> dates=new ArrayList<Date>();
+        for(int i=0;i<20;i++)
+        {
+            dates.add(new Date(Calendar.getInstance().getTimeInMillis()+i*60*60*24*1000));
         }
-        Line line = new Line(mPointValues).setColor(Color.BLUE).setCubic(false);
+        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+        /*==============================================================================*/
+
+        for (int i = 0; i < dates.size() ; i++) {
+            mPointValues.add(new PointValue(i, new Random().nextInt(10)-5));
+            mAxisValues.add(new AxisValue(i).setLabel(format.format(dates.get(i)))); //为每个对应的i设置相应的label(显示在X轴)
+        }
+        Line line = new Line(mPointValues).setColor(getResources().getColor(R.color.lightBlue)).setCubic(false);
+        line.setHasLabelsOnlyForSelected(true);
+        line.setPointColor(getResources().getColor(R.color.validBlue));
+        line.setPointRadius(4);//座标点大小
         List<Line> lines = new ArrayList<Line>();
         lines.add(line);
         LineChartData data = new LineChartData();
@@ -77,9 +97,11 @@ public class Assets extends Fragment {
         Axis axisX = new Axis(); //X轴
         axisX.setHasTiltedLabels(true);
         axisX.setTextColor(Color.BLUE);
-        axisX.setName("采集时间");
-        axisX.setMaxLabelChars(10);
+        axisX.setName("时间");
+        axisX.setMaxLabelChars(14);
         axisX.setValues(mAxisValues);
+        axisX.setHasSeparationLine(false);
+        axisX.setHasLines(true);
         data.setAxisXBottom(axisX);
 
         Axis axisY = new Axis();  //Y轴
@@ -89,9 +111,14 @@ public class Assets extends Fragment {
         //设置行为属性，支持缩放、滑动以及平移
         chart.setInteractive(true);
         chart.setZoomType(ZoomType.HORIZONTAL);
+        chart.setScrollEnabled(true);
         chart.setContainerScrollEnabled(true, ContainerScrollType.HORIZONTAL);
         chart.setLineChartData(data);
         chart.setVisibility(View.VISIBLE);
+        Viewport v = new Viewport(chart.getMaximumViewport());
+        v.left = 0;
+        v.right= 6;
+        chart.setCurrentViewport(v);
     }
 
     public void setTimeline()

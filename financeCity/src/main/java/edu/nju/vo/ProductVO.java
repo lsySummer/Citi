@@ -1,5 +1,7 @@
 package edu.nju.vo;
 
+import edu.nju.service.POJO.NAVHistory;
+
 /**
  * @author lsy
  * 投资产品

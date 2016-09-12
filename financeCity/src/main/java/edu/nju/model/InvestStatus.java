@@ -3,7 +3,7 @@ package edu.nju.model;
 import javax.persistence.*;
 
 /**
- * Created by Sun YuHao on 2016/9/10.
+ * Created by Sun YuHao on 2016/9/12.
  */
 @Entity
 @Table(name = "invest_status", schema = "citi", catalog = "")

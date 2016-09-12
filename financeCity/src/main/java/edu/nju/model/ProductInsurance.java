@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 /**
- * Created by Sun YuHao on 2016/9/5.
+ * Created by Sun YuHao on 2016/9/12.
  */
 @Entity
 @Table(name = "product_insurance", schema = "citi", catalog = "")
@@ -23,6 +23,7 @@ public class ProductInsurance {
     private BigDecimal expectedRate;
     private BigDecimal guaranteedRate;
     private Integer productPeriod;
+    private Integer length;
 
     @Id
     @Column(name = "id")
@@ -164,6 +165,16 @@ public class ProductInsurance {
         this.productPeriod = productPeriod;
     }
 
+    @Basic
+    @Column(name = "length")
+    public Integer getLength() {
+        return length;
+    }
+
+    public void setLength(Integer length) {
+        this.length = length;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -191,6 +202,7 @@ public class ProductInsurance {
             return false;
         if (productPeriod != null ? !productPeriod.equals(that.productPeriod) : that.productPeriod != null)
             return false;
+        if (length != null ? !length.equals(that.length) : that.length != null) return false;
 
         return true;
     }
@@ -211,6 +223,7 @@ public class ProductInsurance {
         result = 31 * result + (expectedRate != null ? expectedRate.hashCode() : 0);
         result = 31 * result + (guaranteedRate != null ? guaranteedRate.hashCode() : 0);
         result = 31 * result + (productPeriod != null ? productPeriod.hashCode() : 0);
+        result = 31 * result + (length != null ? length.hashCode() : 0);
         return result;
     }
 }

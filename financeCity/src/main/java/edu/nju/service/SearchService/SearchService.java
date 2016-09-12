@@ -3,7 +3,7 @@ package edu.nju.service.SearchService;
 import edu.nju.model.CategoryIndex;
 import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.ExceptionsAndError.NoSuchProductException;
-import edu.nju.service.POJO.FundValueHistory;
+import edu.nju.service.POJO.NAVHistory;
 import edu.nju.vo.*;
 import org.springframework.stereotype.Service;
 
@@ -61,6 +61,8 @@ public interface SearchService {
      */
     List<Product> getProductListByOrder(String type, String order);
 
+    List<Product> searchProductsByConditionWithOrder(String type, String cond, String order);
+
     /**
      * get history data
      * @param productId .
@@ -116,7 +118,9 @@ public interface SearchService {
      * @param id .
      * @return .
      */
-    FundValueHistory[] getFundValueHistory(Integer id) throws NoSuchProductException;
+    NAVHistory[] getFundValueHistory(Integer id, Integer days) throws NoSuchProductException;
+
+    NAVHistory[] getBankValueHistory(Integer id, Integer days) throws NoSuchProductException;
 
     /**
      * get institution list

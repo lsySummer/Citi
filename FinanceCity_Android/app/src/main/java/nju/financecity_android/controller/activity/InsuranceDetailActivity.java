@@ -3,13 +3,18 @@ package nju.financecity_android.controller.activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import nju.financecity_android.R;
+import nju.financecity_android.controller.widget.Banner;
 import nju.financecity_android.controller.widget.item.adapter.PropertyListAdapter;
 import nju.financecity_android.model.ProductInsurance;
+import nju.financecity_android.vo.GoodsInfo;
 import nju.financecity_android.vo.PropertyVO;
 
+import java.io.DataOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -24,9 +29,9 @@ public class InsuranceDetailActivity extends AppCompatActivity {
         initComponents();
 
         Intent intent = getIntent();
-        String productId = intent.getStringExtra("productId");
-        Map data = (new ProductInsurance(productId)).getProperties();
-        processData(data);
+        productId = intent.getStringExtra("productId");
+        mData = (new ProductInsurance(productId)).getProperties();
+        processData(mData);
     }
 
     protected void processData(Map data) {
@@ -82,11 +87,33 @@ public class InsuranceDetailActivity extends AppCompatActivity {
         txtGAge = (TextView) findViewById(R.id.txtGAge);
         txtLength = (TextView) findViewById(R.id.txtLength);
         txtInterestRate = (TextView) findViewById(R.id.txtInterestRate);
+        banner = (Banner) findViewById(R.id.banner);
+        banner.setDisplayText("产品详情");
+        btPurchase = (Button) findViewById(R.id.btPruchase);
+        btPurchase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GoodsInfo info = new GoodsInfo();
+                info.goodsId = productId;
+                info.goodsName = mData.get("险种名称").toString();
+                info.amount = 1;
+                info.price = Integer.parseInt(mData.get("保险产品面额").toString().substring(1));
+                info.type = "保险";
+                Intent intent = new Intent(InsuranceDetailActivity.this, OrderConfirmActivity.class);
+                intent.putExtra("0", info);
+                startActivity(intent);
+                InsuranceDetailActivity.this.finish();
+            }
+        });
     }
 
+    private String productId;
+    private Map mData;
+    private Button btPurchase;
     private ListView listProperties;
     private TextView txtPrdtName;
     private TextView txtLength;
+    private Banner banner;
     private TextView txtGAge;
     private TextView txtInterestRate;
 }

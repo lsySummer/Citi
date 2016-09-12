@@ -1,6 +1,7 @@
 package nju.financecity_android.controller.widget.item;
 
 import android.content.Context;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -25,9 +26,6 @@ public class InvestmentListItem implements ICommonItem {
         txtPdtName = (TextView) mView.findViewById(R.id.txtPdtName);
         txtPdtName.setText(mData.productName);
 
-        txtAvlblTime = (TextView) mView.findViewById(R.id.txtAvlblTime);
-        txtAvlblTime.setText(TimeString.getTimeByDate(mData.available));
-
         txtBuyPrice = (TextView) mView.findViewById(R.id.txtBuyPrice);
         txtBuyPrice.setText("￥" + mData.buyPrice);
 
@@ -35,10 +33,7 @@ public class InvestmentListItem implements ICommonItem {
         txtBuyTime.setText(TimeString.getTimeByDate(mData.buy));
 
         txtCurrPrice = (TextView) mView.findViewById(R.id.txtCurrPrice);
-        txtCurrPrice.setText("(￥" + mData.currPrice + ")");
-
-        txtExpiration = (TextView) mView.findViewById(R.id.txtExpiration);
-        txtExpiration.setText(TimeString.getTimeByDate(mData.expiration));
+        txtCurrPrice.setText("￥" + mData.currPrice + "");
 
         txtIncRate = (TextView) mView.findViewById(R.id.txtIncRate);
         if (mData.buyPrice == 0 || mData.buyPrice == mData.currPrice) {
@@ -55,6 +50,17 @@ public class InvestmentListItem implements ICommonItem {
             txtIncRate.setTextColor(mView.getResources().getColor(R.color.increasingRed));
         else
             txtIncRate.setTextColor(mView.getResources().getColor(R.color.decreasingGreen));
+
+        btSell.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
+                dialog.setTitle("卖出");
+                dialog.setMessage("确定要卖出 " + mData.productName + " 吗？");
+                dialog.setPositiveButton("卖出", null);
+                dialog.setNegativeButton("取消", null);
+            }
+        });
     }
 
     @Override
@@ -77,7 +83,7 @@ public class InvestmentListItem implements ICommonItem {
         return mView.findViewById(resId);
     }
 
-    private TextView txtPdtName, txtAvlblTime, txtBuyPrice, txtBuyTime, txtCurrPrice, txtExpiration, txtIncRate;
+    private TextView txtPdtName, txtBuyPrice, txtBuyTime, txtCurrPrice, txtIncRate, btSell;
     private LayoutInflater mInflater;
     private Context mContext;
     private View mView;

@@ -3,14 +3,14 @@ package edu.nju.model;
 import javax.persistence.*;
 
 /**
- * Created by Sun YuHao on 2016/9/5.
+ * Created by Sun YuHao on 2016/9/12.
  */
 @Entity
 @Table(name = "institution_category_relation", schema = "citi", catalog = "")
 public class InstitutionCategoryRelation {
     private int id;
-    private Integer institutionId;
     private String category;
+    private Integer institutionId;
 
     @Id
     @Column(name = "id")
@@ -23,16 +23,6 @@ public class InstitutionCategoryRelation {
     }
 
     @Basic
-    @Column(name = "institution_id")
-    public Integer getInstitutionId() {
-        return institutionId;
-    }
-
-    public void setInstitutionId(Integer institutionId) {
-        this.institutionId = institutionId;
-    }
-
-    @Basic
     @Column(name = "category")
     public String getCategory() {
         return category;
@@ -40,6 +30,16 @@ public class InstitutionCategoryRelation {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    @Basic
+    @Column(name = "institution_id")
+    public Integer getInstitutionId() {
+        return institutionId;
+    }
+
+    public void setInstitutionId(Integer institutionId) {
+        this.institutionId = institutionId;
     }
 
     @Override
@@ -50,9 +50,9 @@ public class InstitutionCategoryRelation {
         InstitutionCategoryRelation that = (InstitutionCategoryRelation) o;
 
         if (id != that.id) return false;
+        if (category != null ? !category.equals(that.category) : that.category != null) return false;
         if (institutionId != null ? !institutionId.equals(that.institutionId) : that.institutionId != null)
             return false;
-        if (category != null ? !category.equals(that.category) : that.category != null) return false;
 
         return true;
     }
@@ -60,8 +60,8 @@ public class InstitutionCategoryRelation {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (institutionId != null ? institutionId.hashCode() : 0);
         result = 31 * result + (category != null ? category.hashCode() : 0);
+        result = 31 * result + (institutionId != null ? institutionId.hashCode() : 0);
         return result;
     }
 }

@@ -6,9 +6,12 @@ import edu.nju.service.CategoryAndProduct.ProductCategoryManager;
 import edu.nju.service.InvestAdvisorService.Strategy.StrategyImpl.*;
 import edu.nju.service.POJO.AssetCategoryAllocation;
 import edu.nju.service.POJO.InvestResult;
+import edu.nju.service.POJO.SimpleTradeInfo;
 import edu.nju.service.SearchService.SearchService;
+import edu.nju.service.TradeService.TradeItem;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,7 +31,7 @@ public class InvestStrategyImpl implements InvestStrategy {
     }
 
     @Override
-    public InvestResult createInvestmentPortfolio(UserTemperPrefer preference, SearchService searchService) {
+    public List<List<SimpleTradeInfo>> createInvestmentPortfolio(UserTemperPrefer preference, SearchService searchService) {
         assetCategoryAllocator.createAllocation(preference, searchService);
 
         InvestResult investResult = new InvestResult();
@@ -39,11 +42,25 @@ public class InvestStrategyImpl implements InvestStrategy {
 
             for (CategoryInvest invest : categoryInvest) {
                 if (category.belongTo(invest.getCategoryName())) {
-                    investResult.addInvestResult(invest.invest(preference,searchService));
+                    investResult.addInvestResult(invest.invest(preference,searchService, allocation));
                 }
             }
         }
 
-        return investResult;
+
+        List<List<SimpleTradeInfo>> lists = new ArrayList<>();
+        List<SimpleTradeInfo> simpleTradeInfoList = new ArrayList<>();
+        //TODO:allocate
+        for (TradeItem tradeItem : investResult.getTradeItemList()) {
+            SimpleTradeInfo simpleTradeInfo = new SimpleTradeInfo();
+            simpleTradeInfo.setProductId(tradeItem.getProduct().getID());
+            simpleTradeInfo.setAmount(tradeItem.getTradingVolume());
+
+            simpleTradeInfoList.add(simpleTradeInfo);
+        }
+
+        lists.add(simpleTradeInfoList);
+
+        return lists;
     }
 }

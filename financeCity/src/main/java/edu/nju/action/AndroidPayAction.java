@@ -83,4 +83,36 @@ public class AndroidPayAction extends AndroidAction {
 
         return SUCCESS;
     }
+
+    public String pay() {
+        Map map = getRequestMap();
+        BaseVO baseVO = new BaseVO();
+
+        try {
+            int id = (Integer)map.get("id");
+            String session = (String)map.get("sessionId");
+
+            FinanceCityUser financeCityUser = new FinanceCityUser();
+            financeCityUser.setID(id);
+            financeCityUser.setLoginSession(session);
+
+            String checkCode = (String)map.get("checkCode");
+
+            boolean success = payService.payForPortfolio(checkCode, financeCityUser);
+            if (success) {
+                ErrorManager.setError(baseVO, ErrorManager.errorNormal);
+            }
+            else {
+                ErrorManager.setError(baseVO, ErrorManager.errorPaymentFailed);
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            ErrorManager.setError(baseVO, ErrorManager.errorInvalidParameter);
+        }
+
+        setResult(baseVO);
+
+        return SUCCESS;
+    }
 }

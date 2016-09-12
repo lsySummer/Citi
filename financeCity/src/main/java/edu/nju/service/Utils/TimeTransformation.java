@@ -34,4 +34,8 @@ public class TimeTransformation {
     static public double getTimeAfter(Timestamp timestamp, double length, long lengthType, long resultType) {
         return (timestamp.getTime() + length * lengthType) / resultType;
     }
+
+    static public double getTimeAfter(Date date, double length, long lengthType, long resultType) {
+        return (date.getTime() + length * lengthType) / resultType;
+    }
 }
