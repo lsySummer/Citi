@@ -17,7 +17,7 @@ import java.sql.Date;
  */
 @Controller
 public class UserAction extends BaseAction {
-    private final String default_after_login = "/jsp/assets.jsp";
+    private final String default_after_login = "/jsp/asset.jsp";
     private final String server = "http://localhost:8080";
 
     @Autowired

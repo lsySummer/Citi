@@ -20,20 +20,6 @@ import java.util.List;
 @Service
 public interface InvestAdvisorService {
     /**
-     * set preference
-     *
-     * @param temperPreferVO preference .
-     * @return if it's successful
-     */
-    boolean setTemperPrefer(TemperPreferVO temperPreferVO, FinanceCityUser financeCityUser) throws NotLoginException;
-
-    /**
-     * get temper preference
-     * @return temper preference
-     */
-    TemperPreferVO getTemperPreferVO(FinanceCityUser financeCityUser) throws NotLoginException;
-
-    /**
      * create investment portfolio
      * @param preference
      * @return invest result
