@@ -5,6 +5,7 @@ window.onload = function() {
     type_div_list = document.querySelectorAll(".filter-container");
     type_selector_list = document.querySelectorAll(".type-selector");
     filter_button_list = document.querySelectorAll(".filter-button");
+    search_button_list = document.querySelectorAll(".search-button");
 
     initSlider();
     initSort();
@@ -113,6 +114,7 @@ function initDateTools() {
 }
 
 var filter_button_list;
+var search_button_list;
 var f_list = [submitAll, submitBank, submitBond, submitFund, submitInsurance];
 function initFilterButton() {
     $(".filter-button").on("click", function() {
@@ -126,6 +128,17 @@ function initFilterButton() {
 
         f_list[index](1);
     });
+    $(".search-button").on("click", function() {
+        var index = 0;
+        for(var i=0;i<search_button_list.length;i++){
+            if(this==search_button_list[i]){
+                index = i;
+                break;
+            }
+        }
+
+        f_list[index](1);
+    })
 }
 
 function submitAll(page_num) {
@@ -151,7 +164,7 @@ function submitAll(page_num) {
 
     $.ajax({
         type: "post",
-        url: "searchFilter",
+        url: "jsp/searchFilter",
         data: "data="+JSON.stringify(data),
         cache: false,
         success: function(data) {
@@ -170,7 +183,7 @@ function submitAll(page_num) {
 function submitBank(page_num) {
     var data = {};
     data["keyword"] = $("#bank_keywords").val();
-    data["type"] = "bank";
+    data["type"] = "Bank";
 
     var options = {};
 
@@ -212,7 +225,7 @@ function submitBank(page_num) {
 function submitBond(page_num) {
     var data = {};
     data["keyword"] = $("#bond_keywords").val();
-    data["type"] = "bond";
+    data["type"] = "Bond";
 
     var options = {};
 
@@ -227,7 +240,7 @@ function submitBond(page_num) {
 
     $.ajax({
         type: "post",
-        url: "searchFilter",
+        url: "jsp/searchFilter",
         data: "data="+JSON.stringify(data),
         cache: false,
         success: function(data) {
@@ -246,7 +259,7 @@ function submitBond(page_num) {
 function submitFund(page_num) {
     var data = {};
     data["keyword"] = $("#fund_keywords").val();
-    data["type"] = "fund";
+    data["type"] = "Fund";
 
     var options = {};
 
@@ -280,7 +293,7 @@ function submitFund(page_num) {
 
     $.ajax({
         type: "post",
-        url: "searchFilter",
+        url: "jsp/searchFilter",
         data: "data="+JSON.stringify(data),
         cache: false,
         success: function(data) {
@@ -299,7 +312,7 @@ function submitFund(page_num) {
 function submitInsurance(page_num) {
     var data = {};
     data["keyword"] = $("#insurance_keywords").val();
-    data["type"] = "insurance";
+    data["type"] = "Insurance";
 
     var options = {};
     options["length_of_years"] = $("#insurance_length_of_years").val().split(";");
@@ -314,7 +327,7 @@ function submitInsurance(page_num) {
 
     $.ajax({
         type: "post",
-        url: "searchFilter",
+        url: "jsp/searchFilter",
         data: "data="+JSON.stringify(data),
         cache: false,
         success: function(data) {

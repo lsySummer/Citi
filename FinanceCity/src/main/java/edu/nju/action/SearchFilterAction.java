@@ -117,7 +117,6 @@ public class SearchFilterAction extends BaseAction {
 
         int page_num = Integer.parseInt(page_num_string) - 1;
         int page_length = 1;
-        System.out.println(type+" "+page_num);
 
         ProductVOFactory resultFactory = new ProductVOFactory();
 
