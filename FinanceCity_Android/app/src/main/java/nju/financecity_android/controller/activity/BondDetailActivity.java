@@ -4,11 +4,15 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import nju.financecity_android.R;
+import nju.financecity_android.controller.widget.Banner;
 import nju.financecity_android.controller.widget.item.adapter.PropertyListAdapter;
 import nju.financecity_android.model.ProductBond;
+import nju.financecity_android.vo.GoodsInfo;
 import nju.financecity_android.vo.PropertyVO;
 
 import java.util.ArrayList;
@@ -25,9 +29,9 @@ public class BondDetailActivity extends AppCompatActivity {
         initComponents();
 
         Intent intent = getIntent();
-        String productId = intent.getStringExtra("productId");
-        Map data = (new ProductBond(productId)).getProperties();
-        processData(data);
+        productId = intent.getStringExtra("productId");
+        mData = (new ProductBond(productId)).getProperties();
+        processData(mData);
     }
 
     protected void setHeaderInfo(String productName, String state, String length, String interestRate) {
@@ -38,7 +42,7 @@ public class BondDetailActivity extends AppCompatActivity {
     }
 
     protected void processData(Map data) {
-        String productName = data.get("债权名称").toString();
+        String productName = data.get("债券名称").toString();
         String state = data.get("状态").toString();
         String interestRate = data.get("票面利率").toString();
         String length = data.get("期限").toString();
@@ -136,8 +140,30 @@ public class BondDetailActivity extends AppCompatActivity {
         txtPrdtName = (TextView) findViewById(R.id.txtPdtName);
         txtState = (TextView) findViewById(R.id.txtState);
         txtLength = (TextView) findViewById(R.id.txtLength);
+        banner = (Banner) findViewById(R.id.banner);
+        banner.setDisplayText("产品详情");
+        btPurchase = (Button) findViewById(R.id.btPruchase);
+        btPurchase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GoodsInfo info = new GoodsInfo();
+                info.goodsId = productId;
+                info.goodsName = mData.get("债券名称").toString();
+                info.price = Integer.parseInt(mData.get("发行价").toString()) * 10;
+                info.amount = 1;
+                info.type = "债券";
+                Intent intent = new Intent(BondDetailActivity.this, OrderConfirmActivity.class);
+                intent.putExtra("0", info);
+                startActivity(intent);
+                BondDetailActivity.this.finish();
+            }
+        });
     }
 
+    Map mData;
+    Button btPurchase;
+    String productId;
+    Banner banner;
     ListView listProperties;
     TextView txtInterestRate, txtPrdtName, txtState, txtLength;
     LayoutInflater mInflater;

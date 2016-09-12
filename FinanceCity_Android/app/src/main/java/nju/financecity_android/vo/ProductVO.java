@@ -10,12 +10,27 @@ public class ProductVO {
     private double year;
     private String introduction;
 
+    private String top;
+    private String middle;
+    private String bottom;
+
     public ProductVO(String pid, String name, String type, double year, String introduction) {
         this.pid = pid;
         this.name = name;
         this.type = type;
         this.year = year;
         this.introduction = introduction;
+    }
+
+    public ProductVO(String pid, String name, String type, double year, String introduction, String top, String middle, String bottom) {
+        this.pid = pid;
+        this.name = name;
+        this.type = type;
+        this.year = year;
+        this.introduction = introduction;
+        this.top = top;
+        this.middle = middle;
+        this.bottom = bottom;
     }
 
     public String getPid() {
@@ -36,5 +51,17 @@ public class ProductVO {
 
     public String getIntroduction() {
         return introduction;
+    }
+
+    public String getTop() {
+        return top;
+    }
+
+    public String getMiddle() {
+        return middle;
+    }
+
+    public String getBottom() {
+        return bottom;
     }
 }

@@ -13,10 +13,6 @@ public abstract class BaseProduct {
 
     public BaseProduct(String productId) {
         setProductId(productId);
-        mRawData = new ProductDao(productId).readData();
-        if (mRawData.get("error").toString().equals("0")) {
-            mRawData = (Map) mRawData.get("data");
-        }
         mData = new HashMap<>();
         processData();
     }
@@ -28,6 +24,12 @@ public abstract class BaseProduct {
     public void setProductId(String productId) {
         this.productId = productId;
         mRawData = new ProductDao(productId).readData();
+        if (mRawData.get("history") != null) {
+            ((Map) mRawData.get("data")).put("history", mRawData.get("history"));
+        }
+        if (mRawData.get("error").toString().equals("0")) {
+            mRawData = (Map) mRawData.get("data");
+        }
     }
 
     public String getProperty(String name) {

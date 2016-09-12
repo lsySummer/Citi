@@ -31,7 +31,11 @@ public class GoodsItemWithPrice extends Observable implements ICommonItem {
     public void initComponents() {
         mainPane = (RelativeLayout) findViewById(R.id.mainPane);
         txtPrice = (TextView) findViewById(R.id.txtPrice);
-        txtPrice.setText(String.valueOf("￥" + mData.price));
+        if (mData.type.equals("银行理财")) {
+            txtPrice.setText(String.valueOf("￥" + mData.increasingUnit));
+        } else {
+            txtPrice.setText(String.valueOf("￥" + mData.price));
+        }
         btMinus = (TextView) findViewById(R.id.btMinus);
         txtInitialAmount = (TextView) findViewById(R.id.txtInitialAmount);
         btAdd = (TextView) findViewById(R.id.btAdd);
@@ -60,6 +64,10 @@ public class GoodsItemWithPrice extends Observable implements ICommonItem {
             txtInitialAmount.setVisibility(View.INVISIBLE);
         }
 
+        if (mData.type.equals("银行理财")) {
+            txtAmount.setText(String.valueOf(mData.initialAmount));
+        }
+
         btAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,7 +82,8 @@ public class GoodsItemWithPrice extends Observable implements ICommonItem {
             public void onClick(View v) {
                 int incUnit = (mData.increasingUnit == 0) ? 1 : mData.increasingUnit;
                 int amount = Integer.parseInt(txtAmount.getText().toString().trim());
-                amount -= incUnit;
+                if (amount - incUnit >= mData.initialAmount)
+                    amount -= incUnit;
                 txtAmount.setText(amount + "");
             }
         });
@@ -88,7 +97,7 @@ public class GoodsItemWithPrice extends Observable implements ICommonItem {
             @Override
             public void afterTextChanged(Editable s) {
                 String valueStr = txtAmount.getText().toString().trim();
-                if (valueStr.matches("[0-9]+")) {
+                if (valueStr.matches("[-]?[0-9]+")) {
                     mData.amount = Integer.parseInt(txtAmount.getText().toString().trim());
                     if (mData.amount < mData.initialAmount) mData.amount = mData.initialAmount;
                     setChanged();

@@ -31,7 +31,8 @@ public class ProductDao extends CommonDao {
     public String sendRequest() {
         JSONObject jo = new JSONObject();
         try {
-            jo.put("id", productId);
+            jo.put("id", Integer.parseInt(productId));
+            jo.put("days", Integer.MAX_VALUE);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -39,4 +40,5 @@ public class ProductDao extends CommonDao {
     }
 
     private String productId;
+
 }

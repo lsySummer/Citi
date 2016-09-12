@@ -11,12 +11,12 @@
 			android:id="@+id/txtSimpleType" android:background="@drawable/bank_background" android:gravity="center"
 			android:textColor="#ffffff" android:textSize="24sp"/>
 	<TextView
-			android:layout_width="wrap_content"
+			android:layout_width="200dp"
 			android:layout_height="wrap_content"
 			android:text="某某某理财产品"
 			android:id="@+id/txtGoodName" android:layout_alignParentTop="true"
-			android:layout_toRightOf="@+id/txtSimpleType" android:layout_toEndOf="@+id/txtSimpleType"
-			android:paddingLeft="8dp" android:textSize="16sp"/>
+			android:paddingLeft="8dp" android:textSize="16sp" android:layout_toLeftOf="@+id/btMinus"
+			android:layout_toRightOf="@+id/txtSimpleType" android:layout_toEndOf="@+id/txtSimpleType"/>
 	<TextView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"

@@ -47,6 +47,7 @@ public class OrderConfirmActivity extends AppCompatActivity implements Observer 
     protected void setListContent(List<GoodsInfo> content) {
         ListGoodsAdapter adapter = new ListGoodsAdapter(this, content);
         listGoods.setAdapter(adapter);
+        update(null, null);
     }
 
     private void initComponents() {
@@ -69,6 +70,10 @@ public class OrderConfirmActivity extends AppCompatActivity implements Observer 
 
     @Override
     public void update(Observable observable, Object data) {
-
+        int sum = 0;
+        for (GoodsInfo info: goodsList) {
+            sum += info.getSum();
+        }
+        txtSummary.setText(String.format("%d", sum));
     }
 }

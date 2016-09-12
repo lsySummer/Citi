@@ -43,33 +43,33 @@ public class    ProductBank extends BaseProduct {
 
         chanpinmingcheng = mRawData.get("name").toString();
         chanpinqici = mRawData.get("session").toString();
-        guanlijigou = mRawData.get("institution_manage").toString();
+        guanlijigou = mRawData.get("institutionManage").toString();
         tuoguanjigou = mRawData.get("custodian").toString();
         yujinianhuashouyilv = Double.valueOf(mRawData.get("NAV").toString());
-        shouyileixing = Integer.parseInt(mRawData.get("income_type").toString());
-        fengxiandengji = Integer.parseInt(mRawData.get("risk_level").toString());
-        shifoujingzhixing = Integer.parseInt(mRawData.get("if_NAV_type").toString());
-        shifoufengbi = Integer.parseInt(mRawData.get("if_close").toString());
-        shengoufeilv = Double.parseDouble(mRawData.get("rate_purchase").toString());
-        shuhuifeilv = Double.parseDouble(mRawData.get("rate_redem").toString());
-        guangyiguanlifeilv = Double.parseDouble(mRawData.get("rate_manage").toString());
-        qigoujine = Integer.parseInt(mRawData.get("purchase_threshold").toString());
-        dizenggoumaizuixiaodanwei = Integer.parseInt(mRawData.get("increasing_unit").toString());
-        mujikaishiri = mRawData.get("on_purchase_date").toString();
-        mujijiezhiri = mRawData.get("off_purchase_date").toString();
-        qixiri = mRawData.get("start_interest_date").toString();
-        kaifangri = mRawData.get("on_redemption_date").toString();
+        shouyileixing = Integer.parseInt(mRawData.get("incomeType").toString());
+        fengxiandengji = Integer.parseInt(mRawData.get("riskLevel").toString());
+        shifoujingzhixing = Integer.parseInt(mRawData.get("ifNAVType").toString());
+        shifoufengbi = Integer.parseInt(mRawData.get("ifClose").toString());
+        shengoufeilv = Double.parseDouble(mRawData.get("ratePurchase").toString());
+        shuhuifeilv = Double.parseDouble(mRawData.get("rateRedem").toString());
+        guangyiguanlifeilv = Double.parseDouble(mRawData.get("rateManage").toString());
+        qigoujine = Integer.parseInt(mRawData.get("purchaseThreshold").toString());
+        dizenggoumaizuixiaodanwei = Integer.parseInt(mRawData.get("increasingUnit").toString());
+        mujikaishiri = mRawData.get("onPurchaseDate").toString();
+        mujijiezhiri = mRawData.get("offPurchaseDate").toString();
+        qixiri = mRawData.get("startInterestDate").toString();
+        kaifangri = mRawData.get("onRedemptionDate").toString();
         qixian = Integer.parseInt(mRawData.get("length").toString());
-        shuhuisudu = Integer.parseInt(mRawData.get("redem_speed").toString());
+        shuhuisudu = Integer.parseInt(mRawData.get("redemSpeed").toString());
         licaibizhong = Integer.parseInt(mRawData.get("currency").toString());
-        touzifanwei = mRawData.get("invest_field").toString();
-        touzibili = mRawData.get("invest_ratio").toString();
-        chanpinbianma = mRawData.get("product_code").toString();
-        dengjibianma = mRawData.get("register_code").toString();
-        xiaoshouquyu = mRawData.get("sales_territory").toString();
-        yunxingguimoshangxian = Integer.parseInt(mRawData.get("size_upper_limit").toString());
-        licaibenjinjishouyizhifu = mRawData.get("pay_type").toString();
-        faxingduixiang = mRawData.get("object_oriented").toString();
+        touzifanwei = mRawData.get("investField").toString();
+        touzibili = mRawData.get("investRatio").toString();
+        chanpinbianma = mRawData.get("productCode").toString();
+        dengjibianma = mRawData.get("registerCode").toString();
+        xiaoshouquyu = mRawData.get("salesTerritory").toString();
+        yunxingguimoshangxian = Integer.parseInt(mRawData.get("sizeUpperLimit").toString());
+        licaibenjinjishouyizhifu = mRawData.get("payType").toString();
+        faxingduixiang = mRawData.get("objectOriented").toString();
 
         mData.put("产品名称", chanpinmingcheng);
         mData.put("产品期次", chanpinqici);
@@ -133,5 +133,7 @@ public class    ProductBank extends BaseProduct {
         mData.put("运行规模上限", yunxingguimoshangxian + "亿元");
         mData.put("理财本金及收益支付", licaibenjinjishouyizhifu);
         mData.put("发行对象", faxingduixiang);
+        if (shifoujingzhixing == 1)
+            mData.put("历史净值", mRawData.get("history"));
     }
 }
