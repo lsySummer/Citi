@@ -12,17 +12,17 @@ public class ProductInsurance extends BaseProduct {
     @Override
     protected void processData() {
         String xianzhongmingcheng = mRawData.get("name").toString();
-        String chanpinfaxinggongsi = mRawData.get("institution_manage").toString();
+        String chanpinfaxinggongsi = mRawData.get("institutionManage").toString();
         int peichangjine = Integer.parseInt(mRawData.get("indemnity").toString());
         int baoxianchanpinmiane = Integer.parseInt(mRawData.get("denomination").toString());
-        String danweijinepeichang = mRawData.get("indemnity_per_unit").toString();
-        double nianhuashouyilv = Double.parseDouble(mRawData.get("year_rate").toString());
-        double nianjiesuanlilv = Double.parseDouble(mRawData.get("expected_rate").toString());
-        double baozhenglilv = Double.parseDouble(mRawData.get("guaranteed_rate").toString());
-        double yuqililv = Double.parseDouble(mRawData.get("expected_rate").toString());
-        double rijiesuanlilv = Double.parseDouble(mRawData.get("day_rate").toString());
-        int jiaofeifangshi = Integer.parseInt(mRawData.get("pay_type").toString());
-        int baozhangnianxian = Integer.parseInt(mRawData.get("warranty_period").toString());
+        String danweijinepeichang = mRawData.get("indemnityPerUnit").toString();
+        double nianhuashouyilv = Double.parseDouble(mRawData.get("yearRate").toString());
+        double nianjiesuanlilv = Double.parseDouble(mRawData.get("expectedRate").toString());
+        double baozhenglilv = Double.parseDouble(mRawData.get("guaranteedRate").toString());
+        double yuqililv = Double.parseDouble(mRawData.get("expectedRate").toString());
+        double rijiesuanlilv = Double.parseDouble(mRawData.get("dayRate").toString());
+        int jiaofeifangshi = Integer.parseInt(mRawData.get("payType").toString());
+        int baozhangnianxian = Integer.parseInt(mRawData.get("warrantyPeriod").toString());
         String goumairi = "--";
         String daoqiri = "--";
         int qixian = Integer.parseInt(mRawData.get("length").toString());

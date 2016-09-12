@@ -1,9 +1,11 @@
 package nju.financecity_android.controller.widget;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -42,20 +44,23 @@ public class Banner extends LinearLayout {
         super.onFinishInflate();
         loadComponents();
         lblText.setText(display_text);
-        if (show_search_button)
-            btSearch.setVisibility(VISIBLE);
-        else
-            btSearch.setVisibility(INVISIBLE);
     }
 
     private void loadComponents() {
         lblText = (TextView) findViewById(R.id.lblText);
         mainPane = (RelativeLayout) findViewById(R.id.mainPane);
-        btSearch = (ImageView) findViewById(R.id.btSearch);
+        btBack = (TextView) findViewById(R.id.btBack);
+        btBack.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((Activity) context).finish();
+            }
+        });
     }
 
     private void init(Context context) {
         LayoutInflater.from(context).inflate(R.layout.banner, this, true);
+        this.context = context;
     }
 
     protected void initAttributes(Context context, AttributeSet attrs) {
@@ -66,9 +71,9 @@ public class Banner extends LinearLayout {
     }
 
     private TextView lblText;
-
+    private Context context;
     private RelativeLayout mainPane;
+    private TextView btBack;
     private String display_text = "";
-    private ImageView btSearch;
     private boolean show_search_button;
 }

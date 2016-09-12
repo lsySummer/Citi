@@ -22,4 +22,14 @@ public class GoodsInfo implements Serializable {
         this.price = price;
         this.amount = amount;
     }
+
+    public int getSum() {
+        if (type.equals("银行理财") || type.equals("基金")) {
+            return amount;
+        }
+        else if (type.equals("保险") || type.equals("债券")) {
+            return price * amount;
+        }
+        return 0;
+    }
 }

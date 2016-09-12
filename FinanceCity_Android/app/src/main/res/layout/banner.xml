@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="40dp" android:background="@color/colorPrimary" android:id="@+id/mainPane">
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="40dp" android:id="@+id/mainPane" android:background="@color/lightGrey">
 
 	<TextView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:textAppearance="?android:attr/textAppearanceLarge"
 			android:text="Large Text"
 			android:id="@+id/lblText" android:layout_gravity="center" android:layout_weight="1"
-			android:gravity="center" android:textColor="@color/white" android:layout_centerVertical="true"
-			android:layout_centerHorizontal="true"/>
-	<ImageView
+			android:gravity="center" android:textColor="@color/darkGrey"
+			android:layout_centerHorizontal="true" android:textSize="18sp" android:layout_alignParentTop="true"
+			android:layout_alignParentBottom="true"/>
+	<TextView
 			android:layout_width="40dp"
 			android:layout_height="40dp"
-			android:id="@+id/btSearch" android:layout_alignParentTop="true"
-			android:layout_alignParentRight="true"
-			android:layout_alignParentEnd="true" android:layout_alignParentBottom="true"
-			android:src="@drawable/search_icon" android:padding="8dp"/>
+			android:text="&lt;"
+			android:id="@+id/btBack" android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
+			android:layout_alignParentStart="true" android:layout_alignParentBottom="true" android:textSize="24dp"
+			android:gravity="center"/>
 </RelativeLayout>

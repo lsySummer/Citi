@@ -19,6 +19,7 @@ import nju.financecity_android.controller.info.FragmentName;
 import nju.financecity_android.controller.widget.Banner;
 import nju.financecity_android.controller.widget.Bar;
 import nju.financecity_android.controller.widget.Footer;
+import nju.financecity_android.model.ProductFund;
 import nju.financecity_android.vo.GoodsInfo;
 
 /**
@@ -33,7 +34,7 @@ public class MainActivity extends Activity{
     private static Fragment investmentFragment;//TODO
     private static Assets assetsFragment;
     private static Persons personFragment;//TODO
-
+    private static Fragment testFrag = new QuestionI();
 //    private static Banner banner;
     private static LinearLayout main_mid_layout;
     private static Footer footer;
@@ -47,12 +48,15 @@ public class MainActivity extends Activity{
         fragmentManager=getFragmentManager();
         setFragment(0);
 
+
         Intent intent = new Intent(this, OrderConfirmActivity.class);
         for (int i = 0; i < 10; i++) {
             GoodsInfo info = new GoodsInfo("123", "这是第" + i + "个产品", 10000 / (i + 1), i);
             switch (i % 4) {
                 case 0:
                     info.type = "银行理财";
+                    info.initialAmount = 10000;
+                    info.increasingUnit = 1000;
                     break;
                 case 1:
                     info.type = "保险";
@@ -104,9 +108,9 @@ public class MainActivity extends Activity{
 //                banner.setDisplayText(footer.getText(0));
                 footer.setSelectedById(0);
                 productSearchFragment = new ProductSearch();
-                transaction.add(R.id.main_mid_layout, productSearchFragment);
+                transaction.add(R.id.main_mid_layout, testFrag);
                 if (productSearchFragment != null) {
-                    transaction.show(productSearchFragment);
+                    transaction.show(testFrag);
                 }
                 break;
             case 1://资产（暂时是资产变化信息二级界面）
