@@ -118,7 +118,7 @@
         android:textSize="16sp" />
 
     <EditText
-        android:id="@+id/txtInvestmentAmount"
+        android:id="@+id/txtRedeem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView29"
@@ -134,7 +134,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textView30"
         android:layout_alignStart="@+id/textView30"
-        android:layout_below="@+id/txtInvestmentAmount"
+        android:layout_below="@+id/txtRedeem"
         android:layout_marginTop="15dp"
         android:gravity="center"
         android:paddingLeft="12dp"
@@ -170,11 +170,11 @@
         android:textSize="16sp" />
 
     <EditText
-        android:id="@+id/txtExpiration"
+        android:id="@+id/txtInsurance"
         android:layout_width="130dp"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/txtInvestmentAmount"
-        android:layout_alignStart="@+id/txtInvestmentAmount"
+        android:layout_alignLeft="@+id/txtRedeem"
+        android:layout_alignStart="@+id/txtRedeem"
         android:layout_below="@+id/textView31"
         android:ems="10"
         android:inputType="date"
@@ -188,7 +188,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignStart="@+id/textView31"
-        android:layout_below="@+id/txtExpiration"
+        android:layout_below="@+id/txtInsurance"
         android:layout_marginRight="8dp"
         android:layout_marginTop="20dp"
         android:paddingLeft="12dp"
@@ -217,6 +217,7 @@
             android:textSize="13sp" />
 
         <TextView
+            android:id="@+id/seekText1"
             android:layout_width="20dp"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -255,6 +256,7 @@
             android:textSize="13sp" />
 
         <TextView
+            android:id="@+id/seektext2"
             android:layout_width="20dp"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -307,6 +309,7 @@
             android:textSize="13sp" />
 
         <TextView
+            android:id="@+id/seekText3"
             android:layout_width="20dp"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -345,6 +348,7 @@
             android:textSize="13sp" />
 
         <TextView
+            android:id="@+id/seektext4"
             android:layout_width="20dp"
             android:layout_height="match_parent"
             android:gravity="center"

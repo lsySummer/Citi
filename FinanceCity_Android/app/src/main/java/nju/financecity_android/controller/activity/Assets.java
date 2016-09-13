@@ -3,6 +3,7 @@ package nju.financecity_android.controller.activity;
 import android.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+
+import org.json.JSONObject;
 
 import java.text.DateFormat;
 import java.text.FieldPosition;
@@ -32,6 +35,8 @@ import lecho.lib.hellocharts.model.PointValue;
 import lecho.lib.hellocharts.model.Viewport;
 import lecho.lib.hellocharts.view.LineChartView;
 import nju.financecity_android.R;
+import nju.financecity_android.dao.AssetValueDao;
+import nju.financecity_android.model.UserSession;
 
 /**
  * Created by Administrator on 2016/8/25.
@@ -71,6 +76,34 @@ public class Assets extends Fragment {
         List<PointValue> mPointValues=new ArrayList<PointValue>();
         List<AxisValue> mAxisValues=new ArrayList<AxisValue>();
 
+        final JSONObject[] jsonObjects=new JSONObject[1];
+        jsonObjects[0]=new JSONObject();
+        UserSession user=UserSession.getCurrUser();
+        try {
+            jsonObjects[0].put("id", 6);
+            jsonObjects[0].put("session","a482dd91fc6dd55b5a1b74f103f48717");
+//            jsonObjects[0].put("days",20);//TODO
+        }catch(Exception e)
+        {
+            Log.i("test","user session or json exception");
+            e.printStackTrace();
+        }
+        final String[] result={""};
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                result[0]=new AssetValueDao().sendPost(jsonObjects[0]);
+            }
+        }).start();
+        JSONObject jResult=null;
+        try{
+            jResult=new JSONObject(result[0]);
+        }catch(Exception e)
+        {
+            Log.i("test","asset value result exception");
+            e.printStackTrace();
+        }
         /*==============================================================================*/
         List<Date> dates=new ArrayList<Date>();
         for(int i=0;i<20;i++)

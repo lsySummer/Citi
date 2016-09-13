@@ -62,7 +62,7 @@ public class BankSearch extends RelativeLayout {
         Thread agentThread=new Thread(new Runnable() {
             @Override
             public void run() {
-                ArrayList<String> bankAgent= SearchAgent.getAgent("bank");
+                ArrayList<String> bankAgent=new SearchAgent().getAgent("bank");
                 bankAgent.add(0,"所有");
                 try {
                     if(bankAgent.size()!=0)

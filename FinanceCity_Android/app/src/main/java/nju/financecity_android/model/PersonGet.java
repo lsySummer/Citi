@@ -20,7 +20,7 @@ public class PersonGet {
 
         String mRawData = new PersonDao().getData("user/",sessionid);
 
-        return null;
+        return DetailGet(mRawData);
     }
 
     private HashMap<String,Object> DetailGet(String anGet){

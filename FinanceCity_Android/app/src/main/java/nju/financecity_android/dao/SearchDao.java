@@ -9,33 +9,22 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
-public class SearchDao {
+public class SearchDao extends CommonDao{
 //    private String url="http://172.19.105.116:8888/Citi/api/product/s";//TODO 使用服务器URL
-    private static String url="http://192.168.1.111:8888/Citi/api/product/s";
+//    private static String url="http://192.168.1.111:8888/Citi/api/product/s";
 
-    public String sendPost(JSONObject param)
-    {
-        try {
-            HttpPost request = new HttpPost(url);
-            // 绑定到请求 Entry
-            StringEntity se = new StringEntity(param.toString());
+    @Override
+    public String getAction() {
+        return host+"/Citi/api/product/s";
+    }
 
-            Log.i("test","sendRequest: StringEntity="+param.toString());
+    @Override
+    public String getFullUrl() {
+        return getAction();
+    }
 
-            se.setContentType("application/json");
-            request.setEntity(se);
-            // 发送请求
-            HttpResponse httpResponse = null;
-            httpResponse = new DefaultHttpClient().execute(request);
-            // 得到应答的字符串，这也是一个 JSON 格式保存的数据
-            String retSrc = EntityUtils.toString(httpResponse.getEntity());
-            Log.i("test","sendRequest: retSrc="+retSrc);
-            return retSrc;
-        } catch (Exception e)
-        {
-            Log.e("test", "sendRequest: Exception");
-            e.printStackTrace();
-        }
+    @Override
+    public String sendRequest() {
         return null;
     }
 }
