@@ -12,6 +12,9 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,6 +36,8 @@ import lecho.lib.hellocharts.util.ChartUtils;
 import lecho.lib.hellocharts.view.LineChartView;
 import lecho.lib.hellocharts.view.PieChartView;
 import nju.financecity_android.R;
+import nju.financecity_android.dao.AssetValueDao;
+import nju.financecity_android.model.UserSession;
 
 /**
  * Created by Administrator on 2016/9/12.
@@ -134,17 +139,72 @@ public class AssetsTop extends Fragment
         List<AxisValue> mAxisValues=new ArrayList<AxisValue>();
 
         /*==============================================================================*/
-        List<Date> dates=new ArrayList<Date>();
-        for(int i=0;i<20;i++)
+        final JSONObject[] jsonObjects=new JSONObject[1];
+        jsonObjects[0]=new JSONObject();//value
+        UserSession user=UserSession.getCurrUser();
+        Log.i("test","user "+user.getSessionId());
+        try {
+//            jsonObjects[0].put("id", Integer.parseInt(user.getUserId()));
+//            jsonObjects[0].put("sessionId",user.getSessionId());
+            jsonObjects[0].put("id", 4);
+            jsonObjects[0].put("sessionId","25f651f520e31896b7c1ffc57e78ec33");
+//            jsonObjects[0].put("days",20);//TODO
+        }catch(Exception e)
         {
-            dates.add(new Date(Calendar.getInstance().getTimeInMillis()+i*60*60*24*1000));
+            Log.i("test","user session or json exception");
+            e.printStackTrace();
         }
-        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+
+        Log.i("test","jObject of parameters "+jsonObjects[0]);
+
+        final String[] result={""};
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                result[0]=new AssetValueDao().sendPost(jsonObjects[0]);
+            }
+        });
+        thread.start();
+        try {
+            thread.join();
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        JSONArray jValue=null;
+        try{
+            jValue=new JSONObject(result[0]).getJSONArray("assetValues");
+        }catch(Exception e)
+        {
+            Log.i("test","asset value result exception");
+            e.printStackTrace();
+        }
+        /*==============================================================================*/
+//        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+        List<String> dates=new ArrayList<String>();
+        try {
+            for (int i = 0; i < jValue.length(); i++) {
+                dates.add(jValue.getJSONObject(i).getString("date"));
+            }
+        }catch(Exception e)
+        {
+            Log.i("test","analyse jsonArray");
+            e.printStackTrace();
+        }
         /*==============================================================================*/
 
-        for (int i = 0; i < dates.size() ; i++) {
-            mPointValues.add(new PointValue(i, new Random().nextInt(10)-5));
-            mAxisValues.add(new AxisValue(i).setLabel(format.format(dates.get(i)))); //为每个对应的i设置相应的label(显示在X轴)
+        try{
+//            for (int i = 0; i < dates.size() ; i++) {
+            for (int i = 0; i < 20 ; i++) {//TODO
+                mPointValues.add(new PointValue(i,Float.parseFloat(jValue.getJSONObject(0).get("value")+"")-new Random().nextInt(10)*10000+50000));
+//                test.add(new PointValue(i,new Random().nextInt(10)-5));////////////////////////////////////////////
+                mAxisValues.add(new AxisValue(i).setLabel(dates.get(0))); //为每个对应的i设置相应的label(显示在X轴)
+            }
+
+        }catch(Exception e)
+        {
+            Log.i("test","analyse jsonArray");
+            e.printStackTrace();
         }
         Line line = new Line(mPointValues).setColor(getResources().getColor(R.color.lightBlue)).setCubic(false);
         line.setHasLabelsOnlyForSelected(true);
