@@ -71,7 +71,7 @@ public class InsuranceSearch extends RelativeLayout{
         Thread agentThread=new Thread(new Runnable() {
             @Override
             public void run() {
-                ArrayList<String> insuranceAgent= SearchAgent.getAgent("Insurance");
+                ArrayList<String> insuranceAgent=new SearchAgent().getAgent("Insurance");
                 insuranceAgent.add(0,"所有");
                 try {
                     if(insuranceAgent.size()!=0)

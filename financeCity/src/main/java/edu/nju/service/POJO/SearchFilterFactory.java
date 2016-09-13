@@ -96,7 +96,7 @@ public class SearchFilterFactory {
                 }
                 else if (product instanceof ProductBond) {
                     ProductBond productBond = (ProductBond)(product);
-                    double yearRate = getValue(productBond.getAdjustYearlyRate());
+                    double yearRate = getValue(productBond.getCoupon());
                     int length = getValue(productBond.getLength());
                     return  (yearRate >= year_rate[0] && yearRate <= year_rate[1] &&
                             length >= expiration[0] && length <= expiration[1]);
@@ -190,7 +190,6 @@ public class SearchFilterFactory {
                 int length = getValue(productBond.getLength());
                 double yearRate = getValue(productBond.getAdjustYearlyRate());
 
-                //TODO:judge date
                 return (yearRate >= year_rate[0] && yearRate <=  year_rate[1] &&
                 length >= expiration[0] && length <= expiration[1] &&
                         (expiration_date == null || productBond.getMaturityDate() == null || expiration_date.after(productBond.getMaturityDate())) &&

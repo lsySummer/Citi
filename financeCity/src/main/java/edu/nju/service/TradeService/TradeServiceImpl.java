@@ -1,6 +1,7 @@
 package edu.nju.service.TradeService;
 
 import edu.nju.model.*;
+import edu.nju.service.AssetManagementService.AssetManagementService;
 import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.CategoryAndProduct.ProductCategoryManager;
 import edu.nju.service.ExceptionsAndError.NoSuchProductException;
@@ -33,6 +34,8 @@ public class TradeServiceImpl implements TradeService {
     UserService userService;
     @Autowired
     SearchService searchService;
+    @Autowired
+    AssetManagementService assetManagementService;
     
     //10 minutes
     private final long expiration = 10 * 60 * 1000;
@@ -188,6 +191,8 @@ public class TradeServiceImpl implements TradeService {
             investStatus.setPortfolioId(portfolioId);
 
             userService.getUserDao(financeCityUser).save(investStatus);
+
+            assetManagementService.updateAssetValue(financeCityUser);
         }
     }
 

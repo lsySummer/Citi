@@ -2,6 +2,7 @@ package edu.nju.action;
 
 import edu.nju.model.PayWay;
 import edu.nju.service.ExceptionsAndError.ErrorManager;
+import edu.nju.service.ExceptionsAndError.NotLoginException;
 import edu.nju.service.PayService.PayService;
 import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.vo.BaseVO;
@@ -89,12 +90,10 @@ public class AndroidPayAction extends AndroidAction {
         BaseVO baseVO = new BaseVO();
 
         try {
-            int id = (Integer)map.get("id");
-            String session = (String)map.get("sessionId");
-
-            FinanceCityUser financeCityUser = new FinanceCityUser();
-            financeCityUser.setID(id);
-            financeCityUser.setLoginSession(session);
+            FinanceCityUser financeCityUser = getUser();
+            if (financeCityUser == null) {
+                throw new NotLoginException();
+            }
 
             String checkCode = (String)map.get("checkCode");
 

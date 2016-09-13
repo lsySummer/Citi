@@ -21,24 +21,10 @@ import java.util.List;
  */
 @Service
 public class InvestAdvisorServiceImpl implements InvestAdvisorService {
-    private SearchService searchService;
-    private UserService userService;
-
+    @Autowired
+    SearchService searchService;
     @Autowired
     private InvestStrategy investStrategy;
-
-    @Override
-    public boolean setTemperPrefer(TemperPreferVO temperPreferVO, FinanceCityUser financeCityUser) throws NotLoginException {
-        //TODO:check if valid
-        userService.getUserDao(financeCityUser).save(temperPreferVO);
-        return false;
-    }
-
-    //TODO:...
-    @Override
-    public TemperPreferVO getTemperPreferVO(FinanceCityUser financeCityUser) throws NotLoginException {
-        return null;
-    }
 
     @Override
     public List<TradeInfoWithCheckCode> createInvestmentPortFolio(UserTemperPrefer preference) throws NotAllConfigurationSetException {

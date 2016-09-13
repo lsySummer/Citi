@@ -1,6 +1,14 @@
 package nju.financecity_android.dao;
 
+import android.util.Log;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -11,8 +19,8 @@ import java.util.Map;
  */
 public abstract class CommonDao {
 
-    public static final String host = "http://172.19.115.96:8080";
-
+//    public static final String host = "http://172.19.115.96:8080";
+    public static String host="http://192.168.1.111:8888";
     /**
      * 指定接口。
      * 不一定要实现这个方法。
@@ -49,5 +57,32 @@ public abstract class CommonDao {
             data.put("data", jsonString);
         }
         return data;
+    }
+
+    public String sendPost(JSONObject param)
+    {
+        try {
+            HttpPost request = new HttpPost(getFullUrl());
+            Log.i("test", "sendPost: "+getFullUrl());
+            // 绑定到请求 Entry
+            StringEntity se = new StringEntity(param.toString());
+
+            Log.i("test","sendRequest: StringEntity="+param.toString());
+
+            se.setContentType("application/json");
+            request.setEntity(se);
+            // 发送请求
+            HttpResponse httpResponse = null;
+            httpResponse = new DefaultHttpClient().execute(request);
+            // 得到应答的字符串，这也是一个 JSON 格式保存的数据
+            String retSrc = EntityUtils.toString(httpResponse.getEntity());
+            Log.i("test","sendRequest: retSrc="+retSrc);
+            return retSrc;
+        } catch (Exception e)
+        {
+            Log.e("test", "sendRequest: Exception");
+            e.printStackTrace();
+        }
+        return null;
     }
 }

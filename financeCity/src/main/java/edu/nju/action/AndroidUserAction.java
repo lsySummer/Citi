@@ -68,9 +68,10 @@ public class AndroidUserAction extends AndroidAction {
 
     private String getUserVO() {
         try {
-            FinanceCityUser financeCityUser = new FinanceCityUser();
-            financeCityUser.setID(Integer.valueOf(request.getParameter("id")));
-            financeCityUser.setLoginSession(request.getParameter("sessionId"));
+            FinanceCityUser financeCityUser = getUser();
+            if (financeCityUser == null) {
+                throw new NotLoginException();
+            }
 
             setResult(userService.getUserVO(financeCityUser));
         }
@@ -90,9 +91,10 @@ public class AndroidUserAction extends AndroidAction {
 
         BaseVO baseVO = new BaseVO();
         try {
-            FinanceCityUser financeCityUser = new FinanceCityUser();
-            financeCityUser.setID((Integer)map.get("id"));
-            financeCityUser.setLoginSession((String)map.get("sessionId"));
+            FinanceCityUser financeCityUser = getUser();
+            if (financeCityUser == null) {
+                throw new NotLoginException();
+            }
 
             userService.modifyUserInfo((String)map.get("birthday"), (Integer)map.get("income"),
                     (Integer)map.get("isUrben") == 1, (Integer)map.get("expense"),
@@ -176,12 +178,10 @@ public class AndroidUserAction extends AndroidAction {
         BaseVO baseVO = new BaseVO();
 
         try {
-            FinanceCityUser financeCityUser = new FinanceCityUser();
-            int id = (Integer)map.get("id");
-            String sessionId = (String)map.get("sessionId");
-
-            financeCityUser.setLoginSession(sessionId);
-            financeCityUser.setID(id);
+            FinanceCityUser financeCityUser = getUser();
+            if (financeCityUser == null) {
+                throw new NotLoginException();
+            }
 
             int amount = (Integer)map.get("amount");//投资金额
             String data = (String)map.get("date");//投资期限 yyyy-MM-dd

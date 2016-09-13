@@ -138,7 +138,7 @@ public class ProductCategoryManager {
     }
 
     static public String getBondType(Product product) {
-        if (!product.getCategory().getBiggerCategory().equals("Bond")) {
+        if (!product.getCategory().belongTo(categoryBond)) {
             return null;
         }
 
@@ -151,7 +151,7 @@ public class ProductCategoryManager {
     }
 
     static public String getBondInterestType(Product product) {
-        if (!product.getCategory().getBiggerCategory().equals("Bond")) {
+        if (!product.getCategory().belongTo(categoryBond)) {
             return null;
         }
 

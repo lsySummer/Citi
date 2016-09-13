@@ -240,10 +240,16 @@ public class UserServiceImpl implements UserService {
     }
 
     private boolean validPassword(String password) {
+        if (password == null) {
+            return false;
+        }
         return password.length() >= 8 && password.length() <= 30;
     }
 
     private boolean validMobile(String mobile) {
+        if (mobile == null) {
+            return false;
+        }
         return  (mobile.length() == 11 && isNumeric(mobile));
     }
 

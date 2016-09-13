@@ -13,9 +13,17 @@ import nju.financecity_android.dao.TypeDao;
  * Created by Administrator on 2016/9/8.
  */
 public class SearchAgent {
-    public static ArrayList<String> getAgent(String type)
+    public ArrayList<String> getAgent(String type)
     {
-        String result=TypeDao.readData(type);
+        JSONObject jObject=new JSONObject();
+        try {
+            jObject.put("type", type);
+        }catch(Exception e)
+        {
+            Log.i("test","getAgent json exception");
+            e.printStackTrace();
+        }
+        String result=new TypeDao().sendPost(jObject);
         return exchangeAgent(result);
     }
     private static ArrayList<String> exchangeAgent(String source)

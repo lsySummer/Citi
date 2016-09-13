@@ -5,11 +5,10 @@ import java.math.BigDecimal;
 import java.sql.Date;
 
 /**
- * Created by Sun YuHao on 2016/9/12.
+ * Created by Sun YuHao on 2016/9/13.
  */
 @Entity
 @Table(name = "user_asset", schema = "citi", catalog = "")
-@IdClass(UserAssetPK.class)
 public class UserAsset {
     private int userId;
     private BigDecimal initialPrice;
@@ -90,7 +89,7 @@ public class UserAsset {
         this.emergencyAssets = emergencyAssets;
     }
 
-    @Id
+    @Basic
     @Column(name = "date")
     public Date getDate() {
         return date;

@@ -71,9 +71,9 @@ public class ProductVOFactory {
             insuranceVO.setDistributor(productInsurance.getInstitutionManage());
             insuranceVO.setPid(product.getID());
             insuranceVO.setWay_of_charge(ProductCategoryManager.getInsurancePayType(productInsurance));
+            insuranceVO.setInsurance_age(productInsurance.getWarrantyPeriod());
             //TODO:data missing
             insuranceVO.setAmount_in_force(new int[2]);
-            insuranceVO.setInsurance_age(0);
             insuranceVO.setInsurance_lift("");
 
             poducts.add(insuranceVO);
@@ -91,7 +91,6 @@ public class ProductVOFactory {
             fundVO.setSid(productFund.getProductCode());
             fundVO.setType(product.getCategory().getChineseName());
             fundVO.setMng_charge_rate(getDoubleValue(productFund.getRateManage()));
-            //TODO:set est date
             fundVO.setEst_date(getDate(productFund.getOnPurchaseDate()));
 
             poducts.add(fundVO);

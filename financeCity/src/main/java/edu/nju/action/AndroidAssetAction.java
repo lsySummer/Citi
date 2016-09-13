@@ -8,6 +8,7 @@ import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.vo.AssetValueHistoryVO;
 import edu.nju.vo.CurrentInvestmentVO;
 import edu.nju.vo.TradeHistoryListVO;
+import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -21,19 +22,20 @@ public class AndroidAssetAction extends AndroidAction {
     AssetManagementService assetManagementService;
 
     public String getHistoryVO() {
-        Map map = getRequestMap();
-
         if (!request.getMethod().equals("POST")) {
             TradeHistoryListVO tradeHistoryListVO = new TradeHistoryListVO();
             ErrorManager.setError(tradeHistoryListVO, ErrorManager.errorUnhandledMethod);
-            return SUCCESS;
+            setResult(tradeHistoryListVO);
 
+            return SUCCESS;
         }
 
         try {
-            FinanceCityUser financeCityUser = new FinanceCityUser();
-            financeCityUser.setID((Integer)map.get("id"));
-            financeCityUser.setLoginSession((String)map.get("session"));
+            FinanceCityUser financeCityUser = getUser();
+            if (financeCityUser == null) {
+                throw new  NotLoginException();
+            }
+
             setResult(assetManagementService.getTradeHistory(financeCityUser));
         }
         catch (Exception e) {
@@ -47,19 +49,20 @@ public class AndroidAssetAction extends AndroidAction {
     }
 
     public String getCurrentInvestmentVO() {
-        Map map = getRequestMap();
-
         if (!request.getMethod().equals("POST")) {
             CurrentInvestmentVO currentInvestmentVO = new CurrentInvestmentVO();
             ErrorManager.setError(currentInvestmentVO, ErrorManager.errorUnhandledMethod);
-            return SUCCESS;
+            setResult(currentInvestmentVO);
 
+            return SUCCESS;
         }
 
         try {
-            FinanceCityUser financeCityUser = new FinanceCityUser();
-            financeCityUser.setID((Integer)map.get("id"));
-            financeCityUser.setLoginSession((String)map.get("session"));
+            FinanceCityUser financeCityUser = getUser();
+            if (financeCityUser == null) {
+                throw new NotLoginException();
+            }
+
             setResult(assetManagementService.getInvestProductVOList(financeCityUser));
         }
         catch (Exception e) {
@@ -73,16 +76,19 @@ public class AndroidAssetAction extends AndroidAction {
     }
 
     public String getAssetHistoryVO() {
+        Map map = getRequestMap();
         AssetValueHistoryVO assetValueHistoryVO = new AssetValueHistoryVO();
 
         try {
-            int days = Integer.valueOf(request.getParameter("days"));
-            int id = Integer.valueOf(request.getParameter("id"));
-            String session = request.getParameter("sessionId");
+            FinanceCityUser financeCityUser = getUser();
+            if (financeCityUser == null) {
+                throw new NotLoginException();
+            }
 
-            FinanceCityUser financeCityUser = new FinanceCityUser();
-            financeCityUser.setID(id);
-            financeCityUser.setLoginSession(session);
+            Integer days = (Integer)map.get("days");
+            if (days == null) {
+                days = Integer.MAX_VALUE;
+            }
 
             List<AssetValue> assetValueList = assetManagementService.getAssetValueHistory(financeCityUser, days);
             assetValueHistoryVO.setAssetValues(assetValueList);

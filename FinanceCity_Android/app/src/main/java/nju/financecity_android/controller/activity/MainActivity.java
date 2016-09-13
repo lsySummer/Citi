@@ -53,29 +53,29 @@ public class MainActivity extends Activity {
         setFragment(0);
 
 
-        Intent intent = new Intent(this, OrderConfirmActivity.class);
-        for (int i = 0; i < 10; i++) {
-            GoodsInfo info = new GoodsInfo("123", "这是第" + i + "个产品", 10000 / (i + 1), i);
-            switch (i % 4) {
-                case 0:
-                    info.type = "银行理财";
-                    info.initialAmount = 10000;
-                    info.increasingUnit = 1000;
-                    break;
-                case 1:
-                    info.type = "保险";
-                    break;
-                case 2:
-                    info.type = "基金";
-                    break;
-                case 3:
-                    info.type = "债券";
-                    break;
-            }
-
-            intent.putExtra("product" + i, info);
-        }
-        startActivity(intent);
+//        Intent intent = new Intent(this, OrderConfirmActivity.class);
+//        for (int i = 0; i < 10; i++) {
+//            GoodsInfo info = new GoodsInfo("123", "这是第" + i + "个产品", 10000 / (i + 1), i);
+//            switch (i % 4) {
+//                case 0:
+//                    info.type = "银行理财";
+//                    info.initialAmount = 10000;
+//                    info.increasingUnit = 1000;
+//                    break;
+//                case 1:
+//                    info.type = "保险";
+//                    break;
+//                case 2:
+//                    info.type = "基金";
+//                    break;
+//                case 3:
+//                    info.type = "债券";
+//                    break;
+//            }
+//
+//            intent.putExtra("product" + i, info);
+//        }
+//        startActivity(intent);
     }
 
     private void initComponents() {
@@ -112,10 +112,15 @@ public class MainActivity extends Activity {
 //                banner.setDisplayText(footer.getText(0));
                 footer.setSelectedById(0);
                 productSearchFragment = new ProductSearch();
-                transaction.add(R.id.main_mid_layout, testFrag);
+
+                transaction.add(R.id.main_mid_layout,productSearchFragment);
                 if (productSearchFragment != null) {
-                    transaction.show(testFrag);
+                    transaction.show(productSearchFragment);
                 }
+//                transaction.add(R.id.main_mid_layout, testFrag);
+//                if (productSearchFragment != null) {
+//                    transaction.show(testFrag);
+//                }
                 break;
             case 1://资产（暂时是资产变化信息二级界面）
 //                banner.setDisplayText(footer.getText(1));

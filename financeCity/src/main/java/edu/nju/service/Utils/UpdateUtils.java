@@ -40,6 +40,7 @@ public class UpdateUtils {
                 prep.executeUpdate();
 
             }
+            connection.close();
         }
         catch (SQLException s) {
             s.printStackTrace();
@@ -68,6 +69,7 @@ public class UpdateUtils {
                 prep.executeUpdate();
 
             }
+            connection.close();
         }
         catch (SQLException s) {
             s.printStackTrace();
@@ -97,6 +99,7 @@ public class UpdateUtils {
                 prep.executeUpdate();
 
             }
+            connection.close();
         }
         catch (SQLException s) {
             s.printStackTrace();
@@ -125,6 +128,7 @@ public class UpdateUtils {
                     prep.executeUpdate();
                 }
             }
+            connection.close();
         }
         catch (SQLException s) {
             s.printStackTrace();
@@ -145,6 +149,10 @@ public class UpdateUtils {
             preparedStatement.executeUpdate();
             preparedStatement = connection.prepareStatement("DELETE FROM citi.investment_portfolio");
             preparedStatement.executeUpdate();
+            preparedStatement = connection.prepareStatement("DELETE FROM citi.investment_portfolio");
+            preparedStatement.executeUpdate();
+
+            connection.close();
         }
         catch (SQLException s) {
             s.printStackTrace();

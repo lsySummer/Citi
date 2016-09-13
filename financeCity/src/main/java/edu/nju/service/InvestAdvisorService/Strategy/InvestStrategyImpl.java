@@ -37,29 +37,43 @@ public class InvestStrategyImpl implements InvestStrategy {
         InvestResult investResult = new InvestResult();
 
         List<Category> categoryList = ProductCategoryManager.getCategoryList();
+        InvestResult insuranceList = null;
         for (Category category : categoryList) {
             AssetCategoryAllocation allocation = assetCategoryAllocator.getCategoryAllocation(category.getCategoryName());
 
             for (CategoryInvest invest : categoryInvest) {
                 if (category.belongTo(invest.getCategoryName())) {
-                    investResult.addInvestResult(invest.invest(preference,searchService, allocation));
+                    if (!category.belongTo(ProductCategoryManager.categoryInsurance)) {
+                        investResult.addInvestResult(invest.invest(preference, searchService, allocation));
+                    }
+                    else {
+                        insuranceList = invest.invest(preference, searchService, allocation);
+                    }
                 }
             }
         }
 
 
         List<List<SimpleTradeInfo>> lists = new ArrayList<>();
-        List<SimpleTradeInfo> simpleTradeInfoList = new ArrayList<>();
-        //TODO:allocate
-        for (TradeItem tradeItem : investResult.getTradeItemList()) {
+        List<TradeItem> insurance_item = insuranceList.getTradeItemList();
+
+        for (int i = 0; i < insurance_item.size(); ++i) {
+            List<SimpleTradeInfo> simpleTradeInfoList = new ArrayList<>();
+
+            for (TradeItem tradeItem : investResult.getTradeItemList()) {
+                SimpleTradeInfo simpleTradeInfo = new SimpleTradeInfo();
+                simpleTradeInfo.setProductId(tradeItem.getProduct().getID());
+                simpleTradeInfo.setAmount(tradeItem.getTradingVolume());
+
+                simpleTradeInfoList.add(simpleTradeInfo);
+            }
+
             SimpleTradeInfo simpleTradeInfo = new SimpleTradeInfo();
-            simpleTradeInfo.setProductId(tradeItem.getProduct().getID());
-            simpleTradeInfo.setAmount(tradeItem.getTradingVolume());
+            simpleTradeInfo.setAmount(insuranceList.getUnusedAmount());
+            simpleTradeInfo.setProductId(insurance_item.get(i).getProduct().getID());
 
-            simpleTradeInfoList.add(simpleTradeInfo);
+            lists.add(simpleTradeInfoList);
         }
-
-        lists.add(simpleTradeInfoList);
 
         return lists;
     }
