@@ -3,6 +3,7 @@ package edu.nju.service.SearchService;
 import edu.nju.model.*;
 import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.CategoryAndProduct.ProductFactory;
+import edu.nju.service.ExceptionsAndError.DataNotFoundException;
 import edu.nju.service.ExceptionsAndError.NoSuchProductException;
 import edu.nju.service.CategoryAndProduct.Category;
 import edu.nju.service.CategoryAndProduct.ProductCategoryManager;
@@ -14,7 +15,9 @@ import edu.nju.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -24,6 +27,8 @@ import java.util.List;
 public class SearchServiceImpl implements SearchService {
     @Autowired
     UserService userService;
+
+    static final int MAX_RESULT = 500;
 
     @SuppressWarnings("unchecked")
     @Override
@@ -97,30 +102,28 @@ public class SearchServiceImpl implements SearchService {
             List<Product> productList = new ArrayList<>();
 
             if (searchType == null) {
-                List<Integer> list = userService.getCommonDao().find("SELECT p.id FROM NameToId nameToId WHERE nameToId.name LIKE '%" +
-                        keyWord + "%'");
-
-                productList = getProductsByIds(list);
+                productList.addAll(searchProductsByKey(keyWord, ProductCategoryManager.categoryBank));
+                productList.addAll(searchProductsByKey(keyWord, ProductCategoryManager.categoryBond));
+                productList.addAll(searchProductsByKey(keyWord, ProductCategoryManager.categoryFund));
+                productList.addAll(searchProductsByKey(keyWord, ProductCategoryManager.categoryInsurance));
             }
             else if (searchType.equals(ProductCategoryManager.categoryFund) ||
                     searchType.equals(ProductCategoryManager.categoryInsurance) ||
                     searchType.equals(ProductCategoryManager.categoryBank)) {
-                List<Integer> list = userService.getCommonDao().find("SELECT p.id FROM Product" + searchType +
+                List<Object> list = userService.getCommonDao().find("FROM Product" + searchType +
                         " p WHERE p.name LIKE '%" +
-                        keyWord + "%'");
+                        keyWord + "%'", MAX_RESULT);
 
-                for (Integer id : list) {
-                    int pid = ProductCategoryManager.generateProductID(id, searchType);
-                    productList.add(getProductByID(pid));
+                if (list != null && list.size() != 0) {
+                    productList = ProductFactory.createProduct(list.toArray());
                 }
             }
             else if (searchType.equals(ProductCategoryManager.categoryBond)){
-                List<Integer> list = userService.getCommonDao().find("SELECT p.id FROM ProductBond p WHERE p.title LIKE '%" +
-                        keyWord + "%'");
+                List<Object> list = userService.getCommonDao().find("FROM ProductBond p WHERE p.title LIKE '%" +
+                        keyWord + "%'", MAX_RESULT);
 
-                for (Integer id : list) {
-                    int pid = ProductCategoryManager.generateProductID(id, searchType);
-                    productList.add(getProductByID(pid));
+                if (list != null && list.size() != 0) {
+                    productList = ProductFactory.createProduct(list.toArray());
                 }
             }
 
@@ -177,8 +180,8 @@ public class SearchServiceImpl implements SearchService {
         }
 
         List<Product> productList = new ArrayList<>();
-        for (Object object : list) {
-            productList.add(ProductFactory.createProduct(object));
+        if (list != null && list.size() != 0) {
+            productList = ProductFactory.createProduct(list.toArray());
         }
 
         return productList;
@@ -197,9 +200,8 @@ public class SearchServiceImpl implements SearchService {
         }
 
         List<Product> productList = new ArrayList<>();
-
-        for (Object object : list) {
-            productList.add(ProductFactory.createProduct(object));
+        if (list != null && list.size() != 0) {
+            productList = ProductFactory.createProduct(list.toArray());
         }
 
         return productList;
@@ -218,9 +220,8 @@ public class SearchServiceImpl implements SearchService {
         }
 
         List<Product> productList = new ArrayList<>();
-
-        for (Object object : list) {
-            productList.add(ProductFactory.createProduct(object));
+        if (list != null && list.size() != 0) {
+            productList = ProductFactory.createProduct(list.toArray());
         }
 
         return productList;
@@ -309,19 +310,22 @@ public class SearchServiceImpl implements SearchService {
 
     @SuppressWarnings("unchecked")
     @Override
-    public NAVHistory[] getFundValueHistory(Integer id, Integer days) throws NoSuchProductException {
-        List<FundDailyHistory> list = userService.getCommonDao().find("FROM FundDailyHistory p WHERE p.fundId=" + id +" ORDER BY p.date DESC");
+    public NAVHistory[] getFundValueHistory(Integer id, Integer days) throws DataNotFoundException {
         if (days == null) {
             days = Integer.MAX_VALUE;
         }
 
+        List<FundDailyHistory> list = userService.getCommonDao().
+                find("FROM FundDailyHistory p WHERE p.fundId=" + id +" ORDER BY p.date DESC", days);
+
         if (list == null) {
-            throw new NoSuchProductException(id);
+            throw new DataNotFoundException("Fund History");
         }
         else {
+            Collections.reverse(list);
             NAVHistory[] fundValueHistories = new NAVHistory[list.size()];
 
-            for (int i = 0; i < list.size() && i < days; ++i) {
+            for (int i = 0; i < list.size(); ++i) {
                 fundValueHistories[i] = new NAVHistory();
                 fundValueHistories[i].setNAV(list.get(i).getNav().doubleValue());
                 fundValueHistories[i].setDate(list.get(i).getDate().toString());
@@ -333,16 +337,17 @@ public class SearchServiceImpl implements SearchService {
 
     @SuppressWarnings("unchecked")
     @Override
-    public NAVHistory[] getBankValueHistory(Integer id, Integer days) throws NoSuchProductException {
+    public NAVHistory[] getBankValueHistory(Integer id, Integer days) throws DataNotFoundException {
         List<BankDailyHistory> list = userService.getCommonDao().find("FROM BankDailyHistory p WHERE p.bankId="+ id +" ORDER BY p.date DESC");
         if (days == null) {
             days = Integer.MAX_VALUE;
         }
 
         if (list == null) {
-            throw new NoSuchProductException(id);
+            throw new DataNotFoundException("Bank History");
         }
         else {
+            Collections.reverse(list);
             NAVHistory[] bankValueHistory = new NAVHistory[list.size()];
 
             for (int i = 0; i < list.size() && i < days; ++i) {
@@ -417,5 +422,10 @@ public class SearchServiceImpl implements SearchService {
     @Override
     public List<String> getFundState() {
         return ProductCategoryManager.getFundStateType();
+    }
+
+    @Override
+    public List<String> getBankYieldType() {
+        return ProductCategoryManager.getBankYieldType();
     }
 }

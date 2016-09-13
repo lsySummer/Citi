@@ -28,7 +28,11 @@ public class UpdateUtils {
 
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Category category = ProductCategoryManager.getFundCategory(resultSet.getByte("category"));
+                Byte type = resultSet.getByte("category");
+                if (resultSet.wasNull()) {
+                    type = null;
+                }
+                Category category = ProductCategoryManager.getFundCategory(type);
                 Integer id = resultSet.getInt("id");
                 int pid = ProductCategoryManager.generateProductID(id, category.getCategoryName());
 
@@ -86,14 +90,18 @@ public class UpdateUtils {
 
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Category category = ProductCategoryManager.getFundCategory(resultSet.getByte("category"));
+                Byte type = resultSet.getByte("category");
+                if (resultSet.wasNull()) {
+                    type = null;
+                }
+                Category category = ProductCategoryManager.getFundCategory(type);
                 Integer id = resultSet.getInt("id");
                 String product_code = resultSet.getString("product_code");
                 int pid = ProductCategoryManager.generateProductID(id, category.getCategoryName());
 
                 //System.out.print(resultSet.getString("name"));
                 PreparedStatement prep = connection.prepareStatement(sql_insert);
-                prep.setInt(2, Integer.valueOf(product_code));
+                prep.setInt(2, id);
                 prep.setInt(1, pid);
 
                 prep.executeUpdate();
@@ -173,6 +181,5 @@ public class UpdateUtils {
     }
 
     static public void main(String[] args) {
-        UpdateUtils.cleanTradHistory();
     }
 }

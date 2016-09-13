@@ -255,3 +255,13 @@ input[type=radio]:not(old):checked +  label > span > span {
     box-shadow: 0 0 7px 0 #fd9b4c;
     transition: all 0.5s;
 }
+
+input[type="text"].range-input {
+    width: 90px;
+}
+
+.range-wrapper {
+    padding-top: 13px;
+    display: flex;
+    align-items: center;
+}

@@ -5,6 +5,7 @@ import edu.nju.model.ProductFund;
 import edu.nju.service.CategoryAndProduct.Category;
 import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.CategoryAndProduct.ProductCategoryManager;
+import edu.nju.service.ExceptionsAndError.DataNotFoundException;
 import edu.nju.service.ExceptionsAndError.ErrorManager;
 import edu.nju.service.ExceptionsAndError.NoSuchProductException;
 import edu.nju.service.POJO.NAVHistory;
@@ -15,6 +16,7 @@ import edu.nju.service.SearchService.SearchService;
 import edu.nju.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.xml.crypto.Data;
 import java.util.List;
 import java.util.Map;
 
@@ -195,9 +197,9 @@ public class AndroidSearchAction extends AndroidAction {
             ErrorManager.setError(fundHistoryVO, ErrorManager.errorNormal);
             fundHistoryVO.setData(fundValueHistories);
         }
-        catch (NoSuchProductException n) {
+        catch (DataNotFoundException n) {
             n.printStackTrace();
-            ErrorManager.setError(fundHistoryVO, ErrorManager.errorNoSuchProduct);
+            ErrorManager.setError(fundHistoryVO, ErrorManager.errorDataNotFound);
         }
         catch (Exception e) {
             e.printStackTrace();

@@ -20,6 +20,8 @@ public interface BaseDao {
 
 	 List find(String queryString);
 
+	List find(String queryString, int maxResult);
+
 	void query(String query);
 	 
 	public List getAllList(Class c) ;

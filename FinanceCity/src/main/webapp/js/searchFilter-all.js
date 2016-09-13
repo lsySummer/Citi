@@ -34,15 +34,16 @@ function initSlider() {
         to: 80,
         postfix: "%"
     });
-    $("#bank_initial_amount").ionRangeSlider({
-        type: "double",
-        grid: true,
-        min: 0,
-        max: 1000,
-        from: 200,
-        to: 800,
-        prefix: "$"
-    });
+    //$("#bank_initial_amount").ionRangeSlider({
+    //    type: "double",
+    //    grid: true,
+    //    min: 0,
+    //    max: 1000000000,
+    //    from: 200,
+    //    step: 1000,
+    //    to: 800,
+    //    prefix: "$"
+    //});
     $("#insurance_length_of_years").ionRangeSlider({
         type: "double",
         grid: true,
@@ -168,7 +169,7 @@ function submitAll(page_num) {
         data: "data="+JSON.stringify(data),
         cache: false,
         success: function(data) {
-            console.log(data);
+            //console.log(data);
             $(".result-container").empty();
             $(".result-container").append(data);
 
@@ -189,7 +190,7 @@ function submitBank(page_num) {
 
     options["yearly_income_rate"] = $("#bank_yearly_income_rate").val().split(";");
     options["expiration"] = $("#bank_expiration").val().split(";");
-    options["initial_amount"] = $("#bank_initial_amount").val().split(";");
+    options["initial_amount"] = [""+$("#bank_initial_amount_start").val(), ""+$("#bank_initial_amount_end").val()];
     options["institution_manage"] = $("#bank_institution_manage").val();
     options["income_type"] = $("#bank_income_type").val();
 
@@ -244,7 +245,7 @@ function submitBond(page_num) {
         data: "data="+JSON.stringify(data),
         cache: false,
         success: function(data) {
-            console.log(data);
+            //console.log(data);
             $(".result-container").empty();
             $(".result-container").append(data);
 
@@ -267,7 +268,7 @@ function submitFund(page_num) {
     options["type"] = $("#fund_type").val();
     options["state"] = $("#fund_state").val();
     options["net_value"] = $("#fund_net_value").val().split(";");
-    options["expiration"] = $("#fund_expiration").val();
+    options["expiration"] = $("#fund_expiration").val().split(";");
 
     var is_close_ended = document.getElementById("fund_is_close_ended").checked;
     if(is_close_ended) {
@@ -279,12 +280,12 @@ function submitFund(page_num) {
     var sort_state = document.getElementById("fund_sort_open").checked;
     if(sort_state){
         if(isAscend){
-            options["sort_type"] = 1;
+            options["sort_type"] = 1+"";
         }else{
-            options["sort_type"] = 2;
+            options["sort_type"] = 2+"";
         }
     }else{
-        options["sort_type"] = 0;
+        options["sort_type"] = 0+"";
     }
 
     data["options"] = options;
@@ -297,7 +298,7 @@ function submitFund(page_num) {
         data: "data="+JSON.stringify(data),
         cache: false,
         success: function(data) {
-            console.log(data);
+            //console.log(data);
             $(".result-container").empty();
             $(".result-container").append(data);
 
@@ -331,7 +332,7 @@ function submitInsurance(page_num) {
         data: "data="+JSON.stringify(data),
         cache: false,
         success: function(data) {
-            console.log(data);
+            //console.log(data);
             $(".result-container").empty();
             $(".result-container").append(data);
 

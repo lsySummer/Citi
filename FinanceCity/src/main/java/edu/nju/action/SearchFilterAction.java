@@ -120,6 +120,8 @@ public class SearchFilterAction extends BaseAction {
 
         ProductVOFactory resultFactory = new ProductVOFactory();
 
+        System.out.println("page_num:"+page_num);
+
         try {
             ProductFilter productFilter = SearchFilterFactory.createFilter(type, map);
             List<Product> productList = searchService.searchProductsByKey(key, type);
@@ -128,24 +130,30 @@ public class SearchFilterAction extends BaseAction {
 
             for(int i=0;i<productList.size();i++){
                 Product product = productList.get(i);
-                if(productFilter.isChosen(product)){
-                    if(index>=page_num*8&&i<(page_num+1)*8){//保证相应页面8个产品上限
+                if(productFilter.isChosen(product.getProduct())){
+                    if(index>=page_num*8&&index<(page_num+1)*8){//保证相应页面8个产品上限
+                        System.out.println("add Product");
                         resultFactory.addProduct(product);
                     }
+                    System.out.println("index:"+index);
                     index++;
                 }
+                System.out.println("i:"+i);
             }
 
-            page_length = productList.size()/8+1;
+        page_length = productList.size()/8+1;
+        page_length = resultFactory.getResultList().length/8+1;
 
-            context.put("searchResultJSON", JSON.toJSON(resultFactory.getResultList()));
-            context.put("searchResult", resultFactory.getResultList());
+        System.out.println(resultFactory.getResultList().length);
 
-        } catch (InvalidParametersException e) {
-            e.printStackTrace();
-        }
+        context.put("searchResultJSON", JSON.toJSON(resultFactory.getResultList()));
+        context.put("searchResult", resultFactory.getResultList());
 
-        context.put("currentPage", page_num);
+    } catch (InvalidParametersException e) {
+        e.printStackTrace();
+    }
+
+        context.put("currentPage", page_num+1);
         context.put("pageLength", page_length);
 
         return SUCCESS;
@@ -166,7 +174,8 @@ public class SearchFilterAction extends BaseAction {
             String key = (String) it.next();
             Object object = options.get(key);
             if(object==null){
-                optMap.put(key, null);
+                String temp = null;
+                optMap.put(key, temp);
             }else{
                 optMap.put(key, object);
             }
