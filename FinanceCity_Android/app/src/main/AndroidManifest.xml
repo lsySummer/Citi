@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="nju.financecity_android">
-	<uses-permission android:name="android.permission.INTERNET" />
+
+	<uses-permission android:name="android.permission.INTERNET"/>
+
 	<application
 			android:allowBackup="true"
 			android:icon="@mipmap/ic_launcher"
@@ -9,47 +11,46 @@
 			android:supportsRtl="true"
 			android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 		<activity android:name=".controller.activity.MainActivity">
-			 <!--<intent-filter>
-			 <action android:name="android.intent.action.MAIN"/>
 
-
-			 <category android:name="android.intent.category.LAUNCHER"/>
-			 </intent-filter>-->
 		</activity>
 		<activity android:name=".controller.activity.Log_inActivity">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN"/>
 
-			 <intent-filter>
-			 <action android:name="android.intent.action.MAIN"/>
-
-
-			 <category android:name="android.intent.category.LAUNCHER"/>
-			 </intent-filter>
+				<category android:name="android.intent.category.LAUNCHER"/>
+			</intent-filter>
 		</activity>
 		<activity android:name=".controller.activity.RegisterActivity">
 		</activity>
 		<activity android:name=".controller.activity.BankDetailActivity">
 		</activity>
 		<activity android:name=".controller.activity.FundDetailActivity">
+
 		</activity>
 		<activity android:name=".controller.activity.BondDetailActivity">
 		</activity>
 		<activity android:name=".controller.activity.Persons_Edit">
 
-			 <!--<intent-filter>-->
-			 <!--<action android:name="android.intent.action.MAIN"/>-->
+			<!-- <intent-filter> -->
+			<!-- <action android:name="android.intent.action.MAIN"/> -->
 
 
-			 <!--<category android:name="android.intent.category.LAUNCHER"/>-->
-			 <!--</intent-filter>-->
+			<!-- <category android:name="android.intent.category.LAUNCHER"/> -->
+			<!-- </intent-filter> -->
 		</activity>
 		<activity android:name=".controller.activity.InsuranceDetailActivity">
 		</activity>
 		<activity android:name=".controller.activity.OrderConfirmActivity">
-			<!--<intent-filter>-->
-				<!--<action android:name="android.intent.action.MAIN"/>-->
 
-				<!--<category android:name="android.intent.category.LAUNCHER"/>-->
-			<!--</intent-filter>-->
+			<!-- <intent-filter> -->
+			<!-- <action android:name="android.intent.action.MAIN"/> -->
+
+
+			<!-- <category android:name="android.intent.category.LAUNCHER"/> -->
+			<!-- </intent-filter> -->
+		</activity>
+		<activity android:name=".controller.activity.QuestionActivity">
+
 		</activity>
 	</application>
 

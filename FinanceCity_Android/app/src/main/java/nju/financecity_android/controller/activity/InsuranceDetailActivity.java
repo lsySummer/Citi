@@ -1,6 +1,7 @@
 package nju.financecity_android.controller.activity;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,7 +15,6 @@ import nju.financecity_android.model.ProductInsurance;
 import nju.financecity_android.vo.GoodsInfo;
 import nju.financecity_android.vo.PropertyVO;
 
-import java.io.DataOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -30,8 +30,18 @@ public class InsuranceDetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         productId = intent.getStringExtra("productId");
-        mData = (new ProductInsurance(productId)).getProperties();
-        processData(mData);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                mData = (new ProductInsurance(productId)).getProperties();
+                mainThreadHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        processData(mData);
+                    }
+                });
+            }
+        });
     }
 
     protected void processData(Map data) {
@@ -116,4 +126,6 @@ public class InsuranceDetailActivity extends AppCompatActivity {
     private Banner banner;
     private TextView txtGAge;
     private TextView txtInterestRate;
+
+    private Handler mainThreadHandler;
 }

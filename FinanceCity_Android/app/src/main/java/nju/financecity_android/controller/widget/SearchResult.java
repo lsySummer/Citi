@@ -43,7 +43,6 @@ public class SearchResult extends ScrollView {
         LayoutInflater.from(context).inflate(R.layout.product_search_result, this, true);
         resultList=list;
         onFinishInflate();
-
     }
     @Override
     protected void onFinishInflate() {

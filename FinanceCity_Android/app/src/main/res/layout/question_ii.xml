@@ -251,12 +251,12 @@
 		android:layout_alignParentRight="true"
 		android:layout_marginBottom="16dp"
 		android:layout_marginRight="16dp"
-		android:text="继续 >"
+		android:text="继续"
 		android:textColor="@color/WordBlack"
 		android:textSize="16sp" />
 
 <Button
-		android:id="@+id/btCancle"
+		android:id="@+id/btCancel"
 		android:layout_width="150dp"
 		android:layout_height="45dp"
 		android:layout_alignParentBottom="true"

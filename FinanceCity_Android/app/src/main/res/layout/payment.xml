@@ -26,90 +26,92 @@
         android:layout_alignStart="@+id/radioGroup"
         android:id="@+id/textView11" />
     <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView11"
-        android:layout_centerHorizontal="true">
+            android:id="@+id/radioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView11"
+            android:layout_alignParentLeft="true" android:layout_alignParentStart="true"
+            android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
+            android:layout_marginLeft="12dp" android:layout_marginRight="12dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_height="30dp"
             android:layout_marginTop="15dp"
             android:orientation="horizontal">
 
             <RadioButton
                 android:id="@+id/rBcard"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="30dp"
                 android:layout_centerHorizontal="true"
                 android:checked="false" />
 
             <ImageView
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
                 android:src="@mipmap/paycard"/>
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="30dp"
                 android:text="银行卡"
-                android:textSize="30dp"
+                android:textSize="16sp"
                 android:gravity="center"/>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_height="30dp"
             android:layout_marginTop="15dp"
             android:orientation="horizontal">
 
             <RadioButton
                 android:id="@+id/rBbao"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="30dp"
                 android:layout_centerHorizontal="true"
                 android:checked="false" />
 
             <ImageView
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
                 android:src="@mipmap/paybao"/>
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="30dp"
                 android:text="支付宝"
-                android:textSize="30dp"
+                android:textSize="16sp"
                 android:gravity="center"/>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_height="30dp"
             android:layout_marginTop="15dp"
             android:orientation="horizontal">
 
             <RadioButton
                 android:id="@+id/rBwechat"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="30dp"
                 android:layout_centerHorizontal="true"
                 android:checked="false" />
 
             <ImageView
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
 
                 android:src="@mipmap/wechat"/>
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="30dp"
                 android:text="微信"
-                android:textSize="30dp"
+                android:textSize="16sp"
                 android:gravity="center"/>
         </LinearLayout>
     </RadioGroup>

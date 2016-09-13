@@ -7,5 +7,8 @@ public interface IQuestionObserver {
     void putAnswer(String key, Object value);
     Object getAnswer(String key);
     void showNextPage();
+    void showNextPage(int skip);
+    void showFormerPage(int skip);
     void showFormerPage();
+    void postAnswer();
 }

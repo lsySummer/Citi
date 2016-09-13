@@ -46,9 +46,7 @@ public class AssetsTop extends Fragment
 {
     private LinearLayout assets_top_layout;
     private PieChartView pieChart;
-    private Button pieButton;
     private LineChartView lineChart;
-    private Button lineButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -121,9 +119,7 @@ public class AssetsTop extends Fragment
 
         pieChart.setPieChartData(data);
 
-
-        pieButton=(Button)getView().findViewById(R.id.pie_button);
-        pieButton.setOnClickListener(new View.OnClickListener() {
+        pieChart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.i("test","click pie button");
@@ -144,10 +140,10 @@ public class AssetsTop extends Fragment
         UserSession user=UserSession.getCurrUser();
         Log.i("test","user "+user.getSessionId());
         try {
-//            jsonObjects[0].put("id", Integer.parseInt(user.getUserId()));
-//            jsonObjects[0].put("sessionId",user.getSessionId());
-            jsonObjects[0].put("id", 4);
-            jsonObjects[0].put("sessionId","25f651f520e31896b7c1ffc57e78ec33");
+            jsonObjects[0].put("id", Integer.parseInt(user.getUserId()));
+            jsonObjects[0].put("sessionId",user.getSessionId());
+//            jsonObjects[0].put("id", 4);
+//            jsonObjects[0].put("sessionId","25f651f520e31896b7c1ffc57e78ec33");
 //            jsonObjects[0].put("days",20);//TODO
         }catch(Exception e)
         {
@@ -242,9 +238,7 @@ public class AssetsTop extends Fragment
         v.right= 6;
         lineChart.setCurrentViewport(v);
 
-
-        lineButton=(Button)getView().findViewById(R.id.line_button);
-        lineButton.setOnClickListener(new View.OnClickListener() {
+        lineChart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.i("test","click line button");

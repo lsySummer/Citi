@@ -10,13 +10,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import nju.financecity_android.R;
+import nju.financecity_android.util.StringUtil;
 
 import java.util.Observer;
 
 /**
  * Created by coral on 16-9-12.
  */
-public class QuestionI_I extends Fragment {
+public class QuestionI_I extends Fragment implements IObservableQuestion {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.question_i_i, container, false);
@@ -84,16 +85,17 @@ public class QuestionI_I extends Fragment {
         return getView().findViewById(resId);
     }
 
-    public void setObserver(IQuestionObserver observer) {
+    public Fragment setObserver(IQuestionObserver observer) {
         this.mObserver = observer;
+        return this;
     }
 
     private void generateData() {
         byte type = 0;
         if (rbInsurance.isChecked()) type = 0;
         else if (rbInsurance.isChecked()) type = 1;
-        int backAmount = Integer.parseInt(txtFetchAmount.getText().toString());
-        int insuranceAmount = Integer.parseInt(txtInsuranceAmount.getText().toString());
+        int backAmount = StringUtil.parseInt(txtFetchAmount.getText().toString());
+        int insuranceAmount = StringUtil.parseInt(txtInsuranceAmount.getText().toString());
         mObserver.putAnswer("type", type);
         mObserver.putAnswer("backAmount", backAmount);
         mObserver.putAnswer("insuranceAmount", insuranceAmount);
@@ -101,6 +103,6 @@ public class QuestionI_I extends Fragment {
 
     private RadioButton rbPrepareYes, rbPrepareNo, rbInsurance, rbMassFund;
     private EditText txtInsuranceAmount, txtFetchAmount;
-    private IQuestionObserver mObserver;
+    private static IQuestionObserver mObserver;
     private Button btCancle, btContinue;
 }

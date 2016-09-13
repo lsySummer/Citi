@@ -377,15 +377,6 @@ public class ProductSearch extends Fragment{
                 product_search_body.addView(filter[0]);
             }
         });
-        //返回按钮
-        ImageButton back=(ImageButton)getView().findViewById(R.id.back);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                product_search_body.removeAllViews();
-                product_search_body.addView(searchResult);
-            }
-        });
     }
 
 }

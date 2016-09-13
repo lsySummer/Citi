@@ -19,7 +19,7 @@ import java.util.Locale;
 /**
  * Created by sam on 16/9/12.
  */
-public class QuestionII extends Fragment {
+public class QuestionII extends Fragment implements IObservableQuestion {
     private EditText Insurance,GetMoney;
 
 
@@ -39,23 +39,32 @@ public class QuestionII extends Fragment {
         return getView().findViewById(resId);
     }
 
-    public void setObserver(IQuestionObserver observer) {
+    public Fragment setObserver(IQuestionObserver observer) {
         this.mObserver = observer;
+        return this;
     }
 
     private void initComponent(){
         sb1 = (SeekBar) findViewById(R.id.sb1);
+        sb1.setProgress(2);
         sb2 = (SeekBar) findViewById(R.id.sb2);
+        sb2.setProgress(5);
         sb3 = (SeekBar) findViewById(R.id.sb3);
+        sb3.setProgress(10);
         sb4 = (SeekBar) findViewById(R.id.sb4);
+        sb4.setProgress(20);
         txtValue1 = (TextView) findViewById(R.id.txtValue1);
         txtValue2 = (TextView) findViewById(R.id.txtValue2);
         txtValue3 = (TextView) findViewById(R.id.txtValue3);
         txtValue4 = (TextView) findViewById(R.id.txtValue4);
+        txtValue1.setText(String.format(Locale.CHINESE, "%d%%", sb1.getProgress()));
+        txtValue2.setText(String.format(Locale.CHINESE, "%d%%", sb2.getProgress()));
+        txtValue3.setText(String.format(Locale.CHINESE, "%d%%", sb3.getProgress()));
+        txtValue4.setText(String.format(Locale.CHINESE, "%d%%", sb4.getProgress()));
         sb1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                txtValue1.setText(String.format(Locale.CHINESE, "%d%", progress));
+                txtValue1.setText(String.format(Locale.CHINESE, "%d%%", progress));
             }
 
             @Override
@@ -67,7 +76,7 @@ public class QuestionII extends Fragment {
         sb2.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                txtValue2.setText(String.format(Locale.CHINESE, "%d%", progress));
+                txtValue2.setText(String.format(Locale.CHINESE, "%d%%", progress));
             }
 
             @Override
@@ -79,7 +88,7 @@ public class QuestionII extends Fragment {
         sb3.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                txtValue3.setText(String.format(Locale.CHINESE, "%d%", progress));
+                txtValue3.setText(String.format(Locale.CHINESE, "%d%%", progress));
             }
 
             @Override
@@ -91,7 +100,7 @@ public class QuestionII extends Fragment {
         sb4.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                txtValue4.setText(String.format(Locale.CHINESE, "%d%", progress));
+                txtValue4.setText(String.format(Locale.CHINESE, "%d%%", progress));
             }
 
             @Override
@@ -100,12 +109,16 @@ public class QuestionII extends Fragment {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {}
         });
-        btCancel = (Button) findViewById(R.id.btCancle);
+        btCancel = (Button) findViewById(R.id.btCancel);
         btContinue = (Button) findViewById(R.id.btContinue);
         btCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mObserver.showFormerPage();
+                if (Boolean.valueOf(mObserver.getAnswer("ifPrepare").toString())) {
+                    mObserver.showFormerPage();
+                } else {
+                    mObserver.showFormerPage(1);
+                }
             }
         });
         btContinue.setOnClickListener(new View.OnClickListener() {
@@ -128,7 +141,7 @@ public class QuestionII extends Fragment {
         mObserver.putAnswer("income", income);
     }
 
-    private IQuestionObserver mObserver;
+    private static IQuestionObserver mObserver;
     private SeekBar sb1, sb2, sb3, sb4;
     private TextView txtValue1, txtValue2, txtValue3, txtValue4;
     private Button btCancel, btContinue;

@@ -19,4 +19,11 @@
 	<color name="lightGrey">#dcdcdc</color>
 	<color name="darkGrey">#bfbfbf</color>
 	<color name="WordBlack">#7a7a7a</color>
+	<color name="vivid1">#c601f8</color>
+	<color name="vivid2">#fd3278</color>
+	<color name="vivid3">#11b7f3</color>
+	<color name="vivid4">#56b354</color>
+	<color name="vivid5">#f9d540</color>
+	<color name="vivid6">#ffb01d</color>
+	<color name="vivid7">#3d70fc</color>
 </resources>
