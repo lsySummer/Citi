@@ -1,6 +1,7 @@
 package nju.financecity_android.controller.widget;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import nju.financecity_android.R;
+import nju.financecity_android.controller.activity.BankDetailActivity;
+import nju.financecity_android.controller.activity.FundDetailActivity;
 import nju.financecity_android.controller.activity.MainActivity;
 import nju.financecity_android.vo.ProductVO;
 
@@ -26,6 +29,8 @@ import nju.financecity_android.vo.ProductVO;
 public class SearchResult extends ScrollView {
     private List<ProductVO> resultList=new ArrayList<ProductVO>();
     private LinearLayout listLayout;
+    private String pid;
+    private String type;
 
     public SearchResult(Context context) {
         super(context);
@@ -43,7 +48,14 @@ public class SearchResult extends ScrollView {
         LayoutInflater.from(context).inflate(R.layout.product_search_result, this, true);
         resultList=list;
         onFinishInflate();
-
+    }
+    public void setProductId(String pid)
+    {
+        this.pid=pid;
+    }
+    public void setProductType(String type)
+    {
+        this.type=type;
     }
     @Override
     protected void onFinishInflate() {
@@ -54,7 +66,15 @@ public class SearchResult extends ScrollView {
             single.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    MainActivity.showProductDetail("test");//TODO
+//                    MainActivity.showProductDetail(type,pid);//TODO
+                    //生成一个Intent对象
+                    Intent intent = new Intent();
+                    //在Intent对象当中添加一个键值对
+                    intent.putExtra("productId", pid);
+                    //设置Intent对象要启动的Activity
+                    intent.setClass(SearchResult.this.getContext(),FundDetailActivity.class);
+                    //通过Intent对象启动另外一个Activity
+                    SearchResult.this.getContext().startActivity(intent);
                 }
             });
             listLayout.addView(single);

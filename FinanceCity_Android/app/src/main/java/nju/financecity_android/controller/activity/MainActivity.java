@@ -144,13 +144,13 @@ public class MainActivity extends Activity{
         transaction.commit();
     }
 
-    public static void showProductDetail(String productId)
+    public static void showProductDetail(String type,int productId)
     {
         // 每次选中之前先清楚掉上次的选中状态
         clearSelection();
         // 先隐藏掉所有的Fragment，以防止有多个Fragment显示在界面上的情况
         hideFragments(transaction);
-        if(productId!=null) {
+//        if(productId!=null) {
             transaction=fragmentManager.beginTransaction();
             products = new Products();//TODO 如何传入productId
             transaction.add(R.id.main_mid_layout, products);
@@ -158,10 +158,10 @@ public class MainActivity extends Activity{
                 transaction.show(products);
             }
             transaction.commit();
-        }
-        else{
-            Log.e("test","no productId for detail");
-        }
+//        }
+//        else{
+//            Log.e("test","no productId for detail");
+//        }
     }
 
     public static void nextAssets(int id)

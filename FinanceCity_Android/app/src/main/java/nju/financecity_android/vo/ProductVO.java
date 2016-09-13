@@ -5,6 +5,7 @@ package nju.financecity_android.vo;
  */
 public class ProductVO {
     private String pid;
+    private String sid;
     private String name;
     private String type;
     private double year;
@@ -14,16 +15,18 @@ public class ProductVO {
     private String middle;
     private String bottom;
 
-    public ProductVO(String pid, String name, String type, double year, String introduction) {
+    public ProductVO(String pid,String sid, String name, String type, double year, String introduction) {
         this.pid = pid;
+        this.sid = sid;
         this.name = name;
         this.type = type;
         this.year = year;
         this.introduction = introduction;
     }
 
-    public ProductVO(String pid, String name, String type, double year, String introduction, String top, String middle, String bottom) {
+    public ProductVO(String pid,String sid, String name, String type, double year, String introduction, String top, String middle, String bottom) {
         this.pid = pid;
+        this.sid = sid;
         this.name = name;
         this.type = type;
         this.year = year;
@@ -63,5 +66,9 @@ public class ProductVO {
 
     public String getBottom() {
         return bottom;
+    }
+
+    public String getSid() {
+        return sid;
     }
 }
