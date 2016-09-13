@@ -166,7 +166,8 @@ public class SearchFilterAction extends BaseAction {
             String key = (String) it.next();
             Object object = options.get(key);
             if(object==null){
-                optMap.put(key, (Object) null);
+                String temp = null;
+                optMap.put(key, temp);
             }else{
                 optMap.put(key, object);
             }

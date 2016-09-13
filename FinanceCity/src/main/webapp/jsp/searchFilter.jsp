@@ -159,7 +159,11 @@
                 </div>
                 <div class="input-add-on income-item">
                     <span class="tag">收益类型</span>
-                    <select id="bank_income_type" class="input-add-on-field"></select>
+                    <select id="bank_income_type" class="input-add-on-field">
+                        <s:iterator id="bank" value="#request.bankYieldList" status="tl">
+                            <option value="<s:property value="#tl.index"/>"><s:property value="#bank"/></option>
+                        </s:iterator>
+                    </select>
                 </div>
                 <div class="input-add-on income-item">
                     <span class="tag">是否封闭</span>

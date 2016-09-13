@@ -21,6 +21,7 @@ public class SearchAction extends BaseAction {
         //TODO:set category
         ActionContext context = ActionContext.getContext();
 
+        List<String> bankYieldList = searchService.getBankYieldType();
         List<String> bondYieldList = searchService.getBondYieldType();
         List<String> bondStateList = searchService.getBondStateType();
         List<String> fundTargetList = searchService.getFundTargetType();
@@ -41,11 +42,13 @@ public class SearchAction extends BaseAction {
         System.out.println("fund:"+fundInstitutionList);
         System.out.println("insurance:"+insuranceInstitutionList);
 
+        System.out.println("bankYieldList:"+bankYieldList);
         System.out.println("bondStateList:"+bondStateList);
         System.out.println("bondYieldList:"+bondYieldList);
         System.out.println("fundStateList:"+fundStateList);
         System.out.println("fundTargetList:"+fundTargetList);
 
+        context.put("bankYieldList", bankYieldList);
         context.put("bondStateList", bondStateList);
         context.put("bondYieldList", bondYieldList);
         context.put("fundStateList", fundStateList);
