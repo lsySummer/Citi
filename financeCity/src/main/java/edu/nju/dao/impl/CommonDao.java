@@ -7,4 +7,5 @@ import java.util.List;
  */
 public interface CommonDao {
     List find(String queryString);
+    List find(String queryString, int days);
 }

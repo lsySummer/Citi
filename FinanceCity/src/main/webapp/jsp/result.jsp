@@ -16,6 +16,8 @@
     var searchResult;
     searchResult = ${searchResultJSON};
 
+    console.log(searchResult);
+
 </script>
 
 <div id="product_wrapper" class="product-wrapper">

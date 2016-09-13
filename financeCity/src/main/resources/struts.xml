@@ -55,18 +55,22 @@
 
 		<action name="orderConfirm" class="edu.nju.action.OrderAction" method="">
 			<result name="success">/jsp/order-confirm.jsp</result>
+			<result name="login">/jsp/login.jsp</result>
 		</action>
 		
 		<action name="assets" class="edu.nju.action.Assets" method="">
 			<result name="success">/jsp/asset.jsp</result>
+			<result name="login">/jsp/login.jsp</result>
 		</action>
 		
 		<action name="recommend" class="edu.nju.action.Assets" method="getRecommend">
 			<result name="success">/jsp/recommendation.jsp</result>
+			<result name="login">/jsp/login.jsp</result>
 		</action>
 		
 		<action name="product" class="edu.nju.action.Assets" method="getProduct">
 			<result name="success">/jsp/searchFilter.jsp</result>
+			<result name="login">/jsp/login.jsp</result>
 		</action>
 	</package>
 	

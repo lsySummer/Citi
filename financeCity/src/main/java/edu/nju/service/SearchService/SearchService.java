@@ -2,6 +2,7 @@ package edu.nju.service.SearchService;
 
 import edu.nju.model.CategoryIndex;
 import edu.nju.service.CategoryAndProduct.Product;
+import edu.nju.service.ExceptionsAndError.DataNotFoundException;
 import edu.nju.service.ExceptionsAndError.NoSuchProductException;
 import edu.nju.service.POJO.NAVHistory;
 import edu.nju.vo.*;
@@ -118,9 +119,9 @@ public interface SearchService {
      * @param id .
      * @return .
      */
-    NAVHistory[] getFundValueHistory(Integer id, Integer days) throws NoSuchProductException;
+    NAVHistory[] getFundValueHistory(Integer id, Integer days) throws DataNotFoundException;
 
-    NAVHistory[] getBankValueHistory(Integer id, Integer days) throws NoSuchProductException;
+    NAVHistory[] getBankValueHistory(Integer id, Integer days) throws DataNotFoundException;
 
     /**
      * get institution list
@@ -131,6 +132,8 @@ public interface SearchService {
     List<String> getBondYieldType();
 
     List<String> getBondStateType();
+
+    List<String> getBankYieldType();
 
     List<String> getFundTargetType();
 
