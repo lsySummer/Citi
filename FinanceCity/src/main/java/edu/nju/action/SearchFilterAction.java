@@ -141,16 +141,17 @@ public class SearchFilterAction extends BaseAction {
                 System.out.println("i:"+i);
             }
 
-            page_length = resultFactory.getResultList().length/8+1;
+        page_length = productList.size()/8+1;
+        page_length = resultFactory.getResultList().length/8+1;
 
-            System.out.println(resultFactory.getResultList().length);
+        System.out.println(resultFactory.getResultList().length);
 
-            context.put("searchResultJSON", JSON.toJSON(resultFactory.getResultList()));
-            context.put("searchResult", resultFactory.getResultList());
+        context.put("searchResultJSON", JSON.toJSON(resultFactory.getResultList()));
+        context.put("searchResult", resultFactory.getResultList());
 
-        } catch (InvalidParametersException e) {
-            e.printStackTrace();
-        }
+    } catch (InvalidParametersException e) {
+        e.printStackTrace();
+    }
 
         context.put("currentPage", page_num+1);
         context.put("pageLength", page_length);
