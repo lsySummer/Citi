@@ -31,13 +31,15 @@ public class AndroidBuyAction extends AndroidAction {
         OrderResultVO orderResultVO = new OrderResultVO();
 
         try {
+            FinanceCityUser financeCityUser = getUser();
+            if (financeCityUser == null) {
+                throw new NotLoginException();
+            }
+
             List<Map> productList = (List<Map>)map.get("product_list");
             if (productList == null || productList.size() == 0) {
                 throw new InvalidParametersException("product_list");
             }
-
-            int id = (Integer)map.get("id");
-            String session = (String)map.get("sessionId");
 
             List<SimpleTradeInfo> simpleTradeInfoList = new ArrayList<>();
             for (Map tradeMap : productList) {
@@ -50,10 +52,6 @@ public class AndroidBuyAction extends AndroidAction {
 
                 simpleTradeInfoList.add(simpleTradeInfo);
             }
-
-            FinanceCityUser financeCityUser = new FinanceCityUser();
-            financeCityUser.setID(id);
-            financeCityUser.setLoginSession(session);
 
             orderResultVO = tradeService.buyProduct(simpleTradeInfoList, financeCityUser);
             ErrorManager.setError(orderResultVO, ErrorManager.errorNormal);

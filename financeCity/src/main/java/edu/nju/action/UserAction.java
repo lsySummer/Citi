@@ -107,14 +107,14 @@ public class UserAction extends BaseAction {
         }
 
         try {
-            int income_i = Integer.valueOf(income);
-            int expense_i = Integer.valueOf(expense);
-            boolean isUrben_b = from.equals("city");
-
             FinanceCityUser financeCityUser = (FinanceCityUser)session.get("user");
             if (financeCityUser == null) {
                 throw new NotLoginException();
             }
+
+            int income_i = Integer.valueOf(income);
+            int expense_i = Integer.valueOf(expense);
+            boolean isUrben_b = from.equals("city");
 
             userService.modifyUserInfo(toDateFormat(birthday_y, birthday_m, birthday_d), income_i, isUrben_b, expense_i, financeCityUser);
             ErrorManager.setError(request, ErrorManager.errorNormal);
@@ -162,6 +162,11 @@ public class UserAction extends BaseAction {
         }
 
         try {
+            FinanceCityUser financeCityUser = (FinanceCityUser)session.get("user");
+            if (financeCityUser == null) {
+                throw new NotLoginException();
+            }
+
             int amount_i = Integer.valueOf(amount);
             String data = toDateFormat(year, month, day);
             boolean ifPrepare_b = Integer.valueOf(ifPrepare) == 1;
@@ -224,7 +229,7 @@ public class UserAction extends BaseAction {
             userTemperPrefer.setExpectedProfitMax(new BigDecimal(income_rate[1]));
             userTemperPrefer.setChosenProducts(preferType_En);
 
-            userService.setUserTemperPrefer(userTemperPrefer, (FinanceCityUser)session.get("user"));
+            userService.setUserTemperPrefer(userTemperPrefer, financeCityUser);
 
             ErrorManager.setError(request, ErrorManager.errorNormal);
             return SUCCESS;

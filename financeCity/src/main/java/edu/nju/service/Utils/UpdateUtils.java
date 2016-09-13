@@ -149,6 +149,8 @@ public class UpdateUtils {
             preparedStatement.executeUpdate();
             preparedStatement = connection.prepareStatement("DELETE FROM citi.investment_portfolio");
             preparedStatement.executeUpdate();
+            preparedStatement = connection.prepareStatement("DELETE FROM citi.investment_portfolio");
+            preparedStatement.executeUpdate();
 
             connection.close();
         }

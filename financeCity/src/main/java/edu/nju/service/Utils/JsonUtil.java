@@ -1,5 +1,6 @@
 package edu.nju.service.Utils;
 
+import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 
 import java.io.*;
@@ -31,11 +32,8 @@ public class JsonUtil {
     public Map getMap() {
         if (result != null) {
             try {
-                System.out.println(result);
-                JSONObject jsonObject = JSONObject.fromObject(result);
-                return jsonObject;
-            }catch (Exception e) {
-                e.printStackTrace();
+                return JSONObject.fromObject(result);
+            }catch (JSONException e) {
                 return null;
             }
         }

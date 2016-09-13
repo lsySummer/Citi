@@ -49,6 +49,10 @@ public class Assets extends BaseAction{
 	public String getRecommend(){
 		try {
 			FinanceCityUser financeCityUser = (FinanceCityUser)session.get("user");
+			if (financeCityUser == null) {
+				throw new NotLoginException();
+			}
+
 			UserTemperPrefer userTemperPrefer = userService.getUserTemper(financeCityUser);
 			List<TradeInfoWithCheckCode> lists = investAdvisorService.createInvestmentPortFolio(userTemperPrefer);
 			session.put("investResult", lists);

@@ -181,14 +181,14 @@ public class AndroidSearchAction extends AndroidAction {
     }
 
     public String getFundValueHistory() {
+        Map map = getRequestMap();
         FundHistoryVO fundHistoryVO = new FundHistoryVO();
 
         try {
-            Integer id = Integer.valueOf(request.getParameter("id"));
-            String days_s = request.getParameter("days");
-            Integer days = null;
-            if (days_s != null) {
-                days = Integer.valueOf(days_s);
+            Integer id = (Integer)map.get("id");
+            Integer days = (Integer) map.get("days");
+            if (days == null) {
+                days = Integer.MAX_VALUE;
             }
 
             NAVHistory[] fundValueHistories = searchService.getFundValueHistory(id, days);

@@ -61,7 +61,7 @@ public class AssetManagementServiceImpl implements AssetManagementService {
                     List<ProductVO> productList = new ArrayList<>();
                     for (InvestedProducts investedProducts : investedProductList) {
                         try {
-                            Product product = searchService.getProductByID(investedProducts.getId());
+                            Product product = searchService.getProductByID(investedProducts.getProductId());
                             ProductVO productVO = new ProductVO();
                             productVO.setId(product.getID());
                             productVO.setType(product.getCategory().getChineseName());
@@ -101,7 +101,7 @@ public class AssetManagementServiceImpl implements AssetManagementService {
         if (product.getCategory().belongTo(ProductCategoryManager.categoryBond) ||
                 product.getCategory().belongTo(ProductCategoryManager.categoryBank) ||
                 product.getCategory().belongTo(ProductCategoryManager.categoryInsurance)) {
-            double ret_rate = TimeTransformation.getTimeFromNow(investedProducts.getBuyingDate(), 'd') / 365;
+            double ret_rate = -product.getRTR() * TimeTransformation.getTimeFromNow(investedProducts.getBuyingDate(), TimeTransformation.day) / 365;
             current_value = (ret_rate + 1) * investedProducts.getTotalAmount().doubleValue();
         }
         else if (product.getCategory().belongTo(ProductCategoryManager.categoryFund)) {
@@ -166,7 +166,8 @@ public class AssetManagementServiceImpl implements AssetManagementService {
 
         try {
             List<TradeHistoryVO> tradeHistoryVOList = new ArrayList<>();
-            List<TradeHistory> tradeHistoryList = userService.getUserDao(financeCityUser).find("FROM TradHistory t WHERE t.userId=" + financeCityUser.getID());
+            List<TradeHistory> tradeHistoryList = userService.getUserDao(financeCityUser).
+                    find("FROM TradeHistory t WHERE t.userId=" + financeCityUser.getID());
 
             if (tradeHistoryList == null || tradeHistoryList.size() == 0) {
                 throw new DataNotFoundException("Trade History");
@@ -259,6 +260,8 @@ public class AssetManagementServiceImpl implements AssetManagementService {
             AssetValue assetValue = new AssetValue();
             assetValue.setDate(list.get(i).getDate().toString());
             assetValue.setValue(list.get(i).getCurrentPrice().doubleValue());
+
+            assetValues.add(assetValue);
         }
 
         return assetValues;
