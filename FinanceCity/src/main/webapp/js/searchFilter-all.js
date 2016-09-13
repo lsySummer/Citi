@@ -34,15 +34,16 @@ function initSlider() {
         to: 80,
         postfix: "%"
     });
-    $("#bank_initial_amount").ionRangeSlider({
-        type: "double",
-        grid: true,
-        min: 0,
-        max: 1000,
-        from: 200,
-        to: 800,
-        prefix: "$"
-    });
+    //$("#bank_initial_amount").ionRangeSlider({
+    //    type: "double",
+    //    grid: true,
+    //    min: 0,
+    //    max: 1000000000,
+    //    from: 200,
+    //    step: 1000,
+    //    to: 800,
+    //    prefix: "$"
+    //});
     $("#insurance_length_of_years").ionRangeSlider({
         type: "double",
         grid: true,
@@ -189,7 +190,7 @@ function submitBank(page_num) {
 
     options["yearly_income_rate"] = $("#bank_yearly_income_rate").val().split(";");
     options["expiration"] = $("#bank_expiration").val().split(";");
-    options["initial_amount"] = $("#bank_initial_amount").val().split(";");
+    options["initial_amount"] = [""+$("#bank_initial_amount_start").val(), ""+$("#bank_initial_amount_end").val()];
     options["institution_manage"] = $("#bank_institution_manage").val();
     options["income_type"] = $("#bank_income_type").val();
 
