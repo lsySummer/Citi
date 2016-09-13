@@ -336,6 +336,8 @@ public class SearchFilterFactory {
         Boolean is_close_ended;
 
         try {
+
+
             Map option = (Map)map.get("options");
             if (option == null) {
                 option = new HashMap();
@@ -387,6 +389,13 @@ public class SearchFilterFactory {
                 double exp_rate = getValue(productBank.getExpectedRate());
                 int length = getValue(productBank.getLength());
                 int threshold = getValue(productBank.getPurchaseThreshold());
+
+                boolean is = exp_rate >= year_rate[0] && exp_rate <= year_rate[1];
+                is = length >= expiration[0] && length <= expiration[1];
+                is = threshold >= init_amount[0] && threshold <= init_amount[1];
+                is = institution_manage.equals(productBank.getInstitutionManage());
+                is = income_type.equals(productBank.getIncomeType());
+                //is = is_close_ended.equals(ProductCategoryManager.ifClosedBankProduct(productBank));
 
                 return (exp_rate >= year_rate[0] && exp_rate <= year_rate[1] &&
                 length >= expiration[0] && length <= expiration[1] &&
