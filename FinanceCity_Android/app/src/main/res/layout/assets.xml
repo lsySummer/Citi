@@ -33,7 +33,6 @@
 		android:id="@+id/chart"
 		android:layout_width="match_parent"
 		android:layout_height="200dp"
-		android:layout_marginLeft="-25dp"
 		android:layout_marginRight="5dp"
 		android:background="@color/white"
 		android:layout_below="@id/asset_history_head"/>

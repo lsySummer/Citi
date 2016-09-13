@@ -1,13 +1,12 @@
 package nju.financecity_android.dao;
 
-/**
- * Created by Administrator on 2016/9/12.
- */
-public class AssetValueDao extends CommonDao{
-//    private static String url="http://192.168.1.111:8888/Citi/api/asset/value";
+
+public class Person_EditDao  extends  CommonDao{
+
+
     @Override
     public String getAction() {
-        return host+"/Citi/api/asset/value";
+        return host+"/api/user";
     }
 
     @Override

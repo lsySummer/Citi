@@ -2,6 +2,7 @@ package nju.financecity_android.controller.activity;
 
 import android.app.Fragment;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.text.DateFormat;
@@ -35,6 +37,7 @@ import lecho.lib.hellocharts.model.PointValue;
 import lecho.lib.hellocharts.model.Viewport;
 import lecho.lib.hellocharts.view.LineChartView;
 import nju.financecity_android.R;
+import nju.financecity_android.dao.AssetHistoryDao;
 import nju.financecity_android.dao.AssetValueDao;
 import nju.financecity_android.model.UserSession;
 
@@ -77,45 +80,70 @@ public class Assets extends Fragment {
         List<AxisValue> mAxisValues=new ArrayList<AxisValue>();
 
         final JSONObject[] jsonObjects=new JSONObject[1];
-        jsonObjects[0]=new JSONObject();
+        jsonObjects[0]=new JSONObject();//value
         UserSession user=UserSession.getCurrUser();
+        Log.i("test","user "+user.getSessionId());
         try {
-            jsonObjects[0].put("id", 6);
-            jsonObjects[0].put("session","a482dd91fc6dd55b5a1b74f103f48717");
+//            jsonObjects[0].put("id", Integer.parseInt(user.getUserId()));
+//            jsonObjects[0].put("sessionId",user.getSessionId());
+            jsonObjects[0].put("id", 4);
+            jsonObjects[0].put("sessionId","25f651f520e31896b7c1ffc57e78ec33");
 //            jsonObjects[0].put("days",20);//TODO
         }catch(Exception e)
         {
             Log.i("test","user session or json exception");
             e.printStackTrace();
         }
+
+        Log.i("test","jObject of parameters "+jsonObjects[0]);
+
         final String[] result={""};
-        new Thread(new Runnable() {
+        Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-
                 result[0]=new AssetValueDao().sendPost(jsonObjects[0]);
             }
-        }).start();
-        JSONObject jResult=null;
+        });
+        thread.start();
+        try {
+            thread.join();
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        JSONArray jValue=null;
         try{
-            jResult=new JSONObject(result[0]);
+            jValue=new JSONObject(result[0]).getJSONArray("assetValues");
         }catch(Exception e)
         {
             Log.i("test","asset value result exception");
             e.printStackTrace();
         }
         /*==============================================================================*/
-        List<Date> dates=new ArrayList<Date>();
-        for(int i=0;i<20;i++)
+//        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+        List<String> dates=new ArrayList<String>();
+        try {
+            for (int i = 0; i < jValue.length(); i++) {
+                dates.add(jValue.getJSONObject(i).getString("date"));
+            }
+        }catch(Exception e)
         {
-            dates.add(new Date(Calendar.getInstance().getTimeInMillis()+i*60*60*24*1000));
+            Log.i("test","analyse jsonArray");
+            e.printStackTrace();
         }
-        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
         /*==============================================================================*/
+        try{
+//            for (int i = 0; i < dates.size() ; i++) {
+            for (int i = 0; i < 20 ; i++) {//TODO
+                mPointValues.add(new PointValue(i,Float.parseFloat(jValue.getJSONObject(0).get("value")+"")-new Random().nextInt(10)*10000+50000));
+//                test.add(new PointValue(i,new Random().nextInt(10)-5));////////////////////////////////////////////
+                mAxisValues.add(new AxisValue(i).setLabel(dates.get(0))); //为每个对应的i设置相应的label(显示在X轴)
+            }
 
-        for (int i = 0; i < dates.size() ; i++) {
-            mPointValues.add(new PointValue(i, new Random().nextInt(10)-5));
-            mAxisValues.add(new AxisValue(i).setLabel(format.format(dates.get(i)))); //为每个对应的i设置相应的label(显示在X轴)
+        }catch(Exception e)
+        {
+            Log.i("test","analyse jsonArray");
+            e.printStackTrace();
         }
         Line line = new Line(mPointValues).setColor(getResources().getColor(R.color.lightBlue)).setCubic(false);
         line.setHasLabelsOnlyForSelected(true);
@@ -123,6 +151,13 @@ public class Assets extends Fragment {
         line.setPointRadius(4);//座标点大小
         List<Line> lines = new ArrayList<Line>();
         lines.add(line);
+        ///////////////////////////////////////////////////////////
+//        Line testLine=new Line(test).setCubic(false);
+//        testLine.setHasLabelsOnlyForSelected(true);
+//        testLine.setPointColor(getResources().getColor(R.color.validBlue));
+//        testLine.setPointRadius(4);//座标点大小
+//        lines.add(testLine);
+        ////////////////////////////////////
         LineChartData data = new LineChartData();
         data.setLines(lines);
 
@@ -156,25 +191,71 @@ public class Assets extends Fragment {
 
     public void setTimeline()
     {
+        final JSONObject[] jsonObjects=new JSONObject[1];
+        jsonObjects[0]=new JSONObject();//history
+        UserSession user=UserSession.getCurrUser();
+        Log.i("test","user "+user.getSessionId());
+        try {
+//            jsonObjects[0].put("id", Integer.parseInt(user.getUserId()));
+//            jsonObjects[0].put("sessionId",user.getSessionId());
+            jsonObjects[0].put("id", 4);
+            jsonObjects[0].put("sessionId","25f651f520e31896b7c1ffc57e78ec33");
+        }catch(Exception e)
+        {
+            Log.i("test","user session or json exception");
+            e.printStackTrace();
+        }
+
+        Log.i("test","jObject of parameters "+jsonObjects[0]);
+
+        final String[] result={""};
+        Thread thread = new Thread( new Runnable() {
+            @Override
+            public void run() {
+                result[0]=new AssetHistoryDao().sendPost(jsonObjects[0]);
+            }
+        });
+        thread.start();
+        try {
+            thread.join();
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        JSONArray jHistory=null;
+        try{
+            jHistory=new JSONObject(result[0]).getJSONArray("tradeHistoryVOList");
+        }catch(Exception e)
+        {
+            Log.i("test","asset value result exception");
+            e.printStackTrace();
+        }
+
         //资产变化事迹
         timeline = (ListView) getView().findViewById(R.id.timeline);
         ArrayList<HashMap<String, Object>> listItem = new ArrayList<HashMap<String,Object>>();/*在数组中存放数据*/
-        HashMap<String, Object> mapTitle = new HashMap<String, Object>();
-        mapTitle.put("time", "时间");
-        mapTitle.put("history", "事件");
-        for(int i=0;i<2;i++)
+//        HashMap<String, Object> mapTitle = new HashMap<String, Object>();
+//        mapTitle.put("time", "时间");
+//        mapTitle.put("history", "事件");
+        try {
+            for (int i = 0; i < jHistory.length(); i++) {
+                JSONObject jDiscription=jHistory.getJSONObject(i);
+                HashMap<String, Object> map = new HashMap<String, Object>();
+                map.put("time", jDiscription.getString("date"));
+                String tradingType="";
+                switch(jDiscription.getString("tradingType"))
+                {
+                    case "buy":
+                        tradingType="购买";
+                        break;
+                }//TODO
+                map.put("history", tradingType+jDiscription.getString("productName")+jDiscription.getString("tradingVolume")+jDiscription.getString("unit"));
+                listItem.add(map);
+            }
+        } catch(Exception e)
         {
-            HashMap<String, Object> map = new HashMap<String, Object>();
-            map.put("time", "2016-01-"+i+"");
-            map.put("history", "购买。。。。。。。。。。。。。。。。。");
-            listItem.add(map);
-        }
-        for(int i=2;i<4;i++)
-        {
-            HashMap<String, Object> map = new HashMap<String, Object>();
-            map.put("time", "2016-01-"+i+"");
-            map.put("history", "购买。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。");
-            listItem.add(map);
+            Log.i("test","set timeline");
+            e.printStackTrace();
         }
         SimpleAdapter mSimpleAdapter = new SimpleAdapter(this.getActivity(),listItem,R.layout.assets_history,new String[]{"time", "history"},new int[] {R.id.time,R.id.history});
         //需要绑定的数据//每一行的布局//动态数组中的数据源的键对应到定义布局的View中new String[] {"ItemImage"

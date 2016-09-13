@@ -138,7 +138,12 @@
                 <div class="input-add-on income-item">
                     <span class="tag">起购金额</span>
                     <div class="slider-wrapper input-add-on-field">
-                        <input id="bank_initial_amount" type="text" id="purchase_amount" name="purchase_amount" value="" class="input-add-on-field"/>
+                        <div class="range-wrapper">
+                            <input id="bank_initial_amount_start" type="text" class="range-input"/>
+                            <label>—</label>
+                            <input id="bank_initial_amount_end" type="text" class="range-input"/>
+                        </div>
+                        <%--<input id="bank_initial_amount" type="text" id="purchase_amount" name="purchase_amount" value="" class="input-add-on-field"/>--%>
                     </div>
                 </div>
                 <div class="input-add-on income-item">

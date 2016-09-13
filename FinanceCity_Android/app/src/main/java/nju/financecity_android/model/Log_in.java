@@ -24,7 +24,7 @@ public class Log_in {
             Log.d("bug","root put wrong");
         }
 
-        String mRawData = new Log_inDao().sendPost(root,"login");
+        String mRawData = new Log_inDao().sendPost(root);
 
         return DetailPost(mRawData);
     }
@@ -41,9 +41,13 @@ public class Log_in {
             String message = Root.getString("message");
             Result.put("message",message);
             //session
-            String session = Root.getString("session");
+            String session = Root.getString("sessionId");
             Result.put("session",session);
 
+            int id = Root.getInt("id");
+            Result.put("id",id);
+
+            Log.i("test","can still to here");
         } catch (JSONException e) {
             e.printStackTrace();
         }

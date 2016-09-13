@@ -106,9 +106,13 @@ public class Log_inActivity extends Activity {
                     String mess = (String) res.get("message");
                     Log.d("SeeErr","mess为"+mess);
                     String sess = (String) res.get("session");
+                    int id=(int)res.get("id");
                     if (error==0){
-                        UserSession.setCurrUser(new UserSession(Account,sess));
+                        Log.i("test","change to mainActivity1");
+                        UserSession.setCurrUser(new UserSession(id+"",sess));
+                        Log.i("test","change to mainActivity2");
                         Intent intent = new Intent(Log_inActivity.this,MainActivity.class);
+                        Log.i("test","change to mainActivity3");
                         startActivity(intent);
                     }else if(error!=0){
                         Toast.makeText(Log_inActivity.this,mess,Toast.LENGTH_SHORT).show();

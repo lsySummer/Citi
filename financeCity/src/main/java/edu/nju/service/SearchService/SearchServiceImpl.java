@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import javax.xml.crypto.Data;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -99,6 +100,9 @@ public class SearchServiceImpl implements SearchService {
     public List<Product> searchProductsByKey(String keyWord, String searchType) {
         try {
             List<Product> productList = new ArrayList<>();
+            if (keyWord == null) {
+                keyWord = "";
+            }
 
             if (searchType == null) {
                 productList.addAll(searchProductsByKey(keyWord, ProductCategoryManager.categoryBank));
@@ -321,6 +325,7 @@ public class SearchServiceImpl implements SearchService {
             throw new DataNotFoundException("Fund History");
         }
         else {
+            Collections.reverse(list);
             NAVHistory[] fundValueHistories = new NAVHistory[list.size()];
 
             for (int i = 0; i < list.size(); ++i) {
@@ -345,6 +350,7 @@ public class SearchServiceImpl implements SearchService {
             throw new DataNotFoundException("Bank History");
         }
         else {
+            Collections.reverse(list);
             NAVHistory[] bankValueHistory = new NAVHistory[list.size()];
 
             for (int i = 0; i < list.size() && i < days; ++i) {
