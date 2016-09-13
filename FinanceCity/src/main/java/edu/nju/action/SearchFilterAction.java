@@ -128,7 +128,7 @@ public class SearchFilterAction extends BaseAction {
 
             for(int i=0;i<productList.size();i++){
                 Product product = productList.get(i);
-                if(productFilter.isChosen(product)){
+                if(productFilter.isChosen(product.getProduct())){
                     if(index>=page_num*8&&i<(page_num+1)*8){//保证相应页面8个产品上限
                         resultFactory.addProduct(product);
                     }

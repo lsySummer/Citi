@@ -27,6 +27,8 @@ public class SearchServiceImpl implements SearchService {
     @Autowired
     UserService userService;
 
+    static final int MAX_RESULT = 500;
+
     @SuppressWarnings("unchecked")
     @Override
     public List<Product> getProductByName(String productName) throws NoSuchProductException {
@@ -99,30 +101,28 @@ public class SearchServiceImpl implements SearchService {
             List<Product> productList = new ArrayList<>();
 
             if (searchType == null) {
-                List<Integer> list = userService.getCommonDao().find("SELECT p.id FROM NameToId nameToId WHERE nameToId.name LIKE '%" +
-                        keyWord + "%'");
-
-                productList = getProductsByIds(list);
+                productList.addAll(searchProductsByKey(keyWord, ProductCategoryManager.categoryBank));
+                productList.addAll(searchProductsByKey(keyWord, ProductCategoryManager.categoryBond));
+                productList.addAll(searchProductsByKey(keyWord, ProductCategoryManager.categoryFund));
+                productList.addAll(searchProductsByKey(keyWord, ProductCategoryManager.categoryInsurance));
             }
             else if (searchType.equals(ProductCategoryManager.categoryFund) ||
                     searchType.equals(ProductCategoryManager.categoryInsurance) ||
                     searchType.equals(ProductCategoryManager.categoryBank)) {
-                List<Integer> list = userService.getCommonDao().find("SELECT p.id FROM Product" + searchType +
+                List<Object> list = userService.getCommonDao().find("FROM Product" + searchType +
                         " p WHERE p.name LIKE '%" +
-                        keyWord + "%'");
+                        keyWord + "%'", MAX_RESULT);
 
-                for (Integer id : list) {
-                    int pid = ProductCategoryManager.generateProductID(id, searchType);
-                    productList.add(getProductByID(pid));
+                if (list != null && list.size() != 0) {
+                    productList = ProductFactory.createProduct(list.toArray());
                 }
             }
             else if (searchType.equals(ProductCategoryManager.categoryBond)){
-                List<Integer> list = userService.getCommonDao().find("SELECT p.id FROM ProductBond p WHERE p.title LIKE '%" +
-                        keyWord + "%'");
+                List<Object> list = userService.getCommonDao().find("FROM ProductBond p WHERE p.title LIKE '%" +
+                        keyWord + "%'", MAX_RESULT);
 
-                for (Integer id : list) {
-                    int pid = ProductCategoryManager.generateProductID(id, searchType);
-                    productList.add(getProductByID(pid));
+                if (list != null && list.size() != 0) {
+                    productList = ProductFactory.createProduct(list.toArray());
                 }
             }
 
@@ -179,8 +179,8 @@ public class SearchServiceImpl implements SearchService {
         }
 
         List<Product> productList = new ArrayList<>();
-        for (Object object : list) {
-            productList.add(ProductFactory.createProduct(object));
+        if (list != null && list.size() != 0) {
+            productList = ProductFactory.createProduct(list.toArray());
         }
 
         return productList;
@@ -199,9 +199,8 @@ public class SearchServiceImpl implements SearchService {
         }
 
         List<Product> productList = new ArrayList<>();
-
-        for (Object object : list) {
-            productList.add(ProductFactory.createProduct(object));
+        if (list != null && list.size() != 0) {
+            productList = ProductFactory.createProduct(list.toArray());
         }
 
         return productList;
@@ -220,9 +219,8 @@ public class SearchServiceImpl implements SearchService {
         }
 
         List<Product> productList = new ArrayList<>();
-
-        for (Object object : list) {
-            productList.add(ProductFactory.createProduct(object));
+        if (list != null && list.size() != 0) {
+            productList = ProductFactory.createProduct(list.toArray());
         }
 
         return productList;
