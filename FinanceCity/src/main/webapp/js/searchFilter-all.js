@@ -210,7 +210,7 @@ function submitBank(page_num) {
         data: "data="+JSON.stringify(data),
         cache: false,
         success: function(data) {
-            //console.log(data);
+            console.log(data);
             $(".result-container").empty();
             $(".result-container").append(data);
 
