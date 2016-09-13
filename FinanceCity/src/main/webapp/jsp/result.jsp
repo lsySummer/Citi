@@ -170,7 +170,7 @@
     </div>
 
     <s:set name="size" value="1"/>
-    <s:iterator id="product" value="#request.searchResult.data">
+    <s:iterator id="product" value="#request.searchResult">
         <s:set name="size" value="#size+1"/>
         <s:if test="#product.distributor_bank!=null">
             <div class="product bank-financing" data-toggle="modal" data-target="#myModal">

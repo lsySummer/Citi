@@ -211,7 +211,9 @@ label.line {
 
 .info {
     text-align: end;
+    white-space: nowrap;
     color: rgb(180, 180, 180);
+    overflow: hidden;
 }
 
 .paging-wrapper {
