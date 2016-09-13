@@ -73,6 +73,10 @@ public class ProductCategoryManager {
         "申购中", "认购中", "已关闭"
     };
 
+    static private final String[] bankYieldType = {
+        "保证收益型", "保本浮动收益型", "非保本浮动收益型"
+    };
+
     static {
         //init
         categoryList = new ArrayList<>();
@@ -87,6 +91,10 @@ public class ProductCategoryManager {
 
     static public List<Category> getCategoryList() {
         return categoryList;
+    }
+
+    static public List<String> getBankYieldType() {
+        return Arrays.asList(bankYieldType);
     }
 
     static public Category getCategoryByID(Integer ID) {
@@ -208,10 +216,16 @@ public class ProductCategoryManager {
     }
 
     static public boolean ifNetBankProduct(ProductBank bank) {
+        if (bank.getIfNavType() == null) {
+            return false;
+        }
         return bank.getIfNavType() == 1;
     }
 
     static public boolean ifClosedBankProduct(ProductBank bank) {
+        if (bank.getIfClose() == null) {
+            return false;
+        }
         return bank.getIfClose() == 1;
     }
 

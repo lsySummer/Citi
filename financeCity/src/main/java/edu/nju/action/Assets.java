@@ -62,7 +62,7 @@ public class Assets extends BaseAction{
 		catch (NotLoginException e) {
 			e.printStackTrace();
 			ErrorManager.setError(request, ErrorManager.errorNotLogin);
-			return ERROR;
+			return LOGIN;
 		}
 		catch (NotAllConfigurationSetException t) {
 			t.printStackTrace();

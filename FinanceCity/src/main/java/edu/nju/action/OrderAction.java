@@ -61,6 +61,11 @@ public class OrderAction extends BaseAction {
             e.printStackTrace();
             ErrorManager.setError(request, ErrorManager.errorNoSuchInvestmentPortfolio);
         }
+        catch (NotLoginException n) {
+            n.printStackTrace();
+            ErrorManager.setError(request, ErrorManager.errorNotLogin);
+            return LOGIN;
+        }
         catch (Exception e) {
             e.printStackTrace();
             ErrorManager.setError(request, ErrorManager.errorInvalidParameter);
@@ -91,6 +96,7 @@ public class OrderAction extends BaseAction {
         catch (NotLoginException e) {
             ErrorManager.setError(request, ErrorManager.errorNotLogin);
             e.printStackTrace();
+            return LOGIN;
         }
         catch (NothingToPayException n) {
             n.printStackTrace();

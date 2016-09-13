@@ -3,6 +3,7 @@ package edu.nju.dao.impl;
 import java.util.List;
 
 import edu.nju.dao.UserDao;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -130,6 +131,14 @@ public class BaseDaoImpl implements BaseDao, CommonDao, UserDao {
 	public List find(String queryString) {
 		Session session = getSession();
 		return session.createQuery(queryString).list();
+	}
+
+	@Override
+	public List find(String queryString, int maxResult) {
+		Session session = getSession();
+		Query query = session.createQuery(queryString);
+		query.setMaxResults(maxResult);
+		return query.list();
 	}
 
 	public SessionFactory getSessionFactory() {
