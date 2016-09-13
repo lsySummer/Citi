@@ -36,10 +36,15 @@ public class SearchAction extends BaseAction {
         context.put("fundInstitutionList", fundInstitutionList);
         context.put("insuranceInstitutionList", insuranceInstitutionList);
 
-        System.out.println(bankInstitutionList);
-        System.out.println(bondInstitutionList);
-        System.out.println(fundInstitutionList);
-        System.out.println(insuranceInstitutionList);
+        System.out.println("bank:"+bankInstitutionList);
+        System.out.println("bond:"+bondInstitutionList);
+        System.out.println("fund:"+fundInstitutionList);
+        System.out.println("insurance:"+insuranceInstitutionList);
+
+        System.out.println("bondStateList:"+bondStateList);
+        System.out.println("bondYieldList:"+bondYieldList);
+        System.out.println("fundStateList:"+fundStateList);
+        System.out.println("fundTargetList:"+fundTargetList);
 
         context.put("bondStateList", bondStateList);
         context.put("bondYieldList", bondYieldList);

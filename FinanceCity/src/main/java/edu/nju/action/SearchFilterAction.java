@@ -145,7 +145,7 @@ public class SearchFilterAction extends BaseAction {
             e.printStackTrace();
         }
 
-        context.put("currentPage", page_num);
+        context.put("currentPage", page_num+1);
         context.put("pageLength", page_length);
 
         return SUCCESS;
@@ -166,7 +166,7 @@ public class SearchFilterAction extends BaseAction {
             String key = (String) it.next();
             Object object = options.get(key);
             if(object==null){
-                optMap.put(key, null);
+                optMap.put(key, (Object) null);
             }else{
                 optMap.put(key, object);
             }

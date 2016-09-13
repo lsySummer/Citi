@@ -34,10 +34,10 @@
     <link type="text/css" rel="stylesheet" href="${basePath}css/searchResult.css"/>
     <link type="text/css" rel="stylesheet" href="${basePath}css/searchFilter.css"/>
 
-    <%--<script>--%>
-        <%--var search_list = "<s:property value="#request.bondStateList"/>";--%>
-        <%--console.log(search_list);--%>
-    <%--</script>--%>
+    <script>
+        var search_list = "<s:property value="#request.bankInstitutionList"/>";
+        console.log(search_list);
+    </script>
 
     <script type="text/javascript" rel="script" src="js/jquery.min.js"></script>
     <script type="text/javascript" rel="script" src="plugins/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
@@ -152,7 +152,7 @@
                 <div class="input-add-on income-item">
                     <span class="tag">管理机构&nbsp;&nbsp;</span>
                     <select id="bank_institution_manage" class="input-add-on-field">
-                        <s:iterator id="bond" value="#request.bankInstitutionList">
+                        <s:iterator id="bank" value="#request.bankInstitutionList">
                             <option><s:property value="#bank"/></option>
                         </s:iterator>
                     </select>
@@ -227,8 +227,8 @@
                     &nbsp;&nbsp;
                     &nbsp;&nbsp;
                     <select id="bond_state" class="input-add-on-field">
-                        <s:iterator id="state" value="#request.bondStateList">
-                            <option><s:property value="#state"/></option>
+                        <s:iterator var="counter" id="state" value="#request.bondStateList" status="tl">
+                            <option value="<s:property value="#tl.index"/>"><s:property value="#state"/></option>
                         </s:iterator>
                     </select>
                 </div>
@@ -277,16 +277,16 @@
                 <div class="input-add-on income-item">
                     <span class="tag">目标类型</span>
                     <select id="fund_type" class="input-add-on-field">
-                        <s:iterator id="target" value="#request.fundTargetList">
-                            <option><s:property value="#target"/></option>
+                        <s:iterator id="target" value="#request.fundTargetList" status="tl">
+                            <option value="<s:property value="#tl.index"/>"><s:property value="#target"/></option>
                         </s:iterator>
                     </select>
                 </div>
                 <div class="input-add-on income-item">
                     <span class="tag">状态</span>
                     <select id="fund_state" class="input-add-on-field">
-                        <s:iterator id="state" value="#request.fundStateList">
-                            <option><s:property value="#state"/></option>
+                        <s:iterator id="state" value="#request.fundStateList" status="tl">
+                            <option value="<s:property value="#tl.index"/>"><s:property value="#state"/></option>
                         </s:iterator>
                     </select>
                 </div>
