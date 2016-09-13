@@ -23,16 +23,16 @@ import java.net.URL;
 /**
  * Created by sam on 16/9/6.
  */
-public class Log_inDao {
-    private static String mainurl = "http://192.168.1.111:8888/Citi/api/";
+public class Log_inDao extends  CommonDao{
+//    private static String mainurl = "http://192.168.1.111:8888/Citi/api/";
 
-    public String sendPost(JSONObject param, String Api) {
+    public String sendPost(JSONObject param) {
 
         String ResultRes = null;
         HttpURLConnection connection = null;
-        Log.i("testt", mainurl + Api);
+//        Log.i("testt", mainurl + Api);
         try {
-            URL url = new URL(mainurl + Api);
+            URL url = new URL(getFullUrl());
             connection = (HttpURLConnection) url.openConnection();
 //            Log.i("testss", "try01");
 //            String data = "\"username\":\"administer\",\"passwd\":\"123456\"";
@@ -90,5 +90,20 @@ public class Log_inDao {
         }
 
         return ResultRes;
+    }
+
+    @Override
+    public String getAction() {
+        return host+"/api/login";
+    }
+
+    @Override
+    public String getFullUrl() {
+        return getAction();
+    }
+
+    @Override
+    public String sendRequest() {
+        return null;
     }
 }

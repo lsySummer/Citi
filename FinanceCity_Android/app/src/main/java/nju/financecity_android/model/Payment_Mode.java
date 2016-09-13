@@ -10,9 +10,7 @@ import java.util.HashMap;
 import nju.financecity_android.dao.PaymentDao;
 import nju.financecity_android.util.HttpUtil;
 
-/**
- * Created by sam on 16/9/14.
- */
+
 public class Payment_Mode {
 
     public HashMap<String,Object> analyse(String payment_mode){

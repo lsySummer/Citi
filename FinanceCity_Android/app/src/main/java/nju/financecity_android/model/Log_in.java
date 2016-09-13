@@ -24,7 +24,7 @@ public class Log_in {
             Log.d("bug","root put wrong");
         }
 
-        String mRawData = new Log_inDao().sendPost(root,"login");
+        String mRawData = new Log_inDao().sendPost(root);
 
         return DetailPost(mRawData);
     }
