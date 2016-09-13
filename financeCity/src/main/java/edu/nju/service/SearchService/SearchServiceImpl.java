@@ -100,6 +100,9 @@ public class SearchServiceImpl implements SearchService {
     public List<Product> searchProductsByKey(String keyWord, String searchType) {
         try {
             List<Product> productList = new ArrayList<>();
+            if (keyWord == null) {
+                keyWord = "";
+            }
 
             if (searchType == null) {
                 productList.addAll(searchProductsByKey(keyWord, ProductCategoryManager.categoryBank));
