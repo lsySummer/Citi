@@ -33,9 +33,9 @@
         android:id="@+id/limit"
         nju:bar_name="期限"
         nju:bar_start="0"
-        nju:bar_end="1800"
+        nju:bar_end="60"
         nju:bar_interval="1"
-        nju:bar_unit="天"
+        nju:bar_unit="月"
         nju:putin1_text="0"
         nju:putin2_text="1800"
         android:layout_width="match_parent"
@@ -87,7 +87,7 @@
         android:layout_alignParentRight="true"/>
     <TextView
         android:id="@+id/close_name"
-        android:text="是否封闭"
+        android:text="封闭"
         android:textSize="18dp"
         android:textColor="@color/WordBlack"
         android:layout_width="wrap_content"

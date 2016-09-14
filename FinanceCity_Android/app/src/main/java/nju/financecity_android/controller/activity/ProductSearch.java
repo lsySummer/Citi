@@ -4,6 +4,8 @@ import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -54,10 +56,26 @@ public class ProductSearch extends Fragment{
     /**搜索按钮*/
     private static Button product_search_filter_button;
 
+    // 实例化一个handler
+    Handler myHandler = new Handler() {
+        //接收到消息后处理
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1:
+                    product_search_body.removeAllViews();
+                    product_search_body.addView(searchResult);
+                    Log.i("search","get message");
+                    break;
+            }
+            super.handleMessage(msg);
+        }
+    };
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.product_search, container, false);
+
         return view;
     }
 
@@ -79,13 +97,22 @@ public class ProductSearch extends Fragment{
                 {
                     e.printStackTrace();
                 }
+                maps.clear();
                 maps.addAll(SearchProduct.analyse(jAll));
+                searchResult = new SearchResult(getActivity(), search(maps));
+
+                Message message = new Message();
+                message.what = 1;
+                //发送消息
+                myHandler.sendMessage(message);
+                Log.i("search","send message");
             }
         });
         brunchThread.start();
-        searchResult=new SearchResult(getActivity(),list);
-        product_search_body.addView(searchResult);
 
+        searchResult=new SearchResult(getActivity(),list);
+        product_search_body.removeAllViews();
+        product_search_body.addView(searchResult);
         //关键字搜索框
         final EditText key=(EditText)getView().findViewById(R.id.key);
         Log.i("key",key.getText().toString());
@@ -187,7 +214,7 @@ public class ProductSearch extends Fragment{
                         try {
                             if(key.getText()!=null&&!key.getText().toString().equals(""))
                             {
-                                masterJObject.put("keyword", key.getText());
+                                masterJObject.put("keyword", key.getText().toString());
                             }
                             else
                             {
@@ -197,17 +224,17 @@ public class ProductSearch extends Fragment{
                         }catch(Exception e){Log.e("test","condition to json exception1");e.printStackTrace();}
                         JSONObject optionJObject=new JSONObject();
                         try {
-                            switch (selector[0]) {//TODO 还要处理默认情况,很多数据还不对
+                            switch (selector[0]) {
                                 case 0:
                                     AllSearch allSearch = (AllSearch) filter[0];
                                     float[] all_yearly_income_rate = {allSearch.getYearMin(), allSearch.getYearMax()};
                                     float[] all_expiration = {allSearch.getLimitMin(), allSearch.getLimitMax()};
-                                    int all_is_close_ended = 0;//TODO 0的意思
+                                    int all_is_close_ended = 0;//0表示不封闭
                                     if (allSearch.getCloseChecked()) {
                                         all_is_close_ended = 1;
                                     }
-                                    optionJObject.put("yearly_income_rate", new JSONArray(all_yearly_income_rate));
-                                    optionJObject.put("expiration",new JSONArray(all_expiration));
+                                    optionJObject.put("yearly_income_rate", new JSONArray(all_yearly_income_rate).toString());
+                                    optionJObject.put("expiration",new JSONArray(all_expiration).toString());
                                     optionJObject.put("is_close_ended",all_is_close_ended);
                                     break;
                                 case 1:
@@ -217,19 +244,22 @@ public class ProductSearch extends Fragment{
                                     float[] bank_initial_amount = {bankSearch.getStartMin(), bankSearch.getStartMax()};
                                     String bank_institution_manage=bankSearch.getAgent();
                                     String bank_income_type=bank.getIncometype();
-                                    int bank_is_close_ended = 0;//TODO 0的意思
+                                    int bank_is_close_ended = 0;//0表示不封闭
                                     if (bankSearch.getCloseChecked()) {
                                         bank_is_close_ended = 1;
                                     }
-                                    optionJObject.put("yearly_income_rate", new JSONArray(bank_yearly_income_rate));
-                                    optionJObject.put("expiration",new JSONArray(bank_expiration));
+                                    optionJObject.put("yearly_income_rate", new JSONArray(bank_yearly_income_rate).toString());
+                                    optionJObject.put("expiration",new JSONArray(bank_expiration).toString());
                                     optionJObject.put("is_close_ended",bank_is_close_ended);
-                                    optionJObject.put("initial_amount",new JSONArray(bank_initial_amount));
+                                    optionJObject.put("initial_amount",new JSONArray(bank_initial_amount).toString());
                                     if(!bank_institution_manage.equals("所有"))
                                     {
                                         optionJObject.put("institution_manage",bank_institution_manage);//TODO
                                     }
-                                    optionJObject.put("income_type",bank_income_type);//TODO
+                                    if(!bank_income_type.equals("所有"))
+                                    {
+                                        optionJObject.put("income_type", bank_income_type);//TODO
+                                    }
                                     break;
                                 case 2:
                                     BondSearch bondSearch = (BondSearch) filter[0];
@@ -254,10 +284,10 @@ public class ProductSearch extends Fragment{
                                     if(fundSearch.getCloseChecked()){fund_is_close_ended=1;}
                                     int fund_sort_type=fundSearch.getSort_type_item();
                                     if(fund_sort_type==2){fund_sort_type=-1;}
-                                    int fund_expiration=fundSearch.getSortYear();//TODO
+//                                    int fund_expiration=fundSearch.getSortYear();//TODO
                                     if(!fund_institution_manage.equals("所有"))
                                     {
-                                        optionJObject.put("institution_manage",fund_institution_manage);//TODO
+                                        optionJObject.put("institution_manage",fund_institution_manage);
                                     }
                                     if(!fund_type.equals("所有")) {
                                         optionJObject.put("type", fund_type);
@@ -267,47 +297,55 @@ public class ProductSearch extends Fragment{
                                     }
                                     optionJObject.put("net_value",new JSONArray(fund_net_value).toString());
                                     optionJObject.put("is_close_ended",fund_is_close_ended+"");
-//                                    optionJObject.put("sort_type",fund_sort_type);
+                                    optionJObject.put("sort_type",fund_sort_type);
 //                                    if(fund_expiration!=-1)
 //                                        optionJObject.put("expiration",fund_expiration);
                                     break;
                                 case 4:
                                     InsuranceSearch insuranceSearch=(InsuranceSearch)filter[0];
-                                    String insurance_length_of_years=insuranceSearch.getLimit();//TODO
+                                    String insurance_length_of_years=insuranceSearch.getLimit();
+                                    if(insurance_length_of_years.equals("终身"))
+                                    {
+                                        insurance_length_of_years="100";
+                                    }
                                     float[] insurance_income_rate={insuranceSearch.getYearMin(),insuranceSearch.getYearMax()};
                                     String insurance_distributor=insuranceSearch.getAgent();
                                     float[] insurance_price={insuranceSearch.getValueMin(),insuranceSearch.getValueMax()};
                                     optionJObject.put("length_of_years",insurance_length_of_years);
-                                    optionJObject.put("income_rate",new JSONArray(insurance_income_rate));
+                                    optionJObject.put("income_rate",new JSONArray(insurance_income_rate).toString());
                                     if(!insurance_distributor.equals("所有"))
                                     {
-                                        optionJObject.put("institution_manage",insurance_distributor);//TODO
+                                        optionJObject.put("institution_manage",insurance_distributor);
                                     }
-                                    optionJObject.put("price",new JSONArray(insurance_price));
+                                    optionJObject.put("price",new JSONArray(insurance_price).toString());
                                     break;
                             }
-                            if(optionJObject.length()!=0)
+                            if(isPicked[0])
                             {
-//                                masterJObject.put("options",optionJObject);
+                                masterJObject.put("options",optionJObject);
                             }
                             Log.i("test","optionObject="+optionJObject.toString());
                             Log.i("test","masterObject="+masterJObject.toString());
                         }catch(Exception e){Log.e("test","condition to json exception2");e.printStackTrace();}
+                        maps.clear();
                         maps.addAll(SearchProduct.analyse(masterJObject));
+                        searchResult = new SearchResult(getActivity(), search(maps));
+                        Message message = new Message();
+                        message.what = 1;
+                        //发送消息
+                        myHandler.sendMessage(message);
+                        Log.i("search","send message");
                     }
                 });
                 thread.start();
 
-                try{thread.join();}catch(Exception e){};
+//                try{thread.join();}catch(Exception e){};
 
                 /*=======================================================================================*/
 
-                searchResult = new SearchResult(getActivity(), search(maps));
-                isPicked[0] = false;
-
                 product_search_body.removeAllViews();
                 product_search_body.addView(searchResult);
-
+                isPicked[0] = false;
             }
         });
         //筛选按钮
@@ -334,7 +372,7 @@ public class ProductSearch extends Fragment{
         String middle="";
         String bottom="";
         String state="";
-        for(int i=0;i<maps.size();i++) {//TODO 要展现哪些数据
+        for(int i=0;i<maps.size();i++) {//TODO top middle bottom
             HashMap<String, Object> map = maps.get(i);
             pid=map.get("pid").toString();
             switch((String)map.get("productType"))
@@ -347,6 +385,7 @@ public class ProductSearch extends Fragment{
                         year = (double) map.get("expected_income_rate");
                     }catch(Exception e){}
                     state = (String) map.get("type");
+                    list.add(new ProductVO(pid,sid, name, type, year, state,top,middle,bottom));
                     break;
                 case "bond":
                     sid = (String) map.get("sid");
@@ -356,14 +395,15 @@ public class ProductSearch extends Fragment{
                         year = (double) map.get("expected_income_rate");
                     }catch(Exception e){}
                     state = (String) map.get("type");
+                    list.add(new ProductVO(pid,sid, name, type, year, state,top,middle,bottom));
                     break;
                 case "fund":
                     sid = (String) map.get("sid");
                     name = (String) map.get("name");
                     type = (String) map.get("productType");
                     top = "产品状态 ";
-                    middle="到期时间";
-                    bottom="变化率";
+                    middle="基金募集日";
+                    bottom="管理费率";
                     try {
                         year = (double) map.get("expected_income_rate");
                     }catch(Exception e){}
@@ -371,10 +411,10 @@ public class ProductSearch extends Fragment{
                         top+=(String) map.get("state");
                     }catch(Exception e){}
                     try {
-                        middle +=(String) map.get("est_date");//TODO 中文翻译
+                        middle +=(String) map.get("est_date");
                     }catch(Exception e){}
                     try {
-                        bottom +=(String) map.get("mng_charge_rate");//TODO 中文翻译
+                        bottom +=(String) map.get("mng_charge_rate");
                     }catch(Exception e){}
                     state = (String) map.get("type");
                     list.add(new ProductVO(pid,sid, name, type, year, state,top,middle,bottom));
@@ -387,9 +427,11 @@ public class ProductSearch extends Fragment{
                         year = (double) map.get("expected_income_rate");
                     }catch(Exception e){}
                     state = (String) map.get("type");
+                    list.add(new ProductVO(pid,sid, name, type, year, state,top,middle,bottom));
                     break;
             }
         }
         return list;
     }
+
 }

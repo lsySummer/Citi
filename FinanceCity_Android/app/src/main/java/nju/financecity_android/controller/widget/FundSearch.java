@@ -26,7 +26,7 @@ public class FundSearch extends RelativeLayout {
     private Spinner agent;
     private Spinner state;
     private Bar latest;
-    private EditText sort;
+//    private EditText sort;
     private Spinner sort_type;
     private Switch close;
 
@@ -59,7 +59,7 @@ public class FundSearch extends RelativeLayout {
         agent=(Spinner)findViewById(R.id.agent_spinner);
         state=(Spinner)findViewById(R.id.state_spinner);
         latest=(Bar)findViewById(R.id.latest);
-        sort=(EditText)findViewById(R.id.sort_text);
+//        sort=(EditText)findViewById(R.id.sort_text);
         close=(Switch)findViewById(R.id.close_switch);
         sort_type=(Spinner)findViewById(R.id.sort_type);
 
@@ -144,12 +144,12 @@ public class FundSearch extends RelativeLayout {
     {
         return latest.getMax();
     }
-    public int getSortYear()
-    {
-        if(sort.getText().toString().equals(""))
-            return -1;
-        return Integer.parseInt(sort.getText().toString());
-    }
+//    public int getSortYear()
+//    {
+//        if(sort.getText().toString().equals(""))
+//            return -1;
+//        return Integer.parseInt(sort.getText().toString());
+//    }
     public boolean getCloseChecked()
     {
         return close_checked;
@@ -176,9 +176,9 @@ public class FundSearch extends RelativeLayout {
         this.close_checked=close_checked;
         this.close.setChecked(close_checked);
     }
-    public void setSort(int year) {
-        sort.setText(year+"");
-    }
+//    public void setSort(int year) {
+//        sort.setText(year+"");
+//    }
     public void setSort_type(int pos)
     {
         sort_type.setSelection(pos);
@@ -190,7 +190,7 @@ public class FundSearch extends RelativeLayout {
         setState(0);
         setClose_checked(false);
         setAgent(0);
-        sort.setText("");
+//        sort.setText("");
         setSort_type(0);
     }
 }

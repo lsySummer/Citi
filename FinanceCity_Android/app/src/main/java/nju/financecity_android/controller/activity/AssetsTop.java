@@ -4,6 +4,8 @@ import android.app.Fragment;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,6 +49,19 @@ public class AssetsTop extends Fragment
     private LinearLayout assets_top_layout;
     private PieChartView pieChart;
     private LineChartView lineChart;
+    private LineChartData data = new LineChartData();
+    Handler myHandler = new Handler() {
+        //接收到消息后处理
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1:
+                    lineChart.setLineChartData(data);
+                    Log.i("search","get message");
+                    break;
+            }
+            super.handleMessage(msg);
+        }
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -130,16 +145,53 @@ public class AssetsTop extends Fragment
     private void setLineChart()
     {
         lineChart=(LineChartView)getView().findViewById(R.id.line);
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                setLineData();
+
+                Message message = new Message();
+                message.what = 1;
+                //发送消息
+                myHandler.sendMessage(message);
+                Log.i("search","send message");
+
+            }
+        });
+        thread.start();
+
+        //设置行为属性，支持缩放、滑动以及平移
+        lineChart.setInteractive(true);
+        lineChart.setZoomType(ZoomType.HORIZONTAL);
+        lineChart.setScrollEnabled(true);
+        lineChart.setContainerScrollEnabled(true, ContainerScrollType.HORIZONTAL);
+        lineChart.setLineChartData(data);
+        lineChart.setVisibility(View.VISIBLE);
+        Viewport v = new Viewport(lineChart.getMaximumViewport());
+        v.left = 0;
+        v.right= 6;
+        lineChart.setCurrentViewport(v);
+        lineChart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("test","click line button");
+                ((MainActivity) getActivity()).setDisplayPage(MainActivity.PAGE_ASSET);
+            }
+        });
+    }
+
+    private void setLineData()
+    {
         List<PointValue> mPointValues=new ArrayList<PointValue>();
         List<AxisValue> mAxisValues=new ArrayList<AxisValue>();
 
-        /*==============================================================================*/
         final JSONObject[] jsonObjects=new JSONObject[1];
         jsonObjects[0]=new JSONObject();//value
         UserSession user=UserSession.getCurrUser();
         Log.i("test","user "+user.getSessionId());
         try {
-//            jsonObjects[0].put("id", Integer.parseInt(user.getUserId()));
+//            jsonObjects[0].put("id", Integer.parseInt(user.getUserId()));//TODO 传递当前用户
 //            jsonObjects[0].put("sessionId",user.getSessionId());
             jsonObjects[0].put("id", 4);
             jsonObjects[0].put("sessionId","25f651f520e31896b7c1ffc57e78ec33");
@@ -149,23 +201,10 @@ public class AssetsTop extends Fragment
             Log.i("test","user session or json exception");
             e.printStackTrace();
         }
-
         Log.i("test","jObject of parameters "+jsonObjects[0]);
 
         final String[] result={""};
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                result[0]=new AssetValueDao().sendPost(jsonObjects[0]);
-            }
-        });
-        thread.start();
-        try {
-            thread.join();
-        }catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+        result[0]=new AssetValueDao().sendPost(jsonObjects[0]);
         JSONArray jValue=null;
         try{
             jValue=new JSONObject(result[0]).getJSONArray("assetValues");
@@ -174,8 +213,7 @@ public class AssetsTop extends Fragment
             Log.i("test","asset value result exception");
             e.printStackTrace();
         }
-        /*==============================================================================*/
-//        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+
         List<String> dates=new ArrayList<String>();
         try {
             for (int i = 0; i < jValue.length(); i++) {
@@ -186,8 +224,6 @@ public class AssetsTop extends Fragment
             Log.i("test","analyse jsonArray");
             e.printStackTrace();
         }
-        /*==============================================================================*/
-
         try{
 //            for (int i = 0; i < dates.size() ; i++) {
             for (int i = 0; i < 20 ; i++) {//TODO
@@ -207,7 +243,6 @@ public class AssetsTop extends Fragment
         line.setPointRadius(4);//座标点大小
         List<Line> lines = new ArrayList<Line>();
         lines.add(line);
-        LineChartData data = new LineChartData();
         data.setLines(lines);
 
         //坐标轴
@@ -225,25 +260,5 @@ public class AssetsTop extends Fragment
         axisY.setMaxLabelChars(7); //默认是3，只能看最后三个数字
         data.setAxisYLeft(axisY);
 
-        //设置行为属性，支持缩放、滑动以及平移
-        lineChart.setInteractive(true);
-        lineChart.setZoomType(ZoomType.HORIZONTAL);
-        lineChart.setScrollEnabled(true);
-        lineChart.setContainerScrollEnabled(true, ContainerScrollType.HORIZONTAL);
-        lineChart.setLineChartData(data);
-        lineChart.setVisibility(View.VISIBLE);
-        Viewport v = new Viewport(pieChart.getMaximumViewport());
-        v.left = 0;
-        v.right= 6;
-        lineChart.setCurrentViewport(v);
-
-        lineChart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.i("test","click line button");
-                ((MainActivity) getActivity()).setDisplayPage(MainActivity.PAGE_ASSET);
-            }
-        });
     }
-
 }

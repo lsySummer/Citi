@@ -47,11 +47,11 @@ public class SearchProduct {
                     HashMap<String, Object> map = new HashMap<>();
                     switch (type) {
                         case "bank":
-                            map.put("productId", resultJsonObject.getInt("productId"));
+//                            map.put("productId", resultJsonObject.getInt("productId"));
                             map.put("productType", type);
                             map.put("pid", resultJsonObject.getInt("pid"));
                             map.put("name", resultJsonObject.getString("name"));
-                            map.put("yearly_income_rate", resultJsonObject.getDouble("yearly_income_rate"));
+                            map.put("yearly_income_rate", resultJsonObject.get("yearly_income_rate"));
                             map.put("product_type", resultJsonObject.getString("product_type"));
                             map.put("income_type", resultJsonObject.getString("income_type"));
                             map.put("initial_money", resultJsonObject.getInt("initial_money"));
@@ -72,7 +72,7 @@ public class SearchProduct {
                             map.put("est_date", resultJsonObject.get("est_date"));
                             break;
                         case "insurance":
-                            map.put("productId", resultJsonObject.getInt("productId"));
+//                            map.put("productId", resultJsonObject.getInt("productId"));
                             map.put("productType", type);
                             map.put("pid", resultJsonObject.getInt("pid"));
                             map.put("name", resultJsonObject.getString("name"));
@@ -82,7 +82,7 @@ public class SearchProduct {
                             map.put("distributor", resultJsonObject.getInt("distributor"));
                             break;
                         case "bond":
-                            map.put("productId", resultJsonObject.getInt("productId"));
+//                            map.put("productId", resultJsonObject.getInt("productId"));
                             map.put("productType", type);
                             map.put("pid", resultJsonObject.getInt("pid"));
                             map.put("name", resultJsonObject.getString("name"));

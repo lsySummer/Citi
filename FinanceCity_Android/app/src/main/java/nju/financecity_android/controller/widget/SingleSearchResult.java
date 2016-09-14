@@ -27,9 +27,9 @@ public class SingleSearchResult extends RelativeLayout {
     private TextView type;
     private TextView product;
     private TextView introduction;
-    private TextView top;
-    private TextView middle;
-    private TextView bottom;
+//    private TextView top;
+//    private TextView middle;
+//    private TextView bottom;
     private ProductVO info;
     private RelativeLayout mainPane;
     private Context mContext;
@@ -64,9 +64,9 @@ public class SingleSearchResult extends RelativeLayout {
         type=(TextView)findViewById(R.id.type);
         product=(TextView)findViewById(R.id.product);
         introduction=(TextView)findViewById(R.id.introduction);
-        top=(TextView)findViewById(R.id.top);
-        middle=(TextView)findViewById(R.id.middle);
-        bottom=(TextView)findViewById(R.id.bottom);
+//        top=(TextView)findViewById(R.id.top);
+//        middle=(TextView)findViewById(R.id.middle);
+//        bottom=(TextView)findViewById(R.id.bottom);
         mainPane = (RelativeLayout) findViewById(R.id.search_result_element_layout);
 
         int[] colors={R.color.bank,R.color.bond,R.color.fund,R.color.insurance};
@@ -103,9 +103,9 @@ public class SingleSearchResult extends RelativeLayout {
         year_rate.setText(strYear+"%");
         product.setText(info.getName());
         introduction.setText(info.getIntroduction());
-        top.setText(info.getTop());
-        middle.setText(info.getMiddle());
-        bottom.setText(info.getBottom());
+//        top.setText(info.getTop());
+//        middle.setText(info.getMiddle());
+//        bottom.setText(info.getBottom());
         mainPane.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
