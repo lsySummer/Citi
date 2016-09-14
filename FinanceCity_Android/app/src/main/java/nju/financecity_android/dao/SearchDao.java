@@ -15,7 +15,7 @@ public class SearchDao extends CommonDao{
 
     @Override
     public String getAction() {
-        return host+"/Citi/api/product/s";
+        return host+"/api/product/s";
     }
 
     @Override

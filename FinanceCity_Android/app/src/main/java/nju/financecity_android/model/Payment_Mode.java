@@ -7,24 +7,27 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
-import nju.financecity_android.dao.Log_EditDao;
-import nju.financecity_android.dao.Log_inDao;
+import nju.financecity_android.dao.PaymentDao;
 import nju.financecity_android.util.HttpUtil;
 
 
-public class Log_inEdit {
-    public HashMap<String,Object> analyse(String mobile, String secure,String password){
+public class Payment_Mode {
+
+    public HashMap<String,Object> analyse(String payment_mode){
+        UserSession userSession = UserSession.getCurrUser();
+        String userid = userSession.getUserId();
+        String sessionid = userSession.getSessionId();
         JSONObject root = new JSONObject();
         try {
-            root.put("mobile",mobile);
-            root.put("secure_code",secure);
-            root.put("password",password);
+            root.put("payment_mode",payment_mode);
+            root.put("id",Integer.parseInt(userid));
+            root.put("sessionId",sessionid);
         } catch (JSONException e) {
             e.printStackTrace();
             Log.d("bug","root put wrong");
         }
 
-        String url = new Log_EditDao().getFullUrl();
+        String url = new PaymentDao().getFullUrl();
         String mRawData = HttpUtil.sendJson(url,root,"POST");
 
         return DetailPost(mRawData);
@@ -49,5 +52,4 @@ public class Log_inEdit {
 
         return Result;
     }
-
 }

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--产品搜索主页面-->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/product_search_layout"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                android:id="@+id/product_search_layout"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="12dp">
 
 <!--    <RelativeLayout
         android:id="@+id/header"
@@ -12,15 +13,7 @@
         android:layout_height="wrap_content"
         android:background="@color/lightGreyPlus"
         android:layout_marginBottom="5dp">-->
-        <ImageButton
-            android:id="@+id/back"
-            android:layout_width="25dp"
-            android:layout_height="35dp"
-            android:background="@drawable/back"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="-8dp"/>
-        <Button
+    <Button
             android:id="@+id/pick"
             android:text="筛选▼"
             android:textSize="18dp"
@@ -28,19 +21,18 @@
             android:background="@color/lightGreyPlus"
             android:layout_width="60dp"
             android:layout_height="30dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignTop="@+id/search" android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"/>
         <Button
-            android:id="@+id/search"
-            android:text="搜索"
-            android:textSize="18dp"
-            android:textColor="@color/white"
-            android:background="@color/lightBlue"
-            android:layout_width="60dp"
-            android:layout_height="30dp"
-            android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@id/pick"
-            android:layout_marginRight="5dp"/>
+                android:id="@+id/search"
+                android:textSize="18dp"
+                android:textColor="@color/white"
+                android:background="@color/lightBlue"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@id/pick"
+                android:layout_marginRight="5dp" android:text="Go"/>
         <EditText
             android:id="@+id/key"
             android:hint="输入关键字搜索"
@@ -52,7 +44,6 @@
             android:layout_width="fill_parent"
             android:layout_height="50dp"
             android:layout_alignParentTop="true"
-            android:layout_toRightOf="@id/back"
             android:layout_toLeftOf="@id/search"
             android:layout_marginTop="-10dp"
             android:layout_marginBottom="-10dp"/>
@@ -63,13 +54,13 @@
             android:layout_height="0dp"
             android:layout_centerHorizontal="true" />-->
         <Spinner
-            android:id="@+id/slavery_spinner"
-            android:textSize="18dp"
-            android:layout_width="120dp"
-            android:layout_height="40dp"
-            android:layout_below="@id/key"
-            android:layout_alignParentRight="true"
-            android:spinnerMode="dialog"/>
+                android:id="@+id/slavery_spinner"
+                android:textSize="18dp"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:layout_below="@id/key"
+                android:layout_alignParentRight="true"
+                android:spinnerMode="dialog" android:layout_marginTop="6dp" android:layout_marginBottom="6dp"/>
         <TextView
             android:id="@+id/spinner_name"
             android:text="投资标的"
@@ -81,25 +72,25 @@
             android:layout_alignBottom="@id/slavery_spinner"
             android:layout_alignTop="@id/slavery_spinner"
             android:gravity="center"
-            android:layout_below="@id/back"/>
+        />
         <Spinner
-            android:id="@+id/master_spinner"
-            android:textSize="18dp"
-            android:layout_width="fill_parent"
-            android:layout_height="40dp"
-            android:layout_toRightOf="@id/spinner_name"
-            android:layout_toLeftOf="@id/slavery_spinner"
-            android:layout_below="@id/key"
-            android:layout_marginLeft="5dp"
-            android:spinnerMode="dialog"/>
+                android:id="@+id/master_spinner"
+                android:textSize="18dp"
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/spinner_name"
+                android:layout_toLeftOf="@id/slavery_spinner"
+                android:layout_marginLeft="5dp"
+                android:spinnerMode="dialog" android:layout_below="@+id/key" android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"/>
 
 
     <!--</RelativeLayout>-->
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/product_search_result_scroll"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/slavery_spinner">
+                android:id="@+id/product_search_result_scroll"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/slavery_spinner" android:fillViewport="false">
         <RelativeLayout
             android:id="@+id/product_search_body"
             android:background="@color/white"

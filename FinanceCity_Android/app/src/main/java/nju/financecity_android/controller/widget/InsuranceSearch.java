@@ -80,6 +80,7 @@ public class InsuranceSearch extends RelativeLayout{
                 {
                     Log.i("test","insurance agent exception");
                 }
+                agent.setAdapter(new ArrayAdapter<String>(getContext(),R.layout.spinner_element,agent_content));
             }
         });
         agentThread.start();

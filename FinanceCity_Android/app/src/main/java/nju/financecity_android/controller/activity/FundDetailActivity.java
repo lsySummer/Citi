@@ -35,7 +35,6 @@ public class FundDetailActivity extends AppCompatActivity {
             public void run() {
                 Intent intent = getIntent();
                 productId = intent.getStringExtra("productId");
-                productId = "40000217";
                 mData = (new ProductFund(productId)).getProperties();
                 mainThreadHander.post(new Runnable() {
                     @Override
@@ -111,21 +110,14 @@ public class FundDetailActivity extends AppCompatActivity {
         if (chartPoints == null) {
             chartPoints = new ArrayList();
         }
-        //---------------------for test--------------------
-        for (int i = 0; i < 100; i++) {
-            Map map = new HashMap();
-            map.put("nav", new Random().nextInt(i + 1));
-            map.put("date", i + "天");
-            chartPoints.add(map);
-        }
-        //---------------------------------------------------
+
         for (int i = 0; i < chartPoints.size(); i++) {
-            mPointValues.add(new PointValue(i, Float.valueOf(((Map) chartPoints.get(i)).get("nav").toString())));
-            mAxisValues.add(new AxisValue(i).setLabel(i + "天")); //为每个对应的i设置相应的label(显示在X轴)
+            mPointValues.add(new PointValue(i, Float.valueOf(((Map) chartPoints.get(i)).get("NAV").toString())));
+            mAxisValues.add(new AxisValue(i).setLabel(((Map) chartPoints.get(i)).get("date").toString().substring(5))); //为每个对应的i设置相应的label(显示在X轴)
         }
         Line line = new Line(mPointValues).setColor(COLOR_LIGHT_BLUE).setCubic(true);
-        line.setPointRadius(1);
-        line.setStrokeWidth(1);
+        line.setPointRadius(3);
+        line.setStrokeWidth(2);
         List<Line> lines = new ArrayList<>();
         lines.add(line);
         LineChartData lineChartData = new LineChartData();
@@ -136,6 +128,8 @@ public class FundDetailActivity extends AppCompatActivity {
         ax.setHasTiltedLabels(false);
         ax.setTextColor(COLOR_LIGHT_BLUE);
         ax.setValues(mAxisValues);
+        ax.setHasTiltedLabels(true);
+        ax.setMaxLabelChars(5);
         lineChartData.setAxisXBottom(ax);
 
         Axis ay = new Axis();
@@ -184,6 +178,7 @@ public class FundDetailActivity extends AppCompatActivity {
     }
 
     public static final int COLOR_LIGHT_BLUE = Color.argb(255, 17, 183, 243);
+
 
     private Button btPurchase;
     private Map mData;

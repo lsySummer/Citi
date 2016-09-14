@@ -16,9 +16,18 @@ import nju.financecity_android.dao.PersonDao;
 public class PersonGet {
     public HashMap<String,Object> analyse(){
         UserSession userSession = UserSession.getCurrUser();
+        String userid = userSession.getUserId();
         String sessionid = userSession.getSessionId();
-
-        String mRawData = new PersonDao().getData("user/",sessionid);
+//        JSONObject root = new JSONObject();
+//        try {
+//            root.put("id",Integer.parseInt(userid));
+//            root.put("sessionId",sessionid);
+//        }catch (JSONException e) {
+//            e.printStackTrace();
+//            Log.d("bug","root put wrong");
+//        }
+        String SessId = "{\"id\""+":"+userid+","+"\"sessionId\""+":"+"\""+sessionid+"\"}";
+        String mRawData = new PersonDao().getData(SessId);
 
         return DetailGet(mRawData);
     }

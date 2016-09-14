@@ -17,7 +17,7 @@ public class TypeDao extends CommonDao{
 //    private static String url="http://192.168.1.111:8888/Citi/api/institution";
     @Override
     public String getAction() {
-        return host+"/Citi/api/institution";
+        return host+"/api/institution";
     }
 
     @Override
