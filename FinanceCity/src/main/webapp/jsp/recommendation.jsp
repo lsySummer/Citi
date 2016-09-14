@@ -23,12 +23,6 @@
     <link href="${basePath}css/common.css" rel="stylesheet">
     <link href="${basePath}css/recommendation.css" rel="stylesheet">
 
-    <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
-    <script src="https://www.amcharts.com/lib/3/radar.js"></script>
-    <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
-    <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
-    <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
-
     <script src= "https://cdn.zingchart.com/zingchart.min.js"></script>
     <script>
         ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9","ee6b7db5b51705a13dc2339db3edaf6d"];
@@ -86,7 +80,7 @@
                 </li>
             </ul>
 
-            <h6 class="income-title">预计收益曲线图</h6>
+            <%--<h6 class="radar-title">预计收益曲线图</h6>--%>
             <div id="radarChart1" class="radar-chart"></div>
 
             <div class="recommendation-footer">
@@ -138,7 +132,7 @@
                 </li>
             </ul>
 
-            <h6 class="income-title">预计收益曲线图</h6>
+            <%--<h6 class="radar-title">预计收益曲线图</h6>--%>
             <div id="radarChart2" class="radar-chart"></div>
 
             <div class="recommendation-footer">
@@ -190,7 +184,7 @@
                 </li>
             </ul>
 
-            <h6 class="income-title">预计收益曲线图</h6>
+            <%--<h6 class="radar-title">预计收益曲线图</h6>--%>
             <div id="radarChart3" class="radar-chart"></div>
 
             <div class="recommendation-footer">
