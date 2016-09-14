@@ -173,7 +173,7 @@ public class UserAction extends BaseAction {
             boolean ifBifPre_b = false;
             byte type_b = 0;
             int backAmount_i = 0;
-            String back_date = "";
+            String back_date = null;
             int insurance_amount = 0;
             int[] risks = new int[2];
             String[] risks_s = risk.split(";");
@@ -220,7 +220,7 @@ public class UserAction extends BaseAction {
             userTemperPrefer.setIfBigExpense(ifPrepare_b ? (byte)1 : 0);
             userTemperPrefer.setIfConfigBigExpense(ifBifPre_b ? (byte)1 : 0);
             userTemperPrefer.setExpenseType(type_b);
-            userTemperPrefer.setRedeemTime(Date.valueOf(back_date));
+            userTemperPrefer.setRedeemTime(back_date == null ? null : Date.valueOf(back_date));
             userTemperPrefer.setMayRedeemAmount(new BigDecimal(backAmount_i));
             userTemperPrefer.setInsuranceAmount(new BigDecimal(insurance_amount));
             userTemperPrefer.setRiskToleranceMin(new BigDecimal(risks[0]));
@@ -266,6 +266,9 @@ public class UserAction extends BaseAction {
         if ((!session.containsKey("refer_url")) || ((String)session.get("refer_url")).contains("signup")) {
             session.put("refer_url", default_after_login);
         }
+
+        //Default
+        session.put("refer_url", default_after_login);
     }
 
     

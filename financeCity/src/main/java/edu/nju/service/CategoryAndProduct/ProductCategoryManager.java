@@ -199,6 +199,9 @@ public class ProductCategoryManager {
     }
 
     static public String getBankIncomeTypeInChinese(ProductBank bank) {
+        if (bank.getIncomeType() == null) {
+            return null;
+        }
         switch (bank.getIncomeType()) {
             case 0:
                 return "保本收益型";
@@ -212,6 +215,9 @@ public class ProductCategoryManager {
     }
 
     static public String getBankType(ProductBank bank) {
+        if (bank.getIfClose() == null) {
+            return null;
+        }
         return (ifClosedBankProduct(bank) ? "封闭式" : "开放式") + (ifNetBankProduct(bank) ? "净值型" : "非净值型");
     }
 

@@ -232,7 +232,7 @@ public class SearchServiceImpl implements SearchService {
 
     @Override
     public CategoryIndex getCategoryIndex() {
-        List list = userService.getCommonDao().find("SELECT TOP 1 FROM CategoryIndex c ORDER BY id DESC");
+        List list = userService.getCommonDao().find("FROM CategoryIndex c ORDER BY id DESC", 1);
         if (list == null || list.size() == 0) {
             return null;
         }
