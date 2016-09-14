@@ -39,6 +39,14 @@ public class Banner extends LinearLayout {
         lblText.setText(displayText);
     }
 
+    public void setBtBackVisibility(int visibility) {
+        btBack.setVisibility(visibility);
+    }
+
+    public void setBtBackOnClickListener(OnClickListener listener) {
+        btBack.setOnClickListener(listener);
+    }
+
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();

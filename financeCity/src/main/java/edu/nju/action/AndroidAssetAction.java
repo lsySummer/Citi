@@ -39,7 +39,6 @@ public class AndroidAssetAction extends AndroidAction {
             TradeHistoryListVO tradeHistoryListVO = new TradeHistoryListVO();
             ErrorManager.setError(tradeHistoryListVO, ErrorManager.errorUnhandledMethod);
             setResult(tradeHistoryListVO);
-
             return SUCCESS;
         }
 

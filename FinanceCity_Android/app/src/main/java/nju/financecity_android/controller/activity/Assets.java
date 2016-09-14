@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import nju.financecity_android.controller.widget.Banner;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -45,7 +46,6 @@ import nju.financecity_android.model.UserSession;
  * Created by Administrator on 2016/8/25.
  */
 public class Assets extends Fragment {
-    private ImageButton back;
     public LineChartView chart;
     public ListView timeline;
 
@@ -61,15 +61,6 @@ public class Assets extends Fragment {
         super.onStart();
         setChart();
         setTimeline();
-
-        back=(ImageButton)getView().findViewById(R.id.back);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //切换到资产一级界面
-            }
-        });
-
     }
 
     public void setChart()
