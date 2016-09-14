@@ -104,7 +104,7 @@ public class SearchServiceImpl implements SearchService {
                 keyWord = "";
             }
 
-            if (searchType == null) {
+            if (searchType == null || searchType.equals("all")) {
                 productList.addAll(searchProductsByKey(keyWord, ProductCategoryManager.categoryBank));
                 productList.addAll(searchProductsByKey(keyWord, ProductCategoryManager.categoryBond));
                 productList.addAll(searchProductsByKey(keyWord, ProductCategoryManager.categoryFund));
@@ -112,17 +112,10 @@ public class SearchServiceImpl implements SearchService {
             }
             else if (searchType.equals(ProductCategoryManager.categoryFund) ||
                     searchType.equals(ProductCategoryManager.categoryInsurance) ||
-                    searchType.equals(ProductCategoryManager.categoryBank)) {
+                    searchType.equals(ProductCategoryManager.categoryBank) ||
+                    searchType.equals(ProductCategoryManager.categoryBond)) {
                 List<Object> list = userService.getCommonDao().find("FROM Product" + searchType +
                         " p WHERE p.name LIKE '%" +
-                        keyWord + "%'", MAX_RESULT);
-
-                if (list != null && list.size() != 0) {
-                    productList = ProductFactory.createProduct(list.toArray());
-                }
-            }
-            else if (searchType.equals(ProductCategoryManager.categoryBond)){
-                List<Object> list = userService.getCommonDao().find("FROM ProductBond p WHERE p.title LIKE '%" +
                         keyWord + "%'", MAX_RESULT);
 
                 if (list != null && list.size() != 0) {

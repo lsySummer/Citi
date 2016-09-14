@@ -149,8 +149,8 @@ public class InsuranceInvest implements CategoryInvest {
                 public int compare(Integer o1, Integer o2) {
                     ProductInsurance productInsurance1 = (ProductInsurance)productList.get(o1).getProduct();
                     ProductInsurance productInsurance2 = (ProductInsurance)productList.get(o2).getProduct();
-                    Integer unitCompensation1 = productInsurance1.getIndemnityPerUnit();
-                    Integer unitCompensation2 = productInsurance2.getIndemnityPerUnit();
+                    Double unitCompensation1 = productInsurance1.getIndemnity().doubleValue();
+                    Double unitCompensation2 = productInsurance2.getIndemnity().doubleValue();
                     return unitCompensation2.compareTo(unitCompensation1);
                 }
 

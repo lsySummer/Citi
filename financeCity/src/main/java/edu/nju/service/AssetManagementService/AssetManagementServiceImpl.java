@@ -70,8 +70,7 @@ public class AssetManagementServiceImpl implements AssetManagementService {
                             productVO.setBuyingValue(investedProducts.getTotalAmount().doubleValue());
                             productVO.setName(product.getName());
                             productVO.setEndDate(investedProducts.getEndDate().toString());
-                            //TODO:set redeem date
-                            productVO.setCanRedeemDate("");
+                            productVO.setCanRedeemDate(ProductCategoryManager.getProductRedeemDate(product));
 
                             productList.add(productVO);
                         }

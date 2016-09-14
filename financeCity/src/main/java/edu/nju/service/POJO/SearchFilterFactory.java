@@ -90,6 +90,7 @@ public class SearchFilterFactory {
                     ProductBank productBank = (ProductBank)(product);
                     double exp_rate = getValue(productBank.getExpectedRate());
                     double length  = getValue(productBank.getLength()) / 30;
+
                     return  (((exp_rate >= year_rate[0] && exp_rate <= year_rate[1])) &&
                             length > expiration[0] && length < expiration[1] &&
                             (is_closed_ended == null || ProductCategoryManager.ifClosedBankProduct(productBank) == is_closed_ended));
@@ -97,7 +98,8 @@ public class SearchFilterFactory {
                 else if (product instanceof ProductBond) {
                     ProductBond productBond = (ProductBond)(product);
                     double yearRate = getValue(productBond.getCoupon());
-                    int length = getValue(productBond.getLength());
+                    int length = getValue(productBond.getLength()) / 30;
+
                     return  (yearRate >= year_rate[0] && yearRate <= year_rate[1] &&
                             length >= expiration[0] && length <= expiration[1]);
                 }
@@ -105,6 +107,7 @@ public class SearchFilterFactory {
                     ProductInsurance productInsurance = (ProductInsurance)(product);
                     double yearRate = getValue(productInsurance.getExpectedRate());
                     int length = getValue(productInsurance.getWarrantyPeriod());
+
                     return  (yearRate >= year_rate[0] && yearRate <= year_rate[1] &&
                             length >= expiration[0] && length <= expiration[1]);
                 }
@@ -112,6 +115,7 @@ public class SearchFilterFactory {
                     ProductFund productFund = (ProductFund)(product);
                     double yearRate = getValue(productFund.getYearlyRtnRate());
                     int length = getValue(productFund.getLength());
+
                     return  (yearRate >= year_rate[0] && yearRate <= year_rate[1] &&
                             length >= expiration[0] && length <= expiration[1] &&
                             (is_closed_ended == null || productFund.getOperationMode() == null || (productFund.getOperationMode() == 1) == is_closed_ended));
@@ -158,7 +162,7 @@ public class SearchFilterFactory {
             init_arrary(list, expiration);
 
             String expiration_date_s = (String)option.get("expiration_date");
-            if (expiration_date_s == null) {
+            if (expiration_date_s == null || expiration_date_s.equals("")) {
                 expiration_date = null;
             }
             else {
@@ -186,8 +190,12 @@ public class SearchFilterFactory {
 
             @Override
             public boolean isChosen(Object product) {
+                if (!(product instanceof ProductBond)) {
+                    return false;
+                }
+
                 ProductBond productBond = (ProductBond)(product);
-                int length = getValue(productBond.getLength());
+                int length = getValue(productBond.getLength()) / 30;
                 double yearRate = getValue(productBond.getAdjustYearlyRate());
 
                 return (yearRate >= year_rate[0] && yearRate <=  year_rate[1] &&
@@ -289,6 +297,10 @@ public class SearchFilterFactory {
 
             @Override
             public boolean isChosen(Object product) {
+                if (!(product instanceof ProductFund)) {
+                    return false;
+                }
+
                 ProductFund productFund = (ProductFund)(product);
                 double netValue = getValue(productFund.getNav());
                 int length = getValue(productFund.getLength());
@@ -383,6 +395,10 @@ public class SearchFilterFactory {
 
             @Override
             public boolean isChosen(Object product) {
+                if (!(product instanceof ProductBank)) {
+                    return false;
+                }
+
                 ProductBank productBank = (ProductBank)(product);
                 double exp_rate = getValue(productBank.getExpectedRate());
                 int length = getValue(productBank.getLength()) / 30;
@@ -460,6 +476,10 @@ public class SearchFilterFactory {
 
             @Override
             public boolean isChosen(Object product) {
+                if (!(product instanceof ProductInsurance)) {
+                    return false;
+                }
+
                 ProductInsurance productInsurance = (ProductInsurance)product;
                 int length = getValue(productInsurance.getWarrantyPeriod());
                 double yearRate = getValue(productInsurance.getYearRate());

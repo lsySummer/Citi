@@ -51,6 +51,7 @@ public class UpdateUtils {
         }
     }
 
+
     static public void updateNameToId_Bank() {
         Connection connection = getConn();
 
@@ -66,6 +67,35 @@ public class UpdateUtils {
                 int pid = ProductCategoryManager.generateProductID(id, category.getCategoryName());
 
                 System.out.print(resultSet.getString("name"));
+                PreparedStatement prep = connection.prepareStatement(sql_insert);
+                prep.setInt(1, pid);
+                prep.setString(2, resultSet.getString("name"));
+
+                prep.executeUpdate();
+
+            }
+            connection.close();
+        }
+        catch (SQLException s) {
+            s.printStackTrace();
+        }
+    }
+
+    static public void updateNameToId_Bond() {
+        Connection connection = getConn();
+
+        String sql_select = "SELECT * FROM product_bond";
+        String sql_insert = "INSERT INTO name_to_id(id, name) values(?,?)";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql_select);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Category category = ProductCategoryManager.getCategoryByName(ProductCategoryManager.categoryBond);
+                Integer id = resultSet.getInt("id");
+                int pid = ProductCategoryManager.generateProductID(id, category.getCategoryName());
+
+                System.out.println(pid);
                 PreparedStatement prep = connection.prepareStatement(sql_insert);
                 prep.setInt(1, pid);
                 prep.setString(2, resultSet.getString("name"));
@@ -181,5 +211,6 @@ public class UpdateUtils {
     }
 
     static public void main(String[] args) {
+        UpdateUtils.updateNameToId_Bond();
     }
 }

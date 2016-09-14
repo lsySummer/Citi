@@ -7,20 +7,16 @@ import edu.nju.model.ProductInsurance;
 import edu.nju.service.ExceptionsAndError.InvalidParametersException;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
  * Created by Sun YuHao on 2016/8/14.
- */
-@Service
-public class ProductCategoryManager {
+            */
+    @Service
+    public class ProductCategoryManager {
     static public final String categoryFund = "Fund";
     static public final String categoryBond = "Bond";
     static public final String categoryInsurance = "Insurance";
@@ -36,7 +32,7 @@ public class ProductCategoryManager {
             "金融债",
             "企业债",
             "其他债"
-    };
+    };//TODO：国债都放到电子式国债
     static private final String[] fundTypEn = {
             "stock",
             "bond",
@@ -62,8 +58,8 @@ public class ProductCategoryManager {
             "保本型"
     };
     static private final String[] bondInterestType = {
-        "附息债", "零息债", "贴现债"
-    };
+        "零息债", "附息债", "贴现债"
+    };//TODO：固定利率和附息债
 
     static private final String[] bondStateType = {
         "发行中", "已售罄", "未发行"
@@ -235,6 +231,41 @@ public class ProductCategoryManager {
         return bank.getIfClose() == 1;
     }
 
+    static public boolean ifCloseFundProduct(ProductFund fund) {
+        if (fund.getOperationMode() == null) {
+            return false;
+        }
+        return fund.getOperationMode() == 1;
+    }
+
+    static public String getProductRedeemDate(Product product) {
+        if (product.getCategory().belongTo(ProductCategoryManager.categoryBond)){
+            return "可以赎回";
+        }
+        else if (product.getCategory().belongTo(ProductCategoryManager.categoryBank)) {
+            if (ifClosedBankProduct((ProductBank)product.getProduct())) {
+                return "不能赎回";
+            }
+            else {
+                return "可以赎回";
+            }
+        }
+        else if (product.getCategory().belongTo(ProductCategoryManager.categoryFund)) {
+            if (ifCloseFundProduct((ProductFund)product.getProduct())) {
+                return "不能赎回";
+            }
+            else {
+                return "可以赎回";
+            }
+        }
+        else if (product.getCategory().belongTo(ProductCategoryManager.categoryInsurance)) {
+            return "不能赎回";
+        }
+        else {
+            return null;
+        }
+    }
+
     static public Category getFundCategory(Byte fund_index) {
         try {
             if (fund_index == null) {
@@ -316,7 +347,12 @@ public class ProductCategoryManager {
     }
 
     static public String getInsurancePayType(ProductInsurance productInsurance) {
-        switch (productInsurance.getPayType()) {
+        Byte type = productInsurance.getPayType();
+        if (type == null) {
+            type = 0;
+        }
+
+        switch (type) {
             case 0:
                 return "一次缴清";
             case 1:

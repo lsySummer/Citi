@@ -155,7 +155,7 @@ public class BondInvest implements CategoryInvest{
         boolean ifZeroInterest = ProductCategoryManager.getBondInterestType(productBond).equals("零息债");
         int payFrequency = productBond.getCouponFreq();
         double yearRate = productBond.getAdjustYearlyRate().doubleValue();
-        double faceValue = productBond.getDenomination().doubleValue();
+        double faceValue = productBond.getPar().doubleValue();
         double issuePrice = productBond.getIssuePrice().doubleValue();
         int investTime = productBond.getLength();
 

@@ -12,4 +12,6 @@ public interface ServiceCache<T> {
     void setMaxCacheNum(int max);
     List<Object> getMetas(Object tag);
     Object getLatestMeta(Object tag);
+    int getCachedSize();
+    int getCachedSize(Object tag);
 }

@@ -55,25 +55,32 @@ public class SearchFilterAction_ extends AndroidAction {
             ProductCache cache = (ProductCache)session.get("searchCache");
             if (cache == null) {
                 cache = new ProductCache();
-                ProductFilter productFilter = SearchFilterFactory.createFilter(type, map);
-                List<Product> productList = searchService.searchProductsByKey(key, type);
+            }
 
+            List<Product> productList;
+            if (cache.getCached(tag) == null) {
+                ProductFilter productFilter = SearchFilterFactory.createFilter(type, map);
+                productList = searchService.searchProductsByKey(key, type);
                 for (Product product : productList) {
                     if (productFilter.isChosen(product.getProduct())) {
                         cache.cache(tag, product, null);
                     }
                 }
+            }
+            else {
+                productList = cache.getCached(tag);
+            }
+            session.put("searchCache", cache);
 
-                session.put("searchCache", cache);
+
+            for (int i = page_num * 8; i < (page_num + 1) * 8 && i < productList.size(); ++i) {
+                Product product = productList.get(i);
+
+                resultFactory.addProduct(product);
             }
 
-            List<Product> productList = cache.getCached(tag);
-            for (int i = page_num * 8; i < (page_num + 1) * 8; ++i) {
-                resultFactory.addProduct(productList.get(i));
-            }
-
-            page_length = productList.size() / 8 + 1;
-            page_length = resultFactory.getResultList().length / 8 + 1;
+            page_length = (cache.getCachedSize(tag) + 7) / 8;
+            page_length = page_length == 0 ? 1 : page_length;
 
             System.out.println(resultFactory.getResultList().length);
 

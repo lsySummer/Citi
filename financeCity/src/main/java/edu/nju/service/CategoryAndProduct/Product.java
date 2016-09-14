@@ -42,7 +42,7 @@ public class Product {
             return ((ProductBank)product).getName();
         }
         else if (category.belongTo(ProductCategoryManager.categoryBond)) {
-            return ((ProductBond)product).getTitle();
+            return ((ProductBond)product).getName();
         }
         else if (category.belongTo(ProductCategoryManager.categoryInsurance)) {
             return ((ProductInsurance)product).getName();

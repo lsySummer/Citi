@@ -29,7 +29,19 @@ public interface AssetManagementService {
      */
     TradeHistoryListVO getTradeHistory(FinanceCityUser financeCityUser);
 
+    /**
+     * update asset value
+     * @param financeCityUser .
+     * @throws NotLoginException
+     */
     void updateAssetValue(FinanceCityUser financeCityUser) throws NotLoginException;
 
+    /**
+     * get asset value history
+     * @param financeCityUser .
+     * @param days .
+     * @return .
+     * @throws NotLoginException
+     */
     List<AssetValue> getAssetValueHistory(FinanceCityUser financeCityUser, int days) throws NotLoginException;
 }

@@ -1,6 +1,7 @@
 package edu.nju.service.Cache;
 
 import edu.nju.service.CategoryAndProduct.Product;
+import edu.nju.service.POJO.SimplePortfolio;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -86,6 +87,23 @@ public class ProductCache implements ServiceCache<Product> {
             return simpleCacheStruct.getMetas().get(simpleCacheStruct.getMetas().size() - 1);
         }
         return null;
+    }
+
+    @Override
+    public int getCachedSize() {
+        return cachedSize;
+    }
+
+    @Override
+    public int getCachedSize(Object tag) {
+        SimpleCacheStruct simpleCacheStruct = map.get(tag);
+
+        if (simpleCacheStruct == null) {
+            return 0;
+        }
+        else {
+            return simpleCacheStruct.getProductList().size();
+        }
     }
 
     private class SimpleCacheStruct {
