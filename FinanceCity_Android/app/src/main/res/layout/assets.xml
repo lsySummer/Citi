@@ -16,35 +16,23 @@
 		android:layout_alignParentLeft="true"
 		android:layout_marginLeft="-8dp"/>
 
-	<TextView
-		android:id="@+id/asset_history_head"
-		android:text="资产变动情况"
-		android:textSize="18sp"
-		android:textColor="@color/WordBlack"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_toRightOf="@id/back"
-		android:layout_alignTop="@id/back"
-		android:layout_alignBottom="@id/back"
-		android:layout_alignParentRight="true"
-		android:gravity="center"/>
-
 	<lecho.lib.hellocharts.view.LineChartView
-		android:id="@+id/chart"
-		android:layout_width="match_parent"
-		android:layout_height="200dp"
-		android:layout_marginRight="5dp"
-		android:background="@color/white"
-		android:layout_below="@id/asset_history_head"/>
+			android:id="@+id/chart"
+			android:layout_width="match_parent"
+			android:layout_height="200dp"
+			android:background="@color/white"
+			android:layout_alignTop="@id/back" android:layout_alignParentRight="true"
+			android:layout_alignParentEnd="true"/>
 
 	<ListView
-		android:id="@+id/timeline"
-		android:background="@color/white"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:layout_margin="5dp"
-		android:divider="@null"
-		android:layout_below="@id/chart"/>
+			android:id="@+id/timeline"
+			android:background="@color/white"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:divider="@null"
+			android:layout_below="@+id/chart"
+			android:layout_alignParentLeft="true" android:layout_alignParentStart="true"
+			android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>
 

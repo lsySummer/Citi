@@ -60,7 +60,6 @@ public class AssetsTop extends Fragment
         super.onStart();
         setPieChart();
         setLineChart();
-
     }
 
     private void setPieChart()
@@ -123,7 +122,7 @@ public class AssetsTop extends Fragment
             @Override
             public void onClick(View view) {
                 Log.i("test","click pie button");
-                MainActivity.nextAssets(R.id.pie);
+                ((MainActivity) getActivity()).setDisplayPage(MainActivity.PAGE_INVESTMENT);
             }
         });
     }
@@ -242,7 +241,7 @@ public class AssetsTop extends Fragment
             @Override
             public void onClick(View view) {
                 Log.i("test","click line button");
-                MainActivity.nextAssets(R.id.line);
+                ((MainActivity) getActivity()).setDisplayPage(MainActivity.PAGE_ASSET);
             }
         });
     }
