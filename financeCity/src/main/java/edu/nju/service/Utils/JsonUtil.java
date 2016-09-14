@@ -25,6 +25,10 @@ public class JsonUtil {
         result = stringBuilder.toString();
     }
 
+    public JsonUtil(String srcString) {
+        result = srcString;
+    }
+
     public String getResultString() {
         return result;
     }

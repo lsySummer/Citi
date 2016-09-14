@@ -87,6 +87,8 @@
 	<bean id="investStrategy" class="edu.nju.service.InvestAdvisorService.Strategy.InvestStrategyImpl">
 	</bean>
 
+	<bean id="sharedInfo" class="edu.nju.service.POJO.SharedInfo">
+	</bean>
 
 	<!-- 定义 Autowired 自动注入 bean -->
 	<bean

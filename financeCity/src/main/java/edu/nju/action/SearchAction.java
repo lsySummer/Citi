@@ -4,6 +4,7 @@ import com.opensymphony.xwork2.ActionContext;
 import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.CategoryAndProduct.ProductCategoryManager;
 import edu.nju.service.ExceptionsAndError.ErrorManager;
+import edu.nju.service.POJO.SharedInfo;
 import edu.nju.service.SearchService.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -15,22 +16,24 @@ import java.util.List;
 public class SearchAction extends BaseAction {
     @Autowired
     SearchService searchService;
+    @Autowired
+    SharedInfo sharedInfo;
 
     @SuppressWarnings("unchecked")
     public String getInstitutionList() {
         //TODO:set category
         ActionContext context = ActionContext.getContext();
 
-        List<String> bankYieldList = searchService.getBankYieldType();
-        List<String> bondYieldList = searchService.getBondYieldType();
-        List<String> bondStateList = searchService.getBondStateType();
-        List<String> fundTargetList = searchService.getFundTargetType();
-        List<String> fundStateList = searchService.getFundState();
+        List<String> bankYieldList = sharedInfo.getBankYieldList();
+        List<String> bondYieldList = sharedInfo.getBondYieldList();
+        List<String> bondStateList = sharedInfo.getBondStateList();
+        List<String> fundTargetList = sharedInfo.getFundTargetList();
+        List<String> fundStateList = sharedInfo.getFundStateList();
 
-        List<String> bankInstitutionList = searchService.getInstitutionNameList(ProductCategoryManager.categoryBank);
-        List<String> bondInstitutionList = searchService.getInstitutionNameList(ProductCategoryManager.categoryBond);
-        List<String> fundInstitutionList = searchService.getInstitutionNameList(ProductCategoryManager.categoryFund);
-        List<String> insuranceInstitutionList = searchService.getInstitutionNameList(ProductCategoryManager.categoryInsurance);
+        List<String> bankInstitutionList = sharedInfo.getBankInstitutionList();
+        List<String> bondInstitutionList = sharedInfo.getBondInstitutionList();
+        List<String> fundInstitutionList = sharedInfo.getFundInstitutionList();
+        List<String> insuranceInstitutionList = sharedInfo.getInsuranceInstitutionList();
 
         context.put("bankInstitutionList", bankInstitutionList);
         context.put("bondInstitutionList", bondInstitutionList);

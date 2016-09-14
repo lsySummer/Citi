@@ -27,6 +27,10 @@ public class ProductVOFactory {
     private List<Object> poducts = new ArrayList<>();
 
     public void addProduct(Product product) {
+        if (product == null) {
+            return;
+        }
+
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         if (product.getCategory().equals(ProductCategoryManager.categoryBond)) {

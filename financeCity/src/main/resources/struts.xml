@@ -18,7 +18,7 @@
 			<result name="success">/jsp/searchFilter.jsp</result>
 		</action>
 
-		<action name="searchFilter" class="edu.nju.action.SearchFilterAction" method="filter">
+		<action name="searchFilter" class="edu.nju.action.SearchFilterAction_" method="filter">
 			<result name="success">/jsp/result.jsp</result>
 		</action>
 
@@ -173,6 +173,13 @@
 		</action>
 
 		<action name="value" class="edu.nju.action.AndroidAssetAction" method="getAssetHistoryVO">
+			<result name="success" type="json">
+				<param name="root">result</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+
+		<action name="recommend" class="edu.nju.action.AndroidAssetAction" method="getRecommendPortfolio">
 			<result name="success" type="json">
 				<param name="root">result</param>
 				<param name="ignoreHierarchy">false</param>

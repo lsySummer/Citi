@@ -1,16 +1,25 @@
 package edu.nju.action;
 
+import edu.nju.model.UserTemperPrefer;
 import edu.nju.service.AssetManagementService.AssetManagementService;
 import edu.nju.service.ExceptionsAndError.ErrorManager;
+import edu.nju.service.ExceptionsAndError.NotAllConfigurationSetException;
 import edu.nju.service.ExceptionsAndError.NotLoginException;
+import edu.nju.service.InvestAdvisorService.InvestAdvisorService;
 import edu.nju.service.POJO.AssetValue;
+import edu.nju.service.POJO.SimplePortfolio;
+import edu.nju.service.POJO.SimpleTradeInfo;
+import edu.nju.service.POJO.TradeInfoWithCheckCode;
 import edu.nju.service.Sessions.FinanceCityUser;
+import edu.nju.service.UserService.UserService;
 import edu.nju.vo.AssetValueHistoryVO;
 import edu.nju.vo.CurrentInvestmentVO;
+import edu.nju.vo.RecommendedPortfolioVO;
 import edu.nju.vo.TradeHistoryListVO;
 import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +29,10 @@ import java.util.Map;
 public class AndroidAssetAction extends AndroidAction {
     @Autowired
     AssetManagementService assetManagementService;
+    @Autowired
+    InvestAdvisorService investAdvisorService;
+    @Autowired
+    UserService userService;
 
     public String getHistoryVO() {
         if (!request.getMethod().equals("POST")) {
@@ -105,6 +118,45 @@ public class AndroidAssetAction extends AndroidAction {
         }
 
         setResult(assetValueHistoryVO);
+        return SUCCESS;
+    }
+
+    public String getRecommendPortfolio() {
+        RecommendedPortfolioVO recommendedPortfolioVO = new RecommendedPortfolioVO();
+
+        try {
+            FinanceCityUser financeCityUser = getUser();
+            if (financeCityUser == null) {
+                throw new NotLoginException();
+            }
+
+            UserTemperPrefer userTemperPrefer = userService.getUserTemper(financeCityUser);
+            List<TradeInfoWithCheckCode> list = investAdvisorService.createInvestmentPortFolio(userTemperPrefer);
+
+            List<SimplePortfolio> portfolios = new ArrayList<>();
+            for (TradeInfoWithCheckCode tradeInfoWithCheckCode : list) {
+                SimplePortfolio simplePortfolio = new SimplePortfolio();
+                simplePortfolio.setPortfolio(tradeInfoWithCheckCode.getTradeInfos());
+                portfolios.add(simplePortfolio);
+            }
+
+            recommendedPortfolioVO.setData(portfolios);
+        }
+        catch (NotLoginException n) {
+            n.printStackTrace();
+            ErrorManager.setError(recommendedPortfolioVO, ErrorManager.errorNotLogin);
+        }
+        catch (NotAllConfigurationSetException n) {
+            n.printStackTrace();
+            ErrorManager.setError(recommendedPortfolioVO, ErrorManager.errorUserInfoNotSet);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            ErrorManager.setError(recommendedPortfolioVO, ErrorManager.errorInnerDataError);
+        }
+
+        setResult(recommendedPortfolioVO);
+
         return SUCCESS;
     }
 }

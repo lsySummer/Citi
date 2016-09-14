@@ -89,7 +89,7 @@ public class SearchFilterFactory {
                 if (product instanceof ProductBank) {
                     ProductBank productBank = (ProductBank)(product);
                     double exp_rate = getValue(productBank.getExpectedRate());
-                    double length  = getValue(productBank.getLength());
+                    double length  = getValue(productBank.getLength()) / 30;
                     return  (((exp_rate >= year_rate[0] && exp_rate <= year_rate[1])) &&
                             length > expiration[0] && length < expiration[1] &&
                             (is_closed_ended == null || ProductCategoryManager.ifClosedBankProduct(productBank) == is_closed_ended));
@@ -385,7 +385,7 @@ public class SearchFilterFactory {
             public boolean isChosen(Object product) {
                 ProductBank productBank = (ProductBank)(product);
                 double exp_rate = getValue(productBank.getExpectedRate());
-                int length = getValue(productBank.getLength());
+                int length = getValue(productBank.getLength()) / 30;
                 int threshold = getValue(productBank.getPurchaseThreshold());
 
                 return (exp_rate >= year_rate[0] && exp_rate <= year_rate[1] &&
