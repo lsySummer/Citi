@@ -24,10 +24,16 @@
     <link href="${basePath}css/recommendation.css" rel="stylesheet">
 
     <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
-    <script src="https://www.amcharts.com/lib/3/serial.js"></script>
+    <script src="https://www.amcharts.com/lib/3/radar.js"></script>
     <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
     <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
     <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+
+    <script src= "https://cdn.zingchart.com/zingchart.min.js"></script>
+    <script>
+        ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9","ee6b7db5b51705a13dc2339db3edaf6d"];
+    </script>
+    <link href='https://fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'>
 
     <script src="${basePath}js/recommendation.js"></script>
 
@@ -48,50 +54,40 @@
                         <span>稳赚利38天</span>
                         <span>¥&nbsp;2000</span>
                     </div>
-                    <div class="product-chart">
-                        这个表以后补
-                    </div>
+                    <div id="precentChart1-1" class="product-chart"></div>
                 </li>
                 <li class="product">
                     <div class="product-title">
                         <span>稳赚利38天</span>
                         <span>¥&nbsp;2000</span>
                     </div>
-                    <div class="product-chart">
-                        这个表以后补
-                    </div>
+                    <div id="precentChart1-2" class="product-chart"></div>
                 </li>
                 <li class="product">
                     <div class="product-title">
                         <span>稳赚利38天</span>
                         <span>¥&nbsp;2000</span>
                     </div>
-                    <div class="product-chart">
-                        这个表以后补
-                    </div>
+                    <div id="precentChart1-3" class="product-chart"></div>
                 </li>
                 <li class="product">
                     <div class="product-title">
                         <span>稳赚利38天</span>
                         <span>¥&nbsp;2000</span>
                     </div>
-                    <div class="product-chart">
-                        这个表以后补
-                    </div>
+                    <div id="precentChart1-4" class="product-chart"></div>
                 </li>
                 <li class="product">
                     <div class="product-title">
                         <span>稳赚利38天</span>
                         <span>¥&nbsp;2000</span>
                     </div>
-                    <div class="product-chart">
-                        这个表以后补
-                    </div>
+                    <div id="precentChart1-5" class="product-chart"></div>
                 </li>
             </ul>
 
             <h6 class="income-title">预计收益曲线图</h6>
-            <div id="chartdiv1" class="income-chart"></div>
+            <div id="radarChart1" class="radar-chart"></div>
 
             <div class="recommendation-footer">
 
@@ -110,50 +106,40 @@
                         <span>稳赚利38天</span>
                         <span>¥&nbsp;2000</span>
                     </div>
-                    <div class="product-chart">
-                        这个表以后补
-                    </div>
+                    <div id="precentChart2-1" class="product-chart"></div>
                 </li>
                 <li class="product">
                     <div class="product-title">
                         <span>稳赚利38天</span>
                         <span>¥&nbsp;2000</span>
                     </div>
-                    <div class="product-chart">
-                        这个表以后补
-                    </div>
+                    <div id="precentChart2-2" class="product-chart"></div>
                 </li>
                 <li class="product">
                     <div class="product-title">
                         <span>稳赚利38天</span>
                         <span>¥&nbsp;2000</span>
                     </div>
-                    <div class="product-chart">
-                        这个表以后补
-                    </div>
+                    <div id="precentChart2-3" class="product-chart"></div>
                 </li>
                 <li class="product">
                     <div class="product-title">
                         <span>稳赚利38天</span>
                         <span>¥&nbsp;2000</span>
                     </div>
-                    <div class="product-chart">
-                        这个表以后补
-                    </div>
+                    <div id="precentChart2-4" class="product-chart"></div>
                 </li>
                 <li class="product">
                     <div class="product-title">
                         <span>稳赚利38天</span>
                         <span>¥&nbsp;2000</span>
                     </div>
-                    <div class="product-chart">
-                        这个表以后补
-                    </div>
+                    <div id="precentChart2-5" class="product-chart"></div>
                 </li>
             </ul>
 
             <h6 class="income-title">预计收益曲线图</h6>
-            <div id="chartdiv2" class="income-chart"></div>
+            <div id="radarChart2" class="radar-chart"></div>
 
             <div class="recommendation-footer">
 
@@ -172,50 +158,40 @@
                         <span>稳赚利38天</span>
                         <span>¥&nbsp;2000</span>
                     </div>
-                    <div class="product-chart">
-                        这个表以后补
-                    </div>
+                    <div id="precentChart3-1" class="product-chart"></div>
                 </li>
                 <li class="product">
                     <div class="product-title">
                         <span>稳赚利38天</span>
                         <span>¥&nbsp;2000</span>
                     </div>
-                    <div class="product-chart">
-                        这个表以后补
-                    </div>
+                    <div id="precentChart3-2" class="product-chart"></div>
                 </li>
                 <li class="product">
                     <div class="product-title">
                         <span>稳赚利38天</span>
                         <span>¥&nbsp;2000</span>
                     </div>
-                    <div class="product-chart">
-                        这个表以后补
-                    </div>
+                    <div id="precentChart3-3" class="product-chart"></div>
                 </li>
                 <li class="product">
                     <div class="product-title">
                         <span>稳赚利38天</span>
                         <span>¥&nbsp;2000</span>
                     </div>
-                    <div class="product-chart">
-                        这个表以后补
-                    </div>
+                    <div id="precentChart3-4" class="product-chart"></div>
                 </li>
                 <li class="product">
                     <div class="product-title">
                         <span>稳赚利38天</span>
                         <span>¥&nbsp;2000</span>
                     </div>
-                    <div class="product-chart">
-                        这个表以后补
-                    </div>
+                    <div id="precentChart3-5" class="product-chart"></div>
                 </li>
             </ul>
 
             <h6 class="income-title">预计收益曲线图</h6>
-            <div id="chartdiv3" class="income-chart"></div>
+            <div id="radarChart3" class="radar-chart"></div>
 
             <div class="recommendation-footer">
 
@@ -225,6 +201,7 @@
 
     </div>
 </div>
+
 
 <s:include value="footer.jsp"></s:include>
 

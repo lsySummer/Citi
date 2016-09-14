@@ -1,86 +1,137 @@
 
 window.onload = function() {
-    initChart("chartdiv1");
-    initChart("chartdiv2");
-    initChart("chartdiv3");
+
+    for (var i=1; i<=3; i++) {
+        for (var j=1; j<=5; j++) {
+            var id = "precentChart" + i + "-" + j;
+            initPrecentChart(id);
+        }
+        initRadarChart("radarChart" + i);
+    }
+
 }
 
-function initChart(chartId) {
-    var chartData = generatechartData(chartId);
 
-    var chart = AmCharts.makeChart(chartId, {
+function  initPrecentChart(chartId) {
+    zingchart.MODULESDIR = "https://cdn.zingchart.com/modules/";
+
+    zingchart.THEME="classic";
+
+    var myConfig = {
+        "globals": {
+            "font-family":"Lato",
+            "font-weight":"100"
+        },
+        "graphset":[
+            {
+                "type":"ring",
+                "background-color":"#fff",
+                "tooltip":{
+                    "visible":0
+                },
+                "plotarea":{
+                    "margin":"0% 0% 0% 0%"
+                },
+                "plot":{
+                    "slice":15,
+                    "ref-angle":270,
+                    "detach":false,
+                    "hover-state":{
+                        "visible":false
+                    },
+                    "value-box":{
+                        "visible":true,
+                        "type":"first",
+                        "connected":false,
+                        "placement":"center",
+                        "text":"<div style='font-size:14px;'>30%</vid>",
+                        "rules":[
+                            {
+                                "rule":"%v > 50",
+                                "visible":false
+                            }
+                        ],
+                        "font-color":"#000",
+                        "font-size":"60px"
+                    },
+                    "animation":{
+                        "delay":0,
+                        "effect":2,
+                        "speed":"600",
+                        "method":"0",
+                        "sequence":"1"
+                    }
+                },
+                "series":[
+                    {
+                        "values":[30],
+                        "background-color":"#FDCB0A",
+                        "border-color":"#fff",
+                        "border-width":"1px",
+                        "shadow":0
+                    },
+                    {
+                        "values":[70],
+                        "background-color":"#eee",
+                        "border-color":"#fff",
+                        "border-width":"1px",
+                        "shadow":0
+                    }
+                ]
+            }
+        ]
+    };
+
+    zingchart.render({
+        id : chartId,
+        data : myConfig,
+        height: 50,
+        width: 50,
+        hideprogresslogo: true
+    });
+}
+
+
+
+function initRadarChart(chartId) {
+    var chart = AmCharts.makeChart( chartId, {
+        "type": "radar",
         "theme": "light",
-        "type": "serial",
-        "marginRight": 10,
-        "autoMarginOffset": 10,
-        "marginTop":0,
-        "dataProvider": chartData,
-        "valueAxes": [{
-            "id": "v1",
-            "axisAlpha": 0.1
-        }],
-        "graphs": [{
-            "useNegativeColorIfDown": true,
-            "balloonText": "[[category]]<br><b>value: [[value]]</b>",
+        "dataProvider": [ {
+            "country": "美不美债券",
+            "litres": 156.9
+        }, {
+            "country": "稳赚利38天",
+            "litres": 131.1
+        }, {
+            "country": "大长腿保险",
+            "litres": 115.8
+        }, {
+            "country": "什么理财",
+            "litres": 109.9
+        }, {
+            "country": "一个基金",
+            "litres": 108.3
+            //}, {
+            //    "country": "UK",
+            //"litres": 99
+        } ],
+        "valueAxes": [ {
+            "axisTitleOffset": 20,
+            "minimum": 0,
+            "axisAlpha": 0.15
+        } ],
+        "startDuration": 2,
+        "graphs": [ {
+            "balloonText": "[[value]] litres of beer per year",
             "bullet": "round",
-            "bulletBorderAlpha": 1,
-            "bulletBorderColor": "#FFFFFF",
-            "hideBulletsCount": 50,
-            "lineThickness": 1,
-            "lineColor": "#fdd400",
-            "negativeLineColor": "#67b7dc",
-            "valueField": "visits"
-        }],
-        "chartScrollbar": {
-            "scrollbarHeight": 5,
-            "backgroundAlpha": 0.1,
-            "backgroundColor": "#868686",
-            "selectedBackgroundColor": "#67b7dc",
-            "selectedBackgroundAlpha": 1
-        },
-        "chartCursor": {
-            "valueLineEnabled": false,
-            "valueLineBalloonEnabled": false
-        },
-        "categoryField": "date",
-        "categoryAxis": {
-            "parseDates": true,
-            "axisAlpha": 0,
-            "minHorizontalGap": 60
-        },
+            "lineThickness": 2,
+            "valueField": "litres"
+        } ],
+        "categoryField": "country",
         "export": {
             "enabled": false
         }
-    });
-
-    chart.addListener("dataUpdated", zoomChart);
+    } );
 }
 
-//zoomChart();
-function zoomChart() {
-    if (chart.zoomToIndexes) {
-        chart.zoomToIndexes(130, chartData.length - 1);
-    }
-}
-
-function generatechartData(chartID) {
-    var chartData = [];
-    var firstDate = new Date();
-    firstDate.setDate(firstDate.getDate() - 150);
-
-    for (var i = 0; i < 150; i++) {
-        // we create date objects here. In your data, you can have date strings
-        // and then set format of your dates using chart.dataDateFormat property,
-        // however when possible, use date objects, as this will speed up chart rendering.
-        var newDate = new Date(firstDate);
-        newDate.setDate(newDate.getDate() + i);
-
-        var visits = Math.round(Math.random() * 100 - 50);
-
-        chartData.push({
-            date: newDate,
-            visits: visits
-        });
-    }
-    return chartData;
-}
