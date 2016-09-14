@@ -12,6 +12,7 @@
     display: inline-block;
     vertical-align: top;
     margin-right: 30px;
+    margin-bottom: 30px;
     width: 300px;
     /*height: 500px;*/
     border-radius: 10px;
@@ -50,7 +51,7 @@
 }
 
 /*.recommendation-container ul {*/
-    /*min-height: 400px;*/
+/*min-height: 400px;*/
 /*}*/
 
 .recommendation-container li {
@@ -61,8 +62,7 @@
 .recommendation-container .product-title {
     margin-top: 10px;
     float: left;
-    width: 75%;
-    /*height: 40px;*/
+    width: 80%;
 }
 
 .recommendation-container .product-title span {
@@ -70,9 +70,12 @@
 }
 .recommendation-container .product-chart {
     float: left;
-    width: 25%;
+    width: 20%;
     height: 50px;
-    background-color: #f9f9f9;
+}
+
+.recommendation-container .product-chart a {
+    visibility: hidden;
 }
 
 .recommendation-container .income-title {
@@ -80,13 +83,17 @@
     font-weight: lighter;
 }
 
-.recommendation-container .income-chart {
-    margin-right: 10px;
+.recommendation-container .radar-chart {
+    margin: 20px 0;
     width: 100%;
     height: 200px;
-    font-size: 6px;
     font-weight: lighter;
 }
+
+.recommendation-container .radar-chart a {
+    visibility: hidden;
+}
+
 
 .recommendation-footer {
     width: 100%;
