@@ -86,7 +86,7 @@
     <TextView
 		android:id="@+id/introduction"
 		android:text="介绍。。。。。。。。。。。。。。"
-		android:textColor="@color/darkGrey"
+		android:textColor="@color/propertyValue"
         android:layout_height="wrap_content"
 		android:layout_width="fill_parent"
         android:textSize="15dp"
