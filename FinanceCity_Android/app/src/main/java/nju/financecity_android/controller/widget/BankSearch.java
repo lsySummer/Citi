@@ -62,7 +62,7 @@ public class BankSearch extends RelativeLayout {
         Thread agentThread=new Thread(new Runnable() {
             @Override
             public void run() {
-                ArrayList<String> bankAgent=new SearchAgent().getAgent("bank");
+                ArrayList<String> bankAgent=new SearchAgent().getAgent("Bank");
                 bankAgent.add(0,"所有");
                 try {
                     if(bankAgent.size()!=0)
@@ -71,6 +71,7 @@ public class BankSearch extends RelativeLayout {
                 {
                     Log.i("test","bank agent exception");
                 }
+                agent.setAdapter(new ArrayAdapter<String>(getContext(),R.layout.spinner_element,agent_content));
             }
         });
         agentThread.start();

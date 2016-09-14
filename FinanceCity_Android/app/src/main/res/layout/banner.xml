@@ -18,5 +18,5 @@
 			android:text="&lt;"
 			android:id="@+id/btBack" android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
 			android:layout_alignParentStart="true" android:layout_alignParentBottom="true" android:textSize="24dp"
-			android:gravity="center"/>
+			android:gravity="center" android:textColor="@color/darkGrey"/>
 </RelativeLayout>

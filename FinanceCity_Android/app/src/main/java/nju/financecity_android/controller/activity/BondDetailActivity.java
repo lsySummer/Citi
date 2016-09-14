@@ -1,6 +1,7 @@
 package nju.financecity_android.controller.activity;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -30,8 +31,18 @@ public class BondDetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         productId = intent.getStringExtra("productId");
-        mData = (new ProductBond(productId)).getProperties();
-        processData(mData);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                mData = (new ProductBond(productId)).getProperties();
+                mainThreadHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        processData(mData);
+                    }
+                });
+            }
+        });
     }
 
     protected void setHeaderInfo(String productName, String state, String length, String interestRate) {
@@ -160,11 +171,12 @@ public class BondDetailActivity extends AppCompatActivity {
         });
     }
 
-    Map mData;
-    Button btPurchase;
-    String productId;
-    Banner banner;
-    ListView listProperties;
-    TextView txtInterestRate, txtPrdtName, txtState, txtLength;
-    LayoutInflater mInflater;
+    private Handler mainThreadHandler;
+    private Map mData;
+    private Button btPurchase;
+    private String productId;
+    private Banner banner;
+    private ListView listProperties;
+    private TextView txtInterestRate, txtPrdtName, txtState, txtLength;
+    private LayoutInflater mInflater;
 }

@@ -77,6 +77,7 @@ public class FundSearch extends RelativeLayout {
                 {
                     Log.i("test","fund agent exception");
                 }
+                agent.setAdapter(new ArrayAdapter<String>(getContext(),R.layout.spinner_element,agent_content));
             }
         });
         agentThread.start();

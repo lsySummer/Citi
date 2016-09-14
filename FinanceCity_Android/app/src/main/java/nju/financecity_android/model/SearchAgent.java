@@ -2,6 +2,8 @@ package nju.financecity_android.model;
 
 import android.util.Log;
 
+import nju.financecity_android.dao.CommonDao;
+import nju.financecity_android.util.HttpUtil;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -23,6 +25,7 @@ public class SearchAgent {
             Log.i("test","getAgent json exception");
             e.printStackTrace();
         }
+//        String result= HttpUtil.sendJson(CommonDao.host + "/api/institution", jObject, "POST");
         String result=new TypeDao().sendPost(jObject);
         return exchangeAgent(result);
     }
@@ -34,7 +37,7 @@ public class SearchAgent {
             jsonObject = new JSONObject(source);
             if(jsonObject.getInt("error")==0) {
                 JSONArray jlist = jsonObject.getJSONArray("institutions");
-                for (int i = 0; i > jlist.length(); i++) {
+                for (int i = 0; i < jlist.length(); i++) {
                     list.add(jlist.getString(i));
                 }
                 Log.i("test", "exchangeAgent: list=" + list);

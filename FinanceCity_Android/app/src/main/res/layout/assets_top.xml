@@ -1,59 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/asstes_top_layout"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+              android:id="@+id/asstes_top_layout"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent" android:background="#ffffff">
 
     <TextView
-        android:id="@+id/asset_history_head"
-        android:text="资产"
-        android:textSize="18sp"
-        android:textColor="@color/WordBlack"
+            android:id="@+id/asset_history_head"
+            android:text="资产配置"
+            android:textSize="18sp"
+            android:textColor="@color/WordBlack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center" android:padding="8dp"/>
+    <lecho.lib.hellocharts.view.PieChartView
+        android:id="@+id/pie"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center"/>
-    <LinearLayout
-        android:id="@+id/pie_layout"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_weight="1"/>
+    <TextView android:id="@+id/textView39" android:text="资产概览" android:textSize="18sp"
+              android:textColor="@color/WordBlack" android:layout_width="wrap_content"
+              android:layout_height="wrap_content" android:layout_gravity="center_horizontal" android:gravity="center"
+              android:padding="8dp"/>
+    <lecho.lib.hellocharts.view.LineChartView
+        android:id="@+id/line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="@color/white">
-        <lecho.lib.hellocharts.view.PieChartView
-            android:id="@+id/pie"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"/>
-        <Button
-            android:id="@+id/pie_button"
-            android:background="@mipmap/enter"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="7"/>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/line_layout"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="@color/white">
-
-        <lecho.lib.hellocharts.view.LineChartView
-            android:id="@+id/line"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="5dp"/>
-        <Button
-            android:id="@+id/line_button"
-            android:background="@mipmap/enter"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="7"/>
-
-        </LinearLayout>
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="5dp"/>
 </LinearLayout>

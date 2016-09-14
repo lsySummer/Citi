@@ -20,7 +20,8 @@ import java.util.Map;
 public abstract class CommonDao {
 
 //    public static final String host = "http://172.19.115.96:8080";
-    public static String host="http://192.168.1.111:8888";
+//    public static String host= "http://172.19.115.96:8080";
+    public static String host="http://172.19.108.178:8888/Citi";
     /**
      * 指定接口。
      * 不一定要实现这个方法。

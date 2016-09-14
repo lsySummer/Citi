@@ -13,14 +13,14 @@ import java.net.URL;
 /**
  * Created by sam on 16/9/11.
  */
-public class PersonDao {
-    private static String mainurl = "http://172.28.3.163:8080/api/";
+public class PersonDao extends CommonDao{
+//    private static String mainurl = "http://172.28.3.163:8080/api/";
 
-    public String getData(String Api,String sessid){
+    public String getData(String sessid){
         String ResultRes = "";
         HttpURLConnection connection = null;
         try{
-            URL url = new URL(mainurl+Api);
+            URL url = new URL(getFullUrl()+sessid);
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("Get");
             connection.setConnectTimeout(8000);
@@ -30,7 +30,7 @@ public class PersonDao {
             // 设置请求的头
             connection.setRequestProperty("Content-Type",
                     "application/json");
-            connection.setRequestProperty("id",sessid);
+//            connection.setRequestProperty("id",sessid);
             //连接
             connection.connect();
             if (connection.getResponseCode() == 200) {
@@ -58,4 +58,18 @@ public class PersonDao {
         return ResultRes;
     }
 
+    @Override
+    public String getAction() {
+        return host+"/api/user/";
+    }
+
+    @Override
+    public String getFullUrl() {
+        return getAction();
+    }
+
+    @Override
+    public String sendRequest() {
+        return null;
+    }
 }

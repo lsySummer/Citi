@@ -1,6 +1,7 @@
 package nju.financecity_android.dao;
 
 import nju.financecity_android.util.HttpUtil;
+import nju.financecity_android.util.StringUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,8 +32,8 @@ public class ProductDao extends CommonDao {
     public String sendRequest() {
         JSONObject jo = new JSONObject();
         try {
-            jo.put("id", Integer.parseInt(productId));
-            jo.put("days", Integer.MAX_VALUE);
+            jo.put("id", StringUtil.parseInt(productId));
+            jo.put("days", 60);
         } catch (JSONException e) {
             e.printStackTrace();
         }

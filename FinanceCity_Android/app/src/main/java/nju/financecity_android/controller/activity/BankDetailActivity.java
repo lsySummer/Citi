@@ -1,6 +1,7 @@
 package nju.financecity_android.controller.activity;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -30,11 +31,21 @@ public class BankDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bank_detail);
         initComponents();
-
+        mainThreadHandler = new Handler();
         Intent intent = getIntent();
         productId = intent.getStringExtra("productId");
-        mData = (new ProductBank(productId)).getProperties();
-        processData(mData);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                mData = (new ProductBank(productId)).getProperties();
+                mainThreadHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        processData(mData);
+                    }
+                });
+            }
+        });
     }
 
     protected void setProperties(List<PropertyVO> properties) {
@@ -185,6 +196,7 @@ public class BankDetailActivity extends AppCompatActivity {
         });
     }
 
+    private Handler mainThreadHandler;
     private LineChartView linechart;
     private Map mData;
     private String productId;
