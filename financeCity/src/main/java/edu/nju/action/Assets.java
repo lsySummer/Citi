@@ -11,11 +11,9 @@ import edu.nju.model.UserTemperPrefer;
 import edu.nju.service.AssetManagementService.AssetManagementService;
 import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.CategoryAndProduct.ProductCategoryManager;
-import edu.nju.service.ExceptionsAndError.ErrorManager;
-import edu.nju.service.ExceptionsAndError.InvalidUserPreferenceException;
-import edu.nju.service.ExceptionsAndError.NotAllConfigurationSetException;
-import edu.nju.service.ExceptionsAndError.NotLoginException;
+import edu.nju.service.ExceptionsAndError.*;
 import edu.nju.service.InvestAdvisorService.InvestAdvisorService;
+import edu.nju.service.POJO.RecommendVOFactory;
 import edu.nju.service.POJO.SimpleTradeInfo;
 import edu.nju.service.POJO.TradeInfoWithCheckCode;
 import edu.nju.service.SearchService.SearchService;
@@ -23,6 +21,7 @@ import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.service.UserService.UserService;
 import edu.nju.vo.CurrentInvestmentVO;
 import edu.nju.vo.ProductDetailVO;
+import edu.nju.vo.RecommendedPortfolioVO;
 import org.omg.CORBA.DynAnyPackage.Invalid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -60,7 +59,8 @@ public class Assets extends BaseAction{
 			//UserTemperPrefer userTemperPrefer = userService.getUserTemper(financeCityUser);
 			//List<TradeInfoWithCheckCode> lists = investAdvisorService.createInvestmentPortFolio(userTemperPrefer);
 			List<TradeInfoWithCheckCode> lists = getDemo();
-			session.put("investResult", lists);
+			RecommendedPortfolioVO recommendedPortfolioVO = RecommendVOFactory.createRecommend(lists, searchService, investAdvisorService);
+			session.put("investResult", recommendedPortfolioVO);
 
 			return SUCCESS;
 		}
@@ -68,6 +68,11 @@ public class Assets extends BaseAction{
 			e.printStackTrace();
 			ErrorManager.setError(request, ErrorManager.errorNotLogin);
 			return LOGIN;
+		}
+		catch (NoSuchProductException n) {
+			n.printStackTrace();
+			ErrorManager.setError(request, ErrorManager.errorNoSuchProduct);
+			return ERROR;
 		}
 		/*
 		catch (NotAllConfigurationSetException t) {

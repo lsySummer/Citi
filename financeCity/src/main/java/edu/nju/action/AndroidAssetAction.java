@@ -2,15 +2,14 @@ package edu.nju.action;
 
 import edu.nju.model.UserTemperPrefer;
 import edu.nju.service.AssetManagementService.AssetManagementService;
+import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.ExceptionsAndError.ErrorManager;
 import edu.nju.service.ExceptionsAndError.InvalidUserPreferenceException;
 import edu.nju.service.ExceptionsAndError.NotAllConfigurationSetException;
 import edu.nju.service.ExceptionsAndError.NotLoginException;
 import edu.nju.service.InvestAdvisorService.InvestAdvisorService;
-import edu.nju.service.POJO.AssetValue;
-import edu.nju.service.POJO.SimplePortfolio;
-import edu.nju.service.POJO.SimpleTradeInfo;
-import edu.nju.service.POJO.TradeInfoWithCheckCode;
+import edu.nju.service.POJO.*;
+import edu.nju.service.SearchService.SearchService;
 import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.service.UserService.UserService;
 import edu.nju.vo.AssetValueHistoryVO;
@@ -34,6 +33,8 @@ public class AndroidAssetAction extends AndroidAction {
     InvestAdvisorService investAdvisorService;
     @Autowired
     UserService userService;
+    @Autowired
+    SearchService searchService;
 
     public String getHistoryVO() {
         if (!request.getMethod().equals("POST")) {
@@ -130,25 +131,19 @@ public class AndroidAssetAction extends AndroidAction {
     }
 
     public String getRecommendPortfolio() {
-                RecommendedPortfolioVO recommendedPortfolioVO = new RecommendedPortfolioVO();
+        RecommendedPortfolioVO recommendedPortfolioVO = new RecommendedPortfolioVO();
 
-                try {
-                    FinanceCityUser financeCityUser = getUser();
-                    if (financeCityUser == null) {
-                        throw new NotLoginException();
-                    }
-
-                    UserTemperPrefer userTemperPrefer = userService.getUserTemper(financeCityUser);
-            List<TradeInfoWithCheckCode> list = investAdvisorService.createInvestmentPortFolio(userTemperPrefer);
-
-            List<SimplePortfolio> portfolios = new ArrayList<>();
-            for (TradeInfoWithCheckCode tradeInfoWithCheckCode : list) {
-                SimplePortfolio simplePortfolio = new SimplePortfolio();
-                simplePortfolio.setPortfolio(tradeInfoWithCheckCode.getTradeInfos());
-                portfolios.add(simplePortfolio);
+        try {
+            FinanceCityUser financeCityUser = getUser();
+            if (financeCityUser == null) {
+                throw new NotLoginException();
             }
 
-            recommendedPortfolioVO.setData(portfolios);
+            UserTemperPrefer userTemperPrefer = userService.getUserTemper(financeCityUser);
+            List<TradeInfoWithCheckCode> list = investAdvisorService.createInvestmentPortFolio(userTemperPrefer);
+
+           recommendedPortfolioVO = RecommendVOFactory.createRecommend(list, searchService, investAdvisorService);
+
             ErrorManager.setError(recommendedPortfolioVO, ErrorManager.errorNormal);
         }
         catch (NotLoginException n) {

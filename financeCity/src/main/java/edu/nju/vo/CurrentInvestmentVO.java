@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * Created by Sun YuHao on 2016/8/29.
- */
+         */
 public class CurrentInvestmentVO extends BaseVO{
     private List<Investment_portfolio> investmentPortfolioList;
 

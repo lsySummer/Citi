@@ -19,6 +19,15 @@ public class FundVO {
     private String est_date;//
     private ProductFund productFund;
     private NAVHistory[] history;
+    private Double year_rate;
+
+    public Double getYear_rate() {
+        return year_rate;
+    }
+
+    public void setYear_rate(Double year_rate) {
+        this.year_rate = year_rate;
+    }
 
     public NAVHistory[] getHistory() {
 		return history;

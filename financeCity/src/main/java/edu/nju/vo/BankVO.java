@@ -10,7 +10,7 @@ public class BankVO {
     private String productType;
     private Integer pid;
     private String name;
-    private Double yearly_income_rate;
+    private Double year_rate;
     private String product_type;
     private NAVHistory[] history;
 
@@ -61,12 +61,12 @@ public class BankVO {
         this.name = name;
     }
 
-    public Double getYearly_income_rate() {
-        return yearly_income_rate;
+    public Double getYear_rate() {
+        return year_rate;
     }
 
-    public void setYearly_income_rate(Double yearly_income_rate) {
-        this.yearly_income_rate = yearly_income_rate;
+    public void setYear_rate(Double year_rate) {
+        this.year_rate = year_rate;
     }
 
     public String getProduct_type() {
