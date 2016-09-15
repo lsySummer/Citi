@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -40,6 +41,7 @@ import lecho.lib.hellocharts.view.PieChartView;
 import nju.financecity_android.R;
 import nju.financecity_android.dao.AssetValueDao;
 import nju.financecity_android.model.UserSession;
+import nju.financecity_android.util.Loading;
 
 /**
  * Created by Administrator on 2016/9/12.
@@ -50,12 +52,14 @@ public class AssetsTop extends Fragment
     private PieChartView pieChart;
     private LineChartView lineChart;
     private LineChartData data = new LineChartData();
+    private Loading loading=new Loading();
     Handler myHandler = new Handler() {
         //接收到消息后处理
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
                     lineChart.setLineChartData(data);
+                    loading.closeLoadingDialog();
                     Log.i("search","get message");
                     break;
             }
@@ -160,6 +164,14 @@ public class AssetsTop extends Fragment
             }
         });
         thread.start();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Looper.prepare();
+                loading.showLoadingDialog(getActivity(),"loading",false);
+                Looper.loop();
+            }
+        }).start();
 
         //设置行为属性，支持缩放、滑动以及平移
         lineChart.setInteractive(true);

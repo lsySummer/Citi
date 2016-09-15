@@ -5,6 +5,7 @@ import android.app.ActionBar;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
@@ -43,6 +44,7 @@ import nju.financecity_android.controller.widget.SingleSearchResult;
 import nju.financecity_android.dao.SearchDao;
 import nju.financecity_android.model.SearchAgent;
 import nju.financecity_android.model.SearchProduct;
+import nju.financecity_android.util.Loading;
 import nju.financecity_android.vo.ProductVO;
 
 /**
@@ -52,6 +54,7 @@ public class ProductSearch extends Fragment{
     /**产品搜索体*/
     private RelativeLayout product_search_body;
     private SearchResult searchResult;
+    private Loading loading=new Loading();
 
     /**搜索按钮*/
     private static Button product_search_filter_button;
@@ -64,6 +67,7 @@ public class ProductSearch extends Fragment{
                 case 1:
                     product_search_body.removeAllViews();
                     product_search_body.addView(searchResult);
+                    loading.closeLoadingDialog();
                     Log.i("search","get message");
                     break;
             }
@@ -109,6 +113,15 @@ public class ProductSearch extends Fragment{
             }
         });
         brunchThread.start();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Looper.prepare();
+                loading.showLoadingDialog(getActivity(),"loading",false);
+                Looper.loop();
+            }
+        }).start();
 
         searchResult=new SearchResult(getActivity(),list);
         product_search_body.removeAllViews();
@@ -339,6 +352,14 @@ public class ProductSearch extends Fragment{
                 });
                 thread.start();
 
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Looper.prepare();
+                        loading.showLoadingDialog(getActivity(),"loading",false);
+                        Looper.loop();
+                    }
+                }).start();
 //                try{thread.join();}catch(Exception e){};
 
                 /*=======================================================================================*/
