@@ -215,7 +215,7 @@ public class AndroidUserAction extends AndroidAction {
             UserTemperPrefer userTemperPrefer = new UserTemperPrefer();
             userTemperPrefer.setExpectedCapital(new BigDecimal(amount));
             userTemperPrefer.setEndTime(Date.valueOf(data));
-            userTemperPrefer.setIfBigExpense(ifPrepare ? (byte) 1 : 0);
+            userTemperPrefer.setIfPrepedBigExpense(ifPrepare ? (byte) 1 : 0);
             userTemperPrefer.setIfConfigBigExpense(ifBifPre ? (byte) 1 : 0);
             userTemperPrefer.setExpenseType(type);
             userTemperPrefer.setRedeemTime(backDate == null ? null : Date.valueOf(backDate));

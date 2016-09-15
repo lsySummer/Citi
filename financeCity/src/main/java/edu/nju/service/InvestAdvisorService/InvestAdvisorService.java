@@ -1,6 +1,7 @@
 package edu.nju.service.InvestAdvisorService;
 
 import edu.nju.model.UserTemperPrefer;
+import edu.nju.service.ExceptionsAndError.InvalidUserPreferenceException;
 import edu.nju.service.ExceptionsAndError.NotAllConfigurationSetException;
 import edu.nju.service.ExceptionsAndError.NotLoginException;
 import edu.nju.service.POJO.InvestResult;
@@ -25,5 +26,5 @@ public interface InvestAdvisorService {
      * @return invest result
      * @throws NotAllConfigurationSetException
      */
-    List<TradeInfoWithCheckCode> createInvestmentPortFolio(UserTemperPrefer preference) throws NotAllConfigurationSetException;
+    List<TradeInfoWithCheckCode> createInvestmentPortFolio(UserTemperPrefer preference) throws NotAllConfigurationSetException, InvalidUserPreferenceException;
 }
