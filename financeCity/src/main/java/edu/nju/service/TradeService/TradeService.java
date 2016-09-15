@@ -37,10 +37,10 @@ public interface TradeService {
 
     /**
      * redeem/sell product
-     * @param ProductID .
+     * @param productId .
      * @return if success
      */
-    boolean redeemProduct(Integer ProductID, FinanceCityUser financeCityUser);
+    boolean redeemProduct(String checkCode, int productId, FinanceCityUser financeCityUser);
 
     /**
      * enforce investment plan
@@ -48,5 +48,12 @@ public interface TradeService {
      */
     boolean enforceInvestmentPlan();
 
+    /**
+     * acknowledge payment
+     * @param checkCode .
+     * @param financeCityUser .
+     * @throws NotLoginException
+     * @throws NoSuchProductException
+     */
     void ackPayment(String checkCode, FinanceCityUser financeCityUser) throws NotLoginException, NoSuchProductException;
 }

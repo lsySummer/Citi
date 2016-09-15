@@ -19,9 +19,33 @@ public interface PayService {
      */
     boolean bindCards(String cardNumber);
 
+    /**
+     * bind pay way
+     * @param payWay .
+     * @param financeCityUser .
+     * @throws NotLoginException
+     */
     void bindPayWay(SimplePayWay payWay, FinanceCityUser financeCityUser) throws NotLoginException;
 
+    /**
+     * get pay way list
+     * @param financeCityUser .
+     * @return pay way list
+     * @throws NotLoginException
+     */
     List<PayWay> getPayWayList(FinanceCityUser financeCityUser) throws NotLoginException;
 
+    /**
+     * pay for portfolio
+     * @param checkCode .
+     * @param financeCityUser .
+     * @return
+     */
     boolean payForPortfolio(String checkCode, FinanceCityUser financeCityUser);
+
+    /**
+     * redeem product
+     * @return if success
+     */
+    boolean redeemProduct();
 }

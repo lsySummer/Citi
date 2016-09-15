@@ -41,7 +41,7 @@ import java.util.List;
             "etf",
             "lof",
             "fof",
-            "QDll",
+            "QDII",
             "index",
             "guaranteed"
     };
@@ -53,7 +53,7 @@ import java.util.List;
             "ETF",
             "LOF",
             "FOF",
-            "QDll",
+            "QDII",
             "指数型",
             "保本型"
     };

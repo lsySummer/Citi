@@ -64,4 +64,9 @@ public class PayServiceImpl implements PayService {
             return false;
         }
     }
+
+    @Override
+    public boolean redeemProduct() {
+        return true;
+    }
 }

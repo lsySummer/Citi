@@ -7,6 +7,7 @@ import edu.nju.service.CategoryAndProduct.ProductCategoryManager;
 import edu.nju.service.ExceptionsAndError.NoSuchProductException;
 import edu.nju.service.ExceptionsAndError.NotLoginException;
 import edu.nju.service.POJO.SimpleTradeInfo;
+import edu.nju.service.PayService.PayService;
 import edu.nju.service.SearchService.SearchService;
 import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.service.UserService.UserService;
@@ -36,6 +37,8 @@ public class TradeServiceImpl implements TradeService {
     SearchService searchService;
     @Autowired
     AssetManagementService assetManagementService;
+    @Autowired
+    PayService payService;
     
     //10 minutes
     private final long expiration = 10 * 60 * 1000;
@@ -118,7 +121,33 @@ public class TradeServiceImpl implements TradeService {
     }
 
     @Override
-    public boolean redeemProduct(Integer ProductID, FinanceCityUser financeCityUser) {
+    public boolean redeemProduct(String checkCode, int productId, FinanceCityUser financeCityUser) {
+        try {
+            if (payService.redeemProduct()) {
+                InvestmentPortfolio investmentPortfolio = (InvestmentPortfolio)userService.getCommonDao().
+                        find("FROM InvestmentPortfolio i WHERE i.checkCode='" + checkCode + "'").get(0);
+
+                InvestedProducts investedProducts = (InvestedProducts)userService.getUserDao(financeCityUser).
+                        find("FROM InvestedProduct i WHERE i.portfolioId=" + investmentPortfolio.getId() +
+                        " AND i.productId=" + productId).get(0);
+
+                TradeHistory tradeHistory = new TradeHistory();
+                tradeHistory.setTradeType("redeem");
+                tradeHistory.setTradingVolume(investedProducts.getTotalAmount());
+                tradeHistory.setTradeAt(new Timestamp(System.currentTimeMillis()));
+                tradeHistory.setProductId(productId);
+                tradeHistory.setUserId(financeCityUser.getID());
+
+                userService.getUserDao(financeCityUser).save(tradeHistory);
+
+                investedProducts.setState((byte)0);
+                userService.getUserDao(financeCityUser).update(investedProducts);
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return false;
     }
 
@@ -176,6 +205,7 @@ public class TradeServiceImpl implements TradeService {
                     investedProducts.setTotalAmount(unpaidItem.getTradingVolume());
                     investedProducts.setUserId(financeCityUser.getID());
                     investedProducts.setTradeId(tradeId);
+                    investedProducts.setState((byte)1);
 
                     userService.getUserDao(financeCityUser).save(investedProducts);
                     userService.getUserDao(financeCityUser).delete(unpaidItem);
@@ -207,17 +237,17 @@ public class TradeServiceImpl implements TradeService {
         else if (product.getCategory().belongTo(ProductCategoryManager.categoryFund)) {
             ProductFund productFund = (ProductFund)product.getProduct();
             endtime = TimeTransformation.getTimeAfter(buyingDate, productFund.getLength().doubleValue(),
-                    TimeTransformation.year, TimeTransformation.microSecond);
+                    TimeTransformation.day, TimeTransformation.microSecond);
         }
         else if (product.getCategory().belongTo(ProductCategoryManager.categoryBank)) {
             ProductBank productBank = (ProductBank) product.getProduct();
             endtime = TimeTransformation.getTimeAfter(buyingDate, productBank.getLength().doubleValue(),
-                    TimeTransformation.year, TimeTransformation.microSecond);
+                    TimeTransformation.day, TimeTransformation.microSecond);
         }
         else if (product.getCategory().belongTo(ProductCategoryManager.categoryBond)) {
             ProductBond productBond = (ProductBond) product.getProduct();
             endtime = TimeTransformation.getTimeAfter(buyingDate, productBond.getLength().doubleValue(),
-                    TimeTransformation.year, TimeTransformation.microSecond);
+                    TimeTransformation.day, TimeTransformation.microSecond);
         }
 
 

@@ -210,9 +210,19 @@ public class UpdateUtils {
         return conn;
     }
 
+    public static void test() {
+        Connection connection = getConn();
+        try {
+            PreparedStatement p = connection.
+                    prepareStatement("SELECT pbk.*, pbd.*  FROM citi.product_bank pbk, citi.product_bond pbd INNER JOIN citi.name_to_id n ON pbk.id=n.id WHERE n.name LIKE '%%'");
+            p.execute();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     static public void main(String[] args) {
-        UpdateUtils.updateNameToId_Bond();
-        UpdateUtils.updateNameToId_Bank();
-        UpdateUtils.updateNameToId_Fund();
+       UpdateUtils.test();
     }
 }
