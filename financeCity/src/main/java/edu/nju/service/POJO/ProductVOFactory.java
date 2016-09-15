@@ -6,7 +6,9 @@ import edu.nju.model.ProductFund;
 import edu.nju.model.ProductInsurance;
 import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.CategoryAndProduct.ProductCategoryManager;
+import edu.nju.service.ExceptionsAndError.DataNotFoundException;
 import edu.nju.service.SearchService.ProductFilter;
+import edu.nju.service.SearchService.SearchService;
 import edu.nju.vo.BankVO;
 import edu.nju.vo.BondVO;
 import edu.nju.vo.FundVO;
@@ -20,10 +22,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.SimpleTimeZone;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 /**
  * Created by Sun YuHao on 2016/9/1.
  */
 public class ProductVOFactory {
+	  @Autowired
+	  SearchService searchService;
     private List<Object> poducts = new ArrayList<>();
 
     public void addProduct(Product product) {

@@ -207,6 +207,11 @@
 		</action>
 	</package>
 
+	<package name="DayAjax" extends="json-default" namespace="">
+		<action name="dayTJ" class="edu.nju.action.PurchaseAction" method="getHistory">
+			<result type="json"></result>
+		</action>
+	</package>
 	<constant name="struts.action.extension" value="," />
 
 </struts>
