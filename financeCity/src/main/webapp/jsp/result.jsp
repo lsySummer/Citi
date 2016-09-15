@@ -20,6 +20,12 @@
 
 </script>
 
+<s:form id="purchaseForm" action="purchaseOne" method="post">
+	<input type="hidden" id="propid" name="propid"/>
+	<input type="hidden" id="proname" name="proname"/>
+	<input type="hidden" id="protype" name="protype"/>
+	<input type="hidden" id="proprice" name="proprice"/>
+   <input type="hidden" id="priceType" name="priceType"/>
 <div id="product_wrapper" class="product-wrapper">
 
     <s:set name="size" value="1"/>
@@ -132,7 +138,7 @@
             </div>
         </s:elseif>
         <s:elseif test="#product.productType=='bond'">
-            <div class="product bond" data-toggle="modal" data-target="#mycModal">
+            <div class="product bond" data-toggle="modal" data-target="#myjModal">
                 <div class="bond-circle circle">
                     <h1><s:property value="#product.yearly_interest_rate"/></h1>
                     <h4>收益率</h4>
@@ -172,6 +178,7 @@
     </s:iterator>
 
 </div>
+</s:form>
 <div class="paging-wrapper">
     <hr class="fix">
     <span id="first_page" class="paging-item"><i class="fa fa-long-arrow-left"></i> 第一页</span>

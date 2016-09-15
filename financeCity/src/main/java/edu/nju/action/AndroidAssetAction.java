@@ -3,6 +3,7 @@ package edu.nju.action;
 import edu.nju.model.UserTemperPrefer;
 import edu.nju.service.AssetManagementService.AssetManagementService;
 import edu.nju.service.ExceptionsAndError.ErrorManager;
+import edu.nju.service.ExceptionsAndError.InvalidUserPreferenceException;
 import edu.nju.service.ExceptionsAndError.NotAllConfigurationSetException;
 import edu.nju.service.ExceptionsAndError.NotLoginException;
 import edu.nju.service.InvestAdvisorService.InvestAdvisorService;
@@ -121,15 +122,15 @@ public class AndroidAssetAction extends AndroidAction {
     }
 
     public String getRecommendPortfolio() {
-        RecommendedPortfolioVO recommendedPortfolioVO = new RecommendedPortfolioVO();
+                RecommendedPortfolioVO recommendedPortfolioVO = new RecommendedPortfolioVO();
 
-        try {
-            FinanceCityUser financeCityUser = getUser();
-            if (financeCityUser == null) {
-                throw new NotLoginException();
-            }
+                try {
+                    FinanceCityUser financeCityUser = getUser();
+                    if (financeCityUser == null) {
+                        throw new NotLoginException();
+                    }
 
-            UserTemperPrefer userTemperPrefer = userService.getUserTemper(financeCityUser);
+                    UserTemperPrefer userTemperPrefer = userService.getUserTemper(financeCityUser);
             List<TradeInfoWithCheckCode> list = investAdvisorService.createInvestmentPortFolio(userTemperPrefer);
 
             List<SimplePortfolio> portfolios = new ArrayList<>();
@@ -149,6 +150,10 @@ public class AndroidAssetAction extends AndroidAction {
         catch (NotAllConfigurationSetException n) {
             n.printStackTrace();
             ErrorManager.setError(recommendedPortfolioVO, ErrorManager.errorUserInfoNotSet);
+        }
+        catch (InvalidUserPreferenceException i) {
+            i.printStackTrace();
+            ErrorManager.setError(recommendedPortfolioVO, ErrorManager.errorInvalidUserPreference);
         }
         catch (Exception e) {
             e.printStackTrace();

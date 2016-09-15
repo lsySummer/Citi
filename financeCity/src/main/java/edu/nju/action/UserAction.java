@@ -225,7 +225,7 @@ public class UserAction extends BaseAction {
             UserTemperPrefer userTemperPrefer = new UserTemperPrefer();
             userTemperPrefer.setExpectedCapital(new BigDecimal(amount_i));
             userTemperPrefer.setEndTime(Date.valueOf(data));
-            userTemperPrefer.setIfBigExpense(ifPrepare_b ? (byte)1 : 0);
+            userTemperPrefer.setIfPrepedBigExpense(ifPrepare_b ? (byte)1 : 0);
             userTemperPrefer.setIfConfigBigExpense(ifBifPre_b ? (byte)1 : 0);
             userTemperPrefer.setExpenseType(type_b);
             userTemperPrefer.setRedeemTime(back_date == null ? null : Date.valueOf(back_date));

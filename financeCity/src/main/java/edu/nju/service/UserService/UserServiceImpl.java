@@ -33,10 +33,10 @@ public class UserServiceImpl implements UserService {
         /** match username and password */
         List list;
         if (validMobile(userName)) {
-            list = DAO.find("FROM User user WHERE user.phone=" + userName);
+            list = DAO.find("FROM User user WHERE user.phone='" + userName + "'");
         }
         else {
-            list = DAO.find("FROM User user WHERE user.username=" + userName);
+            list = DAO.find("FROM User user WHERE user.username='" + userName + "'");
         }
 
         /** if login failed */
@@ -245,7 +245,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void setUserTemperPrefer(UserTemperPrefer userTemperPrefer, FinanceCityUser financeCityUser) throws NotLoginException {
         userTemperPrefer.setUserId(financeCityUser.getID());
-        getUserDao(financeCityUser).save(userTemperPrefer);
+        getUserDao(financeCityUser).saveOrUpdate(userTemperPrefer);
     }
 
     private boolean validPassword(String password) {

@@ -46,8 +46,8 @@ public class AssetManagementServiceImpl implements AssetManagementService {
             List<InvestStatus> list = userService.getUserDao(financeCityUser).
                     find("FROM InvestStatus investStatus WHERE investStatus.userId=" + financeCityUser.getID());
             if (list == null || list.size() == 0) {
-                ErrorManager.setError(currentInvestmentVO, ErrorManager.errorDataNotFound);
-                return null;
+                ErrorManager.setError(currentInvestmentVO, ErrorManager.errorNormal);
+                return currentInvestmentVO;
             }
             else {
                 List<Investment_portfolio> investment_portfolioList = new ArrayList<>();
