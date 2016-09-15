@@ -22,53 +22,6 @@ public class SearchFilterAction extends BaseAction {
     @Autowired
     SearchService searchService;
 
-//    private String test = "{\n" +
-//            "    'error': 0,\n" +
-//            "    'message': 'reason of error',\n" +
-//            "    'data': [\n" +
-//            "        {   // bank\n" +
-//            "            'pid': 100001,\n" +
-//            "            'name': 'name',\n" +
-//            "            'yearly_income_rate': 0.0295,\n" +
-//            "            'product_type': '开放式净值型',\n" +
-//            "            'income_type': '保本浮动收益型',\n" +
-//            "            'initial_money': 50000,\n" +
-//            "            'open_date': 'yyyy-MM-dd',\n" +
-//            "            'distributor_bank': '浦发银行',\n" +
-//            "            'distributor_institution': '浦发银行',\n" +
-//            "        },\n" +
-//            "        {   // fund\n" +
-//            "            'pid': 100001,\n" +
-//            "            'name': 'name',\n" +
-//            "            'expected_income_rate': 0.05,\n" +
-//            "            'state': '产品状态',\n" +
-//            "            'net_value': 10000,\n" +
-//            "            'sid': '基金编号',\n" +
-//            "            'type': '简单基金',\n" +
-//            "            'mng_charge_rate': 4.5,\n" +
-//            "            'est_date': 'yyyy-MM-dd'\n" +
-//            "        },\n" +
-//            "        {   // insurance\n" +
-//            "            'pid': 100001,\n" +
-//            "            'name': 'name',\n" +
-//            "            'insurance_life': '终身',\n" +
-//            "            'insurance_age': 30,\n" +
-//            "            'amount_in_force': [100000, 200000],    //保额区间\n" +
-//            "            'way_of_charge': '缴费方式',\n" +
-//            "            'distributor': '叉叉基金'\n" +
-//            "        },\n" +
-//            "        {   // bond\n" +
-//            "            'pid': 100001,\n" +
-//            "            'name': 'name',\n" +
-//            "            'yearly_interest_rate': 0.07,\n" +
-//            "            'nominal_interest_rate': 0.025, // 票面利率\n" +
-//            "            'life': 2,  // 债券期限\n" +
-//            "            'type': '债券类型',\n" +
-//            "            'code': '债券代码'\n" +
-//            "        }\n" +
-//            "    ]\n" +
-//            "}";
-
     public Map<String, Object> getMap() {
         Map<String, Object> map = new HashMap<>();
 
@@ -173,6 +126,7 @@ public class SearchFilterAction extends BaseAction {
         while(it.hasNext()){
             String key = (String) it.next();
             Object object = options.get(key);
+            System.out.println("key:"+object);
             if(object==null){
                 String temp = null;
                 optMap.put(key, temp);

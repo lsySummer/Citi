@@ -192,6 +192,15 @@ function submitBank(page_num) {
 
     options["yearly_income_rate"] = $("#bank_yearly_income_rate").val().split(";");
     options["expiration"] = $("#bank_expiration").val().split(";");
+
+    var initial_amount_start = $("#bank_initial_amount_start").val();
+    var initial_amount_end = $("#bank_initial_amount_end").val();
+
+    if(initial_amount_start==null||initial_amount_start==""||initial_amount_end==null||initial_amount_end==""){
+        alert("起购金额不能为空");
+        return;
+    }
+
     options["initial_amount"] = [""+$("#bank_initial_amount_start").val(), ""+$("#bank_initial_amount_end").val()];
     options["institution_manage"] = $("#bank_institution_manage").val();
     options["income_type"] = $("#bank_income_type").val();
@@ -321,7 +330,7 @@ function submitInsurance(page_num) {
     options["length_of_years"] = $("#insurance_length_of_years").val().split(";");
     options["income_rate"] = $("#insurance_income_rate").val().split(";");
     options["distributor"] = $("#insurance_distributor").val();
-    options["price"] = $("#insurance_price").val();
+    options["price"] = $("#insurance_price").val().split(";");
 
     data["options"] = options;
 
