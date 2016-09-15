@@ -78,9 +78,17 @@ public class AndroidAssetAction extends AndroidAction {
 
             setResult(assetManagementService.getInvestProductVOList(financeCityUser));
         }
-        catch (Exception e) {
+        catch (NotLoginException n) {
+            n.printStackTrace();
             CurrentInvestmentVO currentInvestmentVO = new CurrentInvestmentVO();
             ErrorManager.setError(currentInvestmentVO, ErrorManager.errorNotLogin);
+
+            setResult(currentInvestmentVO);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            CurrentInvestmentVO currentInvestmentVO = new CurrentInvestmentVO();
+            ErrorManager.setError(currentInvestmentVO, ErrorManager.errorInnerDataError);
 
             setResult(currentInvestmentVO);
         }
