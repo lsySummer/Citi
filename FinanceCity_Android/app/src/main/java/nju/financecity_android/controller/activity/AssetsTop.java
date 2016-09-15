@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -39,9 +40,14 @@ import lecho.lib.hellocharts.util.ChartUtils;
 import lecho.lib.hellocharts.view.LineChartView;
 import lecho.lib.hellocharts.view.PieChartView;
 import nju.financecity_android.R;
+import nju.financecity_android.controller.widget.item.adapter.InvstPrdtAdapter;
 import nju.financecity_android.dao.AssetValueDao;
+import nju.financecity_android.dao.InvestmentDao;
+import nju.financecity_android.model.UserInvestment;
 import nju.financecity_android.model.UserSession;
+import nju.financecity_android.util.ColorBoard;
 import nju.financecity_android.util.Loading;
+import nju.financecity_android.vo.ProductInfo;
 
 /**
  * Created by Administrator on 2016/9/12.
@@ -52,6 +58,7 @@ public class AssetsTop extends Fragment
     private PieChartView pieChart;
     private LineChartView lineChart;
     private LineChartData data = new LineChartData();
+    private PieChartData piedata = new PieChartData();
     private Loading loading=new Loading();
     Handler myHandler = new Handler() {
         //接收到消息后处理
@@ -61,6 +68,13 @@ public class AssetsTop extends Fragment
                     lineChart.setLineChartData(data);
                     loading.closeLoadingDialog();
                     Log.i("search","get message");
+                    break;
+                case 2:
+                    pieChart.setPieChartData(piedata);
+                    Log.i("search","get message2");
+                    break;
+                case 3:
+                    Log.i("search","get message3");
                     break;
             }
             super.handleMessage(msg);
@@ -85,57 +99,36 @@ public class AssetsTop extends Fragment
     {
         pieChart=(PieChartView)getView().findViewById(R.id.pie);
 
-//        pieChart.setOnValueTouchListener(new ValueTouchListener());//添加点击事件
-        pieChart.setCircleFillRatio(0.9f);//设置图所占整个view的比例  当有外面的数据时使用，防止数据显示不全
+        setPieData();
 
-//        prepareDataAnimation();//更新数据，并添加动画
+        List<SliceValue> values = new ArrayList<>();
 
-        int numValues = 10;//分成的块数
-
-        List<SliceValue> values = new ArrayList<SliceValue>();
-        for (int i = 0; i < numValues; ++i) {
-            SliceValue sliceValue = new SliceValue(20.0f, ChartUtils.pickColor());//每一块的值和颜色，图标根据值自动进行比例分配
-            values.add(sliceValue);
+        List<ProductInfo> data = new ArrayList<>();
+        ProductInfo info = new ProductInfo();
+        info = new ProductInfo();
+        info.productName = "";
+        info.buyPrice = 0;
+        info.buy = "";
+        info.currPrice = 0;
+        data.add(info);
+        for (int i = 0; i < data.size(); ++i) {
+            SliceValue slice = new SliceValue(data.get(i).currPrice);
+            slice.setLabel(data.get(i).productName);
+            slice.setColor(ColorBoard.nextColor());
+            values.add(slice);
         }
-        PieChartData data = new PieChartData(values);
-        data.setHasLabels(true);//显示数据
-        data.setHasLabelsOnlyForSelected(false);//不用点击显示占的百分比
-        data.setHasLabelsOutside(true);//占的百分比是否显示在饼图外面
-        data.setHasCenterCircle(true);;//是否是环形显示
-        data.setCenterCircleScale(0.5f);////设置环形的大小级别
-        data.setValueLabelBackgroundColor(Color.TRANSPARENT);////设置值得背景透明
-        data.setValueLabelBackgroundEnabled(false);//数据背景不显示
-        data.setValueLabelsTextColor(Color.BLACK);
 
-        //data.setValues(values);//填充数据
-//        if (isExploded) {
-//            data.setSlicesSpacing(1);//设置间隔为0
-//        }
-//
-//        if (hasCenterText1) {
-//            data.setCenterText1("Hello!");
-//
-//            // Get roboto-italic font.
-//            //      Typeface tf = Typeface.createFromAsset(MainActivity.this.getAssets(), "Roboto-Italic.ttf");//设置字体
-//            //   data.setCenterText1Typeface(tf);
-//
-//            // Get font size from dimens.xml and convert it to sp(library uses sp values).
-//            data.setCenterText1FontSize(ChartUtils.px2sp(getResources().getDisplayMetrics().scaledDensity,
-//                    (int) getResources().getDimension(R.dimen.pie_chart_text1_size)));
-//            data.setCenterText1Color(Color.BLACK);////设置值得颜色*/
-//        }
-//
-//        if (hasCenterText2) {
-//            data.setCenterText2("Charts (Roboto Italic)");
-//
-////            Typeface tf = Typeface.createFromAsset(MainActivity.this.getAssets(), "Roboto-Italic.ttf");
-//
-//            data.setCenterText2Typeface(tf);
-//            data.setCenterText2FontSize(ChartUtils.px2sp(getResources().getDisplayMetrics().scaledDensity,
-//                    (int) getResources().getDimension(R.dimen.pie_chart_text2_size)));
-//        }
-
-        pieChart.setPieChartData(data);
+        piedata.setValues(values);
+        piedata.setHasLabels(true);
+        piedata.setHasLabelsOutside(true);
+        piedata.setHasLabelsOnlyForSelected(false);
+        piedata.setHasCenterCircle(true);
+        piedata.setCenterCircleScale(0.5f);
+        piedata.setValueLabelBackgroundColor(Color.TRANSPARENT);
+        piedata.setValueLabelBackgroundEnabled(false);
+        piedata.setValueLabelsTextColor(Color.GRAY);
+        piedata.setSlicesSpacing(1);
+        pieChart.setPieChartData(piedata);
 
         pieChart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -193,6 +186,66 @@ public class AssetsTop extends Fragment
         });
     }
 
+    private void setPieData()
+    {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                List<ProductInfo> list = new ArrayList<ProductInfo>();
+
+                final JSONObject[] jsonObjects=new JSONObject[1];
+                jsonObjects[0]=new JSONObject();//value
+                UserSession user=UserSession.getCurrUser();
+                Log.i("test","user "+user.getSessionId());
+                try {
+//            jsonObjects[0].put("id", Integer.parseInt(user.getUserId()));//TODO 传递当前用户
+//            jsonObjects[0].put("sessionId",user.getSessionId());
+                    jsonObjects[0].put("id", 4);
+                    jsonObjects[0].put("sessionId","3abeb5d73d43eab7d6b0f955795734ed");
+                }catch(Exception e)
+                {
+                    Log.i("test","user session or json exception");
+                    e.printStackTrace();
+                }
+
+                final String[] result={""};
+                result[0]=new InvestmentDao().sendPost(jsonObjects[0]);
+                JSONArray jValue=null;
+                try{
+                    jValue=new JSONObject(result[0]).getJSONArray("investmentPortfolioList");
+                }catch(Exception e)
+                {
+                    Log.i("test","asset value result exception");
+                    e.printStackTrace();
+                }
+
+//                if (investment == null) {
+//                    Message message = new Message();
+//                    message.what = 3;
+//                    //发送消息
+//                    myHandler.sendMessage(message);
+//                    Log.i("search","send message3");
+//                }
+                // 饼图
+                List<SliceValue> values = new ArrayList<>();
+                for (int i = 0; i < list.size(); ++i) {
+                    SliceValue slice = new SliceValue(list.get(i).currPrice);
+                    slice.setLabel(list.get(i).productName);
+                    slice.setColor(ColorBoard.nextColor());
+                    values.add(slice);
+                }
+                piedata.setValues(values);
+
+                Message message = new Message();
+                message.what = 2;
+                //发送消息
+                myHandler.sendMessage(message);
+                Log.i("search","send message2");
+            }
+        }).start();
+    }
+
     private void setLineData()
     {
         List<PointValue> mPointValues=new ArrayList<PointValue>();
@@ -206,7 +259,7 @@ public class AssetsTop extends Fragment
 //            jsonObjects[0].put("id", Integer.parseInt(user.getUserId()));//TODO 传递当前用户
 //            jsonObjects[0].put("sessionId",user.getSessionId());
             jsonObjects[0].put("id", 4);
-            jsonObjects[0].put("sessionId","25f651f520e31896b7c1ffc57e78ec33");
+            jsonObjects[0].put("sessionId","3abeb5d73d43eab7d6b0f955795734ed");
 //            jsonObjects[0].put("days",20);//TODO
         }catch(Exception e)
         {
