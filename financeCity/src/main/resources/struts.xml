@@ -67,6 +67,11 @@
 			<result name="success">/jsp/recommendation.jsp</result>
 			<result name="login">/jsp/login.jsp</result>
 		</action>
+
+		<action name="investment" class="edu.nju.action.Assets" method="getCurrentInvestment">
+			<result name="success">/jsp/recommendation.jsp</result>
+			<result name="login">/jsp/login.jsp</result>
+		</action>
 		
 		<action name="product" class="edu.nju.action.Assets" method="getProduct">
 			<result name="success">/jsp/searchFilter.jsp</result>

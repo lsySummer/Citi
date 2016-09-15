@@ -104,10 +104,10 @@ public class AssetManagementServiceImpl implements AssetManagementService {
             current_value = (ret_rate + 1) * investedProducts.getTotalAmount().doubleValue();
         }
         else if (product.getCategory().belongTo(ProductCategoryManager.categoryFund)) {
-            ProductFund productFund = (ProductFund)product.getProduct();
             try {
-                double nav = getNavOnDate(product.getID(), investedProducts.getBuyingDate());
-                current_value = (productFund.getNav().doubleValue() / nav) * investedProducts.getTotalAmount().doubleValue();
+                double buy_nav = getNavOnDate(product.getID(), investedProducts.getBuyingDate());
+                double now_nav = getNavOnDate(product.getID(), new Date(System.currentTimeMillis()));
+                current_value = (now_nav / buy_nav) * investedProducts.getTotalAmount().doubleValue();
             }
             catch (DataNotFoundException d) {
                 d.printStackTrace();

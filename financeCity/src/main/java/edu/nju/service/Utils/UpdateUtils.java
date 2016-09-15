@@ -212,5 +212,7 @@ public class UpdateUtils {
 
     static public void main(String[] args) {
         UpdateUtils.updateNameToId_Bond();
+        UpdateUtils.updateNameToId_Bank();
+        UpdateUtils.updateNameToId_Fund();
     }
 }

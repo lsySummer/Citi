@@ -1,6 +1,7 @@
 package edu.nju.action;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -15,10 +16,12 @@ import edu.nju.service.ExceptionsAndError.InvalidUserPreferenceException;
 import edu.nju.service.ExceptionsAndError.NotAllConfigurationSetException;
 import edu.nju.service.ExceptionsAndError.NotLoginException;
 import edu.nju.service.InvestAdvisorService.InvestAdvisorService;
+import edu.nju.service.POJO.SimpleTradeInfo;
 import edu.nju.service.POJO.TradeInfoWithCheckCode;
 import edu.nju.service.SearchService.SearchService;
 import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.service.UserService.UserService;
+import edu.nju.vo.CurrentInvestmentVO;
 import edu.nju.vo.ProductDetailVO;
 import org.omg.CORBA.DynAnyPackage.Invalid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,15 +50,16 @@ public class Assets extends BaseAction{
 
 	@SuppressWarnings("unchecked")
 	public String getRecommend(){
-		
+
 		try {
 			FinanceCityUser financeCityUser = (FinanceCityUser)session.get("user");
 			if (financeCityUser == null) {
 				throw new NotLoginException();
 			}
 
-			UserTemperPrefer userTemperPrefer = userService.getUserTemper(financeCityUser);
-			List<TradeInfoWithCheckCode> lists = investAdvisorService.createInvestmentPortFolio(userTemperPrefer);
+			//UserTemperPrefer userTemperPrefer = userService.getUserTemper(financeCityUser);
+			//List<TradeInfoWithCheckCode> lists = investAdvisorService.createInvestmentPortFolio(userTemperPrefer);
+			List<TradeInfoWithCheckCode> lists = getDemo();
 			session.put("investResult", lists);
 
 			return SUCCESS;
@@ -65,6 +69,7 @@ public class Assets extends BaseAction{
 			ErrorManager.setError(request, ErrorManager.errorNotLogin);
 			return LOGIN;
 		}
+		/*
 		catch (NotAllConfigurationSetException t) {
 			t.printStackTrace();
 			ErrorManager.setError(request, ErrorManager.errorUserInfoNotSet);
@@ -75,12 +80,11 @@ public class Assets extends BaseAction{
 			ErrorManager.setError(request, ErrorManager.errorInvalidUserPreference);
 			return ERROR;
 		}
-		
+		*/
 	}
 
 	@SuppressWarnings("unchecked")
 	public String getProduct(){
-		/*
 		try {
 			int pid = Integer.valueOf(request.getParameter("pid"));
 			String days_s = request.getParameter("days");
@@ -109,7 +113,54 @@ public class Assets extends BaseAction{
 			ErrorManager.setError(request, ErrorManager.errorInvalidParameter);
 			return ERROR;
 		}
-		*/
-		return SUCCESS;
+	}
+
+	@SuppressWarnings("unchecked")
+	public String getCurrentInvestment() {
+		try {
+			FinanceCityUser financeCityUser = (FinanceCityUser) session.get("user");
+			if (financeCityUser == null) {
+				throw new NotLoginException();
+			}
+
+			CurrentInvestmentVO currentInvestment = assetManagementService.getInvestProductVOList(financeCityUser);
+			session.put("investment", currentInvestment);
+
+			return SUCCESS;
+		}
+		catch (NotLoginException n) {
+			n.printStackTrace();
+			ErrorManager.setError(request, ErrorManager.errorNotLogin);
+			return LOGIN;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			ErrorManager.setError(request, ErrorManager.errorInnerDataError);
+		}
+
+		return ERROR;
+	}
+
+	List<TradeInfoWithCheckCode> getDemo() {
+		List<TradeInfoWithCheckCode> list = new ArrayList<>();
+		TradeInfoWithCheckCode tradeInfoWithCheckCode = new TradeInfoWithCheckCode();
+		tradeInfoWithCheckCode.setCheckCode("adfasd13sda23dasd");
+		List<SimpleTradeInfo> simpleTradeInfoList = new ArrayList<>();
+
+		//product1
+		SimpleTradeInfo simpleTradeInfo = new SimpleTradeInfo();
+		simpleTradeInfo.setProductId(1);
+		simpleTradeInfo.setAmount(10000);
+		simpleTradeInfoList.add(simpleTradeInfo);
+		//product2
+		simpleTradeInfo = new SimpleTradeInfo();
+		simpleTradeInfo.setProductId(10000001);
+		simpleTradeInfo.setAmount(2000000);
+		simpleTradeInfoList.add(simpleTradeInfo);
+
+		tradeInfoWithCheckCode.setTradeInfos(simpleTradeInfoList);
+		list.add(tradeInfoWithCheckCode);
+
+		return list;
 	}
 }
