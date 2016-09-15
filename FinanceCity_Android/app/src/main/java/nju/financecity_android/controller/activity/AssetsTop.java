@@ -60,17 +60,23 @@ public class AssetsTop extends Fragment
     private LineChartData data = new LineChartData();
     private PieChartData piedata = new PieChartData();
     private Loading loading=new Loading();
+    private int counter=0;
     Handler myHandler = new Handler() {
         //接收到消息后处理
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
+                    counter++;
                     lineChart.setLineChartData(data);
-                    loading.closeLoadingDialog();
+                    if(counter%2==0)
+                        loading.closeLoadingDialog();
                     Log.i("search","get message");
                     break;
                 case 2:
+                    counter++;
                     pieChart.setPieChartData(piedata);
+                    if(counter%2==0)
+                        loading.closeLoadingDialog();
                     Log.i("search","get message2");
                     break;
                 case 3:
@@ -157,14 +163,14 @@ public class AssetsTop extends Fragment
             }
         });
         thread.start();
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                Looper.prepare();
-//                loading.showLoadingDialog(getActivity(),"loading",false);
-//                Looper.loop();
-//            }
-//        }).start();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Looper.prepare();
+                loading.showLoadingDialog(getActivity(),"loading",false);
+                Looper.loop();
+            }
+        }).start();
 
         //设置行为属性，支持缩放、滑动以及平移
         lineChart.setInteractive(true);
@@ -191,7 +197,6 @@ public class AssetsTop extends Fragment
         new Thread(new Runnable() {
             @Override
             public void run() {
-
                 List<ProductInfo> list = new ArrayList<ProductInfo>();
 
                 final JSONObject[] jsonObjects=new JSONObject[1];
@@ -201,8 +206,8 @@ public class AssetsTop extends Fragment
                 try {
 //            jsonObjects[0].put("id", Integer.parseInt(user.getUserId()));//TODO 传递当前用户
 //            jsonObjects[0].put("sessionId",user.getSessionId());
-                    jsonObjects[0].put("id", 6);
-                    jsonObjects[0].put("sessionId","7814199a570d7372e585700affb2c71b");
+                    jsonObjects[0].put("id", 4);
+                    jsonObjects[0].put("sessionId","3abeb5d73d43eab7d6b0f955795734ed");
                 }catch(Exception e)
                 {
                     Log.i("test","user session or json exception");
@@ -219,7 +224,22 @@ public class AssetsTop extends Fragment
                     Log.i("test","asset value result exception");
                     e.printStackTrace();
                 }
-
+                try {
+                    for (int i = 0; i < jValue.length(); i++) {
+                        JSONArray jproducts=(JSONArray)jValue.getJSONObject(i).get("productVOs");
+                        for(int j=0;j<jproducts.length();j++)
+                        {
+                            ProductInfo info = new ProductInfo();
+                            JSONObject jo = jproducts.getJSONObject(j);
+                            info.currPrice=(float)Float.parseFloat(jo.get("currentValue").toString());
+                            info.productName=jo.getString("name");
+                            list.add(info);
+                        }
+                    }
+                }catch(Exception e)
+                {
+                    e.printStackTrace();
+                }
 //                if (investment == null) {
 //                    Message message = new Message();
 //                    message.what = 3;
@@ -258,8 +278,8 @@ public class AssetsTop extends Fragment
         try {
 //            jsonObjects[0].put("id", Integer.parseInt(user.getUserId()));//TODO 传递当前用户
 //            jsonObjects[0].put("sessionId",user.getSessionId());
-            jsonObjects[0].put("id", 6);
-            jsonObjects[0].put("sessionId","7814199a570d7372e585700affb2c71b");
+            jsonObjects[0].put("id", 4);
+            jsonObjects[0].put("sessionId","3abeb5d73d43eab7d6b0f955795734ed");
 //            jsonObjects[0].put("days",20);//TODO
         }catch(Exception e)
         {
