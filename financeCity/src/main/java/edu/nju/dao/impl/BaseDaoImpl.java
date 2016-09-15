@@ -3,10 +3,7 @@ package edu.nju.dao.impl;
 import java.util.List;
 
 import edu.nju.dao.UserDao;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import org.hibernate.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -137,6 +134,23 @@ public class BaseDaoImpl implements BaseDao, CommonDao, UserDao {
 	public List find(String queryString, int maxResult) {
 		Session session = getSession();
 		Query query = session.createQuery(queryString);
+		query.setMaxResults(maxResult);
+		return query.list();
+	}
+
+	@Override
+	public List sql_find(String sql, Class cls) {
+		Session session = getSession();
+		SQLQuery query = session.createSQLQuery(sql);
+		query.addEntity(cls);
+		return query.list();
+	}
+
+	@Override
+	public List sql_find(String sql, Class cls, int maxResult) {
+		Session session = getSession();
+		SQLQuery query = session.createSQLQuery(sql);
+		query.addEntity(cls);
 		query.setMaxResults(maxResult);
 		return query.list();
 	}

@@ -56,7 +56,11 @@ public class AssetManagementServiceImpl implements AssetManagementService {
                             find("FROM InvestmentPortfolio i WHERE i.id=" + investStatus.getPortfolioId()).get(0);
 
                     List<InvestedProducts> investedProductList = userService.getUserDao(financeCityUser).
-                            find("FROM InvestedProducts t WHERE t.portfolioId=" + investmentPortfolio.getId());
+                            find("FROM InvestedProducts t WHERE t.portfolioId=" + investmentPortfolio.getId() + " AND t.state=1");
+
+                    if (investedProductList == null || investedProductList.size() == 0) {
+                        continue;
+                    }
 
                     List<ProductVO> productList = new ArrayList<>();
                     for (InvestedProducts investedProducts : investedProductList) {
