@@ -141,7 +141,7 @@
                         <div class="range-wrapper">
                             <input id="bank_initial_amount_start" type="text" class="range-input" value="0"/>
                             <label>—</label>
-                            <input id="bank_initial_amount_end" type="text" class="range-input" value="10000"/>
+                            <input id="bank_initial_amount_end" type="text" class="range-input"/>
                         </div>
                         <%--<input id="bank_initial_amount" type="text" id="purchase_amount" name="purchase_amount" value="" class="input-add-on-field"/>--%>
                     </div>
