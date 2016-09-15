@@ -132,7 +132,7 @@
             </div>
         </s:elseif>
         <s:elseif test="#product.nominal_interest_rate!=null">
-            <div class="product bond" data-toggle="modal" data-target="#mycModal">
+            <div class="product bond" data-toggle="modal" data-target="#myjModal">
                 <div class="bond-circle circle">
                     <h1><s:property value="#product.yearly_interest_rate"/></h1>
                     <h4>收益率</h4>
@@ -194,4 +194,7 @@
     <span id="next_page" class="paging-item"><i class="fa fa-long-arrow-right"></i></span>
     <span id="last_page" class="paging-item">最后一页 <i class="fa fa-long-arrow-right"></i></span>
 </div>
-<jsp:include page='modal.jsp'/>
+<jsp:include page='bankModal.jsp'/>
+<jsp:include page='bondModal.jsp'/>
+<jsp:include page='fundModal.jsp'/>
+<jsp:include page='insuranceModal.jsp'/>
