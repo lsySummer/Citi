@@ -60,7 +60,7 @@
 		
 		<action name="assets" class="edu.nju.action.Assets" method="">
 			<result name="success">/jsp/asset.jsp</result>
-			<result name="login">/jsp/login.jsp</result>
+			<result name="error">/jsp/login.jsp</result>
 		</action>
 		
 		<action name="recommend" class="edu.nju.action.Assets" method="getRecommend">

@@ -45,52 +45,53 @@ public class Assets extends BaseAction{
 
 	@SuppressWarnings("unchecked")
 	public String getRecommend(){
-		try {
-			FinanceCityUser financeCityUser = (FinanceCityUser)session.get("user");
-			if (financeCityUser == null) {
-				throw new NotLoginException();
-			}
-
-			UserTemperPrefer userTemperPrefer = userService.getUserTemper(financeCityUser);
-			List<TradeInfoWithCheckCode> lists = investAdvisorService.createInvestmentPortFolio(userTemperPrefer);
-			session.put("investResult", lists);
-
-			return SUCCESS;
-		}
-		catch (NotLoginException e) {
-			e.printStackTrace();
-			ErrorManager.setError(request, ErrorManager.errorNotLogin);
-			return LOGIN;
-		}
-		catch (NotAllConfigurationSetException t) {
-			t.printStackTrace();
-			ErrorManager.setError(request, ErrorManager.errorUserInfoNotSet);
-			return ERROR;
-		}
+//		try {
+//			FinanceCityUser financeCityUser = (FinanceCityUser)session.get("user");
+//			if (financeCityUser == null) {
+//				throw new NotLoginException();
+//			}
+//
+//			UserTemperPrefer userTemperPrefer = userService.getUserTemper(financeCityUser);
+//			List<TradeInfoWithCheckCode> lists = investAdvisorService.createInvestmentPortFolio(userTemperPrefer);
+//			session.put("investResult", lists);
+//
+//			return SUCCESS;
+//		}
+//		catch (NotLoginException e) {
+//			e.printStackTrace();
+//			ErrorManager.setError(request, ErrorManager.errorNotLogin);
+//			return LOGIN;
+//		}
+//		catch (NotAllConfigurationSetException t) {
+//			t.printStackTrace();
+//			ErrorManager.setError(request, ErrorManager.errorUserInfoNotSet);
+//			return ERROR;
+//		}
+		return SUCCESS;
 	}
 
 	@SuppressWarnings("unchecked")
 	public String getProduct(){
 		try {
-			int pid = Integer.valueOf(request.getParameter("pid"));
-			String days_s = request.getParameter("days");
-			int days = Integer.MAX_VALUE;
-			if (days_s != null) {
-				days = Integer.valueOf(days_s);
-			}
-
-			ProductDetailVO productDetailVO = new ProductDetailVO();
-			Product product = searchService.getProductByID(pid);
-
-			productDetailVO.setType(product.getCategory().getChineseName());
-			productDetailVO.setData(product.getProduct());
-			if (product.getCategory().belongTo(ProductCategoryManager.categoryBank) &&
-					ProductCategoryManager.ifNetBankProduct((ProductBank)product.getProduct())) {
-				productDetailVO.setHistory(searchService.getBankValueHistory(product.getID(), days));
-			}
-
-			session.put("productDetail", productDetailVO);
-			ErrorManager.setError(request, ErrorManager.errorNormal);
+//			int pid = Integer.valueOf(request.getParameter("pid"));
+//			String days_s = request.getParameter("days");
+//			int days = Integer.MAX_VALUE;
+//			if (days_s != null) {
+//				days = Integer.valueOf(days_s);
+//			}
+//
+//			ProductDetailVO productDetailVO = new ProductDetailVO();
+//			Product product = searchService.getProductByID(pid);
+//
+//			productDetailVO.setType(product.getCategory().getChineseName());
+//			productDetailVO.setData(product.getProduct());
+//			if (product.getCategory().belongTo(ProductCategoryManager.categoryBank) &&
+//					ProductCategoryManager.ifNetBankProduct((ProductBank)product.getProduct())) {
+//				productDetailVO.setHistory(searchService.getBankValueHistory(product.getID(), days));
+//			}
+//
+//			session.put("productDetail", productDetailVO);
+//			ErrorManager.setError(request, ErrorManager.errorNormal);
 
 			return SUCCESS;
 		}

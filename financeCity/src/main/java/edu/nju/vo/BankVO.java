@@ -1,5 +1,7 @@
 package edu.nju.vo;
 
+import edu.nju.model.ProductBank;
+
 /**
  * Created by Sun YuHao on 2016/8/31.
  */
@@ -9,11 +11,20 @@ public class BankVO {
     private String name;
     private Double yearly_income_rate;
     private String product_type;
-    private String income_type;
+    public ProductBank getProductBank() {
+		return productBank;
+	}
+
+	public void setProductBank(ProductBank productBank) {
+		this.productBank = productBank;
+	}
+
+	private String income_type;
     private Integer initial_money;
     private String open_date;
     private String distributor_bank;
     private String distributor_institution;
+    private ProductBank productBank;
 
     public String getProductType() {
         return productType;

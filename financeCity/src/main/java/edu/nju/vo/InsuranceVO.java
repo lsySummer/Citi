@@ -1,5 +1,7 @@
 package edu.nju.vo;
 
+import edu.nju.model.ProductInsurance;
+
 /**
  * Created by Sun YuHao on 2016/8/31.
  */
@@ -20,6 +22,15 @@ public class InsuranceVO {
 
     public void setYear_rate(Double year_rate) {
         this.year_rate = year_rate;
+    }
+    private ProductInsurance productInsurance;
+
+    public ProductInsurance getProductInsurance() {
+		return productInsurance;
+    }
+
+    public void setProductInsurance(ProductInsurance productInsurance) {
+	this.productInsurance = productInsurance;
     }
 
     public String getProductType() {

@@ -1,5 +1,7 @@
 package edu.nju.vo;
 
+import edu.nju.model.ProductBond;
+
 /**
  * Created by Sun YuHao on 2016/8/31.
  */
@@ -10,8 +12,17 @@ public class BondVO {
     private Double yearly_interest_rate;
     private Double nominal_interest_rate;
     private Integer life;
-    private String type;
+    public ProductBond getProductBond() {
+		return productBond;
+	}
+
+	public void setProductBond(ProductBond productBond) {
+		this.productBond = productBond;
+	}
+
+	private String type;
     private String code;
+    private ProductBond productBond;
 
     public String getProductType() {
         return productType;
