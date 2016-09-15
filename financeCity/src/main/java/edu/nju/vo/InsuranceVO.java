@@ -12,6 +12,15 @@ public class InsuranceVO {
     private int[] amount_in_force;
     private String way_of_charge;
     private String distributor;
+    private Double year_rate;
+
+    public Double getYear_rate() {
+        return year_rate;
+    }
+
+    public void setYear_rate(Double year_rate) {
+        this.year_rate = year_rate;
+    }
 
     public String getProductType() {
         return productType;
