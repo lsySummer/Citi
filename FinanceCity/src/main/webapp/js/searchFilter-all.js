@@ -19,19 +19,20 @@ function initSlider() {
         type: "double",
         grid: true,
         min: 0,
-        max: 100,
-        from: 20,
-        to: 80,
-        prefix: ""
+        max: 72,
+        from: 0,
+        to: 20,
+        prefix: "",
+        postfix: "个月"
     });
     $(".annualized-return").ionRangeSlider({
         type: "double",
         grid: true,
         min: 0,
-        max: 100,
+        max: 15,
         step: 0.1,
-        from: 20,
-        to: 80,
+        from: 0,
+        to: 15,
         postfix: "%"
     });
     //$("#bank_initial_amount").ionRangeSlider({
@@ -53,14 +54,15 @@ function initSlider() {
         to: 80,
         postfix: "年"
     });
-    $("#insurance_income_rate").ionRangeSlider({
+    $("#insurance_price").ionRangeSlider({
         type: "double",
         grid: true,
         min: 0,
-        max: 1,
-        step: 0.01,
-        from: 0.1,
-        to: 0.5
+        max: 10,
+        step: 0.5,
+        from: 1,
+        to: 8,
+        postfix: "w"
     });
 }
 

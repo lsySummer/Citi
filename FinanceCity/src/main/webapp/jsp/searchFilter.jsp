@@ -157,6 +157,7 @@
                 <div class="input-add-on income-item">
                     <span class="tag">管理机构&nbsp;&nbsp;</span>
                     <select id="bank_institution_manage" class="input-add-on-field">
+                        <option value="">所有机构</option>
                         <s:iterator id="bank" value="#request.bankInstitutionList">
                             <option><s:property value="#bank"/></option>
                         </s:iterator>
@@ -278,6 +279,7 @@
                 <div class="input-add-on income-item">
                     <span class="tag">管理机构</span>
                     <select id="fund_institution_manage" class="input-add-on-field">
+                        <option value="">所有机构</option>
                         <s:iterator id="fund" value="#request.fundInstitutionList">
                             <option><s:property value="#fund"/></option>
                         </s:iterator>
@@ -372,7 +374,7 @@
                     <span class="tag">预期利率</span>
                     &nbsp;&nbsp;
                     <div class="slider-wrapper input-add-on-field">
-                        <input id="insurance_income_rate" type="text" id="insurance_range" name="range" value="" class="input-add-on-field"/>
+                        <input id="insurance_income_rate" type="text" id="insurance_range" name="range" value="" class="input-add-on-field annualized-return"/>
                     </div>
                 </div>
                 <div class="income-item u1of4">
@@ -382,16 +384,22 @@
             <div class="income-wrapper">
                 <div class="input-add-on income-item">
                     <span class="tag">发行公司</span>
-                    <select id="insurance_distributor" class="input-add-on-field">
-                        <s:iterator id="insurance" value="#request.insuranceInstitutionList">
-                            <option><s:property value="#insurance"/></option>
-                        </s:iterator>
-                    </select>
+                    <div class="toggle-wrapper input-add-on-field">
+                        <select id="insurance_distributor" class="input-add-on-field">
+                            <option value="">所有机构</option>
+                            <s:iterator id="insurance" value="#request.insuranceInstitutionList">
+                                <option><s:property value="#insurance"/></option>
+                            </s:iterator>
+                        </select>
+                    </div>
                 </div>
                 <div class="input-add-on income-item">
                     <span class="tag">保险产品面额</span>
-                    <input id="insurance_price" class="input-add-on-field" type="text"/>
+                    <div class="slider-wrapper input-add-on-field">
+                        <input id="insurance_price" class="input-add-on-field" type="text" name="insurance-price" value=""/>
+                    </div>
                 </div>
+
                 <div class="income-item u1of4">
 
                 </div>
