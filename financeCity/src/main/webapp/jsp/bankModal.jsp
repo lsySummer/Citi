@@ -8,7 +8,7 @@
 		<!-- 银行理财模态框（Modal） -->
 		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 			aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="modal-dialog" style="width: 550px; height: 1600px">
+			<div class="modal-dialog" style="width: 550px; height: 1400px">
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"
@@ -18,7 +18,7 @@
 					<div class="modal-body" style="">
 						<div style="height: 180px;">
 							<div class="product-bigicon bank-circle">
-								<span style="font-size: 35px"><b>2.95</b></span><br /> <span
+								<span style="font-size: 35px"><b><s:property value="#product.productBank.expectedRate"/></b></span><br /> <span
 									style="font-size: 8px;">年化收益率</span>
 								<hr class="line" />
 								<div style="margin-top: -10%;'">
@@ -28,7 +28,7 @@
 							<div class="rightPart">
 								<span style="font-size: 16px"><s:property value="#product.name"/></span><br /> <span
 									style="font-size: 14px">起购金额：￥<s:property value="#product.initial_money"/></span><br /> <span
-									style="font-size: 14px">开放日/到期日：<s:property value="#product.open_date"/></span><br />
+									style="font-size: 14px">开放日：<s:property value="#product.open_date"/></span><br />
 								<button class="block-button"
 									style="font-size: 20px; margin-top: 10px">购 &nbsp
 									&nbsp买</button>
