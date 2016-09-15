@@ -1,6 +1,7 @@
 package edu.nju.vo;
 
 import edu.nju.model.ProductFund;
+import edu.nju.service.POJO.NAVHistory;
 
 /**
  * Created by Sun YuHao on 2016/8/31.
@@ -17,6 +18,7 @@ public class FundVO {
     private Double mng_charge_rate;
     private String est_date;//
     private ProductFund productFund;
+    private NAVHistory[] history;
     private Double year_rate;
 
     public Double getYear_rate() {
@@ -27,7 +29,15 @@ public class FundVO {
         this.year_rate = year_rate;
     }
 
-    public ProductFund getProductFund() {
+    public NAVHistory[] getHistory() {
+		return history;
+	}
+
+	public void setHistory(NAVHistory[] history) {
+		this.history = history;
+	}
+
+	public ProductFund getProductFund() {
 		return productFund;
 	}
 

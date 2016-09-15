@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-
+<%@ page language="java" import="java.util.*"%>
 <html>
 
 
@@ -16,6 +16,96 @@ function setFundValue(pid,pname,price){
 	return true;
 }
 </script>
+
+<script type="text/javascript">
+	var dateArr = new Array();
+	var navArr = new Array();
+	$(function() {
+		$("#dayTJ").click(function() {
+			//提交的参数，name和inch是和struts action中对应的接收变量
+			var params = {
+				day : $("#selectDay").val(),
+				pid :<s:property value="#product.pid"/>,
+			};
+			$.ajax({
+				type : "POST",
+				url : "dayTJ",
+				data : params,
+				dataType : "text", //ajax返回值设置为text（json格式也可用它返回，可打印出结果，也可设置成json）
+				success : function(json) {
+					var obj = $.parseJSON(json); //使用这个方法解析json
+					dateArr = eval(obj.dateArr);
+					navArr=eval(obj.navArr);
+					showChart();
+					return true;
+				},
+				error : function(json) {
+					return false;
+				}
+			});
+		});
+	});
+</script>
+
+<script>
+			
+		
+			
+			
+			var chartLine = null;
+			function showChart(){
+				var data = {
+						labels : dateArr,
+						datasets : [
+							{
+								lineItemName : "fund",
+								fillColor : "rgba(220,220,220,0.5)",
+								strokeColor : "rgba(220,220,220,1)",
+								pointColor : "rgba(220,220,220,1)",
+								pointStrokeColor : "#fff",
+								data : navArr
+							}
+						]
+					};
+				document.getElementById("myChart").width=450;
+				document.getElementById("myChart").height=240;
+				document.getElementById("chartDIV").style.width=460;
+				document.getElementById("chartDIV").style.height=250;
+				var ctx = document.getElementById("myChart").getContext("2d");
+				chartLine = new Chart(ctx).Line(data);
+				
+				initEvent(chartLine, clickCall);
+				return true;
+			}
+			
+			function hideChart(){
+				document.getElementById("myChart").width=1;
+				document.getElementById("myChart").height=1;
+				document.getElementById("chartDIV").style.width=1;
+				document.getElementById("chartDIV").style.height=1;
+			}
+			
+			function clickCall(evt) {
+				var point = chartLine.getPointSingleAtEvent(evt);
+				
+				if ( point !== null )
+					alert( point.label + ": " + point.lineItemName + " ____ " + point.value);
+			}
+			
+			function initEvent(chart, handler) {
+				var method = handler;
+				var eventType = "click";
+				var node = chart.chart.canvas;
+								
+				if (node.addEventListener) {
+					node.addEventListener(eventType, method);
+				} else if (node.attachEvent) {
+					node.attachEvent("on" + eventType, method);
+				} else {
+					node["on" + eventType] = method;
+				}
+			}
+		</script>
 		<!-- 银行理财模态框（Modal） -->
 		<div class="modal fade" id="mymModal" tabindex="-1" role="dialog"
 			aria-labelledby="myModalLabel" aria-hidden="true">
@@ -23,8 +113,8 @@ function setFundValue(pid,pname,price){
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"
-							aria-hidden="true">&times;</button>
-						<h4 class="modal-title" id="myModalLabel">模态框（Modal）标题</h4>
+							aria-hidden="true" onclick="hideChart()">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">基金</h4>
 					</div>
 					<div class="modal-body" style="">
 				<div style="height: 180px;">
@@ -46,11 +136,20 @@ function setFundValue(pid,pname,price){
 						</div>
 					</div>
 
-					<div style="height: 180px; margin-top: 2%">
-						<div class="smallBlock"></div>
-						<span class="blueFont">收益曲线</span>
-						<div class="income"></div>
-					</div>
+					<div style=" margin-top: 6%">
+							<div class="smallBlock"></div>
+							<span class="blueFont">收益曲线</span>
+							<select style="margin-left:10%;" id="selectDay">
+							<option value="7">最近7天</option>
+							<option value="15">最近15天</option>
+							<option value="30">最近30天</option>
+							</select>
+							<button class="button-style" id="dayTJ">点击查看</button>
+							<div id="chartDIV">
+							<canvas id="myChart" width=1 height=1 ></canvas>
+							</div>
+						</div>
+						
 					<div style="height: 100%; margin-top: 2%">
 					<table border="0"  style="margin-left: 5%; width: 90%;">
 						<tr>

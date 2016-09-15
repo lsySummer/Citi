@@ -45,7 +45,7 @@
     <script type="text/javascript" rel="script" src="plugins/ion.rangeSlider-master/js/ion.rangeSlider.min.js"></script>
     <script type="text/javascript" rel="script" src="plugins/bootstrap-toggle-master/js/bootstrap-toggle.min.js"></script>
     <script type="text/javascript" rel="script" src="js/searchFilter-all.js"></script>
-
+ <script type="text/javascript" rel="script" src="js/Chart-1.0.1-beta.4.js"></script>
     <title>InvestGO</title>
 </head>
 <body>

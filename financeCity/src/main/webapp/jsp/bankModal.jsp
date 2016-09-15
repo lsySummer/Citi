@@ -15,11 +15,12 @@ function setBankValue(pid,pname,price){
 }
 </script>
 
+
 		<!-- 银行理财模态框（Modal） -->
 		
 		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 			aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="modal-dialog" style="width: 550px; height: 1400px">
+			<div class="modal-dialog" style="width: 550px; height: 1600px">
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"
@@ -45,12 +46,19 @@ function setBankValue(pid,pname,price){
 									 onclick="return setBankValue('<s:property value="#product.pid"/>','<s:property value="#product.name"/>','<s:property value="#product.productBank.purchaseThreshold"/>')"/>
 							</div>
 						</div>
-
-						<div style="height: 180px; margin-top: 2%">
+<!-- 
+						<div style="height: 180px; margin-top: 4%">
 							<div class="smallBlock"></div>
 							<span class="blueFont">收益曲线</span>
+							<select style="margin-left:10%;" id="selectDay">
+							<option value="7">最近7天</option>
+							<option value="15">最近15天</option>
+							<option value="30">最近30天</option>
+							</select>
+							<button  id="dayTJ">确定</button>
 							<div class="income"></div>
 						</div>
+ -->
 					<div style="height: 100%; margin-top: 2%">
 					<table border="0"  style="margin-left: 5%; width: 90%;">
 						<tr>
