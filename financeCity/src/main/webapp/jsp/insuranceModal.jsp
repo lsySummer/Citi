@@ -4,16 +4,26 @@
 
 <html>
 
-
+<script language="javascript" type="text/javascript">
+function setInsValue(pid,pname,price){
+	document.getElementById("protype").value="保险";
+	document.getElementById("priceType").value="保险面额";
+	document.getElementById("propid").value=pid;
+	document.getElementById("proname").value=pname;
+	document.getElementById("proprice").value=price;
+	document.getElementById("purchaseForm").submit();
+	return true;
+}
+</script>
 		<!-- 银行理财模态框（Modal） -->
 		<div class="modal fade" id="mybModal" tabindex="-1" role="dialog"
 			aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="modal-dialog" style="width: 550px; height: 1600px">
+			<div class="modal-dialog" style="width: 550px; height: 800px">
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"
 							aria-hidden="true">&times;</button>
-						<h4 class="modal-title" id="myModalLabel">模态框（Modal）标题</h4>
+						<h4 class="modal-title" id="myModalLabel">保险</h4>
 					</div>
 					<div class="modal-body" style="">
 							<div style="height: 180px;">
@@ -26,12 +36,11 @@
 							</div>
 						</div>
 						<div class="rightPart">
-							<span style="font-size: 22px">养老保险</span><br /> <span
-								style="font-size: 14px">承保年龄：30-65周岁</span><br /> <span
-								style="font-size: 14px">保险期限：20年</span><br />
-							<button class="block-button"
-								style="font-size: 20px; margin-top: 10px">购 &nbsp
-								&nbsp买</button>
+							<span style="font-size: 22px"><s:property value="#product.name"/></span><br /> <span
+								style="font-size: 14px">保障年限：<s:property value="#product.insurance_age"/>年</span><br />
+							<input type="submit" class="block-button"
+									style="font-size: 20px; margin-top: 10px" id="bankBuy" value="购 &nbsp买"
+									 onclick="return setInsValue('<s:property value="#product.pid"/>','<s:property value="#product.name"/>','<s:property value="#product.productInsurance.denomination"/>')"/>
 						</div>
 					</div>
 
@@ -47,20 +56,20 @@
 							<td><span style="font-size: 14px"></span></td>
 						</tr>
 						<tr>
-							<td valign="top"><span style="font-size: 14px">产品名称</span></td>
+							<td valign="top"><span style="font-size: 14px">险种名称</span></td>
 							<td><span class="typeFont"><s:property value="#product.name"/></span></td>
 						</tr>
 						<tr>
-							<td><span style="font-size: 14px">产品期次</span></td>
-							<td><span class="typeFont"><s:property value="#product.productBank.session"/></span></td>
+							<td><span style="font-size: 14px">产品发行公司</span></td>
+							<td><span class="typeFont"><s:property value="#product.productInsurance.institutionManage"/></span></td>
 						</tr>
 						<tr>
-							<td><span style="font-size: 14px">管理机构</span></td>
-							<td><span class="typeFont"><s:property value="#product.productBank.institutionManage"/></span></td>
+							<td><span style="font-size: 14px">购偿金额</span></td>
+							<td><span class="typeFont"><s:property value="#product.productInsurance.indemnity"/></span></td>
 						</tr>
 						<tr>
-							<td><span style="font-size: 14px">托管机构</span></td>
-							<td><span class="typeFont"><s:property value="#product.productBank.custodian"/></span></td>
+							<td><span style="font-size: 14px">保险产品面额</span></td>
+							<td><span class="typeFont"><s:property value="#product.productInsurance.denomination"/></span></td>
 						</tr>
 						<tr>
 							<td></td>
@@ -71,130 +80,41 @@
 							<td><span class="typeFont"></span></td>
 						</tr>
 						<tr>
-							<td><span style="font-size: 14px">预计年化收益率</span></td>
-							<td><span class="typeFont"><s:property value="#product.productBank.expectedRate"/></span></td>
+							<td><span style="font-size: 14px">单位金额赔偿</span></td>
+							<td><span class="typeFont"><s:property value="#product.productInsurance.indemnity"/></span></td>
 						</tr>
 						<tr>
-							<td><span style="font-size: 14px">收益类型</span></td>
-							<td><span class="typeFont"><s:property value="#product.productBank.incomeType"/></span></td>
+							<td><span style="font-size: 14px">年化收益率</span></td>
+							<td><span class="typeFont"><s:property value="#product.productInsurance.yearRate"/></span></td>
+						</tr>
+							<tr>
+							<td><span style="font-size: 14px">保证利率</span></td>
+							<td><span class="typeFont"><s:property value="#product.productInsurance.guaranteedRate"/></span></td>
 						</tr>
 						<tr>
-							<td><span style="font-size: 14px">风险等级</span></td>
-							<td><span class="typeFont"><s:property value="#product.productBank.riskLevel"/></span></td>
+							<td><span style="font-size: 14px">预期利率</span></td>
+							<td><span class="typeFont"><s:property value="#product.productInsurance.expectedRate"/></span></td>
+						</tr>
+						<tr>
+							<td><span style="font-size: 14px">日结算利率</span></td>
+							<td><span class="typeFont"><s:property value="#product.productInsurance.dayRate"/></span></td>
 						</tr>
 					   <tr>
 							<td></td>
 							<td></td>
 						</tr>
 						<tr>
-							<td><span class="typeFont">申请赎回</span></td>
+							<td><span class="typeFont">购买相关</span></td>
 							<td><span class="typeFont"></span></td>
 						</tr>
 												<tr>
-							<td><span style="font-size: 14px">是否净值型</span></td>
-							<td><span class="typeFont"><s:property value="#product.productBank.ifNavType"/></span></td>
+							<td><span style="font-size: 14px">交费方式</span></td>
+							<td><span class="typeFont"><s:property value="#product.productInsurance.payType"/></span></td>
 						</tr>
 						<tr>
-							<td><span style="font-size: 14px">是否封闭</span></td>
-							<td><span class="typeFont"><s:property value="#product.productBank.ifClose"/></span></td>
+							<td><span style="font-size: 14px">保障年限</span></td>
+							<td><span class="typeFont"><s:property value="#product.productInsurance.warrantyPeriod"/></span></td>
 						</tr>
-						<tr>
-							<td><span style="font-size: 14px">申购费率</span></td>
-							<td><span class="typeFont"><s:property value="#product.productBank.ratePurchase"/></span></td>
-						</tr>
-						<tr>
-							<td><span style="font-size: 14px">赎回费率</span></td>
-							<td><span class="typeFont"><s:property value="#product.productBank.rateRedem"/></span></td>
-						</tr>
-						<tr>
-							<td><span style="font-size: 14px">广义管理费率</span></td>
-							<td><span class="typeFont"><s:property value="#product.productBank.rateManage"/></span></td>
-						</tr>
-						<tr>
-							<td><span style="font-size: 14px">起购金额</span></td>
-							<td><span class="typeFont"><s:property value="#product.productBank.purchaseThreshold"/></span></td>
-						</tr>
-						<tr>
-							<td><span style="font-size: 14px">递增购买最小单位</span></td>
-							<td><span class="typeFont"><s:property value="#product.productBank.increasingUnit"/></span></td>
-						</tr>
-						<tr>
-							<td><span style="font-size: 14px">募集开始日</span></td>
-							<td><span class="typeFont"><s:property value="#product.productBank.onPurchaseDate"/></span></td>
-						</tr>
-						<tr>
-							<td><span style="font-size: 14px">募集截止日</span></td>
-							<td><span class="typeFont"><s:property value="#product.productBank.offPurchaseDate"/></span></td>
-						</tr>
-							<tr>
-							<td><span style="font-size: 14px">起息日</span></td>
-							<td><span class="typeFont"><s:property value="#product.productBank.firstAccrDate"/></span></td>
-						</tr>
-						<tr>
-							<td><span style="font-size: 14px">开放日</span></td>
-							<td><span class="typeFont"><s:property value="#product.productBank.onRedemptionDate"/></span></td>
-						</tr>
-						<tr>
-							<td><span style="font-size: 14px">期限</span></td>
-							<td><span class="typeFont"><s:property value="#product.productBank.length"/></span></td>
-						</tr>
-						<tr>
-							<td><span style="font-size: 14px">赎回速度</span></td>
-							<td><span class="typeFont"><s:property value="#product.productBank.redemSpeed"/></span></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td><span class="typeFont">投资范围</span></td>
-							<td><span class="typeFont"></span></td>
-						</tr>
-						<tr>
-							<td><span style="font-size: 14px">理财币种</span></td>
-							<td><span class="typeFont"><s:property value="#product.productBank.currency"/></span></td>
-						</tr>
-						<tr>
-							<td><span style="font-size: 14px">投资范围</span></td>
-							<td><span class="typeFont"><s:property value="#product.productBank.investField"/></span></td>
-						</tr>
-						<tr>
-							<td><span style="font-size: 14px">投资比例</span></td>
-							<td><span class="typeFont"><s:property value="#product.productBank.investRatio"/></span></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td><span class="typeFont">其他</span></td>
-							<td><span class="typeFont"></span></td>
-						</tr>
-						<tr>
-							<td><span style="font-size: 14px">产品编码</span></td>
-							<td><span class="typeFont"><s:property value="#product.productBank.productCode"/></span></td>
-						</tr>
-						<tr>
-							<td><span style="font-size: 14px">登记编码</span></td>
-							<td><span class="typeFont"><s:property value="#product.productBank.registerCode"/></span></td>
-						</tr>
-												<tr>
-							<td><span style="font-size: 14px">销售区域</span></td>
-							<td><span class="typeFont"><s:property value="#product.productBank.salesRegion"/></span></td>
-						</tr>
-						<tr>
-							<td><span style="font-size: 14px">运行规模上限</span></td>
-							<td><span class="typeFont"><s:property value="#product.productBank.sizeUpperLimit"/></span></td>
-						</tr>
-						<tr>
-							<td><span style="font-size: 14px">理财本金及收益支付</span></td>
-							<td><span class="typeFont"><s:property value="#product.productBank.payType"/></td>
-						</tr>
-						<tr>
-							<td><span style="font-size: 14px">发行对象</span></td>
-							<td><span class="typeFont"><s:property value="#product.productBank.objectOriented"/></td>
-						</tr>
-					
 					</table>
 					</div>
 
