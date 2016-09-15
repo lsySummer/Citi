@@ -61,6 +61,11 @@ public class RecommendItem {
         piechart = (PieChartView) findViewById(R.id.piechart);
     }
 
+    /**
+     * 显示饼图数据
+     * @param amount 当前产品的购买总额
+     * @param sum 当前投资组合总额
+     */
     public void setChartInfo(float amount, float sum) {
         List<SliceValue> values = new ArrayList<>();
         values.add(new SliceValue(amount).setColor(getView().getResources().getColor(R.color.lightBlue)));
