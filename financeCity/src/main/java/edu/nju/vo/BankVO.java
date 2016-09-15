@@ -1,6 +1,7 @@
 package edu.nju.vo;
 
 import edu.nju.model.ProductBank;
+import edu.nju.service.POJO.NAVHistory;
 
 /**
  * Created by Sun YuHao on 2016/8/31.
@@ -11,7 +12,17 @@ public class BankVO {
     private String name;
     private Double yearly_income_rate;
     private String product_type;
-    public ProductBank getProductBank() {
+    private NAVHistory[] history;
+
+    public NAVHistory[] getHistory() {
+		return history;
+	}
+
+	public void setHistory(NAVHistory[] history) {
+		this.history = history;
+	}
+
+	public ProductBank getProductBank() {
 		return productBank;
 	}
 

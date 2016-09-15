@@ -12,6 +12,7 @@ public class BondVO {
     private Double yearly_interest_rate;
     private Double nominal_interest_rate;
     private Integer life;
+    
     public ProductBond getProductBond() {
 		return productBond;
 	}
