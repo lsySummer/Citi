@@ -76,6 +76,7 @@ public class ProductVOFactory {
             insuranceVO.setPid(product.getID());
             insuranceVO.setWay_of_charge(ProductCategoryManager.getInsurancePayType(productInsurance));
             insuranceVO.setInsurance_age(productInsurance.getWarrantyPeriod());
+            insuranceVO.setYear_rate(productInsurance.getGuaranteedRate().doubleValue());
             //TODO:data missing
             insuranceVO.setAmount_in_force(new int[2]);
             insuranceVO.setInsurance_lift("");

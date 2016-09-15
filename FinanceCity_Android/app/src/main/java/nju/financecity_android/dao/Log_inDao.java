@@ -29,6 +29,9 @@ public class Log_inDao extends  CommonDao{
 //            Log.i("testss", "try01");
 //            String data = "\"username\":\"administer\",\"passwd\":\"123456\"";
             String data = param.toString();
+
+            Log.i("login","param "+data);
+
             connection.setDoOutput(true);
             connection.setDoInput(true);
             connection.setRequestMethod("POST");

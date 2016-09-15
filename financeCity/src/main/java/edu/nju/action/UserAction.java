@@ -65,16 +65,24 @@ public class UserAction extends BaseAction {
             return ERROR;
         }
 
-        FinanceCityUser financeCityUser = userService.login(username, password);
-        if (financeCityUser == null) {
-            ErrorManager.setError(request, ErrorManager.errorLoginFailed);
-            return ERROR;
+        try {
+            FinanceCityUser financeCityUser = userService.login(username, password);
+
+            session.put("user", financeCityUser);
+            setReferURL(financeCityUser);
+            ErrorManager.setError(request, ErrorManager.errorNormal);
+            return SUCCESS;
+        }
+        catch (UserNotExistException u) {
+            u.printStackTrace();
+            ErrorManager.setError(request, ErrorManager.errorUserNotExist);
+        }
+        catch (InvalidPasswordException i) {
+            i.printStackTrace();
+            ErrorManager.setError(request, ErrorManager.errorInvalidPassword);
         }
 
-        session.put("user", financeCityUser);
-        setReferURL(financeCityUser);
-        ErrorManager.setError(request, ErrorManager.errorNormal);
-        return SUCCESS;
+        return ERROR;
     }
 
     @SuppressWarnings("unchecked")
@@ -217,7 +225,7 @@ public class UserAction extends BaseAction {
             UserTemperPrefer userTemperPrefer = new UserTemperPrefer();
             userTemperPrefer.setExpectedCapital(new BigDecimal(amount_i));
             userTemperPrefer.setEndTime(Date.valueOf(data));
-            userTemperPrefer.setIfBigExpense(ifPrepare_b ? (byte)1 : 0);
+            userTemperPrefer.setIfPrepedBigExpense(ifPrepare_b ? (byte)1 : 0);
             userTemperPrefer.setIfConfigBigExpense(ifBifPre_b ? (byte)1 : 0);
             userTemperPrefer.setExpenseType(type_b);
             userTemperPrefer.setRedeemTime(back_date == null ? null : Date.valueOf(back_date));

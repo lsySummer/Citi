@@ -143,11 +143,16 @@ public class AssetCategoryAllocatorImpl implements AssetCategoryAllocator {
         CategoryIndex categoryIndex = searchService.getCategoryIndex();
         double Min_Inurance = userInfo.getInsuranceAmount().doubleValue();
         List<Category> categoryList = ProductCategoryManager.getCategoryList();
-        String sign = userInfo.getChosenProducts();
 
         for (int i  = 0; i < ProductCategoryManager.categoryNum; ++i) {
             //sign
-            categoryInfo[i].chosen = sign.charAt(i) == '1';
+            //TODO:set choose
+            if (categoryInfo[i].category.equals(ProductCategoryManager.categoryInsurance)) {
+                categoryInfo[i].chosen = Min_Inurance > 0;
+            }
+            else {
+                categoryInfo[i].chosen = true;
+            }
             //category
             categoryInfo[i].category = categoryList.get(i).getCategoryName();
             //LC

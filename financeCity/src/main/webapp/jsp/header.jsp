@@ -28,7 +28,7 @@
     
     function product() 
     { 
-    document.getAsset.action="product"; 
+    document.getAsset.action="search"; 
     document.getAsset.submit(); 
     } 
     </script> 

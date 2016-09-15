@@ -1,6 +1,7 @@
 package edu.nju.service.InvestAdvisorService;
 
 import edu.nju.model.UserTemperPrefer;
+import edu.nju.service.ExceptionsAndError.InvalidUserPreferenceException;
 import edu.nju.service.ExceptionsAndError.NotAllConfigurationSetException;
 import edu.nju.service.ExceptionsAndError.NotLoginException;
 import edu.nju.service.InvestAdvisorService.Strategy.InvestStrategy;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,9 +29,13 @@ public class InvestAdvisorServiceImpl implements InvestAdvisorService {
     private InvestStrategy investStrategy;
 
     @Override
-    public List<TradeInfoWithCheckCode> createInvestmentPortFolio(UserTemperPrefer preference) throws NotAllConfigurationSetException {
+    public List<TradeInfoWithCheckCode> createInvestmentPortFolio(UserTemperPrefer preference) throws NotAllConfigurationSetException, InvalidUserPreferenceException {
         if (preference == null) {
             throw new NotAllConfigurationSetException();
+        }
+
+        if (!preference.getEndTime().after(new Date(System.currentTimeMillis()))) {
+            throw new InvalidUserPreferenceException();
         }
 
         List<TradeInfoWithCheckCode> list = new ArrayList<>();
@@ -44,5 +50,17 @@ public class InvestAdvisorServiceImpl implements InvestAdvisorService {
         }
 
         return list;
+    }
+
+    @Override
+    public PortfolioScores getPortfolioScore(List<SimpleTradeInfo> list) {
+        //TODO:calculate scores
+        PortfolioScores portfolioScores = new PortfolioScores();
+        portfolioScores.setFlow_score(60);
+        portfolioScores.setLength_score(60);
+        portfolioScores.setRisk_score(60);
+        portfolioScores.setYield_score(60);
+
+        return portfolioScores;
     }
 }

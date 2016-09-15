@@ -8,6 +8,7 @@ import edu.nju.service.POJO.InvestResult;
 import edu.nju.service.SearchService.SearchService;
 import edu.nju.service.TradeService.TradeItem;
 import edu.nju.service.Utils.TimeTransformation;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -23,14 +24,13 @@ public class InsuranceInvest implements CategoryInvest {
     @Override
     public InvestResult invest(UserTemperPrefer userInfo, SearchService searchService, AssetCategoryAllocation allocation)  {
         double timeLimit;
-        int productAmount;
         double capital;
         InvestResult investResult = new InvestResult();
 
-        capital = userInfo.getExpectedCapital().doubleValue();
-        timeLimit = TimeTransformation.getTimeFromNow(userInfo.getEndDate(), 'y');
+        capital = allocation.getFreeCapital() + allocation.getFlowCapital();
+        timeLimit = TimeTransformation.getTimeFromNow(userInfo.getEndTime(), TimeTransformation.year);
         //TODO:ask if need insurance amount(number)
-        productAmount = userInfo.getInsuranceAmount().intValue();
+        int insurance_amount_;
 
         List<Product> productList = searchService.getProductListByOrder(categoryName, "p.yearRate DESC");
         if (productList == null) {

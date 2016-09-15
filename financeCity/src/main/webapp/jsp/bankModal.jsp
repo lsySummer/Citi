@@ -3,22 +3,33 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
 <html>
-
+<script language="javascript" type="text/javascript">
+function setBankValue(pid,pname,price){
+	document.getElementById("protype").value="银行理财";
+	document.getElementById("priceType").value="起购金额";
+	document.getElementById("propid").value=pid;
+	document.getElementById("proname").value=pname;
+	document.getElementById("proprice").value=price;
+	document.getElementById("purchaseForm").submit();
+	return true;
+}
+</script>
 
 		<!-- 银行理财模态框（Modal） -->
+		
 		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 			aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="modal-dialog" style="width: 550px; height: 1600px">
+			<div class="modal-dialog" style="width: 550px; height: 1400px">
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"
 							aria-hidden="true">&times;</button>
-						<h4 class="modal-title" id="myModalLabel">模态框（Modal）标题</h4>
+						<h4 class="modal-title" id="myModalLabel">银行理财</h4>
 					</div>
 					<div class="modal-body" style="">
 						<div style="height: 180px;">
 							<div class="product-bigicon bank-circle">
-								<span style="font-size: 35px"><b>2.95</b></span><br /> <span
+								<span style="font-size: 35px"><b><s:property value="#product.productBank.expectedRate"/></b></span><br /> <span
 									style="font-size: 8px;">年化收益率</span>
 								<hr class="line" />
 								<div style="margin-top: -10%;'">
@@ -28,10 +39,10 @@
 							<div class="rightPart">
 								<span style="font-size: 16px"><s:property value="#product.name"/></span><br /> <span
 									style="font-size: 14px">起购金额：￥<s:property value="#product.initial_money"/></span><br /> <span
-									style="font-size: 14px">开放日/到期日：<s:property value="#product.open_date"/></span><br />
-								<button class="block-button"
-									style="font-size: 20px; margin-top: 10px">购 &nbsp
-									&nbsp买</button>
+									style="font-size: 14px">开放日：<s:property value="#product.open_date"/></span><br />
+									<input type="submit" class="block-button"
+									style="font-size: 20px; margin-top: 10px" id="bankBuy" value="购 &nbsp买"
+									 onclick="return setBankValue('<s:property value="#product.pid"/>','<s:property value="#product.name"/>','<s:property value="#product.productBank.purchaseThreshold"/>')"/>
 							</div>
 						</div>
 

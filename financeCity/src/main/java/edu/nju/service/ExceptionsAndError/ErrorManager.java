@@ -26,6 +26,7 @@ public class ErrorManager {
     static public final int errorNoSuchOrder = 14;
     static public final int errorPaymentFailed = 15;
     static public final int errorUserInfoNotSet = 16;
+    static public final int errorInvalidUserPreference = 17;
 
     static private String[] errorDescription;
     static private String[] errorDescriptionCH;
@@ -48,7 +49,8 @@ public class ErrorManager {
                 "No Such Investment Portfolio",
                 "No Such Order",
                 "Payment Failed",
-                "User Info Not Set"
+                "User Info Not Set",
+                "Invalid User Preference"
         };
         errorDescriptionCH = new String[] {
                 "",
@@ -67,7 +69,8 @@ public class ErrorManager {
                 "该投资组合不存在",
                 "不存在的订单",
                 "交易失败",
-                "用户信息不完整"
+                "用户信息不完整",
+                "无效的用户偏好信息"
         };
     }
 
