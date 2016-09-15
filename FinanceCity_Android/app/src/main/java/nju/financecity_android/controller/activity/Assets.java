@@ -1,10 +1,13 @@
 package nju.financecity_android.controller.activity;
 
 import android.app.Fragment;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -43,6 +46,7 @@ import nju.financecity_android.R;
 import nju.financecity_android.dao.AssetHistoryDao;
 import nju.financecity_android.dao.AssetValueDao;
 import nju.financecity_android.model.UserSession;
+import nju.financecity_android.util.Loading;
 
 /**
  * Created by Administrator on 2016/8/25.
@@ -51,12 +55,14 @@ public class Assets extends Fragment {
     public LineChartView chart;
     public ListView timeline;
     private LineChartData data = new LineChartData();
+    private Loading loading=new Loading();
     Handler myHandler = new Handler() {
         //接收到消息后处理
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
                     chart.setLineChartData(data);
+                    loading.closeLoadingDialog();
                     Log.i("search","get message");
                     break;
             }
@@ -96,6 +102,14 @@ public class Assets extends Fragment {
             }
         });
         thread.start();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Looper.prepare();
+                loading.showLoadingDialog(getActivity(),"loading",false);
+                Looper.loop();
+            }
+        }).start();
 //        try {
 //            thread.join();//很奇怪，用join就会自动拉长x轴
 //        }catch (Exception e)
@@ -117,6 +131,7 @@ public class Assets extends Fragment {
 
     private void setLineData()
     {
+
         List<PointValue> mPointValues=new ArrayList<PointValue>();
         List<AxisValue> mAxisValues=new ArrayList<AxisValue>();
 
