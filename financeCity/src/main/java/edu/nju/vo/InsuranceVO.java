@@ -1,5 +1,7 @@
 package edu.nju.vo;
 
+import edu.nju.model.ProductInsurance;
+
 /**
  * Created by Sun YuHao on 2016/8/31.
  */
@@ -12,8 +14,17 @@ public class InsuranceVO {
     private int[] amount_in_force;
     private String way_of_charge;
     private String distributor;
+    private ProductInsurance productInsurance;
 
-    public String getProductType() {
+    public ProductInsurance getProductInsurance() {
+		return productInsurance;
+	}
+
+	public void setProductInsurance(ProductInsurance productInsurance) {
+		this.productInsurance = productInsurance;
+	}
+
+	public String getProductType() {
         return productType;
     }
 

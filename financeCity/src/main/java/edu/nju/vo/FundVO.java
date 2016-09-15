@@ -1,5 +1,7 @@
 package edu.nju.vo;
 
+import edu.nju.model.ProductFund;
+
 /**
  * Created by Sun YuHao on 2016/8/31.
  */
@@ -14,8 +16,17 @@ public class FundVO {
     private String sid;//
     private Double mng_charge_rate;
     private String est_date;//
+    private ProductFund productFund;
 
-    public String getProductType() {
+    public ProductFund getProductFund() {
+		return productFund;
+	}
+
+	public void setProductFund(ProductFund productFund) {
+		this.productFund = productFund;
+	}
+
+	public String getProductType() {
         return productType;
     }
 
