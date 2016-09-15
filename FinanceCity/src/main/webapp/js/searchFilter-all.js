@@ -19,19 +19,20 @@ function initSlider() {
         type: "double",
         grid: true,
         min: 0,
-        max: 100,
-        from: 20,
-        to: 80,
-        prefix: ""
+        max: 72,
+        from: 0,
+        to: 20,
+        prefix: "",
+        postfix: "个月"
     });
     $(".annualized-return").ionRangeSlider({
         type: "double",
         grid: true,
         min: 0,
-        max: 100,
+        max: 15,
         step: 0.1,
-        from: 20,
-        to: 80,
+        from: 0,
+        to: 15,
         postfix: "%"
     });
     //$("#bank_initial_amount").ionRangeSlider({
@@ -53,14 +54,15 @@ function initSlider() {
         to: 80,
         postfix: "年"
     });
-    $("#insurance_income_rate").ionRangeSlider({
+    $("#insurance_price").ionRangeSlider({
         type: "double",
         grid: true,
         min: 0,
-        max: 1,
-        step: 0.01,
-        from: 0.1,
-        to: 0.5
+        max: 10,
+        step: 0.5,
+        from: 1,
+        to: 8,
+        postfix: "w"
     });
 }
 
@@ -190,6 +192,15 @@ function submitBank(page_num) {
 
     options["yearly_income_rate"] = $("#bank_yearly_income_rate").val().split(";");
     options["expiration"] = $("#bank_expiration").val().split(";");
+
+    var initial_amount_start = $("#bank_initial_amount_start").val();
+    var initial_amount_end = $("#bank_initial_amount_end").val();
+
+    if(initial_amount_start==null||initial_amount_start==""||initial_amount_end==null||initial_amount_end==""){
+        alert("起购金额不能为空");
+        return;
+    }
+
     options["initial_amount"] = [""+$("#bank_initial_amount_start").val(), ""+$("#bank_initial_amount_end").val()];
     options["institution_manage"] = $("#bank_institution_manage").val();
     options["income_type"] = $("#bank_income_type").val();
@@ -319,7 +330,7 @@ function submitInsurance(page_num) {
     options["length_of_years"] = $("#insurance_length_of_years").val().split(";");
     options["income_rate"] = $("#insurance_income_rate").val().split(";");
     options["distributor"] = $("#insurance_distributor").val();
-    options["price"] = $("#insurance_price").val();
+    options["price"] = $("#insurance_price").val().split(";");
 
     data["options"] = options;
 

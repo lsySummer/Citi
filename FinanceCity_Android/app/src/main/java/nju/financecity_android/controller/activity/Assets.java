@@ -1,9 +1,14 @@
 package nju.financecity_android.controller.activity;
 
 import android.app.Fragment;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +46,7 @@ import nju.financecity_android.R;
 import nju.financecity_android.dao.AssetHistoryDao;
 import nju.financecity_android.dao.AssetValueDao;
 import nju.financecity_android.model.UserSession;
+import nju.financecity_android.util.Loading;
 
 /**
  * Created by Administrator on 2016/8/25.
@@ -48,7 +54,22 @@ import nju.financecity_android.model.UserSession;
 public class Assets extends Fragment {
     public LineChartView chart;
     public ListView timeline;
-
+    private LineChartData data = new LineChartData();
+    private Loading loading=new Loading();
+    Handler myHandler = new Handler() {
+        //接收到消息后处理
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1:
+                    chart.setLineChartData(data);
+                    loading.closeLoadingDialog();
+                    Log.i("search","get message");
+                    break;
+            }
+            super.handleMessage(msg);
+        }
+    };
+    
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -65,8 +86,52 @@ public class Assets extends Fragment {
 
     public void setChart()
     {
-        //资产变化曲线图
-        chart = (LineChartView) getView().findViewById(R.id.chart);
+        chart=(LineChartView)getView().findViewById(R.id.chart);
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                setLineData();
+
+                Message message = new Message();
+                message.what = 1;
+                //发送消息
+                myHandler.sendMessage(message);
+                Log.i("search","send message");
+
+            }
+        });
+        thread.start();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Looper.prepare();
+                loading.showLoadingDialog(getActivity(),"loading",false);
+                Looper.loop();
+            }
+        }).start();
+//        try {
+//            thread.join();//很奇怪，用join就会自动拉长x轴
+//        }catch (Exception e)
+//        {
+//            e.printStackTrace();
+//        }
+        //设置行为属性，支持缩放、滑动以及平移
+        chart.setInteractive(true);
+        chart.setZoomType(ZoomType.HORIZONTAL);
+        chart.setScrollEnabled(true);
+        chart.setContainerScrollEnabled(true, ContainerScrollType.HORIZONTAL);
+        chart.setLineChartData(data);
+        chart.setVisibility(View.VISIBLE);
+        Viewport v = new Viewport(chart.getMaximumViewport());
+        v.left = 0;
+        v.right= 6;
+        chart.setCurrentViewport(v);//设置当前的窗口显示多少个坐标数据，必须将折线的可以缩放的开关打开
+    }
+
+    private void setLineData()
+    {
+
         List<PointValue> mPointValues=new ArrayList<PointValue>();
         List<AxisValue> mAxisValues=new ArrayList<AxisValue>();
 
@@ -75,7 +140,7 @@ public class Assets extends Fragment {
         UserSession user=UserSession.getCurrUser();
         Log.i("test","user "+user.getSessionId());
         try {
-//            jsonObjects[0].put("id", Integer.parseInt(user.getUserId()));
+//            jsonObjects[0].put("id", Integer.parseInt(user.getUserId()));//TODO 传递当前用户
 //            jsonObjects[0].put("sessionId",user.getSessionId());
             jsonObjects[0].put("id", 4);
             jsonObjects[0].put("sessionId","25f651f520e31896b7c1ffc57e78ec33");
@@ -89,19 +154,7 @@ public class Assets extends Fragment {
         Log.i("test","jObject of parameters "+jsonObjects[0]);
 
         final String[] result={""};
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                result[0]=new AssetValueDao().sendPost(jsonObjects[0]);
-            }
-        });
-        thread.start();
-        try {
-            thread.join();
-        }catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+        result[0]=new AssetValueDao().sendPost(jsonObjects[0]);
         JSONArray jValue=null;
         try{
             jValue=new JSONObject(result[0]).getJSONArray("assetValues");
@@ -110,8 +163,7 @@ public class Assets extends Fragment {
             Log.i("test","asset value result exception");
             e.printStackTrace();
         }
-        /*==============================================================================*/
-//        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+
         List<String> dates=new ArrayList<String>();
         try {
             for (int i = 0; i < jValue.length(); i++) {
@@ -142,15 +194,9 @@ public class Assets extends Fragment {
         line.setPointRadius(4);//座标点大小
         List<Line> lines = new ArrayList<Line>();
         lines.add(line);
-        ///////////////////////////////////////////////////////////
-//        Line testLine=new Line(test).setCubic(false);
-//        testLine.setHasLabelsOnlyForSelected(true);
-//        testLine.setPointColor(getResources().getColor(R.color.validBlue));
-//        testLine.setPointRadius(4);//座标点大小
-//        lines.add(testLine);
-        ////////////////////////////////////
-        LineChartData data = new LineChartData();
-        data.setLines(lines);
+
+        data=new LineChartData(lines);/////
+//        data.setLines(lines);
 
         //坐标轴
         Axis axisX = new Axis(); //X轴
@@ -166,18 +212,6 @@ public class Assets extends Fragment {
         Axis axisY = new Axis();  //Y轴
         axisY.setMaxLabelChars(7); //默认是3，只能看最后三个数字
         data.setAxisYLeft(axisY);
-
-        //设置行为属性，支持缩放、滑动以及平移
-        chart.setInteractive(true);
-        chart.setZoomType(ZoomType.HORIZONTAL);
-        chart.setScrollEnabled(true);
-        chart.setContainerScrollEnabled(true, ContainerScrollType.HORIZONTAL);
-        chart.setLineChartData(data);
-        chart.setVisibility(View.VISIBLE);
-        Viewport v = new Viewport(chart.getMaximumViewport());
-        v.left = 0;
-        v.right= 6;
-        chart.setCurrentViewport(v);
     }
 
     public void setTimeline()
