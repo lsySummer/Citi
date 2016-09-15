@@ -440,7 +440,7 @@ public class SearchFilterFactory {
         int[] year_length = new int[2];
         double[] income_rate = new double[2];
         String distributor;
-        Integer price;
+        Integer[] price;
 
         try {
             Map option = (Map)map.get("options");
@@ -455,13 +455,7 @@ public class SearchFilterFactory {
 
             distributor = (String)option.get("distributor");
 
-            String price_s = (String)option.get("price");
-            if (price_s == null) {
-                price = null;
-            }
-            else {
-                price = Integer.valueOf(price_s);
-            }
+            price = (Integer[])option.get("price");
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -472,7 +466,7 @@ public class SearchFilterFactory {
             int[] year_length = new int[2];
             double[] income_rate = new double[2];
             String distributor;
-            Integer price;
+            Integer[] price;
 
             @Override
             public boolean isChosen(Object product) {
@@ -483,11 +477,13 @@ public class SearchFilterFactory {
                 ProductInsurance productInsurance = (ProductInsurance)product;
                 int length = getValue(productInsurance.getWarrantyPeriod());
                 double yearRate = getValue(productInsurance.getYearRate());
+                int denomination = getValue(productInsurance.getDenomination());
+                String institution = productInsurance.getInstitutionManage();
 
                 return (length >= year_length[0] && length <= year_length[1] &&
-                yearRate >= income_rate[0] && yearRate <= income_rate[1] &&
-                        (distributor == null || productInsurance.getInstitutionManage() == null || distributor.equals(productInsurance.getInstitutionManage())) &&
-                        (price == null || productInsurance.getDenomination() == null || price.equals(productInsurance.getDenomination())));
+                        yearRate >= income_rate[0] && yearRate <= income_rate[1] &&
+                        (distributor == null ||institution == null || distributor.equals(institution)) &&
+                        (price == null || (price[0] <= denomination && price[1] >= denomination)));
             }
 
             @Override
@@ -498,7 +494,7 @@ public class SearchFilterFactory {
                 return list;
             }
 
-            private ProductFilter setParam(int[] year_length, double[] income_rate, String distributor, Integer price) {
+            private ProductFilter setParam(int[] year_length, double[] income_rate, String distributor, Integer[] price) {
                 this.year_length = year_length;
                 this.income_rate = income_rate;
                 this.distributor = distributor;
