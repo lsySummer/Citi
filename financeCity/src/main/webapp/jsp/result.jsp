@@ -106,7 +106,7 @@
         <s:elseif test="#product.productType=='insurance'">
             <div class="product insurance" data-toggle="modal" data-target="#mybModal">
                 <div class="insurance-circle circle">
-                    <h1><s:property value="#product.expected_income_rate"/></h1>
+                    <h1><s:property value="#product.productInsurance.guaranteedRate"/></h1>
                     <h4>收益率</h4>
                     <hr>
                     <h3>保险</h3>
@@ -140,7 +140,7 @@
         <s:elseif test="#product.productType=='bond'">
             <div class="product bond" data-toggle="modal" data-target="#myjModal">
                 <div class="bond-circle circle">
-                    <h1><s:property value="#product.yearly_interest_rate"/></h1>
+                    <h1><s:property value="#product.nominal_interest_rate"/></h1>
                     <h4>收益率</h4>
                     <hr>
                     <h3>债券</h3>
