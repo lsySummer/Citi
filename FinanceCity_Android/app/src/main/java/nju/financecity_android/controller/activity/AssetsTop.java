@@ -157,14 +157,14 @@ public class AssetsTop extends Fragment
             }
         });
         thread.start();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Looper.prepare();
-                loading.showLoadingDialog(getActivity(),"loading",false);
-                Looper.loop();
-            }
-        }).start();
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                Looper.prepare();
+//                loading.showLoadingDialog(getActivity(),"loading",false);
+//                Looper.loop();
+//            }
+//        }).start();
 
         //设置行为属性，支持缩放、滑动以及平移
         lineChart.setInteractive(true);
@@ -196,13 +196,13 @@ public class AssetsTop extends Fragment
 
                 final JSONObject[] jsonObjects=new JSONObject[1];
                 jsonObjects[0]=new JSONObject();//value
-                UserSession user=UserSession.getCurrUser();
-                Log.i("test","user "+user.getSessionId());
+//                UserSession user=UserSession.getCurrUser();
+//                Log.i("test","user "+user.getSessionId());
                 try {
 //            jsonObjects[0].put("id", Integer.parseInt(user.getUserId()));//TODO 传递当前用户
 //            jsonObjects[0].put("sessionId",user.getSessionId());
-                    jsonObjects[0].put("id", 4);
-                    jsonObjects[0].put("sessionId","3abeb5d73d43eab7d6b0f955795734ed");
+                    jsonObjects[0].put("id", 6);
+                    jsonObjects[0].put("sessionId","7814199a570d7372e585700affb2c71b");
                 }catch(Exception e)
                 {
                     Log.i("test","user session or json exception");
@@ -253,13 +253,13 @@ public class AssetsTop extends Fragment
 
         final JSONObject[] jsonObjects=new JSONObject[1];
         jsonObjects[0]=new JSONObject();//value
-        UserSession user=UserSession.getCurrUser();
-        Log.i("test","user "+user.getSessionId());
+//        UserSession user=UserSession.getCurrUser();
+//        Log.i("test","user "+user.getSessionId());
         try {
 //            jsonObjects[0].put("id", Integer.parseInt(user.getUserId()));//TODO 传递当前用户
 //            jsonObjects[0].put("sessionId",user.getSessionId());
-            jsonObjects[0].put("id", 4);
-            jsonObjects[0].put("sessionId","3abeb5d73d43eab7d6b0f955795734ed");
+            jsonObjects[0].put("id", 6);
+            jsonObjects[0].put("sessionId","7814199a570d7372e585700affb2c71b");
 //            jsonObjects[0].put("days",20);//TODO
         }catch(Exception e)
         {
