@@ -129,6 +129,13 @@
 				<param name="ignoreHierarchy">false</param>
 			</result>
 		</action>
+
+		<action name="redeem" class="edu.nju.action.AndroidBuyAction" method="redeem">
+			<result name="success" type="json">
+				<param name="root">result</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
 	</package>
 
 	<package name="androidProduct" extends="json-default" namespace="/api/product">

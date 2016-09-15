@@ -6,6 +6,7 @@ import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.CategoryAndProduct.ProductCategoryManager;
 import edu.nju.service.ExceptionsAndError.NoSuchProductException;
 import edu.nju.service.ExceptionsAndError.NotLoginException;
+import edu.nju.service.ExceptionsAndError.NothingToReemException;
 import edu.nju.service.POJO.SimpleTradeInfo;
 import edu.nju.service.PayService.PayService;
 import edu.nju.service.SearchService.SearchService;
@@ -121,31 +122,39 @@ public class TradeServiceImpl implements TradeService {
     }
 
     @Override
-    public boolean redeemProduct(String checkCode, int productId, FinanceCityUser financeCityUser) {
-        try {
-            if (payService.redeemProduct()) {
-                InvestmentPortfolio investmentPortfolio = (InvestmentPortfolio)userService.getCommonDao().
-                        find("FROM InvestmentPortfolio i WHERE i.checkCode='" + checkCode + "'").get(0);
+    public boolean redeemProduct(String checkCode, int productId, FinanceCityUser financeCityUser) throws NotLoginException, NothingToReemException {
+        if (payService.redeemProduct()) {
+            List list = userService.getCommonDao().
+                    find("FROM InvestmentPortfolio i WHERE i.checkCode='" + checkCode + "'");
 
-                InvestedProducts investedProducts = (InvestedProducts)userService.getUserDao(financeCityUser).
-                        find("FROM InvestedProduct i WHERE i.portfolioId=" + investmentPortfolio.getId() +
-                        " AND i.productId=" + productId).get(0);
-
-                TradeHistory tradeHistory = new TradeHistory();
-                tradeHistory.setTradeType("redeem");
-                tradeHistory.setTradingVolume(investedProducts.getTotalAmount());
-                tradeHistory.setTradeAt(new Timestamp(System.currentTimeMillis()));
-                tradeHistory.setProductId(productId);
-                tradeHistory.setUserId(financeCityUser.getID());
-
-                userService.getUserDao(financeCityUser).save(tradeHistory);
-
-                investedProducts.setState((byte)0);
-                userService.getUserDao(financeCityUser).update(investedProducts);
+            if (list == null || list.size() == 0) {
+                throw new NothingToReemException();
             }
-        }
-        catch (Exception e) {
-            e.printStackTrace();
+
+            InvestmentPortfolio investmentPortfolio = (InvestmentPortfolio)list.get(0);
+
+            list = userService.getUserDao(financeCityUser).
+                    find("FROM InvestedProduct i WHERE i.portfolioId=" + investmentPortfolio.getId() +
+                            " AND i.productId=" + productId);
+            if (list == null || list.size() == 0) {
+                throw new NothingToReemException();
+            }
+
+            InvestedProducts investedProducts = (InvestedProducts)list.get(0);
+
+            TradeHistory tradeHistory = new TradeHistory();
+            tradeHistory.setTradeType("redeem");
+            tradeHistory.setTradingVolume(investedProducts.getTotalAmount());
+            tradeHistory.setTradeAt(new Timestamp(System.currentTimeMillis()));
+            tradeHistory.setProductId(productId);
+            tradeHistory.setUserId(financeCityUser.getID());
+
+            userService.getUserDao(financeCityUser).save(tradeHistory);
+
+            investedProducts.setState((byte)0);
+            userService.getUserDao(financeCityUser).update(investedProducts);
+
+            return true;
         }
 
         return false;
