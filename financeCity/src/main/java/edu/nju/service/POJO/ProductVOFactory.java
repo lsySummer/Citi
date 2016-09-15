@@ -44,7 +44,7 @@ public class ProductVOFactory {
             bondVO.setName(productBond.getName());
             bondVO.setNominal_interest_rate(getDoubleValue(productBond.getCoupon()));
             bondVO.setPid(product.getID());
-            bondVO.setYearly_interest_rate(getDoubleValue(productBond.getAdjustYearlyRate()));
+            bondVO.setYear_rate(getDoubleValue(productBond.getAdjustYearlyRate()));
             bondVO.setProductBond(productBond);
             poducts.add(bondVO);
         }
@@ -58,7 +58,7 @@ public class ProductVOFactory {
             bankVO.setIncome_type(ProductCategoryManager.getBankIncomeTypeInChinese(productBank));
             bankVO.setInitial_money(productBank.getPurchaseThreshold());
             bankVO.setOpen_date(getDate(productBank.getOnRedemptionDate()));
-            bankVO.setYearly_income_rate(getDoubleValue(productBank.getExpectedRate()));
+            bankVO.setYear_rate(getDoubleValue(productBank.getExpectedRate()));
             bankVO.setProduct_type(ProductCategoryManager.getBankType(productBank));
             //TODO:check if right
             bankVO.setDistributor_bank(productBank.getCustodian());

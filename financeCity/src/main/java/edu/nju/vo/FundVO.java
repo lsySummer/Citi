@@ -17,6 +17,15 @@ public class FundVO {
     private Double mng_charge_rate;
     private String est_date;//
     private ProductFund productFund;
+    private Double year_rate;
+
+    public Double getYear_rate() {
+        return year_rate;
+    }
+
+    public void setYear_rate(Double year_rate) {
+        this.year_rate = year_rate;
+    }
 
     public ProductFund getProductFund() {
 		return productFund;
