@@ -35,7 +35,7 @@ public class FundDetailActivity extends AppCompatActivity {
             public void run() {
                 Intent intent = getIntent();
                 productId = intent.getStringExtra("productId");
-                mData = (new ProductFund(productId)).getProperties();
+                mData = (new ProductFund("40000177")).getProperties();
                 mainThreadHander.post(new Runnable() {
                     @Override
                     public void run() {

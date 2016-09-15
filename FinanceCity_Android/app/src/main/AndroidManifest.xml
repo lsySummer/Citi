@@ -14,18 +14,12 @@
 
 		</activity>
 		<activity android:name=".controller.activity.Log_inActivity">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN"/>
-
-				<category android:name="android.intent.category.LAUNCHER"/>
-			</intent-filter>
 		</activity>
 		<activity android:name=".controller.activity.RegisterActivity">
 		</activity>
 		<activity android:name=".controller.activity.BankDetailActivity">
 		</activity>
 		<activity android:name=".controller.activity.FundDetailActivity">
-
 		</activity>
 		<activity android:name=".controller.activity.BondDetailActivity">
 		</activity>
@@ -50,7 +44,13 @@
 			<!-- </intent-filter> -->
 		</activity>
 		<activity android:name=".controller.activity.QuestionActivity">
+		</activity>
+		<activity android:name=".controller.activity.RecommendActivity">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN"/>
 
+				<category android:name="android.intent.category.LAUNCHER"/>
+			</intent-filter>
 		</activity>
 	</application>
 

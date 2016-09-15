@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import nju.financecity_android.R;
@@ -23,7 +25,7 @@ public class Persons extends Fragment {
     private TextView IfCity;
     private TextView GetIn;
     private TextView GetOut;
-    private Button Modify;
+    private ImageView Modify, prefer;
 
     private View theview;
 
@@ -47,7 +49,16 @@ public class Persons extends Fragment {
         IfCity = (TextView) findViewById(R.id.city_country);
         GetIn = (TextView) findViewById(R.id.get_in);
         GetOut = (TextView) findViewById(R.id.get_out);
-        Modify = (Button) findViewById(R.id.modify_mes);
+        Modify = (ImageView) findViewById(R.id.modify_mes);
+        prefer = (ImageView) findViewById(R.id.btPrefer);
+
+        prefer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Persons.this.getActivity(), QuestionActivity.class);
+                Persons.this.getActivity().startActivity(intent);
+            }
+        });
     }
 
     private View findViewById(int ResId){

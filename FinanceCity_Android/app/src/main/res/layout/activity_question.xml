@@ -14,6 +14,9 @@
 			android:orientation="vertical"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			android:layout_centerHorizontal="true" android:layout_alignParentTop="true" android:id="@+id/mainFragment">
+			android:layout_centerHorizontal="true" android:id="@+id/mainFragment" android:layout_below="@+id/banner">
 	</LinearLayout>
+	<nju.financecity_android.controller.widget.Banner
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content" android:id="@+id/banner"/>
 </RelativeLayout>

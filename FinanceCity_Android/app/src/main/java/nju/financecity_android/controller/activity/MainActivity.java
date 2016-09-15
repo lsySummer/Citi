@@ -43,6 +43,7 @@ public class MainActivity extends Activity {
         headers.add(PAGE_PERSON, "个人信息");
         headers.add(PAGE_ASSET, "资产配置");
         headers.add(PAGE_INVESTMENT, "资产概览");
+        setDisplayPage(PAGE_SEARCH);
     }
 
     private void initComponents() {
@@ -86,6 +87,11 @@ public class MainActivity extends Activity {
         fragmentTransaction.addToBackStack(null);   // add to fragment stack
         fragmentTransaction.commit();
         banner.setDisplayText(headers.get(pageId));
+        if (pageId < 4) {
+            banner.setBtBackVisibility(View.INVISIBLE);
+        } else {
+            banner.setBtBackVisibility(View.VISIBLE);
+        }
     }
 
     private FragmentManager fragmentManager;

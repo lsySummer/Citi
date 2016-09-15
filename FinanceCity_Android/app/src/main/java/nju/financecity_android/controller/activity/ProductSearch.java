@@ -383,6 +383,7 @@ public class ProductSearch extends Fragment{
     }
     private ArrayList<ProductVO> search(ArrayList<HashMap<String,Object>> maps)
     {
+
         ArrayList<ProductVO> list = new ArrayList<ProductVO>();
         String pid="";
         String sid="";
