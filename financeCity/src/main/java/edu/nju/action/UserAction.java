@@ -65,16 +65,24 @@ public class UserAction extends BaseAction {
             return ERROR;
         }
 
-        FinanceCityUser financeCityUser = userService.login(username, password);
-        if (financeCityUser == null) {
-            ErrorManager.setError(request, ErrorManager.errorLoginFailed);
-            return ERROR;
+        try {
+            FinanceCityUser financeCityUser = userService.login(username, password);
+
+            session.put("user", financeCityUser);
+            setReferURL(financeCityUser);
+            ErrorManager.setError(request, ErrorManager.errorNormal);
+            return SUCCESS;
+        }
+        catch (UserNotExistException u) {
+            u.printStackTrace();
+            ErrorManager.setError(request, ErrorManager.errorUserNotExist);
+        }
+        catch (InvalidPasswordException i) {
+            i.printStackTrace();
+            ErrorManager.setError(request, ErrorManager.errorInvalidPassword);
         }
 
-        session.put("user", financeCityUser);
-        setReferURL(financeCityUser);
-        ErrorManager.setError(request, ErrorManager.errorNormal);
-        return SUCCESS;
+        return ERROR;
     }
 
     @SuppressWarnings("unchecked")

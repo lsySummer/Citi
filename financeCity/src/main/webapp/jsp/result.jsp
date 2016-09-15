@@ -25,7 +25,7 @@
     <s:set name="size" value="1"/>
     <s:iterator id="product" value="#request.searchResult">
         <s:set name="size" value="#size+1"/>
-        <s:if test="#product.distributor_bank!=null">
+        <s:if test="#product.productType=='bank'">
             <div class="product bank-financing" data-toggle="modal" data-target="#myModal">
                 <div class="bank-circle circle">
                     <h1><s:property value="#product.yearly_income_rate"/></h1>
@@ -59,7 +59,7 @@
                 </div>
             </div>
         </s:if>
-        <s:elseif test="#product.mng_charge_rate!=null">
+        <s:elseif test="#product.productType=='fund'">
             <div class="product fund" data-toggle="modal" data-target="#mymModal">
                 <div class="fund-circle circle">
                     <h1><s:property value="#product.expected_income_rate"/></h1>
@@ -97,7 +97,7 @@
                 </div>
             </div>
         </s:elseif>
-        <s:elseif test="#product.insurance_life!=null">
+        <s:elseif test="#product.productType=='insurance'">
             <div class="product insurance" data-toggle="modal" data-target="#mybModal">
                 <div class="insurance-circle circle">
                     <h1><s:property value="#product.expected_income_rate"/></h1>
@@ -110,12 +110,12 @@
                     <br>
                     <div class="column">
                         <span class="column-item u1of3 tag">保障年限</span>
-                        <span class="column-item info"><s:property value="#product.insurance_life"/></span>
+                        <span class="column-item info"><s:property value="#product.insurance_age"/>年</span>
                     </div>
-                    <div class="column">
-                        <span class="column-item u1of3 tag">保障年龄</span>
-                        <span class="column-item info"><s:property value="#product.insurance_age"/>岁</span>
-                    </div>
+                    <%--<div class="column">--%>
+                        <%--<span class="column-item u1of3 tag">保障年龄</span>--%>
+                        <%--<span class="column-item info"><s:property value="#product.insurance_age"/>岁</span>--%>
+                    <%--</div>--%>
                     <div class="column">
                         <span class="column-item u1of3 tag">保额区间</span>
                         <span class="column-item info">¥<s:property value="#product.amount_in_force[0]"/>~¥<s:property value="#product.amount_in_force[1]"/></span>
@@ -131,8 +131,8 @@
                 </div>
             </div>
         </s:elseif>
-        <s:elseif test="#product.nominal_interest_rate!=null">
-            <div class="product bond" data-toggle="modal" data-target="#myjModal">
+        <s:elseif test="#product.productType=='bond'">
+            <div class="product bond" data-toggle="modal" data-target="#mycModal">
                 <div class="bond-circle circle">
                     <h1><s:property value="#product.yearly_interest_rate"/></h1>
                     <h4>收益率</h4>

@@ -140,6 +140,7 @@ public class AndroidAssetAction extends AndroidAction {
             }
 
             recommendedPortfolioVO.setData(portfolios);
+            ErrorManager.setError(recommendedPortfolioVO, ErrorManager.errorNormal);
         }
         catch (NotLoginException n) {
             n.printStackTrace();
