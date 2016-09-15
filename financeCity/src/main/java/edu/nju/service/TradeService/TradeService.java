@@ -2,6 +2,7 @@ package edu.nju.service.TradeService;
 
 import edu.nju.service.ExceptionsAndError.NoSuchProductException;
 import edu.nju.service.ExceptionsAndError.NotLoginException;
+import edu.nju.service.ExceptionsAndError.NothingToReemException;
 import edu.nju.service.POJO.SimpleTradeInfo;
 import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.vo.OrderResultVO;
@@ -37,10 +38,10 @@ public interface TradeService {
 
     /**
      * redeem/sell product
-     * @param ProductID .
+     * @param productId .
      * @return if success
      */
-    boolean redeemProduct(Integer ProductID, FinanceCityUser financeCityUser);
+    boolean redeemProduct(String checkCode, int productId, FinanceCityUser financeCityUser) throws NotLoginException, NothingToReemException;
 
     /**
      * enforce investment plan
@@ -48,5 +49,12 @@ public interface TradeService {
      */
     boolean enforceInvestmentPlan();
 
+    /**
+     * acknowledge payment
+     * @param checkCode .
+     * @param financeCityUser .
+     * @throws NotLoginException
+     * @throws NoSuchProductException
+     */
     void ackPayment(String checkCode, FinanceCityUser financeCityUser) throws NotLoginException, NoSuchProductException;
 }

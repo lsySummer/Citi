@@ -167,6 +167,7 @@ label.line {
 /*}*/
 
 .circle h1 {
+    min-height: 38px;
     font-size: 38px;
 }
 
@@ -189,6 +190,7 @@ label.line {
 .more-info h3 {
     text-align: center;
     font-size: 16px;
+    min-height: 34px;
     /*color: #535353;*/
 }
 

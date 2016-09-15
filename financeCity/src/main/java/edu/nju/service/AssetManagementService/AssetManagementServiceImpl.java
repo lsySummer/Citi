@@ -46,8 +46,8 @@ public class AssetManagementServiceImpl implements AssetManagementService {
             List<InvestStatus> list = userService.getUserDao(financeCityUser).
                     find("FROM InvestStatus investStatus WHERE investStatus.userId=" + financeCityUser.getID());
             if (list == null || list.size() == 0) {
-                ErrorManager.setError(currentInvestmentVO, ErrorManager.errorDataNotFound);
-                return null;
+                ErrorManager.setError(currentInvestmentVO, ErrorManager.errorNormal);
+                return currentInvestmentVO;
             }
             else {
                 List<Investment_portfolio> investment_portfolioList = new ArrayList<>();
@@ -56,7 +56,11 @@ public class AssetManagementServiceImpl implements AssetManagementService {
                             find("FROM InvestmentPortfolio i WHERE i.id=" + investStatus.getPortfolioId()).get(0);
 
                     List<InvestedProducts> investedProductList = userService.getUserDao(financeCityUser).
-                            find("FROM InvestedProducts t WHERE t.portfolioId=" + investmentPortfolio.getId());
+                            find("FROM InvestedProducts t WHERE t.portfolioId=" + investmentPortfolio.getId() + " AND t.state=1");
+
+                    if (investedProductList == null || investedProductList.size() == 0) {
+                        continue;
+                    }
 
                     List<ProductVO> productList = new ArrayList<>();
                     for (InvestedProducts investedProducts : investedProductList) {
@@ -104,10 +108,10 @@ public class AssetManagementServiceImpl implements AssetManagementService {
             current_value = (ret_rate + 1) * investedProducts.getTotalAmount().doubleValue();
         }
         else if (product.getCategory().belongTo(ProductCategoryManager.categoryFund)) {
-            ProductFund productFund = (ProductFund)product.getProduct();
             try {
-                double nav = getNavOnDate(product.getID(), investedProducts.getBuyingDate());
-                current_value = (productFund.getNav().doubleValue() / nav) * investedProducts.getTotalAmount().doubleValue();
+                double buy_nav = getNavOnDate(product.getID(), investedProducts.getBuyingDate());
+                double now_nav = getNavOnDate(product.getID(), new Date(System.currentTimeMillis()));
+                current_value = (now_nav / buy_nav) * investedProducts.getTotalAmount().doubleValue();
             }
             catch (DataNotFoundException d) {
                 d.printStackTrace();

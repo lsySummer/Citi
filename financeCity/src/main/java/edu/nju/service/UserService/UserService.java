@@ -28,7 +28,7 @@ public interface UserService {
      * @param password .
      * @return user id
      */
-    FinanceCityUser login(String userName, String password);
+    FinanceCityUser login(String userName, String password) throws UserNotExistException, InvalidPasswordException;
 
     /**
      * user logout

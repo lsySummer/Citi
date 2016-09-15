@@ -6,7 +6,9 @@ import edu.nju.model.ProductFund;
 import edu.nju.model.ProductInsurance;
 import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.CategoryAndProduct.ProductCategoryManager;
+import edu.nju.service.ExceptionsAndError.DataNotFoundException;
 import edu.nju.service.SearchService.ProductFilter;
+import edu.nju.service.SearchService.SearchService;
 import edu.nju.vo.BankVO;
 import edu.nju.vo.BondVO;
 import edu.nju.vo.FundVO;
@@ -20,10 +22,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.SimpleTimeZone;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 /**
  * Created by Sun YuHao on 2016/9/1.
  */
 public class ProductVOFactory {
+	  @Autowired
+	  SearchService searchService;
     private List<Object> poducts = new ArrayList<>();
 
     public void addProduct(Product product) {
@@ -44,7 +50,7 @@ public class ProductVOFactory {
             bondVO.setName(productBond.getName());
             bondVO.setNominal_interest_rate(getDoubleValue(productBond.getCoupon()));
             bondVO.setPid(product.getID());
-            bondVO.setYearly_interest_rate(getDoubleValue(productBond.getAdjustYearlyRate()));
+            bondVO.setYear_rate(getDoubleValue(productBond.getCoupon()));
             bondVO.setProductBond(productBond);
             poducts.add(bondVO);
         }
@@ -58,7 +64,7 @@ public class ProductVOFactory {
             bankVO.setIncome_type(ProductCategoryManager.getBankIncomeTypeInChinese(productBank));
             bankVO.setInitial_money(productBank.getPurchaseThreshold());
             bankVO.setOpen_date(getDate(productBank.getOnRedemptionDate()));
-            bankVO.setYearly_income_rate(getDoubleValue(productBank.getExpectedRate()));
+            bankVO.setYear_rate(getDoubleValue(productBank.getExpectedRate()));
             bankVO.setProduct_type(ProductCategoryManager.getBankType(productBank));
             //TODO:check if right
             bankVO.setDistributor_bank(productBank.getCustodian());
@@ -76,6 +82,7 @@ public class ProductVOFactory {
             insuranceVO.setPid(product.getID());
             insuranceVO.setWay_of_charge(ProductCategoryManager.getInsurancePayType(productInsurance));
             insuranceVO.setInsurance_age(productInsurance.getWarrantyPeriod());
+            insuranceVO.setYear_rate(productInsurance.getGuaranteedRate().doubleValue());
             //TODO:data missing
             insuranceVO.setAmount_in_force(new int[2]);
             insuranceVO.setInsurance_lift("");

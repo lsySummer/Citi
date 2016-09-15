@@ -2,14 +2,14 @@ package edu.nju.action;
 
 import edu.nju.model.UserTemperPrefer;
 import edu.nju.service.AssetManagementService.AssetManagementService;
+import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.ExceptionsAndError.ErrorManager;
+import edu.nju.service.ExceptionsAndError.InvalidUserPreferenceException;
 import edu.nju.service.ExceptionsAndError.NotAllConfigurationSetException;
 import edu.nju.service.ExceptionsAndError.NotLoginException;
 import edu.nju.service.InvestAdvisorService.InvestAdvisorService;
-import edu.nju.service.POJO.AssetValue;
-import edu.nju.service.POJO.SimplePortfolio;
-import edu.nju.service.POJO.SimpleTradeInfo;
-import edu.nju.service.POJO.TradeInfoWithCheckCode;
+import edu.nju.service.POJO.*;
+import edu.nju.service.SearchService.SearchService;
 import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.service.UserService.UserService;
 import edu.nju.vo.AssetValueHistoryVO;
@@ -33,6 +33,8 @@ public class AndroidAssetAction extends AndroidAction {
     InvestAdvisorService investAdvisorService;
     @Autowired
     UserService userService;
+    @Autowired
+    SearchService searchService;
 
     public String getHistoryVO() {
         if (!request.getMethod().equals("POST")) {
@@ -77,9 +79,17 @@ public class AndroidAssetAction extends AndroidAction {
 
             setResult(assetManagementService.getInvestProductVOList(financeCityUser));
         }
-        catch (Exception e) {
+        catch (NotLoginException n) {
+            n.printStackTrace();
             CurrentInvestmentVO currentInvestmentVO = new CurrentInvestmentVO();
             ErrorManager.setError(currentInvestmentVO, ErrorManager.errorNotLogin);
+
+            setResult(currentInvestmentVO);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            CurrentInvestmentVO currentInvestmentVO = new CurrentInvestmentVO();
+            ErrorManager.setError(currentInvestmentVO, ErrorManager.errorInnerDataError);
 
             setResult(currentInvestmentVO);
         }
@@ -132,14 +142,9 @@ public class AndroidAssetAction extends AndroidAction {
             UserTemperPrefer userTemperPrefer = userService.getUserTemper(financeCityUser);
             List<TradeInfoWithCheckCode> list = investAdvisorService.createInvestmentPortFolio(userTemperPrefer);
 
-            List<SimplePortfolio> portfolios = new ArrayList<>();
-            for (TradeInfoWithCheckCode tradeInfoWithCheckCode : list) {
-                SimplePortfolio simplePortfolio = new SimplePortfolio();
-                simplePortfolio.setPortfolio(tradeInfoWithCheckCode.getTradeInfos());
-                portfolios.add(simplePortfolio);
-            }
+            recommendedPortfolioVO = RecommendVOFactory.createRecommend(list, searchService, investAdvisorService);
 
-            recommendedPortfolioVO.setData(portfolios);
+            ErrorManager.setError(recommendedPortfolioVO, ErrorManager.errorNormal);
         }
         catch (NotLoginException n) {
             n.printStackTrace();
@@ -148,6 +153,10 @@ public class AndroidAssetAction extends AndroidAction {
         catch (NotAllConfigurationSetException n) {
             n.printStackTrace();
             ErrorManager.setError(recommendedPortfolioVO, ErrorManager.errorUserInfoNotSet);
+        }
+        catch (InvalidUserPreferenceException i) {
+            i.printStackTrace();
+            ErrorManager.setError(recommendedPortfolioVO, ErrorManager.errorInvalidUserPreference);
         }
         catch (Exception e) {
             e.printStackTrace();

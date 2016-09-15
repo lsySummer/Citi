@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 
 /**
- * Created by Sun YuHao on 2016/9/12.
+ * Created by Sun YuHao on 2016/9/16.
  */
 @Entity
 @Table(name = "invested_products", schema = "citi", catalog = "")
@@ -18,6 +18,7 @@ public class InvestedProducts {
     private Date endDate;
     private Integer portfolioId;
     private Integer tradeId;
+    private Byte state;
 
     @Id
     @Column(name = "id")
@@ -99,6 +100,16 @@ public class InvestedProducts {
         this.tradeId = tradeId;
     }
 
+    @Basic
+    @Column(name = "state")
+    public Byte getState() {
+        return state;
+    }
+
+    public void setState(Byte state) {
+        this.state = state;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -114,6 +125,7 @@ public class InvestedProducts {
         if (endDate != null ? !endDate.equals(that.endDate) : that.endDate != null) return false;
         if (portfolioId != null ? !portfolioId.equals(that.portfolioId) : that.portfolioId != null) return false;
         if (tradeId != null ? !tradeId.equals(that.tradeId) : that.tradeId != null) return false;
+        if (state != null ? !state.equals(that.state) : that.state != null) return false;
 
         return true;
     }
@@ -128,6 +140,7 @@ public class InvestedProducts {
         result = 31 * result + (endDate != null ? endDate.hashCode() : 0);
         result = 31 * result + (portfolioId != null ? portfolioId.hashCode() : 0);
         result = 31 * result + (tradeId != null ? tradeId.hashCode() : 0);
+        result = 31 * result + (state != null ? state.hashCode() : 0);
         return result;
     }
 }

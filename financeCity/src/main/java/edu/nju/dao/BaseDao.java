@@ -22,6 +22,10 @@ public interface BaseDao {
 
 	List find(String queryString, int maxResult);
 
+	List sql_find(String sql, Class cls);
+
+	List sql_find(String sql, Class cls, int maxResult);
+
 	void query(String query);
 	 
 	public List getAllList(Class c) ;

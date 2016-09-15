@@ -31,7 +31,12 @@
     <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
 
     <script src="${basePath}js/asset.js"></script>
-
+<script type="text/javascript">
+	var msg = "${requestScope.tipMessage}";
+	if (msg != "") {
+		alert(msg);
+	}
+	</script>
 </head>
 <body>
 <s:include value="header.jsp"></s:include>

@@ -67,10 +67,23 @@
 			<result name="success">/jsp/recommendation.jsp</result>
 			<result name="login">/jsp/login.jsp</result>
 		</action>
+
+		<action name="investment" class="edu.nju.action.Assets" method="getCurrentInvestment">
+			<result name="success">/jsp/recommendation.jsp</result>
+			<result name="login">/jsp/login.jsp</result>
+		</action>
 		
 		<action name="product" class="edu.nju.action.Assets" method="getProduct">
 			<result name="success">/jsp/searchFilter.jsp</result>
 			<result name="login">/jsp/login.jsp</result>
+		</action>
+		
+		<action name="purchaseOne" class="edu.nju.action.PurchaseAction" method="buy">
+			<result name="success">/jsp/product_pay.jsp</result>
+		</action>
+		
+		<action name="buyOne" class="edu.nju.action.PurchaseAction" method="buyAction">
+			<result name="success">/jsp/asset.jsp</result>
 		</action>
 	</package>
 	
@@ -111,6 +124,13 @@
 		</action>
 
 		<action name="order" class="edu.nju.action.AndroidBuyAction" method="order">
+			<result name="success" type="json">
+				<param name="root">result</param>
+				<param name="ignoreHierarchy">false</param>
+			</result>
+		</action>
+
+		<action name="redeem" class="edu.nju.action.AndroidBuyAction" method="redeem">
 			<result name="success" type="json">
 				<param name="root">result</param>
 				<param name="ignoreHierarchy">false</param>
@@ -187,6 +207,11 @@
 		</action>
 	</package>
 
+	<package name="DayAjax" extends="json-default" namespace="">
+		<action name="dayTJ" class="edu.nju.action.PurchaseAction" method="getHistory">
+			<result type="json"></result>
+		</action>
+	</package>
 	<constant name="struts.action.extension" value="," />
 
 </struts>

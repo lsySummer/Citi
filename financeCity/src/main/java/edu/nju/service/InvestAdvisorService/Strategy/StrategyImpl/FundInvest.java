@@ -25,7 +25,7 @@ public class FundInvest implements CategoryInvest {
 
         InvestResult investResult = new InvestResult();
 
-        capital = userInfo.getExpectedCapital().doubleValue();
+        capital = allocation.getFlowCapital() + allocation.getFreeCapital();
 
         List<Product> productList = searchService.getProductListByOrder(ProductCategoryManager.categoryFund, "p.fundScore");
         if (productList == null || productList.size() == 0) {

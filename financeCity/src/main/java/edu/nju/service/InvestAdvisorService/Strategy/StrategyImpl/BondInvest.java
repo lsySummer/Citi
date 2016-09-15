@@ -27,10 +27,12 @@ public class BondInvest implements CategoryInvest{
         double capital;
         double interestRatio;
 
-        capital = userInfo.getExpectedCapital().doubleValue();
+        capital = allocation.getFlowCapital() + allocation.getFreeCapital();
         mayRedeem = userInfo.getMayRedeemAmount().doubleValue() > 0;
-        investTime = TimeTransformation.getTimeFromNow(userInfo.getEndDate(), 'y');
-        interestRatio = searchService.getCategoryIndex().getRiskFreeInterest().doubleValue();
+        investTime = TimeTransformation.getTimeFromNow(userInfo.getEndTime(), TimeTransformation.year);
+        //TODO:set interest ratio
+        interestRatio = 2;
+        //interestRatio = searchService.getCategoryIndex().getRiskFreeInterest().doubleValue();
 
         if (mayRedeem) {
             return investMayRedeem(capital, investTime, searchService, interestRatio);
@@ -47,25 +49,33 @@ public class BondInvest implements CategoryInvest{
 
     private InvestResult investNoRedeem(double capital, double investTime, SearchService searchService,
                                         double interestRatio) {
-        return investModel(capital, investTime, searchService, "p.type='固定收益债券'", interestRatio);
+        return investModel(capital, investTime, searchService, "p.couponType=1", interestRatio);
     }
 
     private InvestResult investModel(double capital, double investTime, SearchService searchService, String typeLimit,
                                      double interestRatio) {
-        List<Product> productList = null;
+        List<Product> productList;
         InvestResult investResult = new InvestResult();
 
+        String cond = "";
+        if (!typeLimit.equals("")) {
+            cond = typeLimit + " AND ";
+        }
+
         if (investTime <= 1) {
-            productList = searchService.searchProductsByCondition(categoryName, typeLimit + " AND p.dateLimit=1");
+            productList = searchService.searchProductsByCondition(categoryName, cond + "p.length=" + 365);
         }
         else if(investTime > 1 && investTime <= 3) {
-            productList = searchService.searchProductsByCondition(categoryName, typeLimit + " AND p.dateLimit BETWEEN 1 AND 3");
+            productList = searchService.searchProductsByCondition(categoryName, cond + "p.length BETWEEN " + 365 +" AND " + 3 * 365);
         }
         else if(investTime > 3 && investTime <= 5) {
-            productList = searchService.searchProductsByCondition(categoryName, typeLimit + " AND p.dateLimit BETWEEN 3 AND 5");
+            productList = searchService.searchProductsByCondition(categoryName, cond + "p.length BETWEEN " + 3 * 365 +" AND " + 5 * 365);
         }
         else if(investTime > 5 && investTime <= 10) {
-            productList = searchService.searchProductsByCondition(categoryName, typeLimit + " AND p.dateLimit BETWEEN 5 AND 10");
+            productList = searchService.searchProductsByCondition(categoryName, cond + "p.length BETWEEN " + 5 * 365 +" AND " + 10 * 365);
+        }
+        else {
+            productList = searchService.searchProductsByCondition(categoryName, cond + "p.length > " + 10 * 365);
         }
 
         List<Product> selectedProductList = selectProducts(productList, interestRatio);
@@ -100,8 +110,8 @@ public class BondInvest implements CategoryInvest{
         return temp;
     }
 
-    private double getPF(double returnRatio, int timeLimit) {
-        double temp = Math.pow(returnRatio + 1, (double)timeLimit);
+    private double getPF(double returnRatio, double timeLimit) {
+        double temp = Math.pow(returnRatio + 1, timeLimit);
         temp = 1 / temp;
         return temp;
     }
@@ -154,10 +164,10 @@ public class BondInvest implements CategoryInvest{
         boolean ifPayInterest = ProductCategoryManager.getBondInterestType(productBond).equals("附息债");
         boolean ifZeroInterest = ProductCategoryManager.getBondInterestType(productBond).equals("零息债");
         int payFrequency = productBond.getCouponFreq();
-        double yearRate = productBond.getAdjustYearlyRate().doubleValue();
+        double yearRate = productBond.getCoupon().doubleValue();
         double faceValue = productBond.getPar().doubleValue();
         double issuePrice = productBond.getIssuePrice().doubleValue();
-        int investTime = productBond.getLength();
+        int investTime = productBond.getLength() / 365;
 
         if (ifPayInterest) {
             if (payFrequency == 1) {

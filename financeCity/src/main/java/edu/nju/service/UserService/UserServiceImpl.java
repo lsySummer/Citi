@@ -29,23 +29,27 @@ public class UserServiceImpl implements UserService {
     private BaseDao DAO;
 
     @Override
-    public FinanceCityUser login(String userName, String password) {
+    public FinanceCityUser login(String userName, String password) throws UserNotExistException, InvalidPasswordException {
         /** match username and password */
         List list;
         if (validMobile(userName)) {
-            list = DAO.login("FROM User user WHERE user.phone=? AND user.password=?", userName, password);
+            list = DAO.find("FROM User user WHERE user.phone='" + userName + "'");
         }
         else {
-            list = DAO.login("FROM User user WHERE user.username=? AND user.password=?", userName, password);
+            list = DAO.find("FROM User user WHERE user.username='" + userName + "'");
         }
 
         /** if login failed */
         if (list == null || list.size() == 0) {
-            return null;
+            throw new UserNotExistException(userName);
         }
         /** if succeed */
         else {
             User user = (User)list.get(0);
+            if (password == null || !password.equals(user.getPassword())) {
+                throw new InvalidPasswordException();
+            }
+
             FinanceCityUser financeCityUser = new FinanceCityUser();
             financeCityUser.setID(user.getId());
             /** online */
@@ -212,8 +216,13 @@ public class UserServiceImpl implements UserService {
             user.setPassword(password);
             user.setUsername(username);
             DAO.save(user);
-
-            return login(mobile, password);
+            try {
+                return login(mobile, password);
+            }
+            catch (UserNotExistException u) {
+                u.printStackTrace();
+                return null;
+            }
         }
     }
 
@@ -236,7 +245,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void setUserTemperPrefer(UserTemperPrefer userTemperPrefer, FinanceCityUser financeCityUser) throws NotLoginException {
         userTemperPrefer.setUserId(financeCityUser.getID());
-        getUserDao(financeCityUser).save(userTemperPrefer);
+        getUserDao(financeCityUser).saveOrUpdate(userTemperPrefer);
     }
 
     private boolean validPassword(String password) {

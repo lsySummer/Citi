@@ -18,7 +18,6 @@ import java.util.List;
  * Created by Sun YuHao on 2016/8/20.
  */
 public class InvestStrategyImpl implements InvestStrategy {
-    @Autowired
     private AssetCategoryAllocator assetCategoryAllocator;
 
     private CategoryInvest[] categoryInvest;
@@ -32,22 +31,30 @@ public class InvestStrategyImpl implements InvestStrategy {
 
     @Override
     public List<List<SimpleTradeInfo>> createInvestmentPortfolio(UserTemperPrefer preference, SearchService searchService) {
-        assetCategoryAllocator.createAllocation(preference, searchService);
+        //assetCategoryAllocator = new AssetCategoryAllocatorImpl();
+        //assetCategoryAllocator.createAllocation(preference, searchService);
 
         InvestResult investResult = new InvestResult();
 
         List<Category> categoryList = ProductCategoryManager.getCategoryList();
         InvestResult insuranceList = null;
         for (Category category : categoryList) {
-            AssetCategoryAllocation allocation = assetCategoryAllocator.getCategoryAllocation(category.getCategoryName());
+            //AssetCategoryAllocation allocation = assetCategoryAllocator.getCategoryAllocation(category.getCategoryName());
+            AssetCategoryAllocation allocation = new AssetCategoryAllocation();
+            allocation.setFreeCapital(5000);
+            allocation.setFlowCapital(5000);
 
             for (CategoryInvest invest : categoryInvest) {
                 if (category.belongTo(invest.getCategoryName())) {
-                    if (!category.belongTo(ProductCategoryManager.categoryInsurance)) {
-                        investResult.addInvestResult(invest.invest(preference, searchService, allocation));
+                    try {
+                        if (!category.belongTo(ProductCategoryManager.categoryInsurance)) {
+                            investResult.addInvestResult(invest.invest(preference, searchService, allocation));
+                        } else {
+                            insuranceList = invest.invest(preference, searchService, allocation);
+                        }
                     }
-                    else {
-                        insuranceList = invest.invest(preference, searchService, allocation);
+                    catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
             }

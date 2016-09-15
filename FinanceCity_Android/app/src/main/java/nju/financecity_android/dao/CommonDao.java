@@ -19,9 +19,11 @@ import java.util.Map;
  */
 public abstract class CommonDao {
 
-    public static final String host = "http://172.19.115.96:8080";
+//    public static final String host = "http://172.19.115.96:8080";
     // public static String host= "http://172.19.115.96:8080";
-    // public static String host="http://172.19.108.178:8888/Citi";
+//     public static String host="http://172.19.108.178:8888/Citi";
+    public static String host="http://192.168.1.101:8888/Citi";
+//    public static String host="http://172.20.10.2:8888/Citi";
     /**
      * 指定接口。
      * 不一定要实现这个方法。
@@ -53,7 +55,7 @@ public abstract class CommonDao {
         } catch (IOException e) {
             System.err.println("读取到了数据，但是在解析为json的时候出现了错误。将结果包装为默认对象。");
             data = new HashMap();
-            data.put("error", 40);
+            data.put("error", 1);
             data.put("message", "Error parsing Json string");
             data.put("data", jsonString);
         }
