@@ -110,12 +110,12 @@
                     <br>
                     <div class="column">
                         <span class="column-item u1of3 tag">保障年限</span>
-                        <span class="column-item info"><s:property value="#product.insurance_life"/></span>
+                        <span class="column-item info"><s:property value="#product.insurance_age"/>年</span>
                     </div>
-                    <div class="column">
-                        <span class="column-item u1of3 tag">保障年龄</span>
-                        <span class="column-item info"><s:property value="#product.insurance_age"/>岁</span>
-                    </div>
+                    <%--<div class="column">--%>
+                        <%--<span class="column-item u1of3 tag">保障年龄</span>--%>
+                        <%--<span class="column-item info"><s:property value="#product.insurance_age"/>岁</span>--%>
+                    <%--</div>--%>
                     <div class="column">
                         <span class="column-item u1of3 tag">保额区间</span>
                         <span class="column-item info">¥<s:property value="#product.amount_in_force[0]"/>~¥<s:property value="#product.amount_in_force[1]"/></span>
