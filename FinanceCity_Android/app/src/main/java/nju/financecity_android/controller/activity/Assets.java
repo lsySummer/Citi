@@ -143,7 +143,7 @@ public class Assets extends Fragment {
 //            jsonObjects[0].put("id", Integer.parseInt(user.getUserId()));//TODO 传递当前用户
 //            jsonObjects[0].put("sessionId",user.getSessionId());
             jsonObjects[0].put("id", 4);
-            jsonObjects[0].put("sessionId","25f651f520e31896b7c1ffc57e78ec33");
+            jsonObjects[0].put("sessionId","3abeb5d73d43eab7d6b0f955795734ed");
 //            jsonObjects[0].put("days",20);//TODO
         }catch(Exception e)
         {
@@ -224,7 +224,7 @@ public class Assets extends Fragment {
 //            jsonObjects[0].put("id", Integer.parseInt(user.getUserId()));
 //            jsonObjects[0].put("sessionId",user.getSessionId());
             jsonObjects[0].put("id", 4);
-            jsonObjects[0].put("sessionId","25f651f520e31896b7c1ffc57e78ec33");
+            jsonObjects[0].put("sessionId","3abeb5d73d43eab7d6b0f955795734ed");
         }catch(Exception e)
         {
             Log.i("test","user session or json exception");
