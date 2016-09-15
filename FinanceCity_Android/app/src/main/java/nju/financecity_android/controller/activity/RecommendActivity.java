@@ -43,6 +43,10 @@ public class RecommendActivity extends AppCompatActivity {
             }
         });
 
+        // 不知道为什么必须要显示一下后面的页面才行。。。。不然就是一片空白
+        setCurrPage(1);
+        setCurrPage(0);
+
         List<GoodsInfo> data = new ArrayList<>();
         GoodsInfo info = new GoodsInfo();
         info.amount = 1000;
