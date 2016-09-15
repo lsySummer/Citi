@@ -46,11 +46,15 @@ public class InvestStrategyImpl implements InvestStrategy {
 
             for (CategoryInvest invest : categoryInvest) {
                 if (category.belongTo(invest.getCategoryName())) {
-                    if (!category.belongTo(ProductCategoryManager.categoryInsurance)) {
-                        investResult.addInvestResult(invest.invest(preference, searchService, allocation));
+                    try {
+                        if (!category.belongTo(ProductCategoryManager.categoryInsurance)) {
+                            investResult.addInvestResult(invest.invest(preference, searchService, allocation));
+                        } else {
+                            insuranceList = invest.invest(preference, searchService, allocation);
+                        }
                     }
-                    else {
-                        insuranceList = invest.invest(preference, searchService, allocation);
+                    catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
             }

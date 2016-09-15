@@ -107,6 +107,9 @@ public class Assets extends BaseAction{
 					ProductCategoryManager.ifNetBankProduct((ProductBank)product.getProduct())) {
 				productDetailVO.setHistory(searchService.getBankValueHistory(product.getID(), days));
 			}
+			if (product.getCategory().belongTo(ProductCategoryManager.categoryFund)) {
+				productDetailVO.setHistory(searchService.getFundValueHistory(product.getID(), days));
+			}
 
 			session.put("productDetail", productDetailVO);
 			ErrorManager.setError(request, ErrorManager.errorNormal);

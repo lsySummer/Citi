@@ -44,7 +44,7 @@ public class ProductVOFactory {
             bondVO.setName(productBond.getName());
             bondVO.setNominal_interest_rate(getDoubleValue(productBond.getCoupon()));
             bondVO.setPid(product.getID());
-            bondVO.setYear_rate(getDoubleValue(productBond.getAdjustYearlyRate()));
+            bondVO.setYear_rate(getDoubleValue(productBond.getCoupon()));
             bondVO.setProductBond(productBond);
             poducts.add(bondVO);
         }

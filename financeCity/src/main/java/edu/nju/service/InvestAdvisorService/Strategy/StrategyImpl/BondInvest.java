@@ -110,8 +110,8 @@ public class BondInvest implements CategoryInvest{
         return temp;
     }
 
-    private double getPF(double returnRatio, int timeLimit) {
-        double temp = Math.pow(returnRatio + 1, (double)timeLimit);
+    private double getPF(double returnRatio, double timeLimit) {
+        double temp = Math.pow(returnRatio + 1, timeLimit);
         temp = 1 / temp;
         return temp;
     }
@@ -164,10 +164,10 @@ public class BondInvest implements CategoryInvest{
         boolean ifPayInterest = ProductCategoryManager.getBondInterestType(productBond).equals("附息债");
         boolean ifZeroInterest = ProductCategoryManager.getBondInterestType(productBond).equals("零息债");
         int payFrequency = productBond.getCouponFreq();
-        double yearRate = productBond.getAdjustYearlyRate().doubleValue();
+        double yearRate = productBond.getCoupon().doubleValue();
         double faceValue = productBond.getPar().doubleValue();
         double issuePrice = productBond.getIssuePrice().doubleValue();
-        int investTime = productBond.getLength();
+        int investTime = productBond.getLength() / 365;
 
         if (ifPayInterest) {
             if (payFrequency == 1) {
