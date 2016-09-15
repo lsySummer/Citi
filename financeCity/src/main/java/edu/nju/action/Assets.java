@@ -47,7 +47,7 @@ public class Assets extends BaseAction{
 
 	@SuppressWarnings("unchecked")
 	public String getRecommend(){
-		/*
+		
 		try {
 			FinanceCityUser financeCityUser = (FinanceCityUser)session.get("user");
 			if (financeCityUser == null) {
@@ -75,8 +75,7 @@ public class Assets extends BaseAction{
 			ErrorManager.setError(request, ErrorManager.errorInvalidUserPreference);
 			return ERROR;
 		}
-		*/
-		return SUCCESS;
+		
 	}
 
 	@SuppressWarnings("unchecked")

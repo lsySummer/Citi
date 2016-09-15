@@ -47,11 +47,6 @@ function setBondValue(pid,pname,price){
 					</div>
 
 
-						<div style="height: 180px; margin-top: 2%">
-							<div class="smallBlock"></div>
-							<span class="blueFont">收益曲线</span>
-							<div class="income"></div>
-						</div>
 					<div style="height: 100%; margin-top: 2%">
 					<table border="0"  style="margin-left: 5%; width: 90%;">
 						<tr>
