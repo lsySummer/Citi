@@ -5,6 +5,17 @@
 <html>
 
 
+<script language="javascript" type="text/javascript">
+function setFundValue(pid,pname,price){
+	document.getElementById("protype").value="基金";
+	document.getElementById("priceType").value="最新净值";
+	document.getElementById("propid").value=pid;
+	document.getElementById("proname").value=pname;
+	document.getElementById("proprice").value=price;
+	document.getElementById("purchaseForm").submit();
+	return true;
+}
+</script>
 		<!-- 银行理财模态框（Modal） -->
 		<div class="modal fade" id="mymModal" tabindex="-1" role="dialog"
 			aria-labelledby="myModalLabel" aria-hidden="true">
@@ -29,9 +40,9 @@
 							<span style="font-size: 22px"><s:property value="#product.name"/></span><br /> <span
 								style="font-size: 14px">最新净值：¥<s:property value="#product.net_value"/></span><br /> <span
 								style="font-size: 14px">状态：<s:property value="#product.state"/></span><br />
-							<button class="block-button"
-								style="font-size: 20px; margin-top: 10px">购 &nbsp
-								&nbsp买</button>
+							<input type="submit" class="block-button"
+									style="font-size: 20px; margin-top: 10px" id="bankBuy" value="购 &nbsp买"
+									 onclick="return setFundValue('<s:property value="#product.pid"/>','<s:property value="#product.name"/>','<s:property value="#product.net_value"/>')"/>
 						</div>
 					</div>
 
