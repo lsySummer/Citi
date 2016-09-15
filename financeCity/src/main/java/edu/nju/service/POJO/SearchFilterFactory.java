@@ -248,6 +248,9 @@ public class SearchFilterFactory {
             init_arrary(list, net_value);
 
             institution_manage = (String)option.get("institution_manage");
+            if (institution_manage != null && institution_manage.equals("")) {
+                institution_manage = null;
+            }
 
             String type_s = (String)option.get("type");
             if (type_s == null) {
@@ -371,6 +374,9 @@ public class SearchFilterFactory {
             }
 
             institution_manage = (String)option.get("institution_manage");
+            if (institution_manage != null && institution_manage.equals("")) {
+                institution_manage = null;
+            }
 
             String income_t = (String)option.get("income_type");
             if (income_t == null) {
@@ -440,7 +446,7 @@ public class SearchFilterFactory {
         int[] year_length = new int[2];
         double[] income_rate = new double[2];
         String distributor;
-        Integer price;
+        int[] price = new int[2];
 
         try {
             Map option = (Map)map.get("options");
@@ -454,14 +460,12 @@ public class SearchFilterFactory {
             init_arrary(list, income_rate);
 
             distributor = (String)option.get("distributor");
+            if (distributor != null && distributor.equals("")) {
+                distributor = null;
+            }
 
-            String price_s = (String)option.get("price");
-            if (price_s == null) {
-                price = null;
-            }
-            else {
-                price = Integer.valueOf(price_s);
-            }
+            list = (List<String>)option.get("price");
+            init_arrary(list, price);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -472,7 +476,7 @@ public class SearchFilterFactory {
             int[] year_length = new int[2];
             double[] income_rate = new double[2];
             String distributor;
-            Integer price;
+            int[] price;
 
             @Override
             public boolean isChosen(Object product) {
@@ -483,11 +487,15 @@ public class SearchFilterFactory {
                 ProductInsurance productInsurance = (ProductInsurance)product;
                 int length = getValue(productInsurance.getWarrantyPeriod());
                 double yearRate = getValue(productInsurance.getYearRate());
+                double denomination = (double)getValue(productInsurance.getDenomination()) / 10000;
+                String institution = productInsurance.getInstitutionManage();
 
                 return (length >= year_length[0] && length <= year_length[1] &&
-                yearRate >= income_rate[0] && yearRate <= income_rate[1] &&
-                        (distributor == null || productInsurance.getInstitutionManage() == null || distributor.equals(productInsurance.getInstitutionManage())) &&
-                        (price == null || productInsurance.getDenomination() == null || price.equals(productInsurance.getDenomination())));
+                        yearRate >= income_rate[0] && yearRate <= income_rate[1] &&
+                        (distributor == null ||institution == null || distributor.equals(institution)) &&
+                        (price == null ||
+                                (price[0] <= denomination
+                                && price[1] >= denomination)));
             }
 
             @Override
@@ -498,7 +506,7 @@ public class SearchFilterFactory {
                 return list;
             }
 
-            private ProductFilter setParam(int[] year_length, double[] income_rate, String distributor, Integer price) {
+            private ProductFilter setParam(int[] year_length, double[] income_rate, String distributor, int[] price) {
                 this.year_length = year_length;
                 this.income_rate = income_rate;
                 this.distributor = distributor;

@@ -66,11 +66,11 @@ public class SearchFilterAction_ extends AndroidAction {
                         cache.cache(tag, product, null);
                     }
                 }
+                session.put("searchCache", cache);
             }
             else {
                 productList = cache.getCached(tag);
             }
-            session.put("searchCache", cache);
 
 
             for (int i = page_num * 8; i < (page_num + 1) * 8 && i < productList.size(); ++i) {

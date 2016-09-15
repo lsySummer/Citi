@@ -45,7 +45,7 @@ public class ProductVOFactory {
             bondVO.setNominal_interest_rate(getDoubleValue(productBond.getCoupon()));
             bondVO.setPid(product.getID());
             bondVO.setYearly_interest_rate(getDoubleValue(productBond.getAdjustYearlyRate()));
-
+            bondVO.setProductBond(productBond);
             poducts.add(bondVO);
         }
         else if (product.getCategory().equals(ProductCategoryManager.categoryBank)) {
@@ -63,7 +63,7 @@ public class ProductVOFactory {
             //TODO:check if right
             bankVO.setDistributor_bank(productBank.getCustodian());
             bankVO.setDistributor_institution(productBank.getInstitutionManage());
-
+            bankVO.setProductBank(productBank);
             poducts.add(bankVO);
         }
         else if (product.getCategory().equals(ProductCategoryManager.categoryInsurance)) {
@@ -76,10 +76,11 @@ public class ProductVOFactory {
             insuranceVO.setPid(product.getID());
             insuranceVO.setWay_of_charge(ProductCategoryManager.getInsurancePayType(productInsurance));
             insuranceVO.setInsurance_age(productInsurance.getWarrantyPeriod());
+            insuranceVO.setYear_rate(productInsurance.getGuaranteedRate().doubleValue());
             //TODO:data missing
             insuranceVO.setAmount_in_force(new int[2]);
             insuranceVO.setInsurance_lift("");
-
+            insuranceVO.setProductInsurance(productInsurance);
             poducts.add(insuranceVO);
         }
         else if (product.getCategory().belongTo(ProductCategoryManager.categoryFund)) {
@@ -96,7 +97,7 @@ public class ProductVOFactory {
             fundVO.setType(product.getCategory().getChineseName());
             fundVO.setMng_charge_rate(getDoubleValue(productFund.getRateManage()));
             fundVO.setEst_date(getDate(productFund.getOnPurchaseDate()));
-
+            fundVO.setProductFund(productFund);
             poducts.add(fundVO);
         }
     }
