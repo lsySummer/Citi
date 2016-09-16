@@ -128,7 +128,6 @@
 		        // we create date objects here. In your data, you can have date strings
 		        // and then set format of your dates using chart.dataDateFormat property,
 		        // however when possible, use date objects, as this will speed up chart rendering.
-				alert(dateTime[i]+" "+valueArr[i]);
 		        chartData.push({
 		            date: dateTime[i],
 		            visits: valueArr[i]
