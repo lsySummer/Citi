@@ -15,7 +15,7 @@ import nju.financecity_android.util.HttpUtil;
 
 public class Person_Edit {
 
-    public HashMap<String,Object> analyse(){
+    public HashMap<String,Object> analyse(String id,String mob,String bir,String urb,int income,int expense){
         UserSession userSession = UserSession.getCurrUser();
         String userid = userSession.getUserId();
         String sessionid = userSession.getSessionId();
@@ -23,6 +23,17 @@ public class Person_Edit {
         try {
             root.put("id",Integer.parseInt(userid));
             root.put("sessionId",sessionid);
+            root.put("birthday",bir);
+            int Urban = 0;
+            if(urb.equals("城市")){
+                Urban = 1;
+            }
+            root.put("isUrban",Urban);
+            root.put("income",income);
+            root.put("expense",expense);
+            root.put("id",id);
+            root.put("mobile",mob);
+
         }catch (JSONException e) {
             e.printStackTrace();
             Log.d("bug","root put wrong");

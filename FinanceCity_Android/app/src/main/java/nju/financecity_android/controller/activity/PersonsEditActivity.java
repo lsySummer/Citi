@@ -3,6 +3,7 @@ package nju.financecity_android.controller.activity;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,11 +17,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nju.financecity_android.R;
+import nju.financecity_android.model.Person_Edit;
 
 /**
  * Created by sam on 16/9/5.
  */
-public class Persons_Edit extends Activity {
+public class PersonsEditActivity extends Activity {
 
     private List<String> list = new ArrayList<String>();
     private Spinner mySpinner;
@@ -30,9 +32,13 @@ public class Persons_Edit extends Activity {
     private EditText Mobile;
     private EditText GetIn;
     private EditText GetOut;
-    private TextView button;
+    private TextView Birth;
+    private TextView Complete;
+
+    private Person_Edit personEdit;
 
     private String theDate;
+    private String isUrb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +55,11 @@ public class Persons_Edit extends Activity {
         Mobile = (EditText) findViewById(R.id.mobile);
         GetIn = (EditText) findViewById(R.id.get_in);
         GetOut = (EditText) findViewById(R.id.get_out);
-        button = (TextView) findViewById(R.id.button);
+        Birth = (TextView) findViewById(R.id.SetBir);
+
+        Complete = (TextView) findViewById(R.id.complete);
+
+        personEdit = new Person_Edit();
 
     }
 
@@ -69,6 +79,7 @@ public class Persons_Edit extends Activity {
                 // TODO Auto-generated method stub
                 /* 将所选mySpinner 的值带入spinner 中*/
 //                mySpinner.setText("您选择的是："+ adapter.getItem(arg2));
+                isUrb = adapter.getItem(arg2);
                 /* 将mySpinner 显示*/
                 arg0.setVisibility(View.VISIBLE);
             }
@@ -99,18 +110,29 @@ public class Persons_Edit extends Activity {
     }
 
     private void addListener(){
-        button.setOnClickListener(new View.OnClickListener() {
+        Birth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                new DatePickerDialog(Persons_Edit.this, new DatePickerDialog.OnDateSetListener() {
+                new DatePickerDialog(PersonsEditActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
                         theDate = String.format("%d-%d-%d",year,monthOfYear+1,dayOfMonth);
-                        button.setText(theDate);
+                        Birth.setText(theDate);
                     }
                 },2016,9,6).show();
+            }
+        });
+
+        Complete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String id = MyName.getText().toString();
+                String mobile = Mobile.getText().toString();
+                String getin = GetIn.getText().toString();
+                String getout = GetOut.getText().toString();
+                personEdit.analyse(id,mobile,theDate,isUrb,Integer.parseInt(getin),Integer.parseInt(getout));
             }
         });
     }
