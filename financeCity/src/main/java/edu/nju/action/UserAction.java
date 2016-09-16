@@ -17,8 +17,10 @@ import java.sql.Date;
  */
 @Controller
 public class UserAction extends BaseAction {
-    private final String default_after_login = "/jsp/asset.jsp";
+    //private final String default_after_login = "/jsp/asset.jsp";
+    private final String default_after_login = "";
     private final String server = "http://localhost:8080";
+    private final String DEFAULT = "default";
 
     @Autowired
     UserService userService;
@@ -69,9 +71,10 @@ public class UserAction extends BaseAction {
             FinanceCityUser financeCityUser = userService.login(username, password);
 
             session.put("user", financeCityUser);
-            setReferURL(financeCityUser);
+            //setReferURL(financeCityUser);
             ErrorManager.setError(request, ErrorManager.errorNormal);
-            return SUCCESS;
+            //return SUCCESS;
+            return DEFAULT;
         }
         catch (UserNotExistException u) {
             u.printStackTrace();
