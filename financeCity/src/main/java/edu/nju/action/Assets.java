@@ -140,12 +140,15 @@ public class Assets extends BaseAction {
 			List<AssetValue> assetList = assetManagementService.getAssetValueHistory(financeCityUser, 100);
 			List<String> dateArr = new ArrayList<String>();
 			List<Double> valueArr = new ArrayList<Double>();
+			if(assetList!=null){
+				
 			for (int i = 0; i < assetList.size(); i++) {
 				dateArr.add(assetList.get(i).getDate());
 				valueArr.add(assetList.get(i).getValue());
 			}
 			request.setAttribute("dateArr", dateArr);
 			request.setAttribute("valueArr", valueArr);
+			}
 
 			CurrentInvestmentVO currentInvestment = assetManagementService.getInvestProductVOList(financeCityUser);
 			if (currentInvestment != null) {
