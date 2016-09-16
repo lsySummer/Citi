@@ -10,6 +10,7 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ page language="java" import="java.util.*"%>
 <%@ page language="java" import="edu.nju.vo.TradeHistoryVO"%>
+<%@ page language="java" import="edu.nju.service.POJO.AssetValue"%>
 <html>
 <head>
     <%
@@ -102,6 +103,45 @@
 		function submitSold(pid){
 			document.getElementById('hiddenId').value=pid;
 			return true;
+		}
+		
+		function generatechartData() {
+			var dateTime = new  Array();  
+			var valueArr=new Array();
+			<%List<String> dateArr=(List<String>)request.getAttribute("dateArr");
+			List<Double> valueArr=(List<Double>)request.getAttribute("valueArr");
+			int hth=0;
+			   if(dateArr!=null)
+			   {
+				arrLth=dateArr.size();
+			    for(int i=0;i<dateArr.size();i++)
+			    {
+			    	%>
+			    	dateTime[<%=i%>]='<%=dateArr.get(i)%>';
+			    	valueArr[<%=i%>]='<%=valueArr.get(i)%>';
+			    	<%
+			    }
+			   }
+			%>
+		    var chartData = [];
+		    var firstDate = new Date();
+		    firstDate.setDate(firstDate.getDate() - 150);
+
+		    for (var i = 0; i < 150; i++) {
+		        // we create date objects here. In your data, you can have date strings
+		        // and then set format of your dates using chart.dataDateFormat property,
+		        // however when possible, use date objects, as this will speed up chart rendering.
+		        var newDate = new Date(firstDate);
+		        newDate.setDate(newDate.getDate() + i);
+
+		        var visits = Math.round(Math.random() * 100 - 50);
+
+		        chartData.push({
+		            date: dateTime,
+		            visits: valueArr
+		        });
+		    }
+		    return chartData;
 		}
 		</script>
         <div class="asset-price asset-block">

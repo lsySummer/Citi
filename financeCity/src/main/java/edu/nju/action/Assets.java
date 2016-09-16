@@ -18,6 +18,7 @@ import edu.nju.service.ExceptionsAndError.ErrorManager;
 import edu.nju.service.ExceptionsAndError.NoSuchProductException;
 import edu.nju.service.ExceptionsAndError.NotLoginException;
 import edu.nju.service.InvestAdvisorService.InvestAdvisorService;
+import edu.nju.service.POJO.AssetValue;
 import edu.nju.service.POJO.CommonPortfolio;
 import edu.nju.service.POJO.Investment_portfolio;
 import edu.nju.service.POJO.RecommendVOFactory;
@@ -143,6 +144,16 @@ public class Assets extends BaseAction{
 				throw new NotLoginException();
 			}
 
+			List<AssetValue> assetList=assetManagementService.getAssetValueHistory(financeCityUser, 100);
+			List<String> dateArr=new ArrayList<String>();
+			List<Double> valueArr=new ArrayList<Double>();
+			for(int i=0;i<assetList.size();i++){
+				dateArr.add(assetList.get(i).getDate());
+				valueArr.add(assetList.get(i).getValue());
+			}
+			request.setAttribute("dateArr", dateArr);
+			request.setAttribute("valueArr", valueArr);
+			
 			CurrentInvestmentVO currentInvestment = assetManagementService.getInvestProductVOList(financeCityUser);
 			if(currentInvestment!=null){
 			List<Investment_portfolio> investList=currentInvestment.getInvestmentPortfolioList();
@@ -186,6 +197,7 @@ public class Assets extends BaseAction{
 		return ERROR;
 	}
 
+	
 	@SuppressWarnings("unchecked")
 	public String getTradeHistory() {
 		try {
