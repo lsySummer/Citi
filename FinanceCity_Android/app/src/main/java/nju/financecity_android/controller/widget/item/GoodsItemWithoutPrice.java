@@ -43,7 +43,7 @@ public class GoodsItemWithoutPrice extends Observable implements ICommonItem {
             txtInitialAmount.setVisibility(View.INVISIBLE);
         }
         if (mData.subType != null && !mData.subType.equals("")) {
-            txtCatogeries.setText(String.format("%s-%s", mData.type, mData.subType));
+            txtCatogeries.setText(String.format("%s-%s", "基金", mData.subType));
         } else {
             txtCatogeries.setText(mData.type);
         }

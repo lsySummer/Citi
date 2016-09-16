@@ -1,6 +1,7 @@
 package nju.financecity_android.controller.widget.item;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,10 @@ import lecho.lib.hellocharts.model.PieChartData;
 import lecho.lib.hellocharts.model.SliceValue;
 import lecho.lib.hellocharts.view.PieChartView;
 import nju.financecity_android.R;
+import nju.financecity_android.controller.activity.BankDetailActivity;
+import nju.financecity_android.controller.activity.BondDetailActivity;
+import nju.financecity_android.controller.activity.FundDetailActivity;
+import nju.financecity_android.controller.activity.InsuranceDetailActivity;
 import nju.financecity_android.util.ColorBoard;
 import nju.financecity_android.vo.GoodsInfo;
 import nju.financecity_android.vo.RecommendSingleVO;
@@ -26,6 +31,33 @@ public class RecommendItem {
         this.mInflater = LayoutInflater.from(context);
         this.mView = (convertView == null) ? mInflater.inflate(R.layout.recommend_item, null) : convertView;
         this.mData = data;
+        this.mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //生成一个Intent对象
+                Intent intent = new Intent();
+                //在Intent对象当中添加一个键值对
+                intent.putExtra("productId", mData.id);
+                //设置Intent对象要启动的Activity
+                switch(mData.productType)
+                {
+                    case "Bank":
+                        intent.setClass(mContext,BankDetailActivity.class);
+                        break;
+                    case "Fund":
+                        intent.setClass(mContext,FundDetailActivity.class);
+                        break;
+                    case "Bond":
+                        intent.setClass(mContext,BondDetailActivity.class);
+                        break;
+                    case "Insurance":
+                        intent.setClass(mContext,InsuranceDetailActivity.class);
+                        break;
+                }
+                //通过Intent对象启动另外一个Activity
+                mContext.startActivity(intent);
+            }
+        });
         initComponents();
     }
 

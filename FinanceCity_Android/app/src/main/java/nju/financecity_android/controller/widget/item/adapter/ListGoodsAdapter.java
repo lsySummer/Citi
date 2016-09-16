@@ -49,11 +49,11 @@ public class ListGoodsAdapter extends BaseAdapter {
         View view = null;
         final GoodsInfo goodsInfo = (GoodsInfo) getItem(position);
         ICommonItem item = null;
-        if (goodsInfo.type.equals("基金")) {
+        if (goodsInfo.type.equals("Fund")) {
             item = new GoodsItemWithoutPrice(mContext, convertView, (GoodsInfo) getItem(position));
-        } else if (goodsInfo.type.equals("银行理财") || goodsInfo.type.equals("债券")) {
+        } else if (goodsInfo.type.equals("Bank") || goodsInfo.type.equals("Bond")) {
             item = new GoodsItemWithPrice(mContext, convertView, (GoodsInfo) getItem(position));
-        } else if (goodsInfo.type.equals("保险")) {
+        } else if (goodsInfo.type.equals("Insurance")) {
             item = new GoodsItemInsurance(mContext, convertView, (GoodsInfo) getItem(position));
         }
         item.setItemOnLongClickListener(new View.OnLongClickListener() {

@@ -37,16 +37,18 @@ public class GoodsItemInsurance extends Observable implements ICommonItem{
         txtAmount = (EditText) findViewById(R.id.txtAmount);
         txtAmount.setText(String.valueOf(mData.amount));
         txtSimpleType = (TextView) findViewById(R.id.txtSimpleType);
-        if (mData.type.equals("债券")) {
-            txtSimpleType.setBackgroundResource(R.drawable.bond_background);
-            txtSimpleType.setText("债");
-        } else if (mData.type.equals("银行理财")) {
-            txtSimpleType.setBackgroundResource(R.drawable.bank_background);
-            txtSimpleType.setText("理");
-        }
+//        if (mData.type.equals("Bond")) {
+//            txtSimpleType.setBackgroundResource(R.drawable.bond_background);
+//            txtSimpleType.setText("债");
+//        } else if (mData.type.equals("Bank")) {
+//            txtSimpleType.setBackgroundResource(R.drawable.bank_background);
+//            txtSimpleType.setText("理");
+//        }
+        txtSimpleType.setBackgroundResource(R.drawable.insurance_background);
+        txtSimpleType.setText("保");
         txtCatogeries = (TextView) findViewById(R.id.txtCategories);
         if (mData.subType != null && !mData.subType.equals("")) {
-            txtCatogeries.setText(String.format("%s-%s", mData.type, mData.subType));
+            txtCatogeries.setText(String.format("%s-%s", "保险", mData.subType));
         } else {
             txtCatogeries.setText(mData.type);
         }
