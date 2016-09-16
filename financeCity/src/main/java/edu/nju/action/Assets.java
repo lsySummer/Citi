@@ -27,6 +27,8 @@ import edu.nju.service.UserService.UserService;
 import edu.nju.vo.CurrentInvestmentVO;
 import edu.nju.vo.ProductDetailVO;
 import edu.nju.vo.RecommendedPortfolioVO;
+import edu.nju.vo.TradeHistoryListVO;
+
 
 @Controller
 public class Assets extends BaseAction{
@@ -143,6 +145,31 @@ public class Assets extends BaseAction{
 			n.printStackTrace();
 			ErrorManager.setError(request, ErrorManager.errorNotLogin);
 			return LOGIN;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			ErrorManager.setError(request, ErrorManager.errorInnerDataError);
+		}
+
+		return ERROR;
+	}
+
+	@SuppressWarnings("unchecked")
+	public String getTradeHistory() {
+		try {
+			FinanceCityUser financeCityUser = (FinanceCityUser)session.get("user");
+			if (financeCityUser == null) {
+				throw new NotLoginException();
+			}
+
+			TradeHistoryListVO tradeHistoryVO = assetManagementService.getTradeHistory(financeCityUser);
+			session.put("tradHistory", tradeHistoryVO);
+			ErrorManager.setError(request, ErrorManager.errorNormal);
+			return SUCCESS;
+		}
+		catch (NotLoginException n) {
+			n.printStackTrace();
+			ErrorManager.setError(request, ErrorManager.errorNotLogin);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
