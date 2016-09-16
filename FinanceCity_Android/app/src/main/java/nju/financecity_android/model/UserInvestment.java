@@ -28,8 +28,8 @@ public class UserInvestment {
         try {
 //            jsonObjects.put("id", Integer.parseInt(user.getUserId()));//TODO 传递当前用户
 //            jsonObjects.put("sessionId",user.getSessionId());
-            jsonObject.put("id", 6);
-            jsonObject.put("sessionId","745acb2a229043089cf1d04114847705");
+            jsonObject.put("id", 4);
+            jsonObject.put("sessionId","911ba5154b102456b43298be84d38dd9");
         }catch(Exception e)
         {
             Log.i("test","user session or json exception");
