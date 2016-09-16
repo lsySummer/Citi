@@ -113,7 +113,7 @@
 			int hth=0;
 			   if(dateArr!=null)
 			   {
-				arrLth=dateArr.size();
+				   hth=dateArr.size();
 			    for(int i=0;i<dateArr.size();i++)
 			    {
 			    	%>
@@ -123,22 +123,15 @@
 			    }
 			   }
 			%>
-		    var chartData = [];
-		    var firstDate = new Date();
-		    firstDate.setDate(firstDate.getDate() - 150);
-
-		    for (var i = 0; i < 150; i++) {
+			  var chartData = [];
+		    for (var i = 0; i < dateTime.length; i++) {
 		        // we create date objects here. In your data, you can have date strings
 		        // and then set format of your dates using chart.dataDateFormat property,
 		        // however when possible, use date objects, as this will speed up chart rendering.
-		        var newDate = new Date(firstDate);
-		        newDate.setDate(newDate.getDate() + i);
-
-		        var visits = Math.round(Math.random() * 100 - 50);
-
+				alert(dateTime[i]+" "+valueArr[i]);
 		        chartData.push({
-		            date: dateTime,
-		            visits: valueArr
+		            date: dateTime[i],
+		            visits: valueArr[i]
 		        });
 		    }
 		    return chartData;

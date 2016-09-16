@@ -12,7 +12,6 @@ window.onload = function() {
 function initPriceChart() {
 
     var chartData = generatechartData();
-
     var chart = AmCharts.makeChart("price-chart", {
         "theme": "light",
         "type": "serial",
