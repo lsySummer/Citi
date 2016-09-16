@@ -274,4 +274,31 @@ public class AssetManagementServiceImpl implements AssetManagementService {
         return assetValues;
 
     }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<InvestedProducts> getInvestedProduct(String checkCode, FinanceCityUser financeCityUser) throws NotLoginException {
+        List<InvestedProducts> investedProductsList = new ArrayList<>();
+        List<InvestStatus> list = userService.getUserDao(financeCityUser).
+                find("FROM InvestStatus investStatus WHERE investStatus.userId=" + financeCityUser.getID());
+        if (list == null || list.size() == 0) {
+            return null;
+        } else {
+            for (InvestStatus investStatus : list) {
+                InvestmentPortfolio investmentPortfolio = (InvestmentPortfolio) userService.getUserDao(financeCityUser).
+                        find("FROM InvestmentPortfolio i WHERE i.id=" + investStatus.getPortfolioId()).get(0);
+
+                List<InvestedProducts> investedProductList = userService.getUserDao(financeCityUser).
+                        find("FROM InvestedProducts t WHERE t.portfolioId=" + investmentPortfolio.getId() + " AND t.state=1");
+
+                if (investedProductList == null || investedProductList.size() == 0) {
+                    continue;
+                }
+
+                investedProductsList.addAll(investedProductList);
+            }
+        }
+
+        return investedProductsList;
+    }
 }

@@ -41,7 +41,7 @@ public class AssetCategoryAllocatorImpl implements AssetCategoryAllocator {
             AssetCategoryAllocation assetCategoryAllocation = new AssetCategoryAllocation();
             assetCategoryAllocation.setFlowCapital(categoryInfo.flowCapital);
             assetCategoryAllocation.setFreeCapital(categoryInfo.freeCapital);
-            assetCategoryAllocationList.put(categoryInfo.category, assetCategoryAllocation);
+            assetCategoryAllocationList.put(categoryInfo.category.getCategoryName(), assetCategoryAllocation);
         }
     }
 
@@ -154,7 +154,7 @@ public class AssetCategoryAllocatorImpl implements AssetCategoryAllocator {
                 categoryInfo[i].chosen = true;
             }
             //category
-            categoryInfo[i].category = categoryList.get(i).getCategoryName();
+            categoryInfo[i].category = categoryList.get(i);
             //LC
             categoryInfo[i].LC = 0.5;
 
@@ -167,7 +167,7 @@ public class AssetCategoryAllocatorImpl implements AssetCategoryAllocator {
 
                 //Market value
                 try {
-                    categoryInfo[i].W = getMarketValue(categoryInfo[i].category, categoryIndex);
+                    categoryInfo[i].W = getMarketValue(categoryInfo[i].category.getCategoryName(), categoryIndex);
                 }
                 catch (NullPointerException n) {
                     n.printStackTrace();
@@ -210,7 +210,7 @@ public class AssetCategoryAllocatorImpl implements AssetCategoryAllocator {
     }
 
     //TODO:sequence 周年化收益率
-    private double[] getHistoryReturnRateSequence(String category) {
+    private double[] getHistoryReturnRateSequence(Category category) {
         return new double[0];
     }
 
@@ -218,7 +218,7 @@ public class AssetCategoryAllocatorImpl implements AssetCategoryAllocator {
         //TODO:change according to database
         static final int historyNum = 30;
 
-        String category;  //资产类型
+        Category category;  //资产类型
         boolean chosen;  //是否选中
         double E[];      //资产的历史收益率序列
         //double Er;        //预期年化收益率

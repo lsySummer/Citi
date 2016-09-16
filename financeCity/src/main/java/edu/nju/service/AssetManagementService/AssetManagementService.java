@@ -1,5 +1,6 @@
 package edu.nju.service.AssetManagementService;
 
+import edu.nju.model.InvestedProducts;
 import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.ExceptionsAndError.NotLoginException;
 import edu.nju.service.POJO.AssetValue;
@@ -44,4 +45,13 @@ public interface AssetManagementService {
      * @throws NotLoginException
      */
     List<AssetValue> getAssetValueHistory(FinanceCityUser financeCityUser, int days) throws NotLoginException;
+
+    /**
+     * get invested products
+     * @param checkCode .
+     * @param financeCityUser .
+     * @return
+     * @throws NotLoginException
+     */
+    List<InvestedProducts> getInvestedProduct(String checkCode, FinanceCityUser financeCityUser) throws NotLoginException;
 }
