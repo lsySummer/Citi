@@ -142,8 +142,8 @@ public class AndroidAssetAction extends AndroidAction {
             }
 
             UserTemperPrefer userTemperPrefer = userService.getUserTemper(financeCityUser);
-            //List<TradeInfoWithCheckCode> list = investAdvisorService.createInvestmentPortFolio(userTemperPrefer);
-            List<TradeInfoWithCheckCode> list = getDemo();
+            List<TradeInfoWithCheckCode> list = investAdvisorService.createInvestmentPortFolio(userTemperPrefer);
+            //List<TradeInfoWithCheckCode> list = getDemo();
 
             recommendedPortfolioVO = RecommendVOFactory.createRecommend(list, searchService, investAdvisorService);
 

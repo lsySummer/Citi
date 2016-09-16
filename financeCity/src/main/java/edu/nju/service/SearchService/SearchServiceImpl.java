@@ -447,6 +447,18 @@ public class SearchServiceImpl implements SearchService {
         }
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public CategoryMarketWeeklyHistory getCategoryMarket() {
+        List<CategoryMarketWeeklyHistory> list = userService.getCommonDao().find("FROM CategoryMarketWeeklyHistory");
+
+        if (list == null || list.size() == 0) {
+            return null;
+        }
+
+        return list.get(0);
+    }
+
     @Override
     public List<String> getBondYieldType() {
         return ProductCategoryManager.getBondInterestTypeList();

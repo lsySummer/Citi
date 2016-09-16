@@ -31,7 +31,7 @@ public class OrderAction extends BaseAction {
             if (financeCityUser == null) {
                 throw new NotLoginException();
             }
-            String checkCode = (String)session.get("checkCode");
+            String checkCode = request.getParameter("checkCode");
             if (checkCode == null) {
                 throw new InvalidParametersException("checkCode");
             }

@@ -70,7 +70,7 @@ public class Assets extends BaseAction{
 			List<TradeInfoWithCheckCode> lists = getDemo();
 			RecommendedPortfolioVO recommendedPortfolioVO = RecommendVOFactory.createRecommend(lists, searchService, investAdvisorService);
 			List<CommonPortfolio> recArr=recommendedPortfolioVO.getData();
-			request.setAttribute("recArr", recArr);
+			session.put("recArr", recArr);
 
 			return SUCCESS;
 		}
@@ -134,10 +134,10 @@ public class Assets extends BaseAction{
 
 	@SuppressWarnings("unchecked")
 	public String getCurrentInvestment() {
-		if(session.get("tipMessage")!=null&&session.get("tipMessage")!=""){
-		request.setAttribute("tipMessage", session.get("tipMessage"));
-		session.remove("tipMessage");
-	}
+		if(session.get("tipMessage") != null && session.get("tipMessage") != ""){
+			request.setAttribute("tipMessage", session.get("tipMessage"));
+			session.remove("tipMessage");
+		}
 		try {
 			FinanceCityUser financeCityUser = (FinanceCityUser) session.get("user");
 			if (financeCityUser == null) {

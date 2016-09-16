@@ -104,6 +104,7 @@ public class AssetManagementServiceImpl implements AssetManagementService {
     }
 
     private double getCurrentValue(Product product, InvestedProducts investedProducts) {
+        /*
         double current_value;
         if (product.getCategory().belongTo(ProductCategoryManager.categoryBond) ||
                 product.getCategory().belongTo(ProductCategoryManager.categoryBank) ||
@@ -128,6 +129,9 @@ public class AssetManagementServiceImpl implements AssetManagementService {
         }
 
         return current_value;
+        */
+
+        return investedProducts.getTotalAmount().doubleValue();
     }
 
     private double getNavOnDate(int product_id, Date date) throws DataNotFoundException {

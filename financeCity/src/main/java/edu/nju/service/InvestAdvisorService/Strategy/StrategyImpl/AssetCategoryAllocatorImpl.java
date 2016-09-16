@@ -5,6 +5,7 @@ import com.mathworks.toolbox.javabuilder.MWLogicalArray;
 import com.mathworks.toolbox.javabuilder.MWNumericArray;
 import edu.nju.model.CategoryIndex;
 import edu.nju.model.CategoryMarketWeeklyHistory;
+import edu.nju.model.CategoryRtrWeeklyHistory;
 import edu.nju.model.UserTemperPrefer;
 import edu.nju.service.CategoryAndProduct.Category;
 import edu.nju.service.POJO.AssetCategoryAllocation;
@@ -18,6 +19,7 @@ import process3.ClassProcess3;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -141,9 +143,12 @@ public class AssetCategoryAllocatorImpl implements AssetCategoryAllocator {
         return categoryInfo;
     }
 
+    @SuppressWarnings("unchecked")
     public CategoryInfo[] initCategoryInfo(UserTemperPrefer userInfo, SearchService searchService) {
         CategoryInfo[] categoryInfo = new CategoryInfo[ProductCategoryManager.categoryNum];
         CategoryIndex categoryIndex = searchService.getCategoryIndex();
+        CategoryMarketWeeklyHistory categoryMarketWeeklyHistory = searchService.getCategoryMarket();
+        List<CategoryRtrWeeklyHistory> categoryRtrWeeklyHistory = searchService.getCategoryRtrWeeklyHistory(CategoryInfo.historyNum);
         double Min_Inurance = userInfo.getInsuranceAmount().doubleValue();
         List<Category> categoryList = ProductCategoryManager.getCategoryList();
 
@@ -163,14 +168,14 @@ public class AssetCategoryAllocatorImpl implements AssetCategoryAllocator {
 
             if (categoryInfo[i].chosen) {
                 //return rate sequence
-                categoryInfo[i].E = getHistoryReturnRateSequence(categoryInfo[i].category);
+                categoryInfo[i].E = getHistoryReturnRateSequence(categoryInfo[i].category, categoryRtrWeeklyHistory);
                 if (categoryInfo[i].E.length == 0) {
                     return new CategoryInfo[0];
                 }
 
                 //Market value
                 try {
-                    //categoryInfo[i].W = getMarketValue(categoryInfo[i].category.getCategoryName(), categoryIndex);
+                    categoryInfo[i].W = getMarketValue(categoryInfo[i].category.getCategoryName(), categoryMarketWeeklyHistory);
                 }
                 catch (NullPointerException n) {
                     n.printStackTrace();
@@ -190,7 +195,7 @@ public class AssetCategoryAllocatorImpl implements AssetCategoryAllocator {
     private Double getMarketValue(String category, CategoryMarketWeeklyHistory categoryIndex) {
         try {
             Method getter = MethodUtils.getGetter(CategoryMarketWeeklyHistory.class, category);
-            return null;
+            return ((BigDecimal)getter.invoke(categoryIndex)).doubleValue();
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -213,8 +218,8 @@ public class AssetCategoryAllocatorImpl implements AssetCategoryAllocator {
     }
 
     //TODO:sequence 周年化收益率
-    private double[] getHistoryReturnRateSequence(Category category) {
-        return new double[0];
+    private double[] getHistoryReturnRateSequence(Category category, List<CategoryRtrWeeklyHistory> list) {
+        return null;
     }
 
     private class CategoryInfo {

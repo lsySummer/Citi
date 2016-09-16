@@ -1,6 +1,7 @@
 package edu.nju.service.SearchService;
 
 import edu.nju.model.CategoryIndex;
+import edu.nju.model.CategoryMarketWeeklyHistory;
 import edu.nju.model.CategoryRtrWeeklyHistory;
 import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.ExceptionsAndError.DataNotFoundException;
@@ -132,6 +133,8 @@ public interface SearchService {
     NAVHistory[] getBankValueHistory(Integer id, Integer days) throws DataNotFoundException;
 
     List<CategoryRtrWeeklyHistory> getCategoryRtrWeeklyHistory(Integer days);
+
+    CategoryMarketWeeklyHistory getCategoryMarket();
 
     /**
      * get institution list
