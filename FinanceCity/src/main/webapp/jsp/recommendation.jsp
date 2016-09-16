@@ -33,13 +33,20 @@
     <link href='https://fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'>
 
     <script src="${basePath}js/recommendation.js"></script>
-
+<script type="text/javascript">
+function buySubmit(id){
+	document.getElementById('hidValue').value=id;
+	document.getElementById('buyCombine').submit();
+	return true;
+}
+</script>
 </head>
 <body>
 <s:include value="header.jsp"></s:include>
 
 <div class="main">
-<s:form action="buyCombine" name="buyCombine" method="post">
+<s:form action="buyCombine" name="buyCombine" method="post" id="buyCombine">
+<input type="hidden" id="hidValue" name="hidValue"/>
     <div class="container top-margin inline-container">
        <%List<CommonPortfolio> recArr=(List<CommonPortfolio>)request.getAttribute("recArr"); 
        int arraySize=recArr.size();
@@ -271,7 +278,7 @@
         </script>
             <div class="recommendation-footer">
 
-                <a>购买此组合 -></a>
+                <button id="btnA" onclick="return buySubmit('<%=recArr.get(i).getCheckCode()%>')">购买此组合 -></button>
             </div>
         </div>
 		<%}%>
