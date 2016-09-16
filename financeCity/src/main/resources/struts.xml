@@ -53,6 +53,11 @@
 			<result name="error">/jsp/signup_step4.jsp</result>
 			<result name="login">/jsp/login.jsp</result>
 		</action>
+		
+		<action name="buyCombine" class="edu.nju.action.OrderAction" method="buyCombine">
+			<result name="success">/jsp/order-pay.jsp</result>
+			<result name="login">/jsp/login.jsp</result>
+		</action>
 
 		<action name="orderConfirm" class="edu.nju.action.OrderAction" method="">
 			<result name="success">/jsp/order-confirm.jsp</result>

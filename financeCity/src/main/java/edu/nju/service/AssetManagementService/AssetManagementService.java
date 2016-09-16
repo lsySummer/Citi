@@ -1,10 +1,12 @@
 package edu.nju.service.AssetManagementService;
 
+import edu.nju.model.InvestedProducts;
 import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.ExceptionsAndError.NotLoginException;
 import edu.nju.service.POJO.AssetValue;
 import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.vo.CurrentInvestmentVO;
+import edu.nju.vo.ProductVO;
 import edu.nju.vo.TradeHistoryListVO;
 import org.springframework.stereotype.Service;
 
@@ -44,4 +46,13 @@ public interface AssetManagementService {
      * @throws NotLoginException
      */
     List<AssetValue> getAssetValueHistory(FinanceCityUser financeCityUser, int days) throws NotLoginException;
+
+    /**
+     * get invested products
+     * @param checkCode .
+     * @param financeCityUser .
+     * @return
+     * @throws NotLoginException
+     */
+    List<ProductVO> getInvestedProduct(String checkCode, FinanceCityUser financeCityUser) throws NotLoginException;
 }

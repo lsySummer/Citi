@@ -10,7 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import nju.financecity_android.R;
-import nju.financecity_android.controller.activity.Persons_Edit;
 
 /**
  * Created by sam on 16/9/10.
@@ -62,11 +61,11 @@ public class PersonEditTitlt extends RelativeLayout {
             }
         });
 
-        textOk.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(),"click",Toast.LENGTH_SHORT).show();
-            }
-        });
+//        textOk.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(getContext(),"click",Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 }

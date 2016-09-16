@@ -27,7 +27,7 @@
 		</activity>
 		<activity android:name=".controller.activity.BondDetailActivity">
 		</activity>
-		<activity android:name=".controller.activity.Persons_Edit">
+		<activity android:name=".controller.activity.PersonsEditActivity">
 
 			<!-- <intent-filter> -->
 			<!-- <action android:name="android.intent.action.MAIN"/> -->
