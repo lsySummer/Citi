@@ -31,7 +31,7 @@ public class GoodsItemWithPrice extends Observable implements ICommonItem {
     public void initComponents() {
         mainPane = (RelativeLayout) findViewById(R.id.mainPane);
         txtPrice = (TextView) findViewById(R.id.txtPrice);
-        if (mData.type.equals("银行理财")) {
+        if (mData.type.equals("Bank")) {
             txtPrice.setText(String.valueOf("￥" + mData.increasingUnit));
         } else {
             txtPrice.setText(String.valueOf("￥" + mData.price));
@@ -42,18 +42,20 @@ public class GoodsItemWithPrice extends Observable implements ICommonItem {
         txtAmount = (EditText) findViewById(R.id.txtAmount);
         txtAmount.setText(String.valueOf(mData.amount));
         txtSimpleType = (TextView) findViewById(R.id.txtSimpleType);
-        if (mData.type.equals("债券")) {
+        if (mData.type.equals("Bond")) {
+            master="债券";
             txtSimpleType.setBackgroundResource(R.drawable.bond_background);
             txtSimpleType.setText("债");
-        } else if (mData.type.equals("银行理财")) {
+        } else if (mData.type.equals("Bank")) {
+            master="银行理财";
             txtSimpleType.setBackgroundResource(R.drawable.bank_background);
             txtSimpleType.setText("理");
         }
         txtCatogeries = (TextView) findViewById(R.id.txtCategories);
         if (mData.subType != null && !mData.subType.equals("")) {
-            txtCatogeries.setText(String.format("%s-%s", mData.type, mData.subType));
+            txtCatogeries.setText(String.format("%s-%s", master, mData.subType));
         } else {
-            txtCatogeries.setText(mData.type);
+            txtCatogeries.setText(master);
         }
         txtGoodsName = (TextView) findViewById(R.id.txtGoodName);
         txtGoodsName.setText(mData.goodsName);
@@ -64,7 +66,7 @@ public class GoodsItemWithPrice extends Observable implements ICommonItem {
             txtInitialAmount.setVisibility(View.INVISIBLE);
         }
 
-        if (mData.type.equals("银行理财")) {
+        if (mData.type.equals("Bank")) {
             txtAmount.setText(String.valueOf(mData.initialAmount));
         }
 
@@ -149,4 +151,5 @@ public class GoodsItemWithPrice extends Observable implements ICommonItem {
     private TextView txtInitialAmount;
     private RelativeLayout mainPane;
     private int position;
+    private String master="";
 }

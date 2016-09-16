@@ -11,65 +11,65 @@ public class    ProductBank extends BaseProduct {
 
     @Override
     protected void processData() {
-        String chanpinmingcheng;
-        String chanpinqici;
-        String guanlijigou;
-        String tuoguanjigou;
-        double yujinianhuashouyilv;
-        int shouyileixing;
-        int fengxiandengji;
-        int shifoujingzhixing;
-        int shifoufengbi;
-        double shengoufeilv;
-        double shuhuifeilv;
-        double guangyiguanlifeilv;
-        int qigoujine;
-        int dizenggoumaizuixiaodanwei;
-        String mujikaishiri;
-        String mujijiezhiri;
-        String qixiri;
-        String kaifangri;
-        int qixian;
-        int shuhuisudu;
-        int licaibizhong;
-        String touzifanwei;
-        String touzibili;
-        String chanpinbianma;
-        String dengjibianma;
-        String xiaoshouquyu;
-        int yunxingguimoshangxian;
-        String licaibenjinjishouyizhifu;
-        String faxingduixiang;
+        String chanpinmingcheng="";
+        String chanpinqici="";
+        String guanlijigou="";
+        String tuoguanjigou="";
+        double yujinianhuashouyilv=0;
+        int shouyileixing=0;
+        int fengxiandengji=0;
+        int shifoujingzhixing=0;
+        int shifoufengbi=0;
+        double shengoufeilv=0;
+        double shuhuifeilv=0;
+        double guangyiguanlifeilv=0;
+        int qigoujine=0;
+        int dizenggoumaizuixiaodanwei=0;
+        String mujikaishiri="";
+        String mujijiezhiri="";
+        String qixiri="";
+        String kaifangri="";
+        int qixian=0;
+        int shuhuisudu=0;
+        int licaibizhong=0;
+        String touzifanwei="";
+        String touzibili="";
+        String chanpinbianma="";
+        String dengjibianma="";
+        String xiaoshouquyu="";
+        int yunxingguimoshangxian=0;
+        String licaibenjinjishouyizhifu="";
+        String faxingduixiang="";
 
-        chanpinmingcheng = mRawData.get("name").toString();
-        chanpinqici = mRawData.get("session").toString();
-        guanlijigou = mRawData.get("institutionManage").toString();
-        tuoguanjigou = mRawData.get("custodian").toString();
-        yujinianhuashouyilv = Double.valueOf(mRawData.get("NAV").toString());
-        shouyileixing = Integer.parseInt(mRawData.get("incomeType").toString());
-        fengxiandengji = Integer.parseInt(mRawData.get("riskLevel").toString());
-        shifoujingzhixing = Integer.parseInt(mRawData.get("ifNAVType").toString());
-        shifoufengbi = Integer.parseInt(mRawData.get("ifClose").toString());
-        shengoufeilv = Double.parseDouble(mRawData.get("ratePurchase").toString());
-        shuhuifeilv = Double.parseDouble(mRawData.get("rateRedem").toString());
-        guangyiguanlifeilv = Double.parseDouble(mRawData.get("rateManage").toString());
-        qigoujine = Integer.parseInt(mRawData.get("purchaseThreshold").toString());
-        dizenggoumaizuixiaodanwei = Integer.parseInt(mRawData.get("increasingUnit").toString());
-        mujikaishiri = mRawData.get("onPurchaseDate").toString();
-        mujijiezhiri = mRawData.get("offPurchaseDate").toString();
-        qixiri = mRawData.get("startInterestDate").toString();
-        kaifangri = mRawData.get("onRedemptionDate").toString();
-        qixian = Integer.parseInt(mRawData.get("length").toString());
-        shuhuisudu = Integer.parseInt(mRawData.get("redemSpeed").toString());
-        licaibizhong = Integer.parseInt(mRawData.get("currency").toString());
-        touzifanwei = mRawData.get("investField").toString();
-        touzibili = mRawData.get("investRatio").toString();
-        chanpinbianma = mRawData.get("productCode").toString();
-        dengjibianma = mRawData.get("registerCode").toString();
-        xiaoshouquyu = mRawData.get("salesTerritory").toString();
-        yunxingguimoshangxian = Integer.parseInt(mRawData.get("sizeUpperLimit").toString());
-        licaibenjinjishouyizhifu = mRawData.get("payType").toString();
-        faxingduixiang = mRawData.get("objectOriented").toString();
+        try{chanpinmingcheng = mRawData.get("name").toString();}catch(Exception e){}
+        try{chanpinqici = mRawData.get("session").toString();}catch(Exception e){}
+        try{guanlijigou = mRawData.get("institutionManage").toString();}catch(Exception e){}
+        try{tuoguanjigou = mRawData.get("custodian").toString();}catch(Exception e){}
+        try{yujinianhuashouyilv = Double.valueOf(mRawData.get("NAV").toString());}catch(Exception e){}
+        try{shouyileixing = Integer.parseInt(mRawData.get("incomeType").toString());}catch(Exception e){}
+        try{fengxiandengji = Integer.parseInt(mRawData.get("riskLevel").toString());}catch(Exception e){}
+        try{shifoujingzhixing = Integer.parseInt(mRawData.get("ifNAVType").toString());}catch(Exception e){}
+        try{shifoufengbi = Integer.parseInt(mRawData.get("ifClose").toString());}catch(Exception e){}
+        try{shengoufeilv = Double.parseDouble(mRawData.get("ratePurchase").toString());}catch(Exception e){}
+        try{shuhuifeilv = Double.parseDouble(mRawData.get("rateRedem").toString());}catch(Exception e){}
+        try{guangyiguanlifeilv = Double.parseDouble(mRawData.get("rateManage").toString());}catch(Exception e){}
+        try{qigoujine = Integer.parseInt(mRawData.get("purchaseThreshold").toString());}catch(Exception e){}
+        try{dizenggoumaizuixiaodanwei = Integer.parseInt(mRawData.get("increasingUnit").toString());}catch(Exception e){}
+        try{mujikaishiri = mRawData.get("onPurchaseDate").toString();}catch(Exception e){}
+        try{mujijiezhiri = mRawData.get("offPurchaseDate").toString();}catch(Exception e){}
+        try{qixiri = mRawData.get("startInterestDate").toString();}catch(Exception e){}
+        try{kaifangri = mRawData.get("onRedemptionDate").toString();}catch(Exception e){}
+        try{qixian = Integer.parseInt(mRawData.get("length").toString());}catch(Exception e){}
+        try{shuhuisudu = Integer.parseInt(mRawData.get("redemSpeed").toString());}catch(Exception e){}
+        try{licaibizhong = Integer.parseInt(mRawData.get("currency").toString());}catch(Exception e){}
+        try{touzifanwei = mRawData.get("investField").toString();}catch(Exception e){}
+        try{touzibili = mRawData.get("investRatio").toString();}catch(Exception e){}
+        try{chanpinbianma = mRawData.get("productCode").toString();}catch(Exception e){}
+        try{dengjibianma = mRawData.get("registerCode").toString();}catch(Exception e){}
+        try{xiaoshouquyu = mRawData.get("salesTerritory").toString();}catch(Exception e){}
+        try{yunxingguimoshangxian = Integer.parseInt(mRawData.get("sizeUpperLimit").toString());}catch(Exception e){}
+        try{licaibenjinjishouyizhifu = mRawData.get("payType").toString();}catch(Exception e){}
+        try{faxingduixiang = mRawData.get("objectOriented").toString();}catch(Exception e){}
 
         mData.put("产品名称", chanpinmingcheng);
         mData.put("产品期次", chanpinqici);
