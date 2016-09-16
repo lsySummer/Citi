@@ -16,7 +16,7 @@
  <script  type="text/javascript">
     function assets() 
     { 
-    document.getAsset.action="assets"; 
+    document.getAsset.action="investment"; 
     document.getAsset.submit(); 
     } 
      

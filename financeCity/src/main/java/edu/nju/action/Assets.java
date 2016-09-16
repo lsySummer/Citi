@@ -6,13 +6,18 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
 import edu.nju.model.ProductBank;
-import edu.nju.model.UserTemperPrefer;
 import edu.nju.service.AssetManagementService.AssetManagementService;
 import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.CategoryAndProduct.ProductCategoryManager;
-import edu.nju.service.ExceptionsAndError.*;
+import edu.nju.service.ExceptionsAndError.ErrorManager;
+import edu.nju.service.ExceptionsAndError.NoSuchProductException;
+import edu.nju.service.ExceptionsAndError.NotLoginException;
 import edu.nju.service.InvestAdvisorService.InvestAdvisorService;
+import edu.nju.service.POJO.Investment_portfolio;
 import edu.nju.service.POJO.RecommendVOFactory;
 import edu.nju.service.POJO.SimpleTradeInfo;
 import edu.nju.service.POJO.TradeInfoWithCheckCode;
@@ -22,9 +27,6 @@ import edu.nju.service.UserService.UserService;
 import edu.nju.vo.CurrentInvestmentVO;
 import edu.nju.vo.ProductDetailVO;
 import edu.nju.vo.RecommendedPortfolioVO;
-import org.omg.CORBA.DynAnyPackage.Invalid;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 
 @Controller
 public class Assets extends BaseAction{
@@ -132,7 +134,8 @@ public class Assets extends BaseAction{
 			}
 
 			CurrentInvestmentVO currentInvestment = assetManagementService.getInvestProductVOList(financeCityUser);
-			session.put("investment", currentInvestment);
+			List<Investment_portfolio> investList=currentInvestment.getInvestmentPortfolioList();
+			request.setAttribute("investList", investList);
 
 			return SUCCESS;
 		}
