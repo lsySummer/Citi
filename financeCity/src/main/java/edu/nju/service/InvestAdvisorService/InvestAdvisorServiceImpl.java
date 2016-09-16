@@ -56,10 +56,10 @@ public class InvestAdvisorServiceImpl implements InvestAdvisorService {
     public PortfolioScores getPortfolioScore(List<SimpleTradeInfo> list) {
         //TODO:calculate scores
         PortfolioScores portfolioScores = new PortfolioScores();
-        portfolioScores.setFlow_score(60);
-        portfolioScores.setLength_score(60);
-        portfolioScores.setRisk_score(60);
-        portfolioScores.setYield_score(60);
+        portfolioScores.setFlow_score(20);
+        portfolioScores.setLength_score(50);
+        portfolioScores.setRisk_score(80);
+        portfolioScores.setYield_score(40);
 
         return portfolioScores;
     }
