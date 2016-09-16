@@ -22,7 +22,7 @@ public abstract class CommonDao {
 //    public static final String host = "http://172.19.115.96:8080";
     // public static String host= "http://172.19.115.96:8080";
 //     public static String host="http://172.19.108.178:8888/Citi";
-    public static String host="http://192.168.1.101:8888/Citi";
+    public static String host="http://172.19.108.178:8888/Citi";
 //    public static String host="http://172.20.10.2:8888/Citi";
     /**
      * 指定接口。

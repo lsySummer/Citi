@@ -34,9 +34,8 @@ import edu.nju.vo.RecommendedPortfolioVO;
 import edu.nju.vo.TradeHistoryListVO;
 import edu.nju.vo.TradeHistoryVO;
 
-
 @Controller
-public class Assets extends BaseAction{
+public class Assets extends BaseAction {
 	@Autowired
 	SearchService searchService;
 	@Autowired
@@ -49,56 +48,53 @@ public class Assets extends BaseAction{
 	public String execute() throws ServletException, IOException {
 		try {
 			return SUCCESS;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return ERROR;
 		}
 	}
 
 	@SuppressWarnings("unchecked")
-	public String getRecommend(){
+	public String getRecommend() {
 
 		try {
-			FinanceCityUser financeCityUser = (FinanceCityUser)session.get("user");
+			FinanceCityUser financeCityUser = (FinanceCityUser) session.get("user");
 			if (financeCityUser == null) {
 				throw new NotLoginException();
 			}
 
-			//UserTemperPrefer userTemperPrefer = userService.getUserTemper(financeCityUser);
-			//List<TradeInfoWithCheckCode> lists = investAdvisorService.createInvestmentPortFolio(userTemperPrefer);
+			// UserTemperPrefer userTemperPrefer =
+			// userService.getUserTemper(financeCityUser);
+			// List<TradeInfoWithCheckCode> lists =
+			// investAdvisorService.createInvestmentPortFolio(userTemperPrefer);
 			List<TradeInfoWithCheckCode> lists = getDemo();
-			RecommendedPortfolioVO recommendedPortfolioVO = RecommendVOFactory.createRecommend(lists, searchService, investAdvisorService);
-			List<CommonPortfolio> recArr=recommendedPortfolioVO.getData();
+
+			RecommendedPortfolioVO recommendedPortfolioVO = RecommendVOFactory.createRecommend(lists, searchService,
+					investAdvisorService);
+			List<CommonPortfolio> recArr = recommendedPortfolioVO.getData();
+			request.setAttribute("recArr", recArr);
 			session.put("recArr", recArr);
 
 			return SUCCESS;
-		}
-		catch (NotLoginException e) {
+		} catch (NotLoginException e) {
 			ErrorManager.setError(request, ErrorManager.errorNotLogin);
 			return LOGIN;
-		}
-		catch (NoSuchProductException n) {
+		} catch (NoSuchProductException n) {
 			n.printStackTrace();
 			ErrorManager.setError(request, ErrorManager.errorNoSuchProduct);
 			return ERROR;
 		}
 		/*
-		catch (NotAllConfigurationSetException t) {
-			t.printStackTrace();
-			ErrorManager.setError(request, ErrorManager.errorUserInfoNotSet);
-			return ERROR;
-		}
-		catch (InvalidUserPreferenceException i) {
-			i.printStackTrace();
-			ErrorManager.setError(request, ErrorManager.errorInvalidUserPreference);
-			return ERROR;
-		}
-		*/
+		 * catch (NotAllConfigurationSetException t) { t.printStackTrace();
+		 * ErrorManager.setError(request, ErrorManager.errorUserInfoNotSet);
+		 * return ERROR; } catch (InvalidUserPreferenceException i) {
+		 * i.printStackTrace(); ErrorManager.setError(request,
+		 * ErrorManager.errorInvalidUserPreference); return ERROR; }
+		 */
 	}
 
 	@SuppressWarnings("unchecked")
-	public String getProduct(){
+	public String getProduct() {
 		try {
 			int pid = Integer.valueOf(request.getParameter("pid"));
 			String days_s = request.getParameter("days");
@@ -112,8 +108,8 @@ public class Assets extends BaseAction{
 
 			productDetailVO.setType(product.getCategory().getChineseName());
 			productDetailVO.setData(product.getProduct());
-			if (product.getCategory().belongTo(ProductCategoryManager.categoryBank) &&
-					ProductCategoryManager.ifNetBankProduct((ProductBank)product.getProduct())) {
+			if (product.getCategory().belongTo(ProductCategoryManager.categoryBank)
+					&& ProductCategoryManager.ifNetBankProduct((ProductBank) product.getProduct())) {
 				productDetailVO.setHistory(searchService.getBankValueHistory(product.getID(), days));
 			}
 			if (product.getCategory().belongTo(ProductCategoryManager.categoryFund)) {
@@ -124,8 +120,7 @@ public class Assets extends BaseAction{
 			ErrorManager.setError(request, ErrorManager.errorNormal);
 
 			return SUCCESS;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			ErrorManager.setError(request, ErrorManager.errorInvalidParameter);
 			return ERROR;
@@ -134,7 +129,8 @@ public class Assets extends BaseAction{
 
 	@SuppressWarnings("unchecked")
 	public String getCurrentInvestment() {
-		if(session.get("tipMessage") != null && session.get("tipMessage") != ""){
+		if (session.get("tipMessage") != null && session.get("tipMessage") != "") {
+
 			request.setAttribute("tipMessage", session.get("tipMessage"));
 			session.remove("tipMessage");
 		}
@@ -144,53 +140,54 @@ public class Assets extends BaseAction{
 				throw new NotLoginException();
 			}
 
-			List<AssetValue> assetList=assetManagementService.getAssetValueHistory(financeCityUser, 100);
-			List<String> dateArr=new ArrayList<String>();
-			List<Double> valueArr=new ArrayList<Double>();
-			for(int i=0;i<assetList.size();i++){
+			List<AssetValue> assetList = assetManagementService.getAssetValueHistory(financeCityUser, 100);
+			List<String> dateArr = new ArrayList<String>();
+			List<Double> valueArr = new ArrayList<Double>();
+			for (int i = 0; i < assetList.size(); i++) {
 				dateArr.add(assetList.get(i).getDate());
 				valueArr.add(assetList.get(i).getValue());
-				System.out.println("hahha"+assetList.get(i).getDate());
 			}
 			request.setAttribute("dateArr", dateArr);
 			request.setAttribute("valueArr", valueArr);
-			
+
 			CurrentInvestmentVO currentInvestment = assetManagementService.getInvestProductVOList(financeCityUser);
-			if(currentInvestment!=null){
-			List<Investment_portfolio> investList=currentInvestment.getInvestmentPortfolioList();
-			if(investList!=null){
-				if(investList.size()!=0){
-			List<ProductVO> proList=investList.get(0).getProductVOs();
-			List<String> proArr=new ArrayList<String>();
-			List<Integer> pidArr=new ArrayList<Integer>();
-			List<Double> buyArr=new ArrayList<Double>();
-			List<Double> currentArr=new ArrayList<Double>();
-			DecimalFormat df=new DecimalFormat("#.#");  
-			for(int i=0;i<proList.size();i++){
-				double buyingValue=proList.get(i).getBuyingValue();
-				double currentValue=proList.get(i).getCurrentValue();
-				String name=proList.get(i).getName();
-				int pid = proList.get(i).getId();
-				proArr.add(name);
-				buyArr.add(buyingValue);
-				currentArr.add(Double.parseDouble(df.format(currentValue)));
-				pidArr.add(pid);
-			}
-			request.setAttribute("proArr", proArr);
-			request.setAttribute("buyArr", buyArr);
-			request.setAttribute("currentArr", currentArr);
-			request.setAttribute("pidArr", pidArr);
-			getTradeHistory();
+			if (currentInvestment != null) {
+				List<Investment_portfolio> investList = currentInvestment.getInvestmentPortfolioList();
+				if (investList != null) {
+					if (investList.size() != 0) {
+						List<String> proArr = new ArrayList<String>();
+						List<Integer> pidArr = new ArrayList<Integer>();
+						List<Double> buyArr = new ArrayList<Double>();
+						List<Double> currentArr = new ArrayList<Double>();
+						for (int j = 0; j < investList.size(); j++) {
+
+							List<ProductVO> proList = investList.get(j).getProductVOs();
+							DecimalFormat df = new DecimalFormat("#.#");
+							for (int i = 0; i < proList.size(); i++) {
+								double buyingValue = proList.get(i).getBuyingValue();
+								double currentValue = proList.get(i).getCurrentValue();
+								String name = proList.get(i).getName();
+								int pid = proList.get(i).getId();
+								proArr.add(name);
+								buyArr.add(buyingValue);
+								currentArr.add(Double.parseDouble(df.format(currentValue)));
+								pidArr.add(pid);
+							}
+
+						}
+						request.setAttribute("proArr", proArr);
+						request.setAttribute("buyArr", buyArr);
+						request.setAttribute("currentArr", currentArr);
+						request.setAttribute("pidArr", pidArr);
+						getTradeHistory();
+					}
 				}
 			}
-			}
 			return SUCCESS;
-		}
-		catch (NotLoginException n) {
+		} catch (NotLoginException n) {
 			ErrorManager.setError(request, ErrorManager.errorNotLogin);
 			return LOGIN;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			ErrorManager.setError(request, ErrorManager.errorInnerDataError);
 		}
@@ -198,25 +195,22 @@ public class Assets extends BaseAction{
 		return ERROR;
 	}
 
-	
 	@SuppressWarnings("unchecked")
 	public String getTradeHistory() {
 		try {
-			FinanceCityUser financeCityUser = (FinanceCityUser)session.get("user");
+			FinanceCityUser financeCityUser = (FinanceCityUser) session.get("user");
 			if (financeCityUser == null) {
 				throw new NotLoginException();
 			}
 
 			TradeHistoryListVO tradeHistoryVO = assetManagementService.getTradeHistory(financeCityUser);
-			List<TradeHistoryVO> tradeList=tradeHistoryVO.getTradeHistoryVOList();
+			List<TradeHistoryVO> tradeList = tradeHistoryVO.getTradeHistoryVOList();
 			request.setAttribute("tradeList", tradeList);
 			return SUCCESS;
-		}
-		catch (NotLoginException n) {
+		} catch (NotLoginException n) {
 			ErrorManager.setError(request, ErrorManager.errorNotLogin);
 			return LOGIN;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			ErrorManager.setError(request, ErrorManager.errorInnerDataError);
 		}
@@ -230,12 +224,12 @@ public class Assets extends BaseAction{
 		tradeInfoWithCheckCode.setCheckCode("adfasd13sda23dasd");
 		List<SimpleTradeInfo> simpleTradeInfoList = new ArrayList<>();
 
-		//product1
+		// product1
 		SimpleTradeInfo simpleTradeInfo = new SimpleTradeInfo();
 		simpleTradeInfo.setProductId(1);
 		simpleTradeInfo.setAmount(10000);
 		simpleTradeInfoList.add(simpleTradeInfo);
-		//product2
+		// product2
 		simpleTradeInfo = new SimpleTradeInfo();
 		simpleTradeInfo.setProductId(10000001);
 		simpleTradeInfo.setAmount(2000000);

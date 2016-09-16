@@ -95,8 +95,8 @@ public class HttpUtil {
 //            if (UserSession.getCurrUser() != null) {
 //                jsonData.put("id", UserSession.getCurrUser().getUserId());
 //                jsonData.put("sessionId", UserSession.getCurrUser().getSessionId());
-                jsonData.put("id", 17);//TODO use currentUser
-                jsonData.put("sessionId", "51934a56cb3d35fca4b6d2fe7247d83c");
+                jsonData.put("id", 4);//TODO use currentUser
+                jsonData.put("sessionId", "39f175661b1b8961b9ad977326a1825c");
                 Log.i("recommend","parameters "+jsonData.toString());
 //            }
         } catch (JSONException e) {

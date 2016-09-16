@@ -43,6 +43,7 @@ import nju.financecity_android.R;
 import nju.financecity_android.controller.widget.item.adapter.InvstPrdtAdapter;
 import nju.financecity_android.dao.AssetValueDao;
 import nju.financecity_android.dao.InvestmentDao;
+import nju.financecity_android.model.UserAssets;
 import nju.financecity_android.model.UserInvestment;
 import nju.financecity_android.model.UserSession;
 import nju.financecity_android.util.ColorBoard;
@@ -97,6 +98,14 @@ public class AssetsTop extends Fragment
     @Override
     public void onStart() {
         super.onStart();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Looper.prepare();
+                loading.showLoadingDialog(getActivity(),"loading",false);
+                Looper.loop();
+            }
+        }).start();
         setPieChart();
         setLineChart();
     }
@@ -163,14 +172,6 @@ public class AssetsTop extends Fragment
             }
         });
         thread.start();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Looper.prepare();
-                loading.showLoadingDialog(getActivity(),"loading",false);
-                Looper.loop();
-            }
-        }).start();
 
         //设置行为属性，支持缩放、滑动以及平移
         lineChart.setInteractive(true);
@@ -197,63 +198,41 @@ public class AssetsTop extends Fragment
         new Thread(new Runnable() {
             @Override
             public void run() {
-                List<ProductInfo> list = new ArrayList<ProductInfo>();
+                List<ProductInfo> list = UserInvestment.getCurrUserInvestment().mData;
 
-                final JSONObject[] jsonObjects=new JSONObject[1];
-                jsonObjects[0]=new JSONObject();//value
-//                UserSession user=UserSession.getCurrUser();
-//                Log.i("test","user "+user.getSessionId());
-                try {
-//            jsonObjects[0].put("id", Integer.parseInt(user.getUserId()));//TODO 传递当前用户
-//            jsonObjects[0].put("sessionId",user.getSessionId());
-                    jsonObjects[0].put("id", 4);
-                    jsonObjects[0].put("sessionId","3abeb5d73d43eab7d6b0f955795734ed");
-                }catch(Exception e)
-                {
-                    Log.i("test","user session or json exception");
-                    e.printStackTrace();
-                }
-
-                final String[] result={""};
-                result[0]=new InvestmentDao().sendPost(jsonObjects[0]);
-                JSONArray jValue=null;
-                try{
-                    jValue=new JSONObject(result[0]).getJSONArray("investmentPortfolioList");
-                }catch(Exception e)
-                {
-                    Log.i("test","asset value result exception");
-                    e.printStackTrace();
-                }
-                try {
-                    for (int i = 0; i < jValue.length(); i++) {
-                        JSONArray jproducts=(JSONArray)jValue.getJSONObject(i).get("productVOs");
-                        for(int j=0;j<jproducts.length();j++)
-                        {
-                            ProductInfo info = new ProductInfo();
-                            JSONObject jo = jproducts.getJSONObject(j);
-                            info.currPrice=(float)Float.parseFloat(jo.get("currentValue").toString());
-                            info.productName=jo.getString("name");
-                            list.add(info);
-                        }
-                    }
-                }catch(Exception e)
-                {
-                    e.printStackTrace();
-                }
-//                if (investment == null) {
-//                    Message message = new Message();
-//                    message.what = 3;
-//                    //发送消息
-//                    myHandler.sendMessage(message);
-//                    Log.i("search","send message3");
-//                }
                 // 饼图
                 List<SliceValue> values = new ArrayList<>();
+                values.add(new SliceValue(0));//bank
+                values.get(0).setLabel("");
+                values.get(0).setColor(ColorBoard.nextColor());
+                values.add(new SliceValue(0));//bond
+                values.get(1).setLabel("");
+                values.get(1).setColor(ColorBoard.nextColor());
+                values.add(new SliceValue(0));//fund
+                values.get(2).setLabel("");
+                values.get(2).setColor(ColorBoard.nextColor());
+                values.add(new SliceValue(0));//insurance
+                values.get(3).setLabel("");
+                values.get(3).setColor(ColorBoard.nextColor());
                 for (int i = 0; i < list.size(); ++i) {
-                    SliceValue slice = new SliceValue(list.get(i).currPrice);
-                    slice.setLabel(list.get(i).productName);
-                    slice.setColor(ColorBoard.nextColor());
-                    values.add(slice);
+                    ProductInfo info=list.get(i);
+                    if(info.type.contains("理财")) {
+                        values.get(0).setValue(values.get(0).getValue() + info.currPrice);
+                        values.get(0).setLabel("理财产品");
+                    }
+                    else if(info.type.contains("债券")) {
+                        values.get(1).setValue(values.get(1).getValue() + info.currPrice);
+                        values.get(1).setLabel("债券");
+                    }
+                    else if(info.type.contains("基金")) {
+                        values.get(2).setValue(values.get(2).getValue() + info.currPrice);
+                        values.get(2).setLabel("基金");
+                    }
+                    else if(info.type.contains("保险")) {
+                        values.get(3).setValue(values.get(3).getValue() + info.currPrice);
+                        values.get(3).setLabel("保险");
+                    }
+
                 }
                 piedata.setValues(values);
 
@@ -278,8 +257,8 @@ public class AssetsTop extends Fragment
         try {
 //            jsonObjects[0].put("id", Integer.parseInt(user.getUserId()));//TODO 传递当前用户
 //            jsonObjects[0].put("sessionId",user.getSessionId());
-            jsonObjects[0].put("id", 4);
-            jsonObjects[0].put("sessionId","3abeb5d73d43eab7d6b0f955795734ed");
+            jsonObjects[0].put("id", 6);
+            jsonObjects[0].put("sessionId","745acb2a229043089cf1d04114847705");
 //            jsonObjects[0].put("days",20);//TODO
         }catch(Exception e)
         {

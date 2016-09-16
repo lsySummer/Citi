@@ -4,20 +4,30 @@ import android.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import lecho.lib.hellocharts.model.PieChartData;
 import lecho.lib.hellocharts.model.SliceValue;
 import lecho.lib.hellocharts.view.PieChartView;
 import nju.financecity_android.R;
 import nju.financecity_android.controller.widget.item.adapter.InvstPrdtAdapter;
+import nju.financecity_android.dao.InvestmentDao;
+import nju.financecity_android.model.PurchaseBasket;
 import nju.financecity_android.model.User;
 import nju.financecity_android.model.UserInvestment;
 import nju.financecity_android.util.ColorBoard;
+import nju.financecity_android.util.Loading;
 import nju.financecity_android.vo.ProductInfo;
 
 import java.util.*;
@@ -36,31 +46,8 @@ public class Investment extends Fragment {
     public void onStart() {
         super.onStart();
         thisView = getView();
-
         initComponents();
-
-        // processData();
-
-        List<ProductInfo> data = new ArrayList<>();
-        ProductInfo info = new ProductInfo();
-        info.productName = "123";
-        info.buyPrice = 200;
-        info.buy = "2016-01-01";
-        info.currPrice = 150;
-        data.add(info);
-        info = new ProductInfo();
-        info.productName = "14423";
-        info.buyPrice = 60;
-        info.buy = "2016-01-01";
-        info.currPrice = 100;
-        data.add(info);
-        info = new ProductInfo();
-        info.productName = "1233";
-        info.buyPrice = 200;
-        info.buy = "2016-01-01";
-        info.currPrice = 200;
-        data.add(info);
-        setProductListData(data);
+        processData();
     }
 
     public static PieChartView setPieChart(PieChartView chart) {
@@ -74,54 +61,105 @@ public class Investment extends Fragment {
     }
 
     private void processData() {
+        setData();
         new Thread(new Runnable() {
             @Override
             public void run() {
-                UserInvestment investment = UserInvestment.getCurrUserInvestment();
-                if (investment == null) {
-                    mainThreadHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            Investment.this.getActivity().finish();
-                        }
-                    });
-                    return;
-                }
-                final List<ProductInfo> list = investment.getProductList();
-                mainThreadHandler.post(new Runnable() {
+                Looper.prepare();
+                loading.showLoadingDialog(getActivity(),"loading",false);
+                Looper.loop();
+            }
+        }).start();
+        setPieChart();
+        setTable();
+    }
+
+
+    private void setPieChart()
+    {
+        List<SliceValue> values=getPieValue();
+
+        piedata.setValues(values);
+        piedata.setHasLabels(true);
+        piedata.setHasLabelsOutside(true);
+        piedata.setHasLabelsOnlyForSelected(false);
+        piedata.setHasCenterCircle(true);
+        piedata.setCenterCircleScale(0.5f);
+        piedata.setValueLabelBackgroundColor(Color.TRANSPARENT);
+        piedata.setValueLabelBackgroundEnabled(false);
+        piedata.setValueLabelsTextColor(Color.GRAY);
+        piedata.setSlicesSpacing(1);
+        pieChart.setPieChartData(piedata);
+    }
+
+    private void setTable()
+    {
+        ipAdapter=new InvstPrdtAdapter(this.getActivity(),list);
+        listInvstProducts.setAdapter(ipAdapter);
+        listInvstProducts.setVisibility(View.VISIBLE);
+    }
+
+    private void setData()
+    {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                list = UserInvestment.getCurrUserInvestment().mData;
+
+                // 饼图
+                List<SliceValue> values = getPieValue();
+                piedata.setValues(values);
+
+                //表格
+                ipAdapter=new InvstPrdtAdapter(Investment.this.getActivity(),list);
+
+                myHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        setProductListData(list);
+                        pieChart.setPieChartData(piedata);
+                        listInvstProducts.setAdapter(ipAdapter);
+                        loading.closeLoadingDialog();
                     }
                 });
             }
         }).start();
     }
 
-    private void setProductListData(List<ProductInfo> productInfos) {
-        ListAdapter adapter = new InvstPrdtAdapter(getActivity(), productInfos);
-        listInvstProducts.setAdapter(adapter);
-
-        // 饼图
+    private List<SliceValue> getPieValue()
+    {
         List<SliceValue> values = new ArrayList<>();
-        for (int i = 0; i < productInfos.size(); ++i) {
-            SliceValue slice = new SliceValue(productInfos.get(i).currPrice);
-            slice.setLabel(productInfos.get(i).productName);
-            slice.setColor(ColorBoard.nextColor());
-            values.add(slice);
+        values.add(new SliceValue(0));//bank
+        values.get(0).setLabel("");
+        values.get(0).setColor(ColorBoard.nextColor());
+        values.add(new SliceValue(0));//bond
+        values.get(1).setLabel("");
+        values.get(1).setColor(ColorBoard.nextColor());
+        values.add(new SliceValue(0));//fund
+        values.get(2).setLabel("");
+        values.get(2).setColor(ColorBoard.nextColor());
+        values.add(new SliceValue(0));//insurance
+        values.get(3).setLabel("");
+        values.get(3).setColor(ColorBoard.nextColor());
+        for (int i = 0; i < list.size(); ++i) {
+            ProductInfo info=list.get(i);
+            if(info.type.contains("理财")) {
+                values.get(0).setValue(values.get(0).getValue() + info.currPrice);
+                values.get(0).setLabel("理财产品");
+            }
+            else if(info.type.contains("债券")) {
+                values.get(1).setValue(values.get(1).getValue() + info.currPrice);
+                values.get(1).setLabel("债券");
+            }
+            else if(info.type.contains("基金")) {
+                values.get(2).setValue(values.get(2).getValue() + info.currPrice);
+                values.get(2).setLabel("基金");
+            }
+            else if(info.type.contains("保险")) {
+                values.get(3).setValue(values.get(3).getValue() + info.currPrice);
+                values.get(3).setLabel("保险");
+            }
         }
-        PieChartData data = new PieChartData(values);
-        data.setHasLabels(true);
-        data.setHasLabelsOutside(true);
-        data.setHasLabelsOnlyForSelected(false);
-        data.setHasCenterCircle(true);
-        data.setCenterCircleScale(0.5f);
-        data.setValueLabelBackgroundColor(Color.TRANSPARENT);
-        data.setValueLabelBackgroundEnabled(false);
-        data.setValueLabelsTextColor(Color.GRAY);
-        data.setSlicesSpacing(1);
-
-        pieChart.setPieChartData(data);
+        return values;
     }
 
     private View findViewById(int resId) {
@@ -130,5 +168,10 @@ public class Investment extends Fragment {
     private Handler mainThreadHandler = new Handler();
     private View thisView;
     private PieChartView pieChart;
+    private PieChartData piedata=new PieChartData();
     private ListView listInvstProducts;
+    private List<ProductInfo> list=new ArrayList<ProductInfo>();
+    private InvstPrdtAdapter ipAdapter;
+    private Loading loading=new Loading();
+    private Handler myHandler=new Handler();
 }

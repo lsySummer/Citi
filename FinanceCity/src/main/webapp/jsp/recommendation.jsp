@@ -278,7 +278,7 @@ function buySubmit(id){
         </script>
             <div class="recommendation-footer">
 
-                <button id="btnA" onclick="return buySubmit('<%=recArr.get(i).getCheckCode()%>')">购买此组合 -></button>
+                <button style="width:270px;color:white" class="button-style" id="btnA" onclick="return buySubmit('<%=recArr.get(i).getCheckCode()%>')">购买此组合 -></button>
             </div>
         </div>
 		<%}%>
