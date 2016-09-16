@@ -60,15 +60,15 @@ public class PurchaseAction extends BaseAction{
 		request.setAttribute("priceType", priceType);
 		 return SUCCESS;
 	 }
-	 
-	 public String buyAction(){
-		 String value=request.getParameter("submitValue");
-		 String pid=request.getParameter("propid");
-		 //TODO
-		 System.out.println(value+" "+pid);
-		 request.setAttribute("tipMessage", "购买成功！");
-		 return SUCCESS;
-	 }
+
+	public String buyAction() {
+		String value = request.getParameter("submitValue");
+		String pid = request.getParameter("propid");
+		//TODO
+		System.out.println(value + " " + pid);
+		request.setAttribute("tipMessage", "购买成功！");
+		return SUCCESS;
+	}
 	 
 	 public String getHistory(){
 		 try {

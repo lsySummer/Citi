@@ -61,7 +61,7 @@ public class UserAction extends BaseAction {
         String password = request.getParameter("password");
 
         if (username == null || password == null) {
-            ErrorManager.setError(request, ErrorManager.errorInvalidParameter);
+            ErrorManager.setError(request, ErrorManager.errorNormal);
             return ERROR;
         }
 

@@ -62,6 +62,7 @@ public class AssetManagementServiceImpl implements AssetManagementService {
                         continue;
                     }
 
+                    double total_amount = 0;
                     List<ProductVO> productList = new ArrayList<>();
                     for (InvestedProducts investedProducts : investedProductList) {
                         try {
@@ -75,6 +76,7 @@ public class AssetManagementServiceImpl implements AssetManagementService {
                             productVO.setName(product.getName());
                             productVO.setEndDate(investedProducts.getEndDate().toString());
                             productVO.setCanRedeemDate(ProductCategoryManager.getProductRedeemDate(product));
+                            total_amount += investedProducts.getTotalAmount().doubleValue();
 
                             productList.add(productVO);
                         }
@@ -84,6 +86,8 @@ public class AssetManagementServiceImpl implements AssetManagementService {
                     }
                     Investment_portfolio investment_portfolio = new Investment_portfolio();
                     investment_portfolio.setProductVOs(productList);
+                    investment_portfolio.setCheckCode(investmentPortfolio.getCheckCode());
+                    investment_portfolio.setTotal_amount(total_amount);
                     investment_portfolioList.add(investment_portfolio);
                 }
 
