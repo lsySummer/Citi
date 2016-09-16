@@ -7,8 +7,17 @@
 <head>
     <meta charset="UTF-8">
     <title>订单信息确认</title>
-    <link href="../css/common.css" rel="stylesheet">
-    <link href="../css/order.css" rel="stylesheet">
+    <%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+	String url = request.getScheme() + "://" + request.getServerName() + request.getRequestURI() + "?"
+			+ request.getQueryString();
+	request.setAttribute("basePath", basePath);
+%>
+<base href="<%=basePath%>">
+    <link href="${basePath}css/order.css" rel="stylesheet">
+    <link href="${basePath}css/common.css" rel="stylesheet">
 
     <script type="text/javascript" rel="stylesheet" src="../js/jquery.min.js"></script>
     <script type="text/javascript" rel="stylesheet" src="../js/order-confirm.js"></script>
@@ -47,11 +56,12 @@
                         <th>小计</th>
                         <th>操作</th>
                     </tr>
-                    <tr class="current">
+                    <s:iterator value="#request.proList">
+                    <tr>
                         <td>
                             <div class="product-icon bank-circle">理</div>
                             <div class="product-title">
-                                <span class="main-title">稳赚利38天</span>
+                                <span class="main-title"><s:property value="productId" /></span>
                                 </br>
                                 <span class="sub-title">银行理财-小分类</span>
                             </div>
@@ -64,57 +74,7 @@
                         <td class="product-sum">￥300</td>
                         <td><button class="delete">删除</button></td>
                     </tr>
-                    <tr>
-                        <td>
-                            <div class="product-icon fund-circle">基</div>
-                            <div class="product-title">
-                                <span class="main-title">稳赚利38天</span>
-                                </br>
-                                <span class="sub-title">银行理财-小分类</span>
-                            </div>
-                            <div class="clear"></div>
-                        </td>
-                        <td>￥300</td>
-                        <td>
-                            <input type="text" id="quantity2" name="quantity" value="1" class="size"/>
-                        </td>
-                        <td class="product-sum">￥300</td>
-                        <td><button class="delete">删除</button></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="product-icon insurance-circle">保</div>
-                            <div class="product-title">
-                                <span class="main-title">稳赚利38天</span>
-                                </br>
-                                <span class="sub-title">银行理财-小分类</span>
-                            </div>
-                            <div class="clear"></div>
-                        </td>
-                        <td>￥300</td>
-                        <td>
-                            <input type="text" id="quantity3" name="quantity" value="1" class="size"/>
-                        </td>
-                        <td class="product-sum">￥300</td>
-                        <td><button class="delete">删除</button></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="product-icon bond-circle">债</div>
-                            <div class="product-title">
-                                <span class="main-title">稳赚利38天</span>
-                                </br>
-                                <span class="sub-title">银行理财-小分类</span>
-                            </div>
-                            <div class="clear"></div>
-                        </td>
-                        <td>￥300</td>
-                        <td>
-                            <input type="text" id="quantity4" name="quantity" value="1" class="size"/>
-                        </td>
-                        <td class="product-sum">￥300</td>
-                        <td><button class="delete">删除</button></td>
-                    </tr>
+                    </s:iterator>
                 </table>
             </div>
             <div class="clear"></div>

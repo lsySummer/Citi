@@ -223,6 +223,5 @@ public class UpdateUtils {
     }
 
     static public void main(String[] args) {
-      UpdateUtils.updateFundDaily();
     }
 }
