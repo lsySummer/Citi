@@ -1,5 +1,7 @@
 package nju.financecity_android.util;
 
+import android.util.Log;
+
 import nju.financecity_android.dao.CommonDao;
 import nju.financecity_android.model.UserSession;
 import org.json.JSONException;
@@ -84,15 +86,19 @@ public class HttpUtil {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        Log.i("recommend","result string "+result);
         return result;
     }
 
     public static String sendJsonWithSession(String url, JSONObject jsonData, String method) {
         try {
-            if (UserSession.getCurrUser() != null) {
-                jsonData.put("id", UserSession.getCurrUser().getUserId());
-                jsonData.put("sessionId", UserSession.getCurrUser().getSessionId());
-            }
+//            if (UserSession.getCurrUser() != null) {
+//                jsonData.put("id", UserSession.getCurrUser().getUserId());
+//                jsonData.put("sessionId", UserSession.getCurrUser().getSessionId());
+                jsonData.put("id", 17);//TODO use currentUser
+                jsonData.put("sessionId", "51934a56cb3d35fca4b6d2fe7247d83c");
+                Log.i("recommend","parameters "+jsonData.toString());
+//            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
