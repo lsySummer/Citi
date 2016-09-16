@@ -150,6 +150,7 @@ public class Assets extends BaseAction{
 			for(int i=0;i<assetList.size();i++){
 				dateArr.add(assetList.get(i).getDate());
 				valueArr.add(assetList.get(i).getValue());
+				System.out.println("hahha"+assetList.get(i).getDate());
 			}
 			request.setAttribute("dateArr", dateArr);
 			request.setAttribute("valueArr", valueArr);
