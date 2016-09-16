@@ -3,6 +3,7 @@ package nju.financecity_android.controller.activity;
 import android.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TabHost;
@@ -10,7 +11,9 @@ import android.widget.TextView;
 import nju.financecity_android.R;
 import nju.financecity_android.controller.widget.Banner;
 import nju.financecity_android.controller.widget.item.adapter.RecommendListAdapter;
+import nju.financecity_android.model.FCRecommend;
 import nju.financecity_android.vo.GoodsInfo;
+import nju.financecity_android.vo.RecommendVO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +24,7 @@ public class RecommendActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recommend);
+        Log.i("recommend","initComponents");
         initComponents();
 
     }
@@ -46,6 +50,9 @@ public class RecommendActivity extends AppCompatActivity {
         // 不知道为什么必须要显示一下后面的页面才行。。。。不然就是一片空白
         setCurrPage(1);
         setCurrPage(0);
+
+        Log.i("recommend","start get recommend");
+        getRecommendData();////////////
 
         List<GoodsInfo> data = new ArrayList<>();
         GoodsInfo info = new GoodsInfo();
@@ -78,6 +85,20 @@ public class RecommendActivity extends AppCompatActivity {
     private void setRecommendData(List<GoodsInfo> data) {
         RecommendListAdapter adapter = new RecommendListAdapter(this, data);
         reclist.setAdapter(adapter);
+    }
+
+    private RecommendVO getRecommendData()
+    {
+        RecommendVO vo=new RecommendVO();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Log.i("recommend","getRecommend");
+                RecommendVO vo = FCRecommend.getRecommend();
+                Log.i("recommend","recommendVO received");
+            }
+        }).start();
+        return vo;
     }
 
     private ListView reclist;

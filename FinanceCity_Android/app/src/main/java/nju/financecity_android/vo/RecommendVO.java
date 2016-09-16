@@ -7,4 +7,8 @@ import java.util.List;
  */
 public class RecommendVO {
     public List<RecommendCombVO> combinationList;
+    public RecommendVO(){}
+    public RecommendVO(List<RecommendCombVO> combinationList) {
+        this.combinationList = combinationList;
+    }
 }
