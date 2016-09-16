@@ -1,5 +1,7 @@
 package edu.nju.action;
 
+import edu.nju.model.InvestedProducts;
+import edu.nju.service.AssetManagementService.AssetManagementService;
 import edu.nju.service.ExceptionsAndError.*;
 import edu.nju.service.POJO.SimpleTradeInfo;
 import edu.nju.service.POJO.TradeInfoWithCheckCode;
@@ -23,6 +25,8 @@ public class OrderAction extends BaseAction {
     private TradeService tradeService;
     @Autowired
     private PayService payService;
+    @Autowired
+	AssetManagementService assetManagementService;
 
     @SuppressWarnings("unchecked")
     public String confirm() {
@@ -109,7 +113,15 @@ public class OrderAction extends BaseAction {
     }
     
     public String buyCombine(){
+    	FinanceCityUser financeCityUser = (FinanceCityUser)session.get("user");
     	String code=request.getParameter("hidValue");
+    	try {
+    		List<InvestedProducts> proList=assetManagementService.getInvestedProduct(code, financeCityUser);
+    		request.setAttribute("proList", proList);
+    	} catch (NotLoginException e) {
+			 ErrorManager.setError(request, ErrorManager.errorNotLogin);
+	         return LOGIN;
+		}
     	System.out.println(code);
     	return SUCCESS;
     }
