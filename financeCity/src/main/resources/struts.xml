@@ -24,6 +24,7 @@
 
 		<action name="login" class="edu.nju.action.UserAction" method="login">
 			<result name="success">${refer_url}</result> <!-- 跳转到登录前页面 -->
+			<result name="default" type="redirectAction">investment</result>
 			<result name="error">/jsp/login.jsp</result>
 		</action>
 		

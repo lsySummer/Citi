@@ -74,7 +74,6 @@ public class Assets extends BaseAction{
 			return SUCCESS;
 		}
 		catch (NotLoginException e) {
-			e.printStackTrace();
 			ErrorManager.setError(request, ErrorManager.errorNotLogin);
 			return LOGIN;
 		}
@@ -176,7 +175,6 @@ public class Assets extends BaseAction{
 			return SUCCESS;
 		}
 		catch (NotLoginException n) {
-			n.printStackTrace();
 			ErrorManager.setError(request, ErrorManager.errorNotLogin);
 			return LOGIN;
 		}
@@ -202,8 +200,8 @@ public class Assets extends BaseAction{
 			return SUCCESS;
 		}
 		catch (NotLoginException n) {
-			n.printStackTrace();
 			ErrorManager.setError(request, ErrorManager.errorNotLogin);
+			return LOGIN;
 		}
 		catch (Exception e) {
 			e.printStackTrace();

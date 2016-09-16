@@ -18,6 +18,7 @@ import edu.nju.vo.RecommendedPortfolioVO;
 import edu.nju.vo.TradeHistoryListVO;
 import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,7 @@ import java.util.Map;
 /**
  * Created by Sun YuHao on 2016/9/3.
  */
+@Controller
 public class AndroidAssetAction extends AndroidAction {
     @Autowired
     AssetManagementService assetManagementService;

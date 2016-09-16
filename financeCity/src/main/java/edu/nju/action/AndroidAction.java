@@ -3,6 +3,7 @@ package edu.nju.action;
 import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.service.Utils.JsonUtil;
 import edu.nju.vo.BaseVO;
+import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -12,6 +13,7 @@ import java.util.Map;
 /**
  * Created by Sun YuHao on 2016/9/3.
  */
+@Controller
 public class AndroidAction extends BaseAction {
     private Map requestMap;
     private BaseVO result;
