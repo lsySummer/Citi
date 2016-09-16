@@ -40,10 +40,8 @@ import java.util.List;
             "blend",
             "etf",
             "lof",
-            "fof",
             "QDII",
-            "index",
-            "guaranteed"
+            "index"
     };
     static private final String[] fundTypeCH = {
             "股票型",
@@ -52,10 +50,8 @@ import java.util.List;
             "混合型",
             "ETF",
             "LOF",
-            "FOF",
             "QDII",
             "指数型",
-            "保本型"
     };
     static private final String[] bondInterestType = {
         "零息债", "附息债", "贴现债"
