@@ -144,6 +144,7 @@ public class TradeServiceImpl implements TradeService {
             tradeHistory.setTradeAt(new Timestamp(System.currentTimeMillis()));
             tradeHistory.setProductId(productId);
             tradeHistory.setUserId(financeCityUser.getID());
+            tradeHistory.setCheckCode(checkCode);
 
             userService.getUserDao(financeCityUser).save(tradeHistory);
 
