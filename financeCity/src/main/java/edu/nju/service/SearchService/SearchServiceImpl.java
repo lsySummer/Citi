@@ -16,6 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.xml.crypto.Data;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -314,7 +317,7 @@ public class SearchServiceImpl implements SearchService {
         List<FundDailyHistory> list = userService.getCommonDao().
                 find("FROM FundDailyHistory p WHERE p.fundId=" + id +" ORDER BY p.date DESC", days);
 
-        if (list == null) {
+        if (list == null || list.size() == 0) {
             throw new DataNotFoundException("Fund History");
         }
         else {
@@ -353,6 +356,50 @@ public class SearchServiceImpl implements SearchService {
             }
 
             return bankValueHistory;
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<CategoryRtrWeeklyHistory> getCategoryRtrWeeklyHistory(Integer days) {
+        List<CategoryRtrWeeklyHistory> list = (List<CategoryRtrWeeklyHistory>)userService.getCommonDao().
+                find("FROM CategoryRtrWeeklyHistory c ORDER BY c.date DESC", 30);
+
+        if (list == null || list.size() == 0) {
+            return null;
+        }
+        deal_null(list);
+
+        return list;
+    }
+
+    private void deal_null(List<CategoryRtrWeeklyHistory> list) {
+        for (CategoryRtrWeeklyHistory categoryRtrWeeklyHistory : list) {
+            setValue(categoryRtrWeeklyHistory, "Bank");
+            setValue(categoryRtrWeeklyHistory, "Bond");
+            setValue(categoryRtrWeeklyHistory, "Insurance");
+            setValue(categoryRtrWeeklyHistory, "StockFund");
+            setValue(categoryRtrWeeklyHistory, "CurrencyFund");
+            setValue(categoryRtrWeeklyHistory, "EtfFund");
+            setValue(categoryRtrWeeklyHistory, "QDllFund");
+            setValue(categoryRtrWeeklyHistory, "IndexFund");
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    void setValue(CategoryRtrWeeklyHistory categoryRtrWeeklyHistory, String fieldName) {
+        try {
+            Class cls = CategoryRtrWeeklyHistory.class;
+            Method getter = cls.getMethod("get" + fieldName);
+
+            BigDecimal value = (BigDecimal)getter.invoke(categoryRtrWeeklyHistory);
+            if (value == null) {
+                Method setter = cls.getMethod("set" + fieldName);
+                setter.invoke(new BigDecimal(0));
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

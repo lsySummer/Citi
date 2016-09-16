@@ -8,6 +8,7 @@ import edu.nju.vo.BaseVO;
 import edu.nju.vo.SessionIdVO;
 import edu.nju.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -18,6 +19,7 @@ import java.util.Map;
 /**
  * Created by Sun YuHao on 2016/9/3.
  */
+@Controller
 @SuppressWarnings("unchecked")
 public class AndroidUserAction extends AndroidAction {
     @Autowired

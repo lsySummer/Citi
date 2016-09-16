@@ -9,6 +9,7 @@ import edu.nju.vo.BaseVO;
 import edu.nju.vo.OrderResultVO;
 import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.Map;
 /**
  * Created by Sun YuHao on 2016/9/3.
  */
+@Controller
 public class AndroidBuyAction extends AndroidAction {
     @Autowired
     SearchService searchService;

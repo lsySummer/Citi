@@ -101,6 +101,7 @@ public class UserAction extends BaseAction {
         return SUCCESS;
     }
 
+    @SuppressWarnings("unchecked")
     public String setUserInfoInStep2() {
         String birthday_y = request.getParameter("year");
         String birthday_m = request.getParameter("month");
@@ -129,7 +130,6 @@ public class UserAction extends BaseAction {
             return SUCCESS;
         }
         catch (NotLoginException n) {
-            n.printStackTrace();
             session.put("refer_url", getRefererURL(request));
             ErrorManager.setError(request, ErrorManager.errorNotLogin);
             return LOGIN;
@@ -146,6 +146,7 @@ public class UserAction extends BaseAction {
         return SUCCESS;
     }
 
+    @SuppressWarnings("unchecked")
     public String setTemperPrefer() {
         String amount = request.getParameter("amount"); //投资金额
         String year = request.getParameter("year"); //投资期限
@@ -243,7 +244,6 @@ public class UserAction extends BaseAction {
             return SUCCESS;
         }
         catch (NotLoginException n) {
-            n.printStackTrace();
             session.put("refer_url", getRefererURL(request));
             ErrorManager.setError(request, ErrorManager.errorNotLogin);
             return LOGIN;
