@@ -20,19 +20,23 @@ public class RecommendVOFactory {
 
         List<CommonPortfolio> portfolios = new ArrayList<>();
         for (TradeInfoWithCheckCode tradeInfoWithCheckCode : src) {
-            double total_amount = 0;
-            CommonPortfolio commonPortfolio = new CommonPortfolio();
+            CommonPortfolio commonPortfolio = new CommonPortfolio();double total_amount = 0;
+
+            for (SimpleTradeInfo simpleTradeInfo : tradeInfoWithCheckCode.getTradeInfos()) {
+                total_amount += simpleTradeInfo.getAmount();
+            }
 
             List<CommonProductInfo> commonProductInfoList = new ArrayList<>();
             for (SimpleTradeInfo simpleTradeInfo : tradeInfoWithCheckCode.getTradeInfos()) {
                 Product product = searchService.getProductByID(simpleTradeInfo.getProductId());
-                total_amount += simpleTradeInfo.getAmount();
+                double percentage = 100 * simpleTradeInfo.getAmount() / total_amount;
 
                 CommonProductInfo commonProductInfo = new CommonProductInfo();
                 commonProductInfo.setAmount(simpleTradeInfo.getAmount());
                 commonProductInfo.setId(simpleTradeInfo.getProductId());
                 commonProductInfo.setName(product.getName());
                 commonProductInfo.setProductType(product.getCategory().getCategoryName());
+                commonProductInfo.setPercentage(percentage);
 
                 commonProductInfoList.add(commonProductInfo);
             }

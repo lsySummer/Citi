@@ -122,7 +122,7 @@ import java.util.List;
         return null;
     }
 
-   static public Integer generateProductID(Object product) {
+    static public Integer generateProductID(Object product) {
        Category category = getProductCategory(product);
 
         try {

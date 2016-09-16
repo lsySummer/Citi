@@ -103,9 +103,9 @@ public class AndroidBuyAction extends AndroidAction {
             i.printStackTrace();
             ErrorManager.setError(baseVO, ErrorManager.errorInvalidParameter);
         }
-        catch (NothingToReemException n) {
+        catch (NothingToRedeemException n) {
             n.printStackTrace();
-            ErrorManager.setError(baseVO, ErrorManager.errorInvalidParameter);
+            ErrorManager.setError(baseVO, ErrorManager.errorNothingToRedeem);
         }
 
         setResult(baseVO);

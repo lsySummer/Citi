@@ -10,6 +10,15 @@ import java.util.List;
 public class Investment_portfolio {
     private List<ProductVO> productVOs;
     private String checkCode;
+    private double total_amount;
+
+    public double getTotal_amount() {
+        return total_amount;
+    }
+
+    public void setTotal_amount(double total_amount) {
+        this.total_amount = total_amount;
+    }
 
     public String getCheckCode() {
         return checkCode;
