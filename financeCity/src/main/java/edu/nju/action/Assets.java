@@ -19,9 +19,8 @@ import edu.nju.service.POJO.TradeInfoWithCheckCode;
 import edu.nju.service.SearchService.SearchService;
 import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.service.UserService.UserService;
-import edu.nju.vo.CurrentInvestmentVO;
-import edu.nju.vo.ProductDetailVO;
-import edu.nju.vo.RecommendedPortfolioVO;
+import edu.nju.vo.*;
+import org.aspectj.weaver.ast.Not;
 import org.omg.CORBA.DynAnyPackage.Invalid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -140,6 +139,31 @@ public class Assets extends BaseAction{
 			n.printStackTrace();
 			ErrorManager.setError(request, ErrorManager.errorNotLogin);
 			return LOGIN;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			ErrorManager.setError(request, ErrorManager.errorInnerDataError);
+		}
+
+		return ERROR;
+	}
+
+	@SuppressWarnings("unchecked")
+	public String getTradeHistory() {
+		try {
+			FinanceCityUser financeCityUser = (FinanceCityUser)session.get("user");
+			if (financeCityUser == null) {
+				throw new NotLoginException();
+			}
+
+			TradeHistoryListVO tradeHistoryVO = assetManagementService.getTradeHistory(financeCityUser);
+			session.put("tradHistory", tradeHistoryVO);
+			ErrorManager.setError(request, ErrorManager.errorNormal);
+			return SUCCESS;
+		}
+		catch (NotLoginException n) {
+			n.printStackTrace();
+			ErrorManager.setError(request, ErrorManager.errorNotLogin);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
