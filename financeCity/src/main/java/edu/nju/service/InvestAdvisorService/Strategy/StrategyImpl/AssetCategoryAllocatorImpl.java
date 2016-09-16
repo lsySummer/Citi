@@ -4,17 +4,20 @@ import com.mathworks.toolbox.javabuilder.MWClassID;
 import com.mathworks.toolbox.javabuilder.MWLogicalArray;
 import com.mathworks.toolbox.javabuilder.MWNumericArray;
 import edu.nju.model.CategoryIndex;
+import edu.nju.model.CategoryMarketWeeklyHistory;
 import edu.nju.model.UserTemperPrefer;
 import edu.nju.service.CategoryAndProduct.Category;
 import edu.nju.service.POJO.AssetCategoryAllocation;
 import edu.nju.service.SearchService.SearchService;
 import edu.nju.service.Utils.ARIMA;
 import edu.nju.service.CategoryAndProduct.ProductCategoryManager;
+import edu.nju.service.Utils.Arima.MethodUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import process3.ClassProcess3;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.*;
 
 /**
@@ -167,7 +170,7 @@ public class AssetCategoryAllocatorImpl implements AssetCategoryAllocator {
 
                 //Market value
                 try {
-                    categoryInfo[i].W = getMarketValue(categoryInfo[i].category.getCategoryName(), categoryIndex);
+                    //categoryInfo[i].W = getMarketValue(categoryInfo[i].category.getCategoryName(), categoryIndex);
                 }
                 catch (NullPointerException n) {
                     n.printStackTrace();
@@ -184,10 +187,10 @@ public class AssetCategoryAllocatorImpl implements AssetCategoryAllocator {
         return categoryInfo;
     }
 
-    private Double getMarketValue(String category, CategoryIndex categoryIndex) {
+    private Double getMarketValue(String category, CategoryMarketWeeklyHistory categoryIndex) {
         try {
-            Field field = CategoryIndex.class.getField(category.toLowerCase() + "MarketValue");
-            return field.getDouble(category);
+            Method getter = MethodUtils.getGetter(CategoryMarketWeeklyHistory.class, category);
+            return null;
         }
         catch (Exception e) {
             e.printStackTrace();

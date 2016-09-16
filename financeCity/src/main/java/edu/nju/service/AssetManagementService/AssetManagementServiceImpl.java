@@ -277,7 +277,7 @@ public class AssetManagementServiceImpl implements AssetManagementService {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<InvestedProducts> getInvestedProduct(String checkCode, FinanceCityUser financeCityUser) throws NotLoginException {
+    public List<ProductVO> getInvestedProduct(String checkCode, FinanceCityUser financeCityUser) throws NotLoginException {
         List<InvestedProducts> investedProductsList = new ArrayList<>();
         List<InvestStatus> list = userService.getUserDao(financeCityUser).
                 find("FROM InvestStatus investStatus WHERE investStatus.userId=" + financeCityUser.getID());
@@ -299,6 +299,27 @@ public class AssetManagementServiceImpl implements AssetManagementService {
             }
         }
 
-        return investedProductsList;
+        List<ProductVO> productList = new ArrayList<>();
+        for (InvestedProducts investedProducts : investedProductsList) {
+            try {
+                Product product = searchService.getProductByID(investedProducts.getProductId());
+                ProductVO productVO = new ProductVO();
+                productVO.setId(product.getID());
+                productVO.setType(product.getCategory().getChineseName());
+                productVO.setBuyingDate(investedProducts.getBuyingDate().toString());
+                productVO.setCurrentValue(getCurrentValue(product, investedProducts));
+                productVO.setBuyingValue(investedProducts.getTotalAmount().doubleValue());
+                productVO.setName(product.getName());
+                productVO.setEndDate(investedProducts.getEndDate().toString());
+                productVO.setCanRedeemDate(ProductCategoryManager.getProductRedeemDate(product));
+
+                productList.add(productVO);
+            }
+            catch (NoSuchProductException n) {
+                n.printStackTrace();
+            }
+        }
+
+        return productList;
     }
 }
