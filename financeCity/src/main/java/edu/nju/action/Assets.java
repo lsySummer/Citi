@@ -71,7 +71,7 @@ public class Assets extends BaseAction{
 			RecommendedPortfolioVO recommendedPortfolioVO = RecommendVOFactory.createRecommend(lists, searchService, investAdvisorService);
 			List<CommonPortfolio> recArr=recommendedPortfolioVO.getData();
 			request.setAttribute("recArr", recArr);
-
+			session.put("recArr", recArr);
 			return SUCCESS;
 		}
 		catch (NotLoginException e) {

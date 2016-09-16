@@ -59,8 +59,8 @@
 			<result name="login">/jsp/login.jsp</result>
 		</action>
 
-		<action name="orderConfirm" class="edu.nju.action.OrderAction" method="">
-			<result name="success">/jsp/order-confirm.jsp</result>
+		<action name="orderpay" class="edu.nju.action.OrderAction" method="pay">
+			<result name="success" type="redirectAction">investment</result>
 			<result name="login">/jsp/login.jsp</result>
 		</action>
 		

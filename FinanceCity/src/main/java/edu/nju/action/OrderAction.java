@@ -12,6 +12,7 @@ import edu.nju.service.ExceptionsAndError.InvalidParametersException;
 import edu.nju.service.ExceptionsAndError.NotLoginException;
 import edu.nju.service.ExceptionsAndError.NothingToPayException;
 import edu.nju.service.ExceptionsAndError.PaymentFailedException;
+import edu.nju.service.POJO.CommonPortfolio;
 import edu.nju.service.POJO.SimpleTradeInfo;
 import edu.nju.service.POJO.TradeInfoWithCheckCode;
 import edu.nju.service.PayService.PayService;
@@ -40,36 +41,38 @@ public class OrderAction extends BaseAction {
                 throw new NotLoginException();
             }
             String checkCode=request.getParameter("hidValue");
+            session.put("checkCode", checkCode);
+            List<CommonPortfolio> recArr=(List<CommonPortfolio>)session.get("recArr");
             if (checkCode == null) {
                 throw new InvalidParametersException("checkCode");
             }
-            List<TradeInfoWithCheckCode> list = (List<TradeInfoWithCheckCode>)session.get("investResult");
-            if (list == null || list.size() == 0) {
-                throw new EmptyProductListException();
-            }
+//            List<TradeInfoWithCheckCode> list = (List<TradeInfoWithCheckCode>)session.get("investResult");
+//            if (list == null || list.size() == 0) {
+//                throw new EmptyProductListException();
+//            }
 
             List<SimpleTradeInfo> tradeInfoList = null;
-            for (TradeInfoWithCheckCode tradeInfoWithCheckCode : list) {
+            for (CommonPortfolio tradeInfoWithCheckCode : recArr) {
                 if (tradeInfoWithCheckCode.getCheckCode().equals(checkCode)) {
-                    tradeInfoList = tradeInfoWithCheckCode.getTradeInfos();
-                    request.setAttribute("tradeInfoList",tradeInfoList );
+                    request.setAttribute("tradeInfoList",tradeInfoWithCheckCode.getProducts());
+                    request.setAttribute("total",tradeInfoWithCheckCode.getTotal_amount());
                 }
             }
-            if (tradeInfoList != null) {
-                OrderResultVO orderResultVO = tradeService.buyProduct(tradeInfoList, financeCityUser);
-                ErrorManager.setError(request, ErrorManager.errorNormal);
-                session.put("orderResult", orderResultVO);
-            }
-            else {
-                throw new InvalidParametersException("checkCode");
-            }
+//            if (tradeInfoList != null) {
+//                OrderResultVO orderResultVO = tradeService.buyProduct(tradeInfoList, financeCityUser);
+//                ErrorManager.setError(request, ErrorManager.errorNormal);
+//                session.put("orderResult", orderResultVO);
+//            }
+//            else {
+//                throw new InvalidParametersException("checkCode");
+//            }
 
             return SUCCESS;
         }
-        catch (EmptyProductListException e) {
-            e.printStackTrace();
-            ErrorManager.setError(request, ErrorManager.errorNoSuchInvestmentPortfolio);
-        }
+//        catch (EmptyProductListException e) {
+//            e.printStackTrace();
+//            ErrorManager.setError(request, ErrorManager.errorNoSuchInvestmentPortfolio);
+//        }
         catch (NotLoginException n) {
             ErrorManager.setError(request, ErrorManager.errorNotLogin);
             return LOGIN;
@@ -89,12 +92,12 @@ public class OrderAction extends BaseAction {
             if (financeCityUser == null) {
                 throw new NotLoginException();
             }
-            OrderResultVO orderResultVO = (OrderResultVO)session.get("orderResult");
-            if (orderResultVO == null) {
-                throw new NothingToPayException();
-            }
-
-            boolean success = payService.payForPortfolio(orderResultVO.getCheckCode(), financeCityUser);
+//            OrderResultVO orderResultVO = (OrderResultVO)session.get("orderResult");
+//            if (orderResultVO == null) {
+//                throw new NothingToPayException();
+//            }
+            String checkCode=(String)session.get("checkCode");
+            boolean success = payService.payForPortfolio(checkCode, financeCityUser);
             if (!success) {
                 throw new PaymentFailedException();
             }
@@ -105,10 +108,10 @@ public class OrderAction extends BaseAction {
             ErrorManager.setError(request, ErrorManager.errorNotLogin);
             return LOGIN;
         }
-        catch (NothingToPayException n) {
-            n.printStackTrace();
-            ErrorManager.setError(request, ErrorManager.errorNoSuchOrder);
-        }
+//        catch (NothingToPayException n) {
+//            n.printStackTrace();
+//            ErrorManager.setError(request, ErrorManager.errorNoSuchOrder);
+//        }
         catch (PaymentFailedException p) {
             p.printStackTrace();
             ErrorManager.setError(request, ErrorManager.errorPaymentFailed);
