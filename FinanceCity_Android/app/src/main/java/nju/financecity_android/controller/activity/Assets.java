@@ -45,6 +45,7 @@ import lecho.lib.hellocharts.view.LineChartView;
 import nju.financecity_android.R;
 import nju.financecity_android.dao.AssetHistoryDao;
 import nju.financecity_android.dao.AssetValueDao;
+import nju.financecity_android.model.UserAssets;
 import nju.financecity_android.model.UserSession;
 import nju.financecity_android.util.Loading;
 
@@ -52,17 +53,33 @@ import nju.financecity_android.util.Loading;
  * Created by Administrator on 2016/8/25.
  */
 public class Assets extends Fragment {
+    private int counter=0;
     public LineChartView chart;
     public ListView timeline;
     private LineChartData data = new LineChartData();
+    private ArrayList<HashMap<String, Object>> listItem=new ArrayList<>();
+    private SimpleAdapter mSimpleAdapter;
+    private JSONArray jHistory=new JSONArray();
     private Loading loading=new Loading();
     Handler myHandler = new Handler() {
         //接收到消息后处理
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
+                    counter++;
                     chart.setLineChartData(data);
-                    loading.closeLoadingDialog();
+                    if(counter%2==0)
+                        loading.closeLoadingDialog();
+                    Log.i("search","get message");
+                    break;
+                case 2:
+                    counter++;
+                    mSimpleAdapter = new SimpleAdapter(Assets.this.getActivity(),listItem,R.layout.assets_history,new String[]{"time", "history"},new int[] {R.id.time,R.id.history});
+                    //需要绑定的数据//每一行的布局//动态数组中的数据源的键对应到定义布局的View中new String[] {"ItemImage"
+                    timeline.setAdapter(mSimpleAdapter);//为ListView绑定适配器
+                    timeline.setVisibility(View.VISIBLE);
+                    if(counter%2==0)
+                        loading.closeLoadingDialog();
                     Log.i("search","get message");
                     break;
             }
@@ -135,34 +152,8 @@ public class Assets extends Fragment {
         List<PointValue> mPointValues=new ArrayList<PointValue>();
         List<AxisValue> mAxisValues=new ArrayList<AxisValue>();
 
-        final JSONObject[] jsonObjects=new JSONObject[1];
-        jsonObjects[0]=new JSONObject();//value
-        UserSession user=UserSession.getCurrUser();
-        Log.i("test","user "+user.getSessionId());
-        try {
-//            jsonObjects[0].put("id", Integer.parseInt(user.getUserId()));//TODO 传递当前用户
-//            jsonObjects[0].put("sessionId",user.getSessionId());
-            jsonObjects[0].put("id", 4);
-            jsonObjects[0].put("sessionId","3abeb5d73d43eab7d6b0f955795734ed");
-//            jsonObjects[0].put("days",20);//TODO
-        }catch(Exception e)
-        {
-            Log.i("test","user session or json exception");
-            e.printStackTrace();
-        }
-
-        Log.i("test","jObject of parameters "+jsonObjects[0]);
-
-        final String[] result={""};
-        result[0]=new AssetValueDao().sendPost(jsonObjects[0]);
-        JSONArray jValue=null;
-        try{
-            jValue=new JSONObject(result[0]).getJSONArray("assetValues");
-        }catch(Exception e)
-        {
-            Log.i("test","asset value result exception");
-            e.printStackTrace();
-        }
+        JSONArray jValue= UserAssets.getValue();
+        Log.i("search","jValue "+jValue);
 
         List<String> dates=new ArrayList<String>();
         try {
@@ -216,72 +207,45 @@ public class Assets extends Fragment {
 
     public void setTimeline()
     {
-        final JSONObject[] jsonObjects=new JSONObject[1];
-        jsonObjects[0]=new JSONObject();//history
-        UserSession user=UserSession.getCurrUser();
-        Log.i("test","user "+user.getSessionId());
-        try {
-//            jsonObjects[0].put("id", Integer.parseInt(user.getUserId()));
-//            jsonObjects[0].put("sessionId",user.getSessionId());
-            jsonObjects[0].put("id", 4);
-            jsonObjects[0].put("sessionId","3abeb5d73d43eab7d6b0f955795734ed");
-        }catch(Exception e)
-        {
-            Log.i("test","user session or json exception");
-            e.printStackTrace();
-        }
-
-        Log.i("test","jObject of parameters "+jsonObjects[0]);
-
-        final String[] result={""};
-        Thread thread = new Thread( new Runnable() {
+        Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                result[0]=new AssetHistoryDao().sendPost(jsonObjects[0]);
+                jHistory=UserAssets.getHistory();
+                Log.i("search","jHistory "+jHistory);
+                try {
+                    for (int i = 0; i < jHistory.length(); i++) {
+                        JSONObject jDiscription=jHistory.getJSONObject(i);
+                        HashMap<String, Object> map = new HashMap<String, Object>();
+                        map.put("time", jDiscription.getString("date"));
+                        String tradingType="";
+                        switch(jDiscription.getString("tradingType"))
+                        {
+                            case "buy":
+                                tradingType="购买";
+                                break;
+                        }//TODO
+                        map.put("history", tradingType+jDiscription.getString("productName")+jDiscription.getString("tradingVolume")+jDiscription.getString("unit"));
+                        listItem.add(map);
+                    }
+                } catch(Exception e)
+                {
+                    Log.i("test","set timeline");
+                    e.printStackTrace();
+                }
+
+                Message message = new Message();
+                message.what = 2;
+                //发送消息
+                myHandler.sendMessage(message);
+                Log.i("search","send message");
             }
         });
         thread.start();
-        try {
-            thread.join();
-        }catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        JSONArray jHistory=null;
-        try{
-            jHistory=new JSONObject(result[0]).getJSONArray("tradeHistoryVOList");
-        }catch(Exception e)
-        {
-            Log.i("test","asset value result exception");
-            e.printStackTrace();
-        }
 
         //资产变化事迹
         timeline = (ListView) getView().findViewById(R.id.timeline);
-        ArrayList<HashMap<String, Object>> listItem = new ArrayList<HashMap<String,Object>>();/*在数组中存放数据*/
-//        HashMap<String, Object> mapTitle = new HashMap<String, Object>();
-//        mapTitle.put("time", "时间");
-//        mapTitle.put("history", "事件");
-        try {
-            for (int i = 0; i < jHistory.length(); i++) {
-                JSONObject jDiscription=jHistory.getJSONObject(i);
-                HashMap<String, Object> map = new HashMap<String, Object>();
-                map.put("time", jDiscription.getString("date"));
-                String tradingType="";
-                switch(jDiscription.getString("tradingType"))
-                {
-                    case "buy":
-                        tradingType="购买";
-                        break;
-                }//TODO
-                map.put("history", tradingType+jDiscription.getString("productName")+jDiscription.getString("tradingVolume")+jDiscription.getString("unit"));
-                listItem.add(map);
-            }
-        } catch(Exception e)
-        {
-            Log.i("test","set timeline");
-            e.printStackTrace();
-        }
+        listItem = new ArrayList<HashMap<String,Object>>();/*在数组中存放数据*/
+
         SimpleAdapter mSimpleAdapter = new SimpleAdapter(this.getActivity(),listItem,R.layout.assets_history,new String[]{"time", "history"},new int[] {R.id.time,R.id.history});
         //需要绑定的数据//每一行的布局//动态数组中的数据源的键对应到定义布局的View中new String[] {"ItemImage"
         timeline.setAdapter(mSimpleAdapter);//为ListView绑定适配器

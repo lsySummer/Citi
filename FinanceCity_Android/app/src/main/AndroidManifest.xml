@@ -11,7 +11,11 @@
 			android:supportsRtl="true"
 			android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 		<activity android:name=".controller.activity.MainActivity">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN"/>
 
+				<category android:name="android.intent.category.LAUNCHER"/>
+			</intent-filter>
 		</activity>
 		<activity android:name=".controller.activity.Log_inActivity">
 		</activity>
@@ -46,11 +50,7 @@
 		<activity android:name=".controller.activity.QuestionActivity">
 		</activity>
 		<activity android:name=".controller.activity.RecommendActivity">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN"/>
 
-				<category android:name="android.intent.category.LAUNCHER"/>
-			</intent-filter>
 		</activity>
 	</application>
 

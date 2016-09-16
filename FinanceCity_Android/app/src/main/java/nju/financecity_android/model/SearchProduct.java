@@ -51,7 +51,7 @@ public class SearchProduct {
                             map.put("productType", type);
                             map.put("pid", resultJsonObject.getInt("pid"));
                             map.put("name", resultJsonObject.getString("name"));
-                            map.put("yearly_income_rate", resultJsonObject.get("yearly_income_rate"));
+                            map.put("yearly_income_rate", resultJsonObject.get("year_rate"));
                             map.put("product_type", resultJsonObject.getString("product_type"));
                             map.put("income_type", resultJsonObject.getString("income_type"));
                             map.put("initial_money", resultJsonObject.getInt("initial_money"));
@@ -86,10 +86,10 @@ public class SearchProduct {
                             map.put("productType", type);
                             map.put("pid", resultJsonObject.getInt("pid"));
                             map.put("name", resultJsonObject.getString("name"));
-                            map.put("year_interest_rate", resultJsonObject.getDouble("year_interest_rate"));
+                            map.put("year_interest_rate", resultJsonObject.getDouble("year_rate"));
                             map.put("nominal_interest_rate", resultJsonObject.getString("nominal_interest_rate"));
                             map.put("life", resultJsonObject.getString("life"));
-                            map.put("type", resultJsonObject.getInt("type"));
+                            map.put("type", resultJsonObject.getString("type"));
                             map.put("code", resultJsonObject.getInt("code"));
                             break;
                     }
