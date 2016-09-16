@@ -89,8 +89,10 @@ public class HttpUtil {
 
     public static String sendJsonWithSession(String url, JSONObject jsonData, String method) {
         try {
-            jsonData.put("id", UserSession.getCurrUser().getUserId());
-            jsonData.put("sessionId", UserSession.getCurrUser().getSessionId());
+            if (UserSession.getCurrUser() != null) {
+                jsonData.put("id", UserSession.getCurrUser().getUserId());
+                jsonData.put("sessionId", UserSession.getCurrUser().getSessionId());
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }

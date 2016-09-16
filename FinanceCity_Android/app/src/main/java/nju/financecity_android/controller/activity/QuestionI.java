@@ -1,6 +1,7 @@
 package nju.financecity_android.controller.activity;
 
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -72,6 +73,21 @@ public class QuestionI extends Fragment implements IObservableQuestion {
                 } else {
                     mObserver.showNextPage(1);
                 }
+            }
+        });
+        btCancle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage("确定要退出编辑投资偏好设置吗？");
+                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        getActivity().finish();
+                    }
+                });
+                builder.setNegativeButton("取消", null);
+                builder.show();
             }
         });
     }

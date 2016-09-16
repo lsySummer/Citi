@@ -5,7 +5,7 @@
                 android:layout_height="match_parent">
 
 <TextView
-		android:id="@+id/textView2"
+		android:id="@+id/txtSum"
 		android:layout_width="24dp"
 		android:layout_height="24dp"
 		android:layout_alignParentTop="true"
@@ -25,7 +25,7 @@
 		android:id="@+id/textView25"
 		android:layout_width="24dp"
 		android:layout_height="24dp"
-		android:layout_alignTop="@+id/textView2"
+		android:layout_alignTop="@+id/txtSum"
 		android:layout_centerHorizontal="true"
 		android:background="@drawable/selected_label"
 		android:gravity="center"
@@ -56,7 +56,7 @@
 		android:layout_height="25dp"
 		android:layout_alignParentLeft="true"
 		android:layout_alignParentStart="true"
-		android:layout_below="@+id/textView2"
+		android:layout_below="@+id/txtSum"
 		android:layout_marginTop="20dp"
 		android:background="@color/validBlue"
 		android:textAppearance="?android:attr/textAppearanceLarge"
@@ -267,4 +267,14 @@
 		android:text="返回"
 		android:textColor="@color/WordBlack"
 		android:textSize="16sp" />
+	<TextView android:layout_width="10dp" android:layout_height="25dp"
+	          android:textAppearance="?android:attr/textAppearanceLarge" android:id="@+id/textView57"
+	          android:background="@color/darkGrey" android:textColor="@color/validBlue"
+	          android:layout_alignTop="@+id/textView36" android:layout_alignParentLeft="true"
+	          android:layout_alignParentStart="true" android:layout_alignBottom="@+id/textView36"/>
+	<TextView android:layout_width="10dp" android:layout_height="25dp"
+	          android:textAppearance="?android:attr/textAppearanceLarge" android:id="@+id/textView58"
+	          android:background="@color/darkGrey" android:textColor="@color/validBlue"
+	          android:layout_alignTop="@+id/textView4" android:layout_alignParentLeft="true"
+	          android:layout_alignParentStart="true" android:layout_alignBottom="@+id/textView4"/>
 </RelativeLayout>
