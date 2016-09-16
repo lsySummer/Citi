@@ -1,6 +1,7 @@
 package edu.nju.action;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import edu.nju.service.ExceptionsAndError.ErrorManager;
 import edu.nju.service.ExceptionsAndError.NoSuchProductException;
 import edu.nju.service.ExceptionsAndError.NotLoginException;
 import edu.nju.service.InvestAdvisorService.InvestAdvisorService;
+import edu.nju.service.POJO.CommonPortfolio;
 import edu.nju.service.POJO.Investment_portfolio;
 import edu.nju.service.POJO.RecommendVOFactory;
 import edu.nju.service.POJO.SimpleTradeInfo;
@@ -26,8 +28,10 @@ import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.service.UserService.UserService;
 import edu.nju.vo.CurrentInvestmentVO;
 import edu.nju.vo.ProductDetailVO;
+import edu.nju.vo.ProductVO;
 import edu.nju.vo.RecommendedPortfolioVO;
 import edu.nju.vo.TradeHistoryListVO;
+import edu.nju.vo.TradeHistoryVO;
 
 
 @Controller
@@ -64,12 +68,12 @@ public class Assets extends BaseAction{
 			//List<TradeInfoWithCheckCode> lists = investAdvisorService.createInvestmentPortFolio(userTemperPrefer);
 			List<TradeInfoWithCheckCode> lists = getDemo();
 			RecommendedPortfolioVO recommendedPortfolioVO = RecommendVOFactory.createRecommend(lists, searchService, investAdvisorService);
-			session.put("investResult", recommendedPortfolioVO);
+			List<CommonPortfolio> recArr=recommendedPortfolioVO.getData();
+			request.setAttribute("recArr", recArr);
 
 			return SUCCESS;
 		}
 		catch (NotLoginException e) {
-			e.printStackTrace();
 			ErrorManager.setError(request, ErrorManager.errorNotLogin);
 			return LOGIN;
 		}
@@ -129,6 +133,10 @@ public class Assets extends BaseAction{
 
 	@SuppressWarnings("unchecked")
 	public String getCurrentInvestment() {
+		if(session.get("tipMessage")!=null&&session.get("tipMessage")!=""){
+		request.setAttribute("tipMessage", session.get("tipMessage"));
+		session.remove("tipMessage");
+	}
 		try {
 			FinanceCityUser financeCityUser = (FinanceCityUser) session.get("user");
 			if (financeCityUser == null) {
@@ -136,13 +144,37 @@ public class Assets extends BaseAction{
 			}
 
 			CurrentInvestmentVO currentInvestment = assetManagementService.getInvestProductVOList(financeCityUser);
+			if(currentInvestment!=null){
 			List<Investment_portfolio> investList=currentInvestment.getInvestmentPortfolioList();
-			request.setAttribute("investList", investList);
-
+			if(investList!=null){
+				if(investList.size()!=0){
+			List<ProductVO> proList=investList.get(0).getProductVOs();
+			List<String> proArr=new ArrayList<String>();
+			List<Integer> pidArr=new ArrayList<Integer>();
+			List<Double> buyArr=new ArrayList<Double>();
+			List<Double> currentArr=new ArrayList<Double>();
+			DecimalFormat df=new DecimalFormat("#.#");  
+			for(int i=0;i<proList.size();i++){
+				double buyingValue=proList.get(i).getBuyingValue();
+				double currentValue=proList.get(i).getCurrentValue();
+				String name=proList.get(i).getName();
+				int pid = proList.get(i).getId();
+				proArr.add(name);
+				buyArr.add(buyingValue);
+				currentArr.add(Double.parseDouble(df.format(currentValue)));
+				pidArr.add(pid);
+			}
+			request.setAttribute("proArr", proArr);
+			request.setAttribute("buyArr", buyArr);
+			request.setAttribute("currentArr", currentArr);
+			request.setAttribute("pidArr", pidArr);
+			getTradeHistory();
+				}
+			}
+			}
 			return SUCCESS;
 		}
 		catch (NotLoginException n) {
-			n.printStackTrace();
 			ErrorManager.setError(request, ErrorManager.errorNotLogin);
 			return LOGIN;
 		}
@@ -163,13 +195,13 @@ public class Assets extends BaseAction{
 			}
 
 			TradeHistoryListVO tradeHistoryVO = assetManagementService.getTradeHistory(financeCityUser);
-			session.put("tradHistory", tradeHistoryVO);
-			ErrorManager.setError(request, ErrorManager.errorNormal);
+			List<TradeHistoryVO> tradeList=tradeHistoryVO.getTradeHistoryVOList();
+			request.setAttribute("tradeList", tradeList);
 			return SUCCESS;
 		}
 		catch (NotLoginException n) {
-			n.printStackTrace();
 			ErrorManager.setError(request, ErrorManager.errorNotLogin);
+			return LOGIN;
 		}
 		catch (Exception e) {
 			e.printStackTrace();

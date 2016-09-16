@@ -15,6 +15,7 @@ import edu.nju.service.SearchService.ProductFilter;
 import edu.nju.service.SearchService.SearchService;
 import edu.nju.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import javax.xml.crypto.Data;
 import java.util.List;
@@ -23,6 +24,7 @@ import java.util.Map;
 /**
  * Created by Sun YuHao on 2016/9/3.
  */
+@Controller
 public class AndroidSearchAction extends AndroidAction {
     @Autowired
     SearchService searchService;

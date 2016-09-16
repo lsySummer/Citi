@@ -89,4 +89,11 @@ public class PurchaseAction extends BaseAction{
 		}
 		 return SUCCESS;
 	 }
+	 
+	 public String soldAction(){
+		 String pid = request.getParameter("hiddenId");
+		 session.put("tipMessage", "已卖出！");
+		 System.out.println(pid);
+		 return SUCCESS;
+	 }
 }
