@@ -39,9 +39,9 @@
         <h1 class="header-title"></h1>
         <div class="header-button">
         <%if(session.getAttribute("user")==null) {%>
-        <s:form action="loginURL" method="post" name='loginURL'>
-           <a href="${basePath}/jsp/signup_step1.jsp"><button class="button-style">注册</button></a>
-            <a href="javascript:document.loginURL.submit();"><button class="button-style">登录</button></a>
+         <a href="${basePath}/jsp/signup_step1.jsp"><button class="button-style" style="float:left">注册</button></a>
+        <s:form action="loginURL" method="post" name='loginURL' theme="simple">
+            <a href="javascript:document.loginURL.submit();" style="float:left"><button class="button-style">登录</button></a>
        </s:form>
        <% }else{
     	   FinanceCityUser user = (FinanceCityUser)session.getAttribute("user");
