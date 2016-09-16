@@ -55,7 +55,7 @@
 		</action>
 		
 		<action name="buyCombine" class="edu.nju.action.OrderAction" method="buyCombine">
-			<result name="success">/jsp/order-confirm.jsp</result>
+			<result name="success">/jsp/order-pay.jsp</result>
 			<result name="login">/jsp/login.jsp</result>
 		</action>
 

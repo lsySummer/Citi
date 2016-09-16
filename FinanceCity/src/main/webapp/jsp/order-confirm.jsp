@@ -51,28 +51,24 @@
                 <table>
                     <tr>
                         <th class="product-section">产品名称</th>
-                        <th class="product-price">单价</th>
-                        <th class="product-quantity">数量</th>
-                        <th>小计</th>
-                        <th>操作</th>
+                        <th class="product-price">价格</th>
+                        <th class="product-quantity">购买金额</th>
                     </tr>
                     <s:iterator value="#request.proList">
                     <tr>
                         <td>
                             <div class="product-icon bank-circle">理</div>
                             <div class="product-title">
-                                <span class="main-title"><s:property value="productId" /></span>
+                                <span class="main-title"><s:property value="Name" /></span>
                                 </br>
-                                <span class="sub-title">银行理财-小分类</span>
+                                <span class="sub-title"><s:property value="Type" /></span>
                             </div>
                             <div class="clear"></div>
                         </td>
-                        <td>￥300</td>
-                        <td>
+                        <td style="text-align:center;">￥<s:property value="BuyingValue" /></td>
+                        <td  style="text-align:center;">
                             <input type="text" id="quantity1" name="quantity" value="1" class="size"/>
                         </td>
-                        <td class="product-sum">￥300</td>
-                        <td><button class="delete">删除</button></td>
                     </tr>
                     </s:iterator>
                 </table>

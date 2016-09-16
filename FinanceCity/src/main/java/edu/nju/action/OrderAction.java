@@ -1,20 +1,24 @@
 package edu.nju.action;
 
-import edu.nju.model.InvestedProducts;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
 import edu.nju.service.AssetManagementService.AssetManagementService;
-import edu.nju.service.ExceptionsAndError.*;
+import edu.nju.service.ExceptionsAndError.EmptyProductListException;
+import edu.nju.service.ExceptionsAndError.ErrorManager;
+import edu.nju.service.ExceptionsAndError.InvalidParametersException;
+import edu.nju.service.ExceptionsAndError.NotLoginException;
+import edu.nju.service.ExceptionsAndError.NothingToPayException;
+import edu.nju.service.ExceptionsAndError.PaymentFailedException;
 import edu.nju.service.POJO.SimpleTradeInfo;
 import edu.nju.service.POJO.TradeInfoWithCheckCode;
 import edu.nju.service.PayService.PayService;
 import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.service.TradeService.TradeService;
 import edu.nju.vo.OrderResultVO;
-import org.aspectj.weaver.ast.Not;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-
-import java.util.List;
-import java.util.Map;
+import edu.nju.vo.ProductVO;
 
 /**
  * Created by Hermit on 16/9/5.
@@ -35,7 +39,7 @@ public class OrderAction extends BaseAction {
             if (financeCityUser == null) {
                 throw new NotLoginException();
             }
-            String checkCode = (String)session.get("checkCode");
+            String checkCode=request.getParameter("hidValue");
             if (checkCode == null) {
                 throw new InvalidParametersException("checkCode");
             }
@@ -48,6 +52,7 @@ public class OrderAction extends BaseAction {
             for (TradeInfoWithCheckCode tradeInfoWithCheckCode : list) {
                 if (tradeInfoWithCheckCode.getCheckCode().equals(checkCode)) {
                     tradeInfoList = tradeInfoWithCheckCode.getTradeInfos();
+                    request.setAttribute("tradeInfoList",tradeInfoList );
                 }
             }
             if (tradeInfoList != null) {
@@ -113,16 +118,6 @@ public class OrderAction extends BaseAction {
     }
     
     public String buyCombine(){
-    	FinanceCityUser financeCityUser = (FinanceCityUser)session.get("user");
-    	String code=request.getParameter("hidValue");
-    	try {
-    		List<InvestedProducts> proList=assetManagementService.getInvestedProduct(code, financeCityUser);
-    		request.setAttribute("proList", proList);
-    	} catch (NotLoginException e) {
-			 ErrorManager.setError(request, ErrorManager.errorNotLogin);
-	         return LOGIN;
-		}
-    	System.out.println(code);
-    	return SUCCESS;
+    	return confirm();
     }
 }
