@@ -4,10 +4,19 @@
 
 <html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
 <head>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+	String url = request.getScheme() + "://" + request.getServerName() + request.getRequestURI() + "?"
+			+ request.getQueryString();
+	request.setAttribute("basePath", basePath);
+%>
+<base href="<%=basePath%>">
     <meta charset="UTF-8">
     <title>订单付款</title>
-    <link href="../css/order.css" rel="stylesheet">
-    <link href="../css/common.css" rel="stylesheet">
+    <link href="${basePath}css/order.css" rel="stylesheet">
+    <link href="${basePath}css/common.css" rel="stylesheet">
 </head>
 <body>
 

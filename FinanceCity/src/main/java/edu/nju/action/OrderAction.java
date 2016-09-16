@@ -107,4 +107,10 @@ public class OrderAction extends BaseAction {
 
         return ERROR;
     }
+    
+    public String buyCombine(){
+    	String code=request.getParameter("hidValue");
+    	System.out.println(code);
+    	return SUCCESS;
+    }
 }

@@ -7,8 +7,17 @@
 <head>
     <meta charset="UTF-8">
     <title>订单信息确认</title>
-    <link href="../css/common.css" rel="stylesheet">
-    <link href="../css/order.css" rel="stylesheet">
+    <%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+	String url = request.getScheme() + "://" + request.getServerName() + request.getRequestURI() + "?"
+			+ request.getQueryString();
+	request.setAttribute("basePath", basePath);
+%>
+<base href="<%=basePath%>">
+    <link href="${basePath}css/order.css" rel="stylesheet">
+    <link href="${basePath}css/common.css" rel="stylesheet">
 
     <script type="text/javascript" rel="stylesheet" src="../js/jquery.min.js"></script>
     <script type="text/javascript" rel="stylesheet" src="../js/order-confirm.js"></script>
