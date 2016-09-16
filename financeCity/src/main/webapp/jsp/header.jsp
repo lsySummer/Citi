@@ -36,7 +36,7 @@
 <div class="header shadow">
     <div class="container">
         <div class="header-square"></div>
-        <h1 class="header-title">Invest Go</h1>
+        <h1 class="header-title"></h1>
         <div class="header-button">
         <%if(session.getAttribute("user")==null) {%>
         <s:form action="loginURL" method="post" name='loginURL'>

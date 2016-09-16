@@ -107,9 +107,11 @@ select::-ms-expand {
 .header-square {
     float: left;
     margin-top: 7px;
-    width: 46px;
-    height: 46px;
-    background-color: #11b7f3;
+    width: 160px;
+    height: 44px;
+    background:url('../img/logo.png');
+    background-size: contain;
+
 }
 .header-title {
     float: left;
