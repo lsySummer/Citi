@@ -78,7 +78,7 @@
 			var map = {};
 			map[key1] = names[i];
 			map[key2] = buys[i];
-			arrayObj[0]=map;
+			arrayObj[i]=map;
 				
 			}
 			var chart = AmCharts.makeChart( "allocation-chart", {
