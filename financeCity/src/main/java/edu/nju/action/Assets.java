@@ -18,6 +18,7 @@ import edu.nju.service.ExceptionsAndError.ErrorManager;
 import edu.nju.service.ExceptionsAndError.NoSuchProductException;
 import edu.nju.service.ExceptionsAndError.NotLoginException;
 import edu.nju.service.InvestAdvisorService.InvestAdvisorService;
+import edu.nju.service.POJO.CommonPortfolio;
 import edu.nju.service.POJO.Investment_portfolio;
 import edu.nju.service.POJO.RecommendVOFactory;
 import edu.nju.service.POJO.SimpleTradeInfo;
@@ -67,7 +68,8 @@ public class Assets extends BaseAction{
 			//List<TradeInfoWithCheckCode> lists = investAdvisorService.createInvestmentPortFolio(userTemperPrefer);
 			List<TradeInfoWithCheckCode> lists = getDemo();
 			RecommendedPortfolioVO recommendedPortfolioVO = RecommendVOFactory.createRecommend(lists, searchService, investAdvisorService);
-			session.put("investResult", recommendedPortfolioVO);
+			List<CommonPortfolio> recArr=recommendedPortfolioVO.getData();
+			request.setAttribute("recArr", recArr);
 
 			return SUCCESS;
 		}
@@ -132,6 +134,10 @@ public class Assets extends BaseAction{
 
 	@SuppressWarnings("unchecked")
 	public String getCurrentInvestment() {
+		if(session.get("tipMessage")!=null&&session.get("tipMessage")!=""){
+		request.setAttribute("tipMessage", session.get("tipMessage"));
+		session.remove("tipMessage");
+	}
 		try {
 			FinanceCityUser financeCityUser = (FinanceCityUser) session.get("user");
 			if (financeCityUser == null) {
@@ -139,7 +145,10 @@ public class Assets extends BaseAction{
 			}
 
 			CurrentInvestmentVO currentInvestment = assetManagementService.getInvestProductVOList(financeCityUser);
+			if(currentInvestment!=null){
 			List<Investment_portfolio> investList=currentInvestment.getInvestmentPortfolioList();
+			if(investList!=null){
+				if(investList.size()!=0){
 			List<ProductVO> proList=investList.get(0).getProductVOs();
 			List<String> proArr=new ArrayList<String>();
 			List<Integer> pidArr=new ArrayList<Integer>();
@@ -161,9 +170,8 @@ public class Assets extends BaseAction{
 			request.setAttribute("currentArr", currentArr);
 			request.setAttribute("pidArr", pidArr);
 			getTradeHistory();
-			if(session.get("tipMessage")!=null&&session.get("tipMessage")!=""){
-				request.setAttribute("tipMessage", session.get("tipMessage"));
-				session.remove("tipMessage");
+				}
+			}
 			}
 			return SUCCESS;
 		}

@@ -8,7 +8,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-
+<%@ page language="java" import="java.util.*"%>
+<%@ page language="java" import="edu.nju.service.POJO.CommonPortfolio"%>
 <html>
 <head>
     <%
@@ -37,6 +38,7 @@
 
 <div class="main">
     <div class="container top-margin inline-container">
+       <%List<CommonPortfolio> recArr=(List<CommonPortfolio>)request.getAttribute("recArr"); %>
         <div class="recommendation-container">
             <div class="recommendation-header">
                 <h6>推荐一</h6>
@@ -89,109 +91,7 @@
             </div>
         </div>
 
-        <div class="recommendation-container">
-            <div class="recommendation-header">
-                <h6>推荐二</h6>
-                <h5><span>¥ &nbsp;</span>120,000</h5>
-            </div>
-            <ul>
-                <li class="product">
-                    <div class="product-title">
-                        <span>稳赚利38天</span>
-                        <span>¥&nbsp;2000</span>
-                    </div>
-                    <div id="precentChart2-1" class="product-chart"></div>
-                </li>
-                <li class="product">
-                    <div class="product-title">
-                        <span>稳赚利38天</span>
-                        <span>¥&nbsp;2000</span>
-                    </div>
-                    <div id="precentChart2-2" class="product-chart"></div>
-                </li>
-                <li class="product">
-                    <div class="product-title">
-                        <span>稳赚利38天</span>
-                        <span>¥&nbsp;2000</span>
-                    </div>
-                    <div id="precentChart2-3" class="product-chart"></div>
-                </li>
-                <li class="product">
-                    <div class="product-title">
-                        <span>稳赚利38天</span>
-                        <span>¥&nbsp;2000</span>
-                    </div>
-                    <div id="precentChart2-4" class="product-chart"></div>
-                </li>
-                <li class="product">
-                    <div class="product-title">
-                        <span>稳赚利38天</span>
-                        <span>¥&nbsp;2000</span>
-                    </div>
-                    <div id="precentChart2-5" class="product-chart"></div>
-                </li>
-            </ul>
-
-            <%--<h6 class="radar-title">预计收益曲线图</h6>--%>
-            <div id="radarChart2" class="radar-chart"></div>
-
-            <div class="recommendation-footer">
-
-                <a>购买此组合 -></a>
-            </div>
-        </div>
-
-        <div class="recommendation-container no-margin-right">
-            <div class="recommendation-header">
-                <h6>推荐三</h6>
-                <h5><span>¥ &nbsp;</span>120,000</h5>
-            </div>
-            <ul>
-                <li class="product">
-                    <div class="product-title">
-                        <span>稳赚利38天</span>
-                        <span>¥&nbsp;2000</span>
-                    </div>
-                    <div id="precentChart3-1" class="product-chart"></div>
-                </li>
-                <li class="product">
-                    <div class="product-title">
-                        <span>稳赚利38天</span>
-                        <span>¥&nbsp;2000</span>
-                    </div>
-                    <div id="precentChart3-2" class="product-chart"></div>
-                </li>
-                <li class="product">
-                    <div class="product-title">
-                        <span>稳赚利38天</span>
-                        <span>¥&nbsp;2000</span>
-                    </div>
-                    <div id="precentChart3-3" class="product-chart"></div>
-                </li>
-                <li class="product">
-                    <div class="product-title">
-                        <span>稳赚利38天</span>
-                        <span>¥&nbsp;2000</span>
-                    </div>
-                    <div id="precentChart3-4" class="product-chart"></div>
-                </li>
-                <li class="product">
-                    <div class="product-title">
-                        <span>稳赚利38天</span>
-                        <span>¥&nbsp;2000</span>
-                    </div>
-                    <div id="precentChart3-5" class="product-chart"></div>
-                </li>
-            </ul>
-
-            <%--<h6 class="radar-title">预计收益曲线图</h6>--%>
-            <div id="radarChart3" class="radar-chart"></div>
-
-            <div class="recommendation-footer">
-
-                <a>购买此组合 -></a>
-            </div>
-        </div>
+      
 
     </div>
 </div>
