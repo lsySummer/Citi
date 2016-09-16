@@ -6,7 +6,7 @@ import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.CategoryAndProduct.ProductCategoryManager;
 import edu.nju.service.ExceptionsAndError.NoSuchProductException;
 import edu.nju.service.ExceptionsAndError.NotLoginException;
-import edu.nju.service.ExceptionsAndError.NothingToReemException;
+import edu.nju.service.ExceptionsAndError.NothingToRedeemException;
 import edu.nju.service.POJO.SimpleTradeInfo;
 import edu.nju.service.PayService.PayService;
 import edu.nju.service.SearchService.SearchService;
@@ -18,13 +18,9 @@ import edu.nju.vo.OrderResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.xml.crypto.Data;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -122,22 +118,22 @@ public class TradeServiceImpl implements TradeService {
     }
 
     @Override
-    public boolean redeemProduct(String checkCode, int productId, FinanceCityUser financeCityUser) throws NotLoginException, NothingToReemException {
+    public boolean redeemProduct(String checkCode, int productId, FinanceCityUser financeCityUser) throws NotLoginException, NothingToRedeemException {
         if (payService.redeemProduct()) {
             List list = userService.getCommonDao().
                     find("FROM InvestmentPortfolio i WHERE i.checkCode='" + checkCode + "'");
 
             if (list == null || list.size() == 0) {
-                throw new NothingToReemException();
+                throw new NothingToRedeemException();
             }
 
             InvestmentPortfolio investmentPortfolio = (InvestmentPortfolio)list.get(0);
 
             list = userService.getUserDao(financeCityUser).
-                    find("FROM InvestedProduct i WHERE i.portfolioId=" + investmentPortfolio.getId() +
-                            " AND i.productId=" + productId);
+                    find("FROM InvestedProducts i WHERE i.portfolioId=" + investmentPortfolio.getId() +
+                            " AND i.productId=" + productId + " AND i.state=1");
             if (list == null || list.size() == 0) {
-                throw new NothingToReemException();
+                throw new NothingToRedeemException();
             }
 
             InvestedProducts investedProducts = (InvestedProducts)list.get(0);

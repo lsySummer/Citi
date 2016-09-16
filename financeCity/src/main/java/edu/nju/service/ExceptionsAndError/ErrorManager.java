@@ -27,6 +27,7 @@ public class ErrorManager {
     static public final int errorPaymentFailed = 15;
     static public final int errorUserInfoNotSet = 16;
     static public final int errorInvalidUserPreference = 17;
+    static public final int errorNothingToRedeem = 18;
 
     static private String[] errorDescription;
     static private String[] errorDescriptionCH;
@@ -50,7 +51,8 @@ public class ErrorManager {
                 "No Such Order",
                 "Payment Failed",
                 "User Info Not Set",
-                "Invalid User Preference"
+                "Invalid User Preference",
+                "Nothing To Redeem"
         };
         errorDescriptionCH = new String[] {
                 "",
@@ -70,7 +72,8 @@ public class ErrorManager {
                 "不存在的订单",
                 "交易失败",
                 "用户信息不完整",
-                "无效的用户偏好信息"
+                "无效的用户偏好信息",
+                "没有可赎回的产品"
         };
     }
 
