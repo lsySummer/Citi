@@ -8,7 +8,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-
+<%@ page language="java" import="java.util.*"%>
+<%@ page language="java" import="edu.nju.vo.TradeHistoryVO"%>
 <html>
 <head>
     <%
@@ -41,14 +42,68 @@
 <body>
 <s:include value="header.jsp"></s:include>
 
-<div class="main">
+<div class="main" style="margin-bottom:20px">
     <div class="container top-margin inline-container">
 
         <div class="asset-allocation asset-block">
             <h5 class="title">资产配置</h5>
             <div id="allocation-chart"></div>
         </div>
+		<script language="javascript" type="text/javascript">
+		function initAllocationChart() {
+			var names = new  Array();  
+			var buys = new  Array();  
+			<%List<String> nameArr=(List<String>)request.getAttribute("proArr");
+			List<Double> buyArr=(List<Double>)request.getAttribute("buyArr");
+			List<Double> currentArr=(List<Double>)request.getAttribute("currentArr");
+			List<Integer> pidArr=(List<Integer>)request.getAttribute("pidArr");
+			int arrLth=0;
+			   if(nameArr!=null)
+			   {
+				arrLth=nameArr.size();
+			    for(int i=0;i<nameArr.size();i++)
+			    {
+			  %>
+			  names[<%=i%>]='<%=nameArr.get(i)%>';
+			  buys[<%=i%>]='<%=buyArr.get(i)%>';
+			  var lth=<%=nameArr.size()%>;
+			  <%   } 
+			   }
+			%>
+			var arrayObj = new Array([lth]);
+			for(i=0;i<lth;i++){
+			var key1 = 'title';
+			var key2 = 'value';
+			var map = {};
+			map[key1] = names[i];
+			map[key2] = buys[i];
+			arrayObj[0]=map;
+				
+			}
+			var chart = AmCharts.makeChart( "allocation-chart", {
+			    "type": "pie",
+			    "theme": "light",
+			    "dataProvider": 
+			       arrayObj,
+			    "titleField": "title",
+			    "valueField": "value",
+			    "labelRadius": 5,
 
+			    "radius": "30%",
+			    "innerRadius": "60%",
+			    "labelText": "[[title]]",
+			    "export": {
+			        "enabled": false
+			    }
+			} );
+		}
+		
+
+		function submitSold(pid){
+			document.getElementById('hiddenId').value=pid;
+			return true;
+		}
+		</script>
         <div class="asset-price asset-block">
             <h5 class="title">资产价值曲线</h5>
             <div id="price-chart"></div>
@@ -56,6 +111,8 @@
 
         <div class="asset-product asset-block">
             <h5 class="title">投资产品</h5>
+            <s:form action="sold" name="sold" method="post">
+             <input type="hidden" id="hiddenId" name="hiddenId"/>
             <table>
                 <tr>
                     <th class="product-name">产品</th>
@@ -63,62 +120,33 @@
                     <th class="product-total">本利和(￥)</th>
                     <th></th>
                 </tr>
-                <tr>
-                    <td>稳添利38天</td>
-                    <td>2000</td>
-                    <td>2200</td>
-                    <td><a>卖出</a></td>
+                <%for(int i=0;i<arrLth;i++){%>
+                	<tr>
+                    <td width=220><span style="font-size: 12px"><%=nameArr.get(i) %></span></td>
+                    <td><%=buyArr.get(i) %></td>
+                    <td><%=currentArr.get(i) %></td>
+                    <%int pid=pidArr.get(i); %>
+                    <td><button class="button-style" onclick="return submitSold('<%=pid%>')">卖出</button></td>
                 </tr>
-                <tr>
-                    <td>一个很短的基金名字</td>
-                    <td>2300</td>
-                    <td>2330</td>
-                    <td><a>卖出</a></td>
-                </tr>
-                <tr>
-                    <td>大长腿保险</td>
-                    <td>3400</td>
-                    <td>3440</td>
-                    <td><a>卖出</a></td>
-                </tr>
-                <tr>
-                    <td>你就说我美不美债券</td>
-                    <td>2300</td>
-                    <td>2388</td>
-                    <td><a>卖出</a></td>
-                </tr>
+                <% } %>
             </table>
+            </s:form>
         </div>
 
         <div class="asset-timeline asset-block">
             <h5 class="title">投资时间线</h5>
             <table>
-
+			<% List<TradeHistoryVO> tradeList=(List<TradeHistoryVO>)request.getAttribute("tradeList");%>
+                	<s:iterator value="#request.tradeList">
                 <tr>
                     <td>
-                        <div class="opeartion-block timeline-due">到期</div>
+                        <div class="opeartion-block timeline-due"><s:property value="TradingType" /></div>
                     </td>
-                    <td>2016-09-13</td>
-                    <td>稳添利38天</td>
-                    <td>获利￥400</td>
+                    <td><span style="font-size:12px"><s:property value="Date" /></span></td>
+                    <td><span style="font-size:12px"><s:property value="ProductName" /></span></td>
+                    <td><span style="font-size:12px"><s:property value="TradingVolume" /></span></td>
                 </tr>
-                <tr>
-                    <td>
-                        <div class="opeartion-block timeline-buy">买入</div>
-                    </td>
-                    <td>2016-09-01</td>
-                    <td>大长腿保险</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="opeartion-block timeline-pay">付息</div>
-                    </td>
-                    <td>2016-08-30</td>
-                    <td>付息是什么意思</td>
-                    <td></td>
-                </tr>
-
+					</s:iterator>
             </table>
         </div>
     </div>
