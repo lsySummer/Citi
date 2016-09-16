@@ -406,7 +406,7 @@ public class ProductSearch extends Fragment{
                     try {
                         year = (double) map.get("expected_income_rate");
                     }catch(Exception e){}
-                    state = (String) map.get("type");
+                    state = (String) map.get("product_type");
                     list.add(new ProductVO(pid,sid, name, type, year, state,top,middle,bottom));
                     break;
                 case "bond":
@@ -416,7 +416,7 @@ public class ProductSearch extends Fragment{
                     try {
                         year = (double) map.get("expected_income_rate");
                     }catch(Exception e){}
-                    state = (String) map.get("type");
+                    state = (String) map.get("product_type");
                     list.add(new ProductVO(pid,sid, name, type, year, state,top,middle,bottom));
                     break;
                 case "fund":
@@ -438,7 +438,7 @@ public class ProductSearch extends Fragment{
                     try {
                         bottom +=(String) map.get("mng_charge_rate");
                     }catch(Exception e){}
-                    state = (String) map.get("type");
+                    state = (String) map.get("product_type");
                     list.add(new ProductVO(pid,sid, name, type, year, state,top,middle,bottom));
                     break;
                 case "insurance":
@@ -448,7 +448,7 @@ public class ProductSearch extends Fragment{
                     try {
                         year = (double) map.get("expected_income_rate");
                     }catch(Exception e){}
-                    state = (String) map.get("type");
+                    state = (String) map.get("product_type");
                     list.add(new ProductVO(pid,sid, name, type, year, state,top,middle,bottom));
                     break;
             }
