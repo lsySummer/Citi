@@ -8,36 +8,6 @@ window.onload = function() {
 }
 
 
-function initAllocationChart() {
-    var chart = AmCharts.makeChart( "allocation-chart", {
-        "type": "pie",
-        "theme": "light",
-        "dataProvider": [
-            {
-                "title": "稳添利38",
-                "value": 60
-            },
-            {
-                "title": "大长腿保险",
-                "value": 140
-            } ,
-            {
-                "title": "一个基金",
-                "value": 160
-            }],
-        "titleField": "title",
-        "valueField": "value",
-        "labelRadius": 5,
-
-        "radius": "30%",
-        "innerRadius": "60%",
-        "labelText": "[[title]]",
-        "export": {
-            "enabled": false
-        }
-    } );
-}
-
 
 function initPriceChart() {
 

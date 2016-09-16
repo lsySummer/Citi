@@ -84,6 +84,8 @@ public class UserAction extends BaseAction {
 
         return ERROR;
     }
+    
+    
 
     @SuppressWarnings("unchecked")
     public String getUserVO() {

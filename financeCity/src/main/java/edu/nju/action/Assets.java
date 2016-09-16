@@ -1,6 +1,7 @@
 package edu.nju.action;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,8 +27,10 @@ import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.service.UserService.UserService;
 import edu.nju.vo.CurrentInvestmentVO;
 import edu.nju.vo.ProductDetailVO;
+import edu.nju.vo.ProductVO;
 import edu.nju.vo.RecommendedPortfolioVO;
 import edu.nju.vo.TradeHistoryListVO;
+import edu.nju.vo.TradeHistoryVO;
 
 
 @Controller
@@ -137,8 +140,31 @@ public class Assets extends BaseAction{
 
 			CurrentInvestmentVO currentInvestment = assetManagementService.getInvestProductVOList(financeCityUser);
 			List<Investment_portfolio> investList=currentInvestment.getInvestmentPortfolioList();
-			request.setAttribute("investList", investList);
-
+			List<ProductVO> proList=investList.get(0).getProductVOs();
+			List<String> proArr=new ArrayList<String>();
+			List<Integer> pidArr=new ArrayList<Integer>();
+			List<Double> buyArr=new ArrayList<Double>();
+			List<Double> currentArr=new ArrayList<Double>();
+			DecimalFormat df=new DecimalFormat("#.#");  
+			for(int i=0;i<proList.size();i++){
+				double buyingValue=proList.get(i).getBuyingValue();
+				double currentValue=proList.get(i).getCurrentValue();
+				String name=proList.get(i).getName();
+				int pid = proList.get(i).getId();
+				proArr.add(name);
+				buyArr.add(buyingValue);
+				currentArr.add(Double.parseDouble(df.format(currentValue)));
+				pidArr.add(pid);
+			}
+			request.setAttribute("proArr", proArr);
+			request.setAttribute("buyArr", buyArr);
+			request.setAttribute("currentArr", currentArr);
+			request.setAttribute("pidArr", pidArr);
+			getTradeHistory();
+			if(session.get("tipMessage")!=null&&session.get("tipMessage")!=""){
+				request.setAttribute("tipMessage", session.get("tipMessage"));
+				session.remove("tipMessage");
+			}
 			return SUCCESS;
 		}
 		catch (NotLoginException n) {
@@ -163,8 +189,8 @@ public class Assets extends BaseAction{
 			}
 
 			TradeHistoryListVO tradeHistoryVO = assetManagementService.getTradeHistory(financeCityUser);
-			session.put("tradHistory", tradeHistoryVO);
-			ErrorManager.setError(request, ErrorManager.errorNormal);
+			List<TradeHistoryVO> tradeList=tradeHistoryVO.getTradeHistoryVOList();
+			request.setAttribute("tradeList", tradeList);
 			return SUCCESS;
 		}
 		catch (NotLoginException n) {
