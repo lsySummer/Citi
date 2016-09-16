@@ -18,11 +18,8 @@
     <link href="${basePath}css/order.css" rel="stylesheet">
     <link href="${basePath}css/common.css" rel="stylesheet">
 </head>
-<body>
-
-<body>
+<s:form action="orderpay" method="post" id="orderpay">
 <s:include value="header.jsp"></s:include>
-
 
 <div class="main">
     <div class="container">
@@ -38,25 +35,25 @@
                 <h2>订单信息</h2>
                 <div class="total">
                     <span class="total-title">合计:</span>
-                    <span class="total-sum">￥1200</span>
+                    <span class="total-sum" style="margin-right:100px">￥<%=request.getAttribute("total") %></span>
                 </div>
                 <div class="clear"></div>
                   <table>
                     <tr>
-                        <th class="product-section">产品名称</th>
-                        <th class="product-quantity">购买金额</th>
+                        <th>产品名称</th>
+                        <th>购买金额</th>
                     </tr>
                     <s:iterator value="#request.tradeInfoList">
                     <tr>
                         <td style="width:300px">
                             <div class="product-title">
-                                <span class="main-title"><s:property value="productId" /></span>
+                                <span class="main-title"><s:property value="name" /></span>
                                 </br>
-                                <span class="sub-title"><s:property value="Type" /></span>
+                                <span class="sub-title"><s:property value="amount" /></span>
                             </div>
                             <div class="clear"></div>
                         </td>
-                        <td >￥<s:property value="amount" /></td>
+                        <td style="text-align:center;">￥<s:property value="amount" /></td>
                     </tr>
                     </s:iterator>
                 </table>
@@ -83,17 +80,14 @@
                         <label for="radio1"><span><span></span></span>支付方式3</label>
                     </div>
                 </form>
-                <button class="block-button">确认支付 ￥1200</button>
+                <button class="block-button" onclick="document.getElementById('orderpay').submit()">确认支付 ￥<%=request.getAttribute("total") %></button>
             </div>
             <div class="clear"></div>
         </div>
     </div>
 </div>
-
 <s:include value="footer.jsp"></s:include>
+</s:form>
 
-</div>
-</body>
 
-</body>
 </html>
