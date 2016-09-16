@@ -140,7 +140,8 @@ public class AndroidAssetAction extends AndroidAction {
             }
 
             UserTemperPrefer userTemperPrefer = userService.getUserTemper(financeCityUser);
-            List<TradeInfoWithCheckCode> list = investAdvisorService.createInvestmentPortFolio(userTemperPrefer);
+            //List<TradeInfoWithCheckCode> list = investAdvisorService.createInvestmentPortFolio(userTemperPrefer);
+            List<TradeInfoWithCheckCode> list = getDemo();
 
             recommendedPortfolioVO = RecommendVOFactory.createRecommend(list, searchService, investAdvisorService);
 
@@ -154,10 +155,12 @@ public class AndroidAssetAction extends AndroidAction {
             n.printStackTrace();
             ErrorManager.setError(recommendedPortfolioVO, ErrorManager.errorUserInfoNotSet);
         }
+        /*
         catch (InvalidUserPreferenceException i) {
             i.printStackTrace();
             ErrorManager.setError(recommendedPortfolioVO, ErrorManager.errorInvalidUserPreference);
         }
+        */
         catch (Exception e) {
             e.printStackTrace();
             ErrorManager.setError(recommendedPortfolioVO, ErrorManager.errorInnerDataError);
@@ -166,5 +169,28 @@ public class AndroidAssetAction extends AndroidAction {
         setResult(recommendedPortfolioVO);
 
         return SUCCESS;
+    }
+
+    private List<TradeInfoWithCheckCode> getDemo() {
+        List<TradeInfoWithCheckCode> list = new ArrayList<>();
+        TradeInfoWithCheckCode tradeInfoWithCheckCode = new TradeInfoWithCheckCode();
+        tradeInfoWithCheckCode.setCheckCode("feadfeadzda");
+        List<SimpleTradeInfo> simpleTradeInfoList = new ArrayList<>();
+
+        //product1
+        SimpleTradeInfo simpleTradeInfo = new SimpleTradeInfo();
+        simpleTradeInfo.setProductId(1);
+        simpleTradeInfo.setAmount(10000);
+        simpleTradeInfoList.add(simpleTradeInfo);
+        //product2
+        simpleTradeInfo = new SimpleTradeInfo();
+        simpleTradeInfo.setProductId(10000001);
+        simpleTradeInfo.setAmount(2000000);
+        simpleTradeInfoList.add(simpleTradeInfo);
+
+        tradeInfoWithCheckCode.setTradeInfos(simpleTradeInfoList);
+        list.add(tradeInfoWithCheckCode);
+
+        return list;
     }
 }
