@@ -138,17 +138,17 @@ public class Assets extends BaseAction{
 			}
 
 			CurrentInvestmentVO currentInvestment = assetManagementService.getInvestProductVOList(financeCityUser);
-			List<Investment_portfolio> investList=currentInvestment.getInvestmentPortfolioList();
-			List<ProductVO> proList=investList.get(0).getProductVOs();
-			List<String> proArr=new ArrayList<String>();
-			List<Integer> pidArr=new ArrayList<Integer>();
-			List<Double> buyArr=new ArrayList<Double>();
-			List<Double> currentArr=new ArrayList<Double>();
-			DecimalFormat df=new DecimalFormat("#.#");  
-			for(int i=0;i<proList.size();i++){
-				double buyingValue=proList.get(i).getBuyingValue();
-				double currentValue=proList.get(i).getCurrentValue();
-				String name=proList.get(i).getName();
+			List<Investment_portfolio> investList = currentInvestment.getInvestmentPortfolioList();
+			List<ProductVO> proList = investList.get(0).getProductVOs();
+			List<String> proArr = new ArrayList<String>();
+			List<Integer> pidArr = new ArrayList<Integer>();
+			List<Double> buyArr = new ArrayList<Double>();
+			List<Double> currentArr = new ArrayList<Double>();
+			DecimalFormat df = new DecimalFormat("#.#");
+			for(int i = 0;i < proList.size();i++){
+				double buyingValue = proList.get(i).getBuyingValue();
+				double currentValue = proList.get(i).getCurrentValue();
+				String name = proList.get(i).getName();
 				int pid = proList.get(i).getId();
 				proArr.add(name);
 				buyArr.add(buyingValue);
