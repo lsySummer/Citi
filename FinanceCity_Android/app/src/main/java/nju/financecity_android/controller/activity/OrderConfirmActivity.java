@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -29,39 +30,18 @@ public class OrderConfirmActivity extends AppCompatActivity implements Observer 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_confirm);
         initComponents();
-
         processData();
     }
 
     protected void processData() {
         goodsList = new ArrayList<>();
-        /*Intent intent = getIntent();
+        Intent intent = getIntent();
         Bundle dataSet = intent.getExtras();
         for (String key: dataSet.keySet()) {
             GoodsInfo goodsInfo = (GoodsInfo) dataSet.getSerializable(key);
             goodsList.add(goodsInfo);
-        }*/
-        setListContent(goodsList);
-        GoodsInfo info = new GoodsInfo("12312", "这是一个产品1", 1000, 10);
-        info.type = "银行理财";
-        info.increasingUnit = 10;
-        info.initialAmount = 100000;
-        goodsList.add(info);
-        info = new GoodsInfo("12312", "这是一个产品1", 1000, 10);
-        info.type = "基金";
-        info.increasingUnit = 100;
-        info.initialAmount = 50;
-        goodsList.add(info);
-        info = new GoodsInfo("12312", "这是一个产品1", 1000, 10);
-        info.type = "保险";
-        info.increasingUnit = 5;
-        info.initialAmount = 123;
-        goodsList.add(info);
-        info = new GoodsInfo("12312", "这是一个产品1", 1000, 10);
-        info.type = "债券";
-        info.increasingUnit = 10;
-        info.initialAmount = 100000;
-        goodsList.add(info);
+        }
+        Log.i("order","goodsList "+goodsList.toString());
         setListContent(goodsList);
     }
 

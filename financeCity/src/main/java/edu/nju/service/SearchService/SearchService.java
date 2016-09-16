@@ -1,6 +1,7 @@
 package edu.nju.service.SearchService;
 
 import edu.nju.model.CategoryIndex;
+import edu.nju.model.CategoryRtrWeeklyHistory;
 import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.ExceptionsAndError.DataNotFoundException;
 import edu.nju.service.ExceptionsAndError.NoSuchProductException;
@@ -62,6 +63,13 @@ public interface SearchService {
      */
     List<Product> getProductListByOrder(String type, String order);
 
+    /**
+     * search product by condition with order
+     * @param type .
+     * @param cond .
+     * @param order .
+     * @return
+     */
     List<Product> searchProductsByConditionWithOrder(String type, String cond, String order);
 
     /**
@@ -122,6 +130,8 @@ public interface SearchService {
     NAVHistory[] getFundValueHistory(Integer id, Integer days) throws DataNotFoundException;
 
     NAVHistory[] getBankValueHistory(Integer id, Integer days) throws DataNotFoundException;
+
+    List<CategoryRtrWeeklyHistory> getCategoryRtrWeeklyHistory(Integer days);
 
     /**
      * get institution list

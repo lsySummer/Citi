@@ -8,6 +8,7 @@ import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.vo.BaseVO;
 import edu.nju.vo.PayWayVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ import java.util.Map;
 /**
  * Created by Sun YuHao on 2016/9/3.
  */
+@Controller
 public class AndroidPayAction extends AndroidAction {
     @Autowired
     PayService payService;

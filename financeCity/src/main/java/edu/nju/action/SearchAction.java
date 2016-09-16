@@ -7,12 +7,14 @@ import edu.nju.service.ExceptionsAndError.ErrorManager;
 import edu.nju.service.POJO.SharedInfo;
 import edu.nju.service.SearchService.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import java.util.List;
 
 /**
  * Created by Sun YuHao on 2016/9/4.
  */
+@Controller
 public class SearchAction extends BaseAction {
     @Autowired
     SearchService searchService;

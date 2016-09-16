@@ -24,12 +24,26 @@ public class GoodsInfo implements Serializable {
     }
 
     public int getSum() {
-        if (type.equals("银行理财") || type.equals("基金")) {
+        if (type.equals("Bank") || type.equals("Fund")) {
             return amount;
         }
-        else if (type.equals("保险") || type.equals("债券")) {
+        else if (type.equals("Insurance") || type.equals("Bond")) {
             return price * amount;
         }
         return 0;
+    }
+
+    @Override
+    public String toString() {
+        return "GoodsInfo{" +
+                "goodsName='" + goodsName + '\'' +
+                ", goodsId='" + goodsId + '\'' +
+                ", price=" + price +
+                ", amount=" + amount +
+                ", type='" + type + '\'' +
+                ", subType='" + subType + '\'' +
+                ", initialAmount=" + initialAmount +
+                ", increasingUnit=" + increasingUnit +
+                '}';
     }
 }

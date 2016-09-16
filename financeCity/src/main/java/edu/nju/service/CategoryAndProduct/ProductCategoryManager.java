@@ -40,7 +40,7 @@ import java.util.List;
             "blend",
             "etf",
             "lof",
-            "QDII",
+            "QDll",
             "index"
     };
     static private final String[] fundTypeCH = {
@@ -50,7 +50,7 @@ import java.util.List;
             "混合型",
             "ETF",
             "LOF",
-            "QDII",
+            "QDll",
             "指数型",
     };
     static private final String[] bondInterestType = {

@@ -18,6 +18,8 @@ import edu.nju.service.ExceptionsAndError.ErrorManager;
 import edu.nju.service.ExceptionsAndError.NoSuchProductException;
 import edu.nju.service.ExceptionsAndError.NotLoginException;
 import edu.nju.service.InvestAdvisorService.InvestAdvisorService;
+import edu.nju.service.POJO.AssetValue;
+import edu.nju.service.POJO.CommonPortfolio;
 import edu.nju.service.POJO.Investment_portfolio;
 import edu.nju.service.POJO.RecommendVOFactory;
 import edu.nju.service.POJO.SimpleTradeInfo;
@@ -67,12 +69,12 @@ public class Assets extends BaseAction{
 			//List<TradeInfoWithCheckCode> lists = investAdvisorService.createInvestmentPortFolio(userTemperPrefer);
 			List<TradeInfoWithCheckCode> lists = getDemo();
 			RecommendedPortfolioVO recommendedPortfolioVO = RecommendVOFactory.createRecommend(lists, searchService, investAdvisorService);
-			session.put("investResult", recommendedPortfolioVO);
+			List<CommonPortfolio> recArr=recommendedPortfolioVO.getData();
+			request.setAttribute("recArr", recArr);
 
 			return SUCCESS;
 		}
 		catch (NotLoginException e) {
-			e.printStackTrace();
 			ErrorManager.setError(request, ErrorManager.errorNotLogin);
 			return LOGIN;
 		}
@@ -132,14 +134,31 @@ public class Assets extends BaseAction{
 
 	@SuppressWarnings("unchecked")
 	public String getCurrentInvestment() {
+		if(session.get("tipMessage")!=null&&session.get("tipMessage")!=""){
+		request.setAttribute("tipMessage", session.get("tipMessage"));
+		session.remove("tipMessage");
+	}
 		try {
 			FinanceCityUser financeCityUser = (FinanceCityUser) session.get("user");
 			if (financeCityUser == null) {
 				throw new NotLoginException();
 			}
 
+			List<AssetValue> assetList=assetManagementService.getAssetValueHistory(financeCityUser, 100);
+			List<String> dateArr=new ArrayList<String>();
+			List<Double> valueArr=new ArrayList<Double>();
+			for(int i=0;i<assetList.size();i++){
+				dateArr.add(assetList.get(i).getDate());
+				valueArr.add(assetList.get(i).getValue());
+			}
+			request.setAttribute("dateArr", dateArr);
+			request.setAttribute("valueArr", valueArr);
+			
 			CurrentInvestmentVO currentInvestment = assetManagementService.getInvestProductVOList(financeCityUser);
+			if(currentInvestment!=null){
 			List<Investment_portfolio> investList=currentInvestment.getInvestmentPortfolioList();
+			if(investList!=null){
+				if(investList.size()!=0){
 			List<ProductVO> proList=investList.get(0).getProductVOs();
 			List<String> proArr=new ArrayList<String>();
 			List<Integer> pidArr=new ArrayList<Integer>();
@@ -161,14 +180,12 @@ public class Assets extends BaseAction{
 			request.setAttribute("currentArr", currentArr);
 			request.setAttribute("pidArr", pidArr);
 			getTradeHistory();
-			if(session.get("tipMessage")!=null&&session.get("tipMessage")!=""){
-				request.setAttribute("tipMessage", session.get("tipMessage"));
-				session.remove("tipMessage");
+				}
+			}
 			}
 			return SUCCESS;
 		}
 		catch (NotLoginException n) {
-			n.printStackTrace();
 			ErrorManager.setError(request, ErrorManager.errorNotLogin);
 			return LOGIN;
 		}
@@ -180,6 +197,7 @@ public class Assets extends BaseAction{
 		return ERROR;
 	}
 
+	
 	@SuppressWarnings("unchecked")
 	public String getTradeHistory() {
 		try {
@@ -194,8 +212,8 @@ public class Assets extends BaseAction{
 			return SUCCESS;
 		}
 		catch (NotLoginException n) {
-			n.printStackTrace();
 			ErrorManager.setError(request, ErrorManager.errorNotLogin);
+			return LOGIN;
 		}
 		catch (Exception e) {
 			e.printStackTrace();
