@@ -114,7 +114,7 @@ public class UpdateUtils {
         Connection connection = getConn();
 
         String sql_select = "SELECT * FROM product_fund";
-        String sql_insert = "UPDATE fund_daily_history SET fund_id = ? WHERE fund_id = ?";
+        String sql_insert = "UPDATE fund_daily_history SET fund_id = ? WHERE product_code = ?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql_select);
 
@@ -131,8 +131,8 @@ public class UpdateUtils {
 
                 //System.out.print(resultSet.getString("name"));
                 PreparedStatement prep = connection.prepareStatement(sql_insert);
-                prep.setInt(2, id);
                 prep.setInt(1, pid);
+                prep.setInt(2, Integer.valueOf(product_code));
 
                 prep.executeUpdate();
 
@@ -223,6 +223,6 @@ public class UpdateUtils {
     }
 
     static public void main(String[] args) {
-       UpdateUtils.test();
+      UpdateUtils.updateFundDaily();
     }
 }

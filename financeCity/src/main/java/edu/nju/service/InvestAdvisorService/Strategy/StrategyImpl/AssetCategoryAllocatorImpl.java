@@ -209,7 +209,7 @@ public class AssetCategoryAllocatorImpl implements AssetCategoryAllocator {
         }
     }
 
-    //TODO:sequence
+    //TODO:sequence 周年化收益率
     private double[] getHistoryReturnRateSequence(String category) {
         return new double[0];
     }
