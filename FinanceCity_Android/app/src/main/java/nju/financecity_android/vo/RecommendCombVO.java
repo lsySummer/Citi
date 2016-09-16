@@ -1,5 +1,6 @@
 package nju.financecity_android.vo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,7 +15,15 @@ public class RecommendCombVO {
     public double total_amount;
     public String checkCode;
 
-    public RecommendCombVO(){}
+    public RecommendCombVO(){
+        products=new ArrayList<RecommendSingleVO>();
+        this.yield_score = 0;
+        this.risk_score = 0;
+        this.flow_score = 0;
+        this.length_score = 0;
+        this.total_amount = 0;
+        this.checkCode = "";
+    }
     public RecommendCombVO(List<RecommendSingleVO> products, int yield_score, int risk_score, int flow_score, int length_score, double total_amount, String checkCode) {
         this.products = products;
         this.yield_score = yield_score;
@@ -25,4 +34,16 @@ public class RecommendCombVO {
         this.checkCode = checkCode;
     }
 
+    @Override
+    public String toString() {
+        return "RecommendCombVO{" +
+                "products=" + products +
+                ", yield_score=" + yield_score +
+                ", risk_score=" + risk_score +
+                ", flow_score=" + flow_score +
+                ", length_score=" + length_score +
+                ", total_amount=" + total_amount +
+                ", checkCode='" + checkCode + '\'' +
+                '}';
+    }
 }

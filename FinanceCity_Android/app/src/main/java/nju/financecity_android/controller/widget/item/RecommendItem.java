@@ -11,6 +11,7 @@ import lecho.lib.hellocharts.view.PieChartView;
 import nju.financecity_android.R;
 import nju.financecity_android.util.ColorBoard;
 import nju.financecity_android.vo.GoodsInfo;
+import nju.financecity_android.vo.RecommendSingleVO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,7 @@ import java.util.List;
  */
 public class RecommendItem {
 
-    public RecommendItem(Context context, View convertView, GoodsInfo data) {
+    public RecommendItem(Context context, View convertView, RecommendSingleVO data) {
         this.mContext = context;
         this.mInflater = LayoutInflater.from(context);
         this.mView = (convertView == null) ? mInflater.inflate(R.layout.recommend_item, null) : convertView;
@@ -38,22 +39,22 @@ public class RecommendItem {
 
     private void initComponents() {
         txtSimpleType = (TextView) findViewById(R.id.txtSimpleType);
-        if (mData.type != null && mData.type.contains("银行")) {
+        if (mData.productType.equals("Bank")) {
             txtSimpleType.setText("理");
             txtSimpleType.setBackgroundResource(R.drawable.bank_background);
-        } else if (mData.type != null && mData.type.contains("基金")) {
+        } else if (mData.productType.equals("Fund")) {
             txtSimpleType.setText("基");
             txtSimpleType.setBackgroundResource(R.drawable.fund_background);
-        } else if (mData.type != null && mData.type.contains("债券")) {
+        } else if (mData.productType.equals("Bond")) {
             txtSimpleType.setText("债");
             txtSimpleType.setBackgroundResource(R.drawable.bond_background);
-        } else if (mData.type != null && mData.type.contains("保险")) {
+        } else if (mData.productType.equals("Insurance")) {
             txtSimpleType.setText("保");
             txtSimpleType.setBackgroundResource(R.drawable.insurance_background);
         }
 
         txtProductName = (TextView) findViewById(R.id.txtProductName);
-        txtProductName.setText(mData.goodsName + "");
+        txtProductName.setText(mData.name + "");
 
         txtAmount = (TextView) findViewById(R.id.txtAmount);
         txtAmount.setText("￥" + mData.amount);
@@ -64,19 +65,19 @@ public class RecommendItem {
     /**
      * 显示饼图数据
      * @param amount 当前产品的购买总额
-     * @param sum 当前投资组合总额
+//     * @param sum 当前投资组合总额
      */
-    public void setChartInfo(float amount, float sum) {
+    public void setChartInfo(float amount, float percentage) {
         List<SliceValue> values = new ArrayList<>();
         values.add(new SliceValue(amount).setColor(getView().getResources().getColor(R.color.lightBlue)));
-        values.add(new SliceValue(sum - amount).setColor(getView().getResources().getColor(R.color.lightGrey)));
+        values.add(new SliceValue(amount/percentage-amount).setColor(getView().getResources().getColor(R.color.lightGrey)));
         PieChartData data = new PieChartData(values);
         data.setHasLabels(false);
         data.setHasLabelsOutside(true);
         data.setHasLabelsOnlyForSelected(false);
         data.setHasCenterCircle(true);
         data.setCenterCircleScale(0.8f);
-        String strPercent = amount / sum * 100 + "";
+        String strPercent = percentage * 100 + "";
         if (strPercent.length() > 3) strPercent = strPercent.substring(0, 3) + "%";
         data.setCenterText1(strPercent);
         data.setCenterText1FontSize(14);
@@ -91,8 +92,7 @@ public class RecommendItem {
     private LayoutInflater mInflater;
     private Context mContext;
     private View mView;
-    private GoodsInfo mData;
+    private RecommendSingleVO mData;
     private TextView txtSimpleType, txtProductName, txtAmount;
     private PieChartView piechart;
-
 }

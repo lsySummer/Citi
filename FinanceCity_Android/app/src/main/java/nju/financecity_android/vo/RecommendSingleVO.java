@@ -19,4 +19,14 @@ public class RecommendSingleVO {
         this.percentage = percentage;
     }
 
+    @Override
+    public String toString() {
+        return "RecommendSingleVO{" +
+                "id=" + id +
+                ", amount=" + amount +
+                ", name='" + name + '\'' +
+                ", productType='" + productType + '\'' +
+                ", percentage=" + percentage +
+                '}';
+    }
 }

@@ -52,7 +52,7 @@ public class FCRecommend {
             combVO.flow_score=Integer.parseInt(comb.get("flow_score").toString());
             combVO.length_score=Integer.parseInt(comb.get("length_score").toString());
             combVO.total_amount=Double.parseDouble(comb.get("total_amount").toString());
-            combVO.checkCode=comb.get("checkCode").toString();
+//            combVO.checkCode=comb.get("checkCode").toString();TODO 需要这个嘛
             result.combinationList.add(combVO);
         }
         return result;

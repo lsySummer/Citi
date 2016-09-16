@@ -95,7 +95,7 @@ public class HttpUtil {
 //            if (UserSession.getCurrUser() != null) {
 //                jsonData.put("id", UserSession.getCurrUser().getUserId());
 //                jsonData.put("sessionId", UserSession.getCurrUser().getSessionId());
-                jsonData.put("id", 17);
+                jsonData.put("id", 17);//TODO use currentUser
                 jsonData.put("sessionId", "51934a56cb3d35fca4b6d2fe7247d83c");
                 Log.i("recommend","parameters "+jsonData.toString());
 //            }

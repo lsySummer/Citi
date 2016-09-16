@@ -54,10 +54,92 @@
 					<TextView
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
-							android:text="￥6100"
-							android:id="@+id/txtSum" android:layout_gravity="center_horizontal"
+							android:text="￥"
+							android:id="@+id/txtSum"
+							android:layout_alignParentLeft="true"
 							android:textColor="@color/increasingRed" android:padding="12dp" android:textSize="20sp"
 							android:layout_alignParentTop="true" android:layout_centerHorizontal="true"/>
+					<TextView
+						android:id="@+id/yield_score_name"
+						android:text="收益性"
+						android:textColor="@color/WordBlack"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_toRightOf="@id/txtSum"
+						android:layout_marginLeft="10dp"
+						android:layout_alignTop="@id/txtSum"/>
+					<TextView
+						android:id="@+id/yield_score"
+						android:text=""
+						android:textColor="@color/WordBlack"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_toRightOf="@id/yield_score_name"
+						android:layout_marginLeft="5dp"
+						android:layout_alignTop="@id/txtSum"/>
+					<TextView
+						android:id="@+id/risk_score_name"
+						android:text="风险性"
+						android:textColor="@color/WordBlack"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_toRightOf="@id/txtSum"
+						android:layout_below="@id/yield_score_name"
+						android:layout_marginLeft="10dp"
+						android:gravity="bottom"
+						android:layout_alignBottom="@id/txtSum"/>
+					<TextView
+						android:id="@+id/risk_score"
+						android:text=""
+						android:textColor="@color/WordBlack"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_toRightOf="@id/risk_score_name"
+						android:layout_below="@id/yield_score_name"
+						android:layout_marginLeft="5dp"
+						android:gravity="bottom"
+						android:layout_alignBottom="@id/txtSum"/>
+					<TextView
+						android:id="@+id/flow_score_name"
+						android:text="流动性"
+						android:textColor="@color/WordBlack"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_toRightOf="@id/yield_score"
+						android:layout_marginLeft="10dp"
+						android:layout_alignTop="@id/txtSum"/>
+					<TextView
+						android:id="@+id/flow_score"
+						android:text=""
+						android:textColor="@color/WordBlack"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_toRightOf="@id/flow_score_name"
+						android:layout_marginLeft="5dp"
+						android:layout_alignTop="@id/txtSum"/>
+					<TextView
+						android:id="@+id/length_score_name"
+						android:text="平均期限"
+						android:textColor="@color/WordBlack"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_toRightOf="@id/risk_score"
+						android:layout_below="@id/flow_score_name"
+						android:layout_marginLeft="10dp"
+						android:gravity="bottom"
+						android:layout_alignBottom="@id/txtSum"/>
+
+					<TextView
+						android:id="@+id/length_score"
+						android:text=""
+						android:textColor="@color/WordBlack"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_toRightOf="@id/length_score_name"
+						android:layout_below="@id/flow_score_name"
+						android:layout_marginLeft="5dp"
+						android:gravity="bottom"
+						android:layout_alignBottom="@id/txtSum"/>
 				</RelativeLayout>
 			</FrameLayout>
 		</LinearLayout>
