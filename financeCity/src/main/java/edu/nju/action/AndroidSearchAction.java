@@ -7,7 +7,6 @@ import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.CategoryAndProduct.ProductCategoryManager;
 import edu.nju.service.ExceptionsAndError.DataNotFoundException;
 import edu.nju.service.ExceptionsAndError.ErrorManager;
-import edu.nju.service.ExceptionsAndError.NoSuchProductException;
 import edu.nju.service.POJO.NAVHistory;
 import edu.nju.service.POJO.ProductVOFactory;
 import edu.nju.service.POJO.SearchFilterFactory;
@@ -17,7 +16,6 @@ import edu.nju.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import javax.xml.crypto.Data;
 import java.util.List;
 import java.util.Map;
 

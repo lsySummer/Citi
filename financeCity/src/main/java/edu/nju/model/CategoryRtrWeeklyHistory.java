@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 
 /**
- * Created by Sun YuHao on 2016/9/16.
+ * Created by Sun YuHao on 2016/9/18.
  */
 @Entity
 @Table(name = "categoryRTR_weekly_history", schema = "citi", catalog = "")
@@ -20,7 +20,7 @@ public class CategoryRtrWeeklyHistory {
     private BigDecimal blendFund;
     private BigDecimal etfFund;
     private BigDecimal lofFund;
-    private BigDecimal qDllFund;
+    private BigDecimal qdllFund;
     private BigDecimal indexFund;
 
     @Id
@@ -124,13 +124,13 @@ public class CategoryRtrWeeklyHistory {
     }
 
     @Basic
-    @Column(name = "QDll_fund")
-    public BigDecimal getqDllFund() {
-        return qDllFund;
+    @Column(name = "qdll_fund")
+    public BigDecimal getQdllFund() {
+        return qdllFund;
     }
 
-    public void setqDllFund(BigDecimal qDllFund) {
-        this.qDllFund = qDllFund;
+    public void setQdllFund(BigDecimal qdllFund) {
+        this.qdllFund = qdllFund;
     }
 
     @Basic
@@ -160,7 +160,7 @@ public class CategoryRtrWeeklyHistory {
         if (blendFund != null ? !blendFund.equals(that.blendFund) : that.blendFund != null) return false;
         if (etfFund != null ? !etfFund.equals(that.etfFund) : that.etfFund != null) return false;
         if (lofFund != null ? !lofFund.equals(that.lofFund) : that.lofFund != null) return false;
-        if (qDllFund != null ? !qDllFund.equals(that.qDllFund) : that.qDllFund != null) return false;
+        if (qdllFund != null ? !qdllFund.equals(that.qdllFund) : that.qdllFund != null) return false;
         if (indexFund != null ? !indexFund.equals(that.indexFund) : that.indexFund != null) return false;
 
         return true;
@@ -178,7 +178,7 @@ public class CategoryRtrWeeklyHistory {
         result = 31 * result + (blendFund != null ? blendFund.hashCode() : 0);
         result = 31 * result + (etfFund != null ? etfFund.hashCode() : 0);
         result = 31 * result + (lofFund != null ? lofFund.hashCode() : 0);
-        result = 31 * result + (qDllFund != null ? qDllFund.hashCode() : 0);
+        result = 31 * result + (qdllFund != null ? qdllFund.hashCode() : 0);
         result = 31 * result + (indexFund != null ? indexFund.hashCode() : 0);
         return result;
     }

@@ -5,6 +5,7 @@ import edu.nju.service.SearchService.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import process3.ClassProcess3;
 
 import java.util.List;
 
@@ -24,8 +25,10 @@ public class SharedInfo {
     private List<String> fundInstitutionList;
     private List<String> insuranceInstitutionList;
 
+    private ClassProcess3 process3;
+
     @Autowired
-    SharedInfo(SearchService searchService) {
+    SharedInfo(SearchService searchService, ClassProcess3 process3) {
         bankYieldList = searchService.getBankYieldType();
         bondYieldList = searchService.getBondYieldType();
         bondStateList = searchService.getBondStateType();
@@ -36,6 +39,12 @@ public class SharedInfo {
         bondInstitutionList = searchService.getInstitutionNameList(ProductCategoryManager.categoryBond);
         fundInstitutionList = searchService.getInstitutionNameList(ProductCategoryManager.categoryFund);
         insuranceInstitutionList = searchService.getInstitutionNameList(ProductCategoryManager.categoryInsurance);
+
+        this.process3 = process3;
+    }
+
+    public ClassProcess3 getProcess3() {
+        return process3;
     }
 
     public List<String> getBankYieldList() {

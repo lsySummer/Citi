@@ -43,14 +43,14 @@ public class BankInvest implements CategoryInvest {
         InvestResult freeInvestResult;
 
         //invest
-        if (allocation.getFlowCapital() >= threshold) {
+        if (allocation.getFlowCapital() >= threshold && allocation.getFlowCapital()> 0 && userInfo.getRedeemTime() != null) {
             flowInvestResult = investFlowAmount(searchService, allocation.getFlowCapital(), userInfo.getRedeemTime());
         }
         else {
             flowInvestResult = new InvestResult();
             investResult.addUnusedCapital(allocation.getFlowCapital(), unusedFlowAmount);
         }
-        if (allocation.getFreeCapital() >= threshold) {
+        if (allocation.getFreeCapital() >= threshold && allocation.getFreeCapital() > 0) {
             freeInvestResult = investFreeAmount(searchService, allocation.getFreeCapital());
         }
         else {
@@ -76,7 +76,7 @@ public class BankInvest implements CategoryInvest {
     }
 
     private int findMinThreshold(SearchService searchService) {
-        return  (int)searchService.searchMin(categoryName, "purchase_threshold");
+        return  (int)searchService.searchMin(categoryName, "purchaseThreshold");
     }
 
     private int findMaxThresholdIndex(double flowAmount) {
@@ -114,7 +114,7 @@ public class BankInvest implements CategoryInvest {
         while (max_threshold >= 0) {
             candidateList = searchService.searchProductsByConditionWithOrder(
                     ProductCategoryManager.categoryBank,
-                    "p.purchase_threshold BETWEEN " + thresholdList[max_threshold] + " AND " + leftAmount,
+                    "p.purchaseThreshold BETWEEN " + thresholdList[max_threshold] + " AND " + leftAmount,
                     "p.expectedRate DESC");
 
             if (candidateList != null && candidateList.size() != 0) {

@@ -8,7 +8,6 @@ import edu.nju.service.POJO.InvestResult;
 import edu.nju.service.SearchService.SearchService;
 import edu.nju.service.TradeService.TradeItem;
 import edu.nju.service.Utils.TimeTransformation;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -20,6 +19,7 @@ import java.util.stream.Collectors;
  */
 public class InsuranceInvest implements CategoryInvest {
     public static final String categoryName = "Insurance";
+    public static final String unusedInsurance = "unusedInsurance";
 
     @Override
     public InvestResult invest(UserTemperPrefer userInfo, SearchService searchService, AssetCategoryAllocation allocation)  {
@@ -28,11 +28,15 @@ public class InsuranceInvest implements CategoryInvest {
         InvestResult investResult = new InvestResult();
 
         capital = allocation.getFreeCapital() + allocation.getFlowCapital();
-        timeLimit = TimeTransformation.getTimeFromNow(userInfo.getEndTime(), TimeTransformation.year);
+        timeLimit = (TimeTransformation.getTimeFromNow(userInfo.getEndTime(), TimeTransformation.year) / 5) * 5;
+        if (userInfo.getInsuranceAmount() == null || userInfo.getInsuranceAmount().doubleValue() == 0 || timeLimit <= 0) {
+            investResult.addUnusedCapital(capital, unusedInsurance);
+            return investResult;
+        }
         //TODO:ask if need insurance amount(number)
         int insurance_amount_;
 
-        List<Product> productList = searchService.getProductListByOrder(categoryName, "p.yearRate DESC");
+        List<Product> productList = searchService.getProductListByOrder(categoryName, "p.guaranteedRate DESC");
         if (productList == null) {
             InvestResult investResult1 = new InvestResult();
             investResult1.addUnusedCapital(capital, categoryName);
@@ -99,9 +103,9 @@ public class InsuranceInvest implements CategoryInvest {
         private List<Product> sortByShortTermExp() {
             calcuUnitCompensationOrder();
 
-            shortTermExp = new ArrayList<>(productList.size());
+            shortTermExp = new ArrayList<>();
             for (int i = 0; i < productList.size(); ++i) {
-                shortTermExp.set(i, yearRateOrder.get(i) * 0.7 +
+                shortTermExp.add(yearRateOrder.get(i) * 0.7 +
                         unitCompensationOrder.get(i) * 0.3);
             }
 
@@ -162,7 +166,10 @@ public class InsuranceInvest implements CategoryInvest {
 
             noList.sort(comparator);
 
-            unitCompensationOrder = new ArrayList<>(noList.size());
+            unitCompensationOrder = new ArrayList<>();
+            for (int i = 0; i < noList.size(); ++i) {
+                unitCompensationOrder.add(0);
+            }
             for (int i = 0; i < noList.size(); ++i) {
                 unitCompensationOrder.set(noList.get(i), i);
             }

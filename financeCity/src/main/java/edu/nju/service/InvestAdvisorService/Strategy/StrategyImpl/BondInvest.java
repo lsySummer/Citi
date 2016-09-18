@@ -31,7 +31,7 @@ public class BondInvest implements CategoryInvest{
         mayRedeem = userInfo.getMayRedeemAmount().doubleValue() > 0;
         investTime = TimeTransformation.getTimeFromNow(userInfo.getEndTime(), TimeTransformation.year);
         //TODO:set interest ratio
-        interestRatio = 2;
+        interestRatio = searchService.getCategoryIndex().getRiskFreeInterest().doubleValue();
         //interestRatio = searchService.getCategoryIndex().getRiskFreeInterest().doubleValue();
 
         if (mayRedeem) {
@@ -92,11 +92,6 @@ public class BondInvest implements CategoryInvest{
 
     private Product findHighestYieldBond(List<Product> productList) {
         Product wanted = productList.get(0);
-        for (Product product : productList) {
-            if (((ProductBond)product.getProduct()).getAdjustYearlyRate().doubleValue() > ((ProductBond)wanted.getProduct()).getAdjustYearlyRate().doubleValue()) {
-                wanted = product;
-            }
-        }
 
         return wanted;
     }
@@ -161,12 +156,12 @@ public class BondInvest implements CategoryInvest{
     }
 
     private double calcuInterestCurrentValue(ProductBond productBond, double interestRatio) {
-        boolean ifPayInterest = ProductCategoryManager.getBondInterestType(productBond).equals("附息债");
-        boolean ifZeroInterest = ProductCategoryManager.getBondInterestType(productBond).equals("零息债");
+        boolean ifPayInterest = ProductCategoryManager.ifBondPayInterest(productBond);
+        boolean ifZeroInterest = ProductCategoryManager.ifBondZeroInterest(productBond);
         int payFrequency = productBond.getCouponFreq();
         double yearRate = productBond.getCoupon().doubleValue();
         double faceValue = productBond.getPar().doubleValue();
-        double issuePrice = productBond.getIssuePrice().doubleValue();
+        double issuePrice = productBond.getIssuePrice() == null ? faceValue : productBond.getIssuePrice().doubleValue();
         int investTime = productBond.getLength() / 365;
 
         if (ifPayInterest) {

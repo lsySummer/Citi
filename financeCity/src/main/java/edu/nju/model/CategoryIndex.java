@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 
 /**
- * Created by Sun YuHao on 2016/9/13.
+ * Created by Sun YuHao on 2016/9/18.
  */
 @Entity
 @Table(name = "category_index", schema = "citi", catalog = "")

@@ -1,19 +1,15 @@
 package edu.nju.service.POJO;
 
-import Jama.Matrix;
 import edu.nju.model.ProductBank;
 import edu.nju.model.ProductBond;
 import edu.nju.model.ProductFund;
 import edu.nju.model.ProductInsurance;
-import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.CategoryAndProduct.ProductCategoryManager;
 import edu.nju.service.ExceptionsAndError.InvalidParametersException;
 import edu.nju.service.SearchService.ProductFilter;
-import org.python.antlr.ast.Str;
 
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

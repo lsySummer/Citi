@@ -9,6 +9,42 @@ public class CommonProductInfo {
     private String name;
     private String productType;
     private double percentage;
+    private boolean risk;
+    private int length;
+    private boolean flow;
+    private double Rtr;
+
+    public boolean isFlow() {
+        return flow;
+    }
+
+    public void setFlow(boolean flow) {
+        this.flow = flow;
+    }
+
+    public double getRtr() {
+        return Rtr;
+    }
+
+    public void setRtr(double rtr) {
+        Rtr = rtr;
+    }
+
+    public boolean isRisk() {
+        return risk;
+    }
+
+    public void setRisk(boolean risk) {
+        this.risk = risk;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+    }
 
     public double getPercentage() {
         return percentage;

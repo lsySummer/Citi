@@ -87,6 +87,9 @@
 	<bean id="investStrategy" class="edu.nju.service.InvestAdvisorService.Strategy.InvestStrategyImpl">
 	</bean>
 
+	<bean id="process3" class="process3.ClassProcess3">
+	</bean>
+
 	<bean id="sharedInfo" class="edu.nju.service.POJO.SharedInfo">
 	</bean>
 

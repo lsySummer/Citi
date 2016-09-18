@@ -6,10 +6,12 @@ import edu.nju.service.CategoryAndProduct.ProductCategoryManager;
 import edu.nju.service.InvestAdvisorService.Strategy.StrategyImpl.*;
 import edu.nju.service.POJO.AssetCategoryAllocation;
 import edu.nju.service.POJO.InvestResult;
+import edu.nju.service.POJO.SharedInfo;
 import edu.nju.service.POJO.SimpleTradeInfo;
 import edu.nju.service.SearchService.SearchService;
 import edu.nju.service.TradeService.TradeItem;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +19,12 @@ import java.util.List;
 /**
  * Created by Sun YuHao on 2016/8/20.
  */
+@Component
 public class InvestStrategyImpl implements InvestStrategy {
-    private AssetCategoryAllocator assetCategoryAllocator;
+    @Autowired
+    private SearchService searchService;
+    @Autowired
+    private SharedInfo sharedInfo;
 
     private CategoryInvest[] categoryInvest;
 
@@ -31,18 +37,21 @@ public class InvestStrategyImpl implements InvestStrategy {
 
     @Override
     public List<List<SimpleTradeInfo>> createInvestmentPortfolio(UserTemperPrefer preference, SearchService searchService) {
-        //assetCategoryAllocator = new AssetCategoryAllocatorImpl();
-        //assetCategoryAllocator.createAllocation(preference, searchService);
+        AssetCategoryAllocator assetCategoryAllocator = new AssetCategoryAllocatorImpl();
+        assetCategoryAllocator.createAllocation(preference, searchService, sharedInfo);
 
         InvestResult investResult = new InvestResult();
 
         List<Category> categoryList = ProductCategoryManager.getCategoryList();
-        InvestResult insuranceList = null;
+        InvestResult insuranceList = new InvestResult();
         for (Category category : categoryList) {
-            //AssetCategoryAllocation allocation = assetCategoryAllocator.getCategoryAllocation(category.getCategoryName());
-            AssetCategoryAllocation allocation = new AssetCategoryAllocation();
-            allocation.setFreeCapital(5000);
-            allocation.setFlowCapital(5000);
+            if (category.belongTo(ProductCategoryManager.categoryFund)) {
+                continue;
+            }
+            AssetCategoryAllocation allocation = assetCategoryAllocator.getCategoryAllocation(category.getCategoryName());
+            //AssetCategoryAllocation allocation = new AssetCategoryAllocation();
+            //allocation.setFreeCapital(5000);
+            //allocation.setFlowCapital(5000);
 
             for (CategoryInvest invest : categoryInvest) {
                 if (category.belongTo(invest.getCategoryName())) {
@@ -64,7 +73,26 @@ public class InvestStrategyImpl implements InvestStrategy {
         List<List<SimpleTradeInfo>> lists = new ArrayList<>();
         List<TradeItem> insurance_item = insuranceList.getTradeItemList();
 
-        for (int i = 0; i < insurance_item.size(); ++i) {
+        if (insurance_item != null && insurance_item.size() != 0) {
+            for (int i = 0; i < insurance_item.size(); ++i) {
+                List<SimpleTradeInfo> simpleTradeInfoList = new ArrayList<>();
+
+                for (TradeItem tradeItem : investResult.getTradeItemList()) {
+                    SimpleTradeInfo simpleTradeInfo = new SimpleTradeInfo();
+                    simpleTradeInfo.setProductId(tradeItem.getProduct().getID());
+                    simpleTradeInfo.setAmount(tradeItem.getTradingVolume());
+
+                    simpleTradeInfoList.add(simpleTradeInfo);
+                }
+
+                SimpleTradeInfo simpleTradeInfo = new SimpleTradeInfo();
+                simpleTradeInfo.setAmount(insuranceList.getUnusedAmount());
+                simpleTradeInfo.setProductId(insurance_item.get(i).getProduct().getID());
+
+                lists.add(simpleTradeInfoList);
+            }
+        }
+        else {
             List<SimpleTradeInfo> simpleTradeInfoList = new ArrayList<>();
 
             for (TradeItem tradeItem : investResult.getTradeItemList()) {
@@ -74,10 +102,6 @@ public class InvestStrategyImpl implements InvestStrategy {
 
                 simpleTradeInfoList.add(simpleTradeInfo);
             }
-
-            SimpleTradeInfo simpleTradeInfo = new SimpleTradeInfo();
-            simpleTradeInfo.setAmount(insuranceList.getUnusedAmount());
-            simpleTradeInfo.setProductId(insurance_item.get(i).getProduct().getID());
 
             lists.add(simpleTradeInfoList);
         }

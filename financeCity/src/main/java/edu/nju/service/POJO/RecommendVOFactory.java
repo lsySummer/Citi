@@ -1,6 +1,7 @@
 package edu.nju.service.POJO;
 
 import edu.nju.service.CategoryAndProduct.Product;
+import edu.nju.service.CategoryAndProduct.ProductCategoryManager;
 import edu.nju.service.ExceptionsAndError.NoSuchProductException;
 import edu.nju.service.InvestAdvisorService.InvestAdvisorService;
 import edu.nju.service.SearchService.SearchService;
@@ -37,19 +38,25 @@ public class RecommendVOFactory {
                 commonProductInfo.setName(product.getName());
                 commonProductInfo.setProductType(product.getCategory().getCategoryName());
                 commonProductInfo.setPercentage(percentage);
+                commonProductInfo.setLength(product.getDayLength());
+                commonProductInfo.setRisk(product.getCategory().belongTo(ProductCategoryManager.categoryFund));
+                commonProductInfo.setRtr(product.getRTR() * 100);
+                commonProductInfo.setFlow(product.getCategory().belongTo(ProductCategoryManager.categoryFund) ||
+                        product.getCategory().belongTo(ProductCategoryManager.categoryBond));
 
                 commonProductInfoList.add(commonProductInfo);
             }
 
-            PortfolioScores scores = investAdvisorService.getPortfolioScore(tradeInfoWithCheckCode.getTradeInfos());
+            commonPortfolio.setTotal_amount(total_amount);
+            commonPortfolio.setProducts(commonProductInfoList);
+            commonPortfolio.setCheckCode(tradeInfoWithCheckCode.getCheckCode());
 
+            PortfolioScores scores = investAdvisorService.getPortfolioScore(commonPortfolio);
             commonPortfolio.setYield_score(scores.getYield_score());
             commonPortfolio.setRisk_score(scores.getRisk_score());
             commonPortfolio.setLength_score(scores.getLength_score());
             commonPortfolio.setFlow_score(scores.getFlow_score());
-            commonPortfolio.setTotal_amount(total_amount);
-            commonPortfolio.setProducts(commonProductInfoList);
-            commonPortfolio.setCheckCode(tradeInfoWithCheckCode.getCheckCode());
+
             portfolios.add(commonPortfolio);
         }
 

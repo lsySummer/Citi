@@ -7,16 +7,15 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 
+import edu.nju.model.ProductBank;
+import edu.nju.model.UserTemperPrefer;
+import edu.nju.service.ExceptionsAndError.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import edu.nju.model.ProductBank;
 import edu.nju.service.AssetManagementService.AssetManagementService;
 import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.CategoryAndProduct.ProductCategoryManager;
-import edu.nju.service.ExceptionsAndError.ErrorManager;
-import edu.nju.service.ExceptionsAndError.NoSuchProductException;
-import edu.nju.service.ExceptionsAndError.NotLoginException;
 import edu.nju.service.InvestAdvisorService.InvestAdvisorService;
 import edu.nju.service.POJO.AssetValue;
 import edu.nju.service.POJO.CommonPortfolio;
@@ -63,11 +62,8 @@ public class Assets extends BaseAction {
 				throw new NotLoginException();
 			}
 
-			// UserTemperPrefer userTemperPrefer =
-			// userService.getUserTemper(financeCityUser);
-			// List<TradeInfoWithCheckCode> lists =
-			// investAdvisorService.createInvestmentPortFolio(userTemperPrefer);
-			List<TradeInfoWithCheckCode> lists = getDemo();
+			UserTemperPrefer userTemperPrefer = userService.getUserTemper(financeCityUser);
+			List<TradeInfoWithCheckCode> lists = investAdvisorService.createInvestmentPortFolio(userTemperPrefer);
 
 			RecommendedPortfolioVO recommendedPortfolioVO = RecommendVOFactory.createRecommend(lists, searchService,
 					investAdvisorService);
@@ -84,13 +80,15 @@ public class Assets extends BaseAction {
 			ErrorManager.setError(request, ErrorManager.errorNoSuchProduct);
 			return ERROR;
 		}
-		/*
-		 * catch (NotAllConfigurationSetException t) { t.printStackTrace();
-		 * ErrorManager.setError(request, ErrorManager.errorUserInfoNotSet);
-		 * return ERROR; } catch (InvalidUserPreferenceException i) {
-		 * i.printStackTrace(); ErrorManager.setError(request,
-		 * ErrorManager.errorInvalidUserPreference); return ERROR; }
-		 */
+
+		catch (NotAllConfigurationSetException t) {
+			t.printStackTrace();
+			ErrorManager.setError(request, ErrorManager.errorUserInfoNotSet);
+			return ERROR;
+		}
+		catch (InvalidUserPreferenceException i) {
+			i.printStackTrace(); ErrorManager.setError(request, ErrorManager.errorInvalidUserPreference); return ERROR;
+		}
 	}
 
 	@SuppressWarnings("unchecked")

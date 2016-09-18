@@ -9,15 +9,15 @@ import edu.nju.model.CategoryRtrWeeklyHistory;
 import edu.nju.model.UserTemperPrefer;
 import edu.nju.service.CategoryAndProduct.Category;
 import edu.nju.service.POJO.AssetCategoryAllocation;
+import edu.nju.service.POJO.SharedInfo;
 import edu.nju.service.SearchService.SearchService;
 import edu.nju.service.Utils.ARIMA;
 import edu.nju.service.CategoryAndProduct.ProductCategoryManager;
-import edu.nju.service.Utils.Arima.MethodUtils;
+import edu.nju.service.Utils.MethodUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import process3.ClassProcess3;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.util.*;
@@ -25,18 +25,14 @@ import java.util.*;
 /**
  * Created by Sun YuHao on 2016/8/20.
  */
-@Component
 public class AssetCategoryAllocatorImpl implements AssetCategoryAllocator {
-    @Autowired
-    SearchService searchService;
-
-    static public final int arimaHistory = 30;
     private Map<String, AssetCategoryAllocation> assetCategoryAllocationList;
+    private ClassProcess3 process3;
 
     @SuppressWarnings("unchecked")
     @Override
-    public void createAllocation(UserTemperPrefer userInfo, SearchService searchService) {
-        init();
+    public void createAllocation(UserTemperPrefer userInfo, SearchService searchService, SharedInfo sharedInfo) {
+        init(sharedInfo);
 
         double capital = userInfo.getExpectedCapital().doubleValue();
 
@@ -44,9 +40,9 @@ public class AssetCategoryAllocatorImpl implements AssetCategoryAllocator {
 
         for (CategoryInfo categoryInfo : categoryInfos) {
             AssetCategoryAllocation assetCategoryAllocation = new AssetCategoryAllocation();
-            assetCategoryAllocation.setFlowCapital(categoryInfo.flowCapital);
-            assetCategoryAllocation.setFreeCapital(categoryInfo.freeCapital);
-            assetCategoryAllocationList.put(categoryInfo.category.getCategoryName(), assetCategoryAllocation);
+            assetCategoryAllocation.setFlowCapital(categoryInfo.getFlowCapital());
+            assetCategoryAllocation.setFreeCapital(categoryInfo.getFreeCapital());
+            assetCategoryAllocationList.put(categoryInfo.getCategory().getCategoryName(), assetCategoryAllocation);
         }
     }
 
@@ -55,8 +51,9 @@ public class AssetCategoryAllocatorImpl implements AssetCategoryAllocator {
         return assetCategoryAllocationList.get(category);
     }
 
-    private void init() {
+    private void init(SharedInfo sharedInfo) {
         assetCategoryAllocationList = new HashMap<>();
+        process3 = sharedInfo.getProcess3();
     }
 
     private CategoryInfo[] calcuCategoryPortion(double capital, UserTemperPrefer userTemperPrefer,
@@ -67,7 +64,7 @@ public class AssetCategoryAllocatorImpl implements AssetCategoryAllocator {
         double[][] W = new double[1][categoryNum];
         double[][] Exp = new double[1][categoryNum];
         double[][] LC = new double[1][categoryNum];
-        double[][] E_hs = getHS_300();
+        double[][] E_hs = getHS_300(searchService);
         double rf = searchService.getCategoryIndex().getRiskFreeInterest().doubleValue();
         double min_insurance = userTemperPrefer.getInsuranceAmount().doubleValue();
         double money_start = capital - min_insurance;
@@ -79,23 +76,22 @@ public class AssetCategoryAllocatorImpl implements AssetCategoryAllocator {
 
         int no = 0;
         for (int i = 0; i < ProductCategoryManager.categoryNum; ++i) {
-            if (categoryInfos[i].category.equals(ProductCategoryManager.categoryInsurance)) {
+            if (categoryInfos[i].getCategory().equals(ProductCategoryManager.categoryInsurance)) {
                 continue;
             }
 
-            sign[1][no] = categoryInfos[no].chosen;
-            k += categoryInfos[no].chosen ? 1 : 0;
+            sign[0][no] = categoryInfos[i].isChosen();
+            k += categoryInfos[i].isChosen() ? 1 : 0;
             for (int j = 0; j < CategoryInfo.historyNum; ++j) {
-                E[j][no] = categoryInfos[no].E[j];
+                E[j][no] = categoryInfos[i].getE()[j];
             }
-            W[1][no] = categoryInfos[no].W;
-            Exp[1][no] = categoryInfos[no].Exp;
-            LC[1][no] = categoryInfos[no].LC;
+            W[0][no] = categoryInfos[i].getW();
+            Exp[0][no] = categoryInfos[i].getExp();
+            LC[0][no] = categoryInfos[i].getLC();
             ++no;
         }
 
         try {
-            ClassProcess3 process3 = new ClassProcess3();
             MWLogicalArray Msign = new MWLogicalArray(sign);
             MWNumericArray Mk = new MWNumericArray(k, MWClassID.DOUBLE);
             MWNumericArray ME = new MWNumericArray(E, MWClassID.DOUBLE);
@@ -114,12 +110,12 @@ public class AssetCategoryAllocatorImpl implements AssetCategoryAllocator {
 
             no = 0;
             for (int i  = 0; i < ProductCategoryManager.categoryNum; ++i) {
-                if (categoryInfos[i].category.equals(ProductCategoryManager.categoryInsurance)) {
-                    categoryInfos[i].freeCapital = min_insurance;
+                if (categoryInfos[i].getCategory().equals(ProductCategoryManager.categoryInsurance)) {
+                    categoryInfos[i].setFreeCapital(min_insurance);
                 }
                 else {
-                    categoryInfos[i].freeCapital = ret[0][no];
-                    categoryInfos[i].flowCapital = ret[1][no];
+                    categoryInfos[i].setFlowCapital(ret[0][no]);
+                    categoryInfos[i].setFreeCapital(ret[1][no]);
                     ++no;
                 }
             }
@@ -136,8 +132,11 @@ public class AssetCategoryAllocatorImpl implements AssetCategoryAllocator {
         CategoryInfo[] categoryInfo = initCategoryInfo(userInfo, searchService);
 
         for (int i = 0; i < categoryInfo.length; ++i) {
-            ARIMA arima = new ARIMA(categoryInfo[i].E);
-            categoryInfo[i].Exp = arima.getReulst();
+            if (categoryInfo[i].getCategory().belongTo(ProductCategoryManager.categoryInsurance)) {
+                continue;
+            }
+            ARIMA arima = new ARIMA(categoryInfo[i].getE());
+            categoryInfo[i].setExp(arima.getReulst());
         }
 
         return categoryInfo;
@@ -145,51 +144,47 @@ public class AssetCategoryAllocatorImpl implements AssetCategoryAllocator {
 
     @SuppressWarnings("unchecked")
     public CategoryInfo[] initCategoryInfo(UserTemperPrefer userInfo, SearchService searchService) {
-        CategoryInfo[] categoryInfo = new CategoryInfo[ProductCategoryManager.categoryNum];
-        CategoryIndex categoryIndex = searchService.getCategoryIndex();
+        CategoryInfo[] categoryInfoList = CategoryInfo.getCatetories();
         CategoryMarketWeeklyHistory categoryMarketWeeklyHistory = searchService.getCategoryMarket();
         List<CategoryRtrWeeklyHistory> categoryRtrWeeklyHistory = searchService.getCategoryRtrWeeklyHistory(CategoryInfo.historyNum);
         double Min_Inurance = userInfo.getInsuranceAmount().doubleValue();
-        List<Category> categoryList = ProductCategoryManager.getCategoryList();
 
-        for (int i  = 0; i < ProductCategoryManager.categoryNum; ++i) {
+        for (CategoryInfo categoryInfo : categoryInfoList) {
             //sign
             //TODO:set choose
-            if (categoryInfo[i].category.equals(ProductCategoryManager.categoryInsurance)) {
-                categoryInfo[i].chosen = Min_Inurance > 0;
+            if (categoryInfo.getCategory().equals(ProductCategoryManager.categoryInsurance)) {
+                categoryInfo.setChosen(Min_Inurance > 0);
+                categoryInfo.setFreeCapital(Min_Inurance);
             }
             else {
-                categoryInfo[i].chosen = true;
+                categoryInfo.setChosen(true);
             }
-            //category
-            categoryInfo[i].category = categoryList.get(i);
-            //LC
-            categoryInfo[i].LC = 0.5;
 
-            if (categoryInfo[i].chosen) {
+            //LC
+            categoryInfo.setLC(0.5);
+
+            if (categoryInfo.isChosen()) {
                 //return rate sequence
-                categoryInfo[i].E = getHistoryReturnRateSequence(categoryInfo[i].category, categoryRtrWeeklyHistory);
-                if (categoryInfo[i].E.length == 0) {
+                categoryInfo.setE(getHistoryReturnRateSequence(categoryInfo.getCategory(), categoryRtrWeeklyHistory));
+                if (categoryInfo.getE().length == 0) {
                     return new CategoryInfo[0];
                 }
 
                 //Market value
                 try {
-                    categoryInfo[i].W = getMarketValue(categoryInfo[i].category.getCategoryName(), categoryMarketWeeklyHistory);
+                    categoryInfo.setW(getMarketValue(categoryInfo.getCategory().getCategoryName(), categoryMarketWeeklyHistory));
                 }
                 catch (NullPointerException n) {
                     n.printStackTrace();
-                    categoryInfo[i].W = 0;
+                    categoryInfo.setW(0);
                 }
             }
             else {
-                categoryInfo[i].E = new double[CategoryInfo.historyNum];
+                categoryInfo.setE(new double[CategoryInfo.historyNum]);
             }
-
-            ++i;
         }
 
-        return categoryInfo;
+        return categoryInfoList;
     }
 
     private Double getMarketValue(String category, CategoryMarketWeeklyHistory categoryIndex) {
@@ -203,10 +198,10 @@ public class AssetCategoryAllocatorImpl implements AssetCategoryAllocator {
         }
     }
 
-    private double[][] getHS_300() {
+    private double[][] getHS_300(SearchService searchService) {
         double[][] ret;
 
-        double[] hs300 = searchService.getHS_300ByTime();
+        double[] hs300 = searchService.getHS_300ByTime(CategoryInfo.historyNum);
         if (hs300.length > 0) {
             ret = new double[1][];
             ret[0] = hs300;
@@ -219,22 +214,19 @@ public class AssetCategoryAllocatorImpl implements AssetCategoryAllocator {
 
     //TODO:sequence 周年化收益率
     private double[] getHistoryReturnRateSequence(Category category, List<CategoryRtrWeeklyHistory> list) {
-        return null;
-    }
+        Method getter = MethodUtils.getGetter(CategoryRtrWeeklyHistory.class, category.getCategoryName());
+        double[] ret = new double[list.size()];
 
-    private class CategoryInfo {
-        //TODO:change according to database
-        static final int historyNum = 30;
+        try {
+            for (int i = 0; i < list.size(); ++i) {
+                ret[i] = ((BigDecimal) getter.invoke(list.get(i))).doubleValue();
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        Category category;  //资产类型
-        boolean chosen;  //是否选中
-        double E[];      //资产的历史收益率序列
-        //double Er;        //预期年化收益率
-        double  W;     //资产的市值
-        double  Exp;     //专家预期收益观点
-        double  LC;      //观点的置信度
-        double  flowCapital; //流动资金
-        double  freeCapital; //固定投资资金
+        return ret;
     }
 
     static public void main(String[] args) {

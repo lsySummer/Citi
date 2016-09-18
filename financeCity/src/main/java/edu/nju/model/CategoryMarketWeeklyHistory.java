@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 
 /**
- * Created by Sun YuHao on 2016/9/12.
+ * Created by Sun YuHao on 2016/9/18.
  */
 @Entity
 @Table(name = "categoryMarket_weekly_history", schema = "citi", catalog = "")
@@ -13,7 +13,6 @@ public class CategoryMarketWeeklyHistory {
     private int id;
     private Date date;
     private BigDecimal bank;
-    private BigDecimal insurance;
     private BigDecimal bond;
     private BigDecimal stockFund;
     private BigDecimal bondFund;
@@ -21,10 +20,8 @@ public class CategoryMarketWeeklyHistory {
     private BigDecimal blendFund;
     private BigDecimal etfFund;
     private BigDecimal lofFund;
-    private BigDecimal fofFund;
-    private BigDecimal qDllFund;
+    private BigDecimal qdllFund;
     private BigDecimal indexFund;
-    private BigDecimal guranteedFund;
 
     @Id
     @Column(name = "id")
@@ -54,16 +51,6 @@ public class CategoryMarketWeeklyHistory {
 
     public void setBank(BigDecimal bank) {
         this.bank = bank;
-    }
-
-    @Basic
-    @Column(name = "insurance")
-    public BigDecimal getInsurance() {
-        return insurance;
-    }
-
-    public void setInsurance(BigDecimal insurance) {
-        this.insurance = insurance;
     }
 
     @Basic
@@ -137,23 +124,13 @@ public class CategoryMarketWeeklyHistory {
     }
 
     @Basic
-    @Column(name = "fof_fund")
-    public BigDecimal getFofFund() {
-        return fofFund;
+    @Column(name = "qdll_fund")
+    public BigDecimal getQdllFund() {
+        return qdllFund;
     }
 
-    public void setFofFund(BigDecimal fofFund) {
-        this.fofFund = fofFund;
-    }
-
-    @Basic
-    @Column(name = "QDll_fund")
-    public BigDecimal getqDllFund() {
-        return qDllFund;
-    }
-
-    public void setqDllFund(BigDecimal qDllFund) {
-        this.qDllFund = qDllFund;
+    public void setQdllFund(BigDecimal qdllFund) {
+        this.qdllFund = qdllFund;
     }
 
     @Basic
@@ -166,16 +143,6 @@ public class CategoryMarketWeeklyHistory {
         this.indexFund = indexFund;
     }
 
-    @Basic
-    @Column(name = "guranteed_fund")
-    public BigDecimal getGuranteedFund() {
-        return guranteedFund;
-    }
-
-    public void setGuranteedFund(BigDecimal guranteedFund) {
-        this.guranteedFund = guranteedFund;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -186,7 +153,6 @@ public class CategoryMarketWeeklyHistory {
         if (id != that.id) return false;
         if (date != null ? !date.equals(that.date) : that.date != null) return false;
         if (bank != null ? !bank.equals(that.bank) : that.bank != null) return false;
-        if (insurance != null ? !insurance.equals(that.insurance) : that.insurance != null) return false;
         if (bond != null ? !bond.equals(that.bond) : that.bond != null) return false;
         if (stockFund != null ? !stockFund.equals(that.stockFund) : that.stockFund != null) return false;
         if (bondFund != null ? !bondFund.equals(that.bondFund) : that.bondFund != null) return false;
@@ -194,11 +160,8 @@ public class CategoryMarketWeeklyHistory {
         if (blendFund != null ? !blendFund.equals(that.blendFund) : that.blendFund != null) return false;
         if (etfFund != null ? !etfFund.equals(that.etfFund) : that.etfFund != null) return false;
         if (lofFund != null ? !lofFund.equals(that.lofFund) : that.lofFund != null) return false;
-        if (fofFund != null ? !fofFund.equals(that.fofFund) : that.fofFund != null) return false;
-        if (qDllFund != null ? !qDllFund.equals(that.qDllFund) : that.qDllFund != null) return false;
+        if (qdllFund != null ? !qdllFund.equals(that.qdllFund) : that.qdllFund != null) return false;
         if (indexFund != null ? !indexFund.equals(that.indexFund) : that.indexFund != null) return false;
-        if (guranteedFund != null ? !guranteedFund.equals(that.guranteedFund) : that.guranteedFund != null)
-            return false;
 
         return true;
     }
@@ -208,7 +171,6 @@ public class CategoryMarketWeeklyHistory {
         int result = id;
         result = 31 * result + (date != null ? date.hashCode() : 0);
         result = 31 * result + (bank != null ? bank.hashCode() : 0);
-        result = 31 * result + (insurance != null ? insurance.hashCode() : 0);
         result = 31 * result + (bond != null ? bond.hashCode() : 0);
         result = 31 * result + (stockFund != null ? stockFund.hashCode() : 0);
         result = 31 * result + (bondFund != null ? bondFund.hashCode() : 0);
@@ -216,10 +178,8 @@ public class CategoryMarketWeeklyHistory {
         result = 31 * result + (blendFund != null ? blendFund.hashCode() : 0);
         result = 31 * result + (etfFund != null ? etfFund.hashCode() : 0);
         result = 31 * result + (lofFund != null ? lofFund.hashCode() : 0);
-        result = 31 * result + (fofFund != null ? fofFund.hashCode() : 0);
-        result = 31 * result + (qDllFund != null ? qDllFund.hashCode() : 0);
+        result = 31 * result + (qdllFund != null ? qdllFund.hashCode() : 0);
         result = 31 * result + (indexFund != null ? indexFund.hashCode() : 0);
-        result = 31 * result + (guranteedFund != null ? guranteedFund.hashCode() : 0);
         return result;
     }
 }

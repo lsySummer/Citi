@@ -5,17 +5,17 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
- * Created by Sun YuHao on 2016/9/12.
+ * Created by Sun YuHao on 2016/9/18.
  */
 @Entity
 @Table(name = "unpaid_item", schema = "citi", catalog = "")
 public class UnpaidItem {
     private int id;
-    private int productId;
+    private Integer productId;
     private BigDecimal tradingVolume;
     private String checkCode;
     private Timestamp expirationTime;
-    private int userId;
+    private Integer userId;
     private Integer amount;
     private String unit;
 
@@ -31,11 +31,11 @@ public class UnpaidItem {
 
     @Basic
     @Column(name = "product_id")
-    public int getProductId() {
+    public Integer getProductId() {
         return productId;
     }
 
-    public void setProductId(int productId) {
+    public void setProductId(Integer productId) {
         this.productId = productId;
     }
 
@@ -71,11 +71,11 @@ public class UnpaidItem {
 
     @Basic
     @Column(name = "user_id")
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
@@ -107,13 +107,13 @@ public class UnpaidItem {
         UnpaidItem that = (UnpaidItem) o;
 
         if (id != that.id) return false;
-        if (productId != that.productId) return false;
-        if (userId != that.userId) return false;
+        if (productId != null ? !productId.equals(that.productId) : that.productId != null) return false;
         if (tradingVolume != null ? !tradingVolume.equals(that.tradingVolume) : that.tradingVolume != null)
             return false;
         if (checkCode != null ? !checkCode.equals(that.checkCode) : that.checkCode != null) return false;
         if (expirationTime != null ? !expirationTime.equals(that.expirationTime) : that.expirationTime != null)
             return false;
+        if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
         if (amount != null ? !amount.equals(that.amount) : that.amount != null) return false;
         if (unit != null ? !unit.equals(that.unit) : that.unit != null) return false;
 
@@ -123,11 +123,11 @@ public class UnpaidItem {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + productId;
+        result = 31 * result + (productId != null ? productId.hashCode() : 0);
         result = 31 * result + (tradingVolume != null ? tradingVolume.hashCode() : 0);
         result = 31 * result + (checkCode != null ? checkCode.hashCode() : 0);
         result = 31 * result + (expirationTime != null ? expirationTime.hashCode() : 0);
-        result = 31 * result + userId;
+        result = 31 * result + (userId != null ? userId.hashCode() : 0);
         result = 31 * result + (amount != null ? amount.hashCode() : 0);
         result = 31 * result + (unit != null ? unit.hashCode() : 0);
         return result;

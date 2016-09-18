@@ -14,4 +14,6 @@ public interface ServiceCache<T> {
     Object getLatestMeta(Object tag);
     int getCachedSize();
     int getCachedSize(Object tag);
+    void disable(Object tag);
+    void disableAll();
 }

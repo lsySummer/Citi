@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 /**
- * Created by Sun YuHao on 2016/9/14.
+ * Created by Sun YuHao on 2016/9/18.
  */
 @Entity
 @Table(name = "product_insurance", schema = "citi", catalog = "")
@@ -23,6 +23,8 @@ public class ProductInsurance {
     private Integer warrantyPeriod;
     private BigDecimal dayRate;
     private Integer productPeriod;
+    private Integer indemnityPerUnit;
+    private Integer length;
 
     @Id
     @Column(name = "id")
@@ -164,6 +166,26 @@ public class ProductInsurance {
         this.productPeriod = productPeriod;
     }
 
+    @Basic
+    @Column(name = "indemnity_per_unit")
+    public Integer getIndemnityPerUnit() {
+        return indemnityPerUnit;
+    }
+
+    public void setIndemnityPerUnit(Integer indemnityPerUnit) {
+        this.indemnityPerUnit = indemnityPerUnit;
+    }
+
+    @Basic
+    @Column(name = "length")
+    public Integer getLength() {
+        return length;
+    }
+
+    public void setLength(Integer length) {
+        this.length = length;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -190,6 +212,9 @@ public class ProductInsurance {
         if (dayRate != null ? !dayRate.equals(that.dayRate) : that.dayRate != null) return false;
         if (productPeriod != null ? !productPeriod.equals(that.productPeriod) : that.productPeriod != null)
             return false;
+        if (indemnityPerUnit != null ? !indemnityPerUnit.equals(that.indemnityPerUnit) : that.indemnityPerUnit != null)
+            return false;
+        if (length != null ? !length.equals(that.length) : that.length != null) return false;
 
         return true;
     }
@@ -210,6 +235,8 @@ public class ProductInsurance {
         result = 31 * result + (warrantyPeriod != null ? warrantyPeriod.hashCode() : 0);
         result = 31 * result + (dayRate != null ? dayRate.hashCode() : 0);
         result = 31 * result + (productPeriod != null ? productPeriod.hashCode() : 0);
+        result = 31 * result + (indemnityPerUnit != null ? indemnityPerUnit.hashCode() : 0);
+        result = 31 * result + (length != null ? length.hashCode() : 0);
         return result;
     }
 }

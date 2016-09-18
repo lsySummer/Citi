@@ -22,7 +22,7 @@ import java.util.List;
     static public final String categoryInsurance = "Insurance";
     static public final String categoryBank = "Bank";
     static private int fundBase = 4;
-    static public final int categoryNum = 13;
+    static public final int categoryNum = 11;
     static private List<Category> categoryList;
     static private final int serialNumberSize = 10000000;
     static private final String[] bondTypes = {
@@ -40,7 +40,7 @@ import java.util.List;
             "blend",
             "etf",
             "lof",
-            "QDll",
+            "qdll",
             "index"
     };
     static private final String[] fundTypeCH = {
@@ -50,7 +50,7 @@ import java.util.List;
             "混合型",
             "ETF",
             "LOF",
-            "QDll",
+            "QDII",
             "指数型",
     };
     static private final String[] bondInterestType = {
@@ -171,6 +171,14 @@ import java.util.List;
 
     static public String getBondInterestType(ProductBond productBond) {
         return bondInterestType[productBond.getCouponType()];
+    }
+
+    static public boolean ifBondPayInterest(ProductBond bond) {
+        return bond.getCouponType() == 1;
+    }
+
+    static public boolean ifBondZeroInterest(ProductBond bond) {
+        return bond.getCouponType() == 0;
     }
 
     static public String getUnit(String category) {

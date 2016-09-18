@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
- * Created by Sun YuHao on 2016/9/12.
+ * Created by Sun YuHao on 2016/9/18.
  */
 @Entity
 @Table(name = "investment_portfolio", schema = "citi", catalog = "")
@@ -14,6 +14,7 @@ public class InvestmentPortfolio {
     private Timestamp date;
     private BigDecimal tradingVolume;
     private String checkCode;
+    private Integer tradeId;
 
     @Id
     @Column(name = "id")
@@ -55,6 +56,16 @@ public class InvestmentPortfolio {
         this.checkCode = checkCode;
     }
 
+    @Basic
+    @Column(name = "trade_id")
+    public Integer getTradeId() {
+        return tradeId;
+    }
+
+    public void setTradeId(Integer tradeId) {
+        this.tradeId = tradeId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -67,6 +78,7 @@ public class InvestmentPortfolio {
         if (tradingVolume != null ? !tradingVolume.equals(that.tradingVolume) : that.tradingVolume != null)
             return false;
         if (checkCode != null ? !checkCode.equals(that.checkCode) : that.checkCode != null) return false;
+        if (tradeId != null ? !tradeId.equals(that.tradeId) : that.tradeId != null) return false;
 
         return true;
     }
@@ -77,6 +89,7 @@ public class InvestmentPortfolio {
         result = 31 * result + (date != null ? date.hashCode() : 0);
         result = 31 * result + (tradingVolume != null ? tradingVolume.hashCode() : 0);
         result = 31 * result + (checkCode != null ? checkCode.hashCode() : 0);
+        result = 31 * result + (tradeId != null ? tradeId.hashCode() : 0);
         return result;
     }
 }

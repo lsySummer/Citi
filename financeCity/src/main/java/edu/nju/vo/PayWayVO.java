@@ -1,7 +1,5 @@
 package edu.nju.vo;
 
-import edu.nju.model.PayWay;
-
 /**
  * Created by Sun YuHao on 2016/9/1.
  */

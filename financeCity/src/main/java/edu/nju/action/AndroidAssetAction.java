@@ -2,9 +2,7 @@ package edu.nju.action;
 
 import edu.nju.model.UserTemperPrefer;
 import edu.nju.service.AssetManagementService.AssetManagementService;
-import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.ExceptionsAndError.ErrorManager;
-import edu.nju.service.ExceptionsAndError.InvalidUserPreferenceException;
 import edu.nju.service.ExceptionsAndError.NotAllConfigurationSetException;
 import edu.nju.service.ExceptionsAndError.NotLoginException;
 import edu.nju.service.InvestAdvisorService.InvestAdvisorService;
@@ -16,7 +14,6 @@ import edu.nju.vo.AssetValueHistoryVO;
 import edu.nju.vo.CurrentInvestmentVO;
 import edu.nju.vo.RecommendedPortfolioVO;
 import edu.nju.vo.TradeHistoryListVO;
-import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 

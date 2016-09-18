@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 
 /**
- * Created by Sun YuHao on 2016/9/12.
+ * Created by Sun YuHao on 2016/9/18.
  */
 @Entity
 @Table(name = "fund_daily_history", schema = "citi", catalog = "")
@@ -21,6 +21,7 @@ public class FundDailyHistory {
     private BigDecimal fundSize;
     private BigDecimal debtRatio;
     private BigDecimal institutionRatio;
+    private Integer productCode;
 
     @Id
     @Column(name = "id")
@@ -132,6 +133,16 @@ public class FundDailyHistory {
         this.institutionRatio = institutionRatio;
     }
 
+    @Basic
+    @Column(name = "product_code")
+    public Integer getProductCode() {
+        return productCode;
+    }
+
+    public void setProductCode(Integer productCode) {
+        this.productCode = productCode;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -151,6 +162,7 @@ public class FundDailyHistory {
         if (debtRatio != null ? !debtRatio.equals(that.debtRatio) : that.debtRatio != null) return false;
         if (institutionRatio != null ? !institutionRatio.equals(that.institutionRatio) : that.institutionRatio != null)
             return false;
+        if (productCode != null ? !productCode.equals(that.productCode) : that.productCode != null) return false;
 
         return true;
     }
@@ -168,6 +180,7 @@ public class FundDailyHistory {
         result = 31 * result + (fundSize != null ? fundSize.hashCode() : 0);
         result = 31 * result + (debtRatio != null ? debtRatio.hashCode() : 0);
         result = 31 * result + (institutionRatio != null ? institutionRatio.hashCode() : 0);
+        result = 31 * result + (productCode != null ? productCode.hashCode() : 0);
         return result;
     }
 }

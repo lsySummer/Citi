@@ -106,6 +106,21 @@ public class ProductCache implements ServiceCache<Product> {
         }
     }
 
+    @Override
+    public void disable(Object tag) {
+        SimpleCacheStruct simpleCacheStruct = map.get(tag);
+        int size = simpleCacheStruct.getProductList().size();
+
+        map.remove(tag);
+        cachedSize -= size;
+    }
+
+    @Override
+    public void disableAll() {
+        map.clear();
+        cachedSize = 0;
+    }
+
     private class SimpleCacheStruct {
         List<Product> productList;
         List<Object> metas;

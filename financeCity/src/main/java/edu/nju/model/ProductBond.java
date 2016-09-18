@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 
 /**
- * Created by Sun YuHao on 2016/9/16.
+ * Created by Sun YuHao on 2016/9/18.
  */
 @Entity
 @Table(name = "product_bond", schema = "citi", catalog = "")
@@ -42,6 +42,12 @@ public class ProductBond {
     private Date firstRedeemAccrDate;
     private Byte state;
     private BigDecimal adjustYearlyRate;
+    private Integer advanceRedeemDate;
+    private Integer advanceRedeemInterestDate;
+    private BigDecimal currenctValue;
+    private BigDecimal denomination;
+    private Integer paymentPrice;
+    private String title;
 
     @Id
     @Column(name = "id")
@@ -363,6 +369,66 @@ public class ProductBond {
         this.adjustYearlyRate = adjustYearlyRate;
     }
 
+    @Basic
+    @Column(name = "advance_redeem_date")
+    public Integer getAdvanceRedeemDate() {
+        return advanceRedeemDate;
+    }
+
+    public void setAdvanceRedeemDate(Integer advanceRedeemDate) {
+        this.advanceRedeemDate = advanceRedeemDate;
+    }
+
+    @Basic
+    @Column(name = "advance_redeem_interest_date")
+    public Integer getAdvanceRedeemInterestDate() {
+        return advanceRedeemInterestDate;
+    }
+
+    public void setAdvanceRedeemInterestDate(Integer advanceRedeemInterestDate) {
+        this.advanceRedeemInterestDate = advanceRedeemInterestDate;
+    }
+
+    @Basic
+    @Column(name = "currenct_value")
+    public BigDecimal getCurrenctValue() {
+        return currenctValue;
+    }
+
+    public void setCurrenctValue(BigDecimal currenctValue) {
+        this.currenctValue = currenctValue;
+    }
+
+    @Basic
+    @Column(name = "denomination")
+    public BigDecimal getDenomination() {
+        return denomination;
+    }
+
+    public void setDenomination(BigDecimal denomination) {
+        this.denomination = denomination;
+    }
+
+    @Basic
+    @Column(name = "payment_price")
+    public Integer getPaymentPrice() {
+        return paymentPrice;
+    }
+
+    public void setPaymentPrice(Integer paymentPrice) {
+        this.paymentPrice = paymentPrice;
+    }
+
+    @Basic
+    @Column(name = "title")
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -412,6 +478,15 @@ public class ProductBond {
         if (state != null ? !state.equals(that.state) : that.state != null) return false;
         if (adjustYearlyRate != null ? !adjustYearlyRate.equals(that.adjustYearlyRate) : that.adjustYearlyRate != null)
             return false;
+        if (advanceRedeemDate != null ? !advanceRedeemDate.equals(that.advanceRedeemDate) : that.advanceRedeemDate != null)
+            return false;
+        if (advanceRedeemInterestDate != null ? !advanceRedeemInterestDate.equals(that.advanceRedeemInterestDate) : that.advanceRedeemInterestDate != null)
+            return false;
+        if (currenctValue != null ? !currenctValue.equals(that.currenctValue) : that.currenctValue != null)
+            return false;
+        if (denomination != null ? !denomination.equals(that.denomination) : that.denomination != null) return false;
+        if (paymentPrice != null ? !paymentPrice.equals(that.paymentPrice) : that.paymentPrice != null) return false;
+        if (title != null ? !title.equals(that.title) : that.title != null) return false;
 
         return true;
     }
@@ -450,6 +525,12 @@ public class ProductBond {
         result = 31 * result + (firstRedeemAccrDate != null ? firstRedeemAccrDate.hashCode() : 0);
         result = 31 * result + (state != null ? state.hashCode() : 0);
         result = 31 * result + (adjustYearlyRate != null ? adjustYearlyRate.hashCode() : 0);
+        result = 31 * result + (advanceRedeemDate != null ? advanceRedeemDate.hashCode() : 0);
+        result = 31 * result + (advanceRedeemInterestDate != null ? advanceRedeemInterestDate.hashCode() : 0);
+        result = 31 * result + (currenctValue != null ? currenctValue.hashCode() : 0);
+        result = 31 * result + (denomination != null ? denomination.hashCode() : 0);
+        result = 31 * result + (paymentPrice != null ? paymentPrice.hashCode() : 0);
+        result = 31 * result + (title != null ? title.hashCode() : 0);
         return result;
     }
 }

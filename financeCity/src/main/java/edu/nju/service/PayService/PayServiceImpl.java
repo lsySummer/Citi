@@ -2,12 +2,10 @@ package edu.nju.service.PayService;
 
 import edu.nju.model.PayWay;
 import edu.nju.service.ExceptionsAndError.NotLoginException;
-import edu.nju.service.POJO.Payment;
 import edu.nju.service.POJO.SimplePayWay;
 import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.service.TradeService.TradeService;
 import edu.nju.service.UserService.UserService;
-import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

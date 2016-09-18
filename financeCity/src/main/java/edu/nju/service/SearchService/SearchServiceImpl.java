@@ -1,6 +1,7 @@
 package edu.nju.service.SearchService;
 
 import edu.nju.model.*;
+import edu.nju.service.Cache.ProductCache;
 import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.CategoryAndProduct.ProductFactory;
 import edu.nju.service.ExceptionsAndError.DataNotFoundException;
@@ -9,14 +10,13 @@ import edu.nju.service.CategoryAndProduct.Category;
 import edu.nju.service.CategoryAndProduct.ProductCategoryManager;
 import edu.nju.service.POJO.NAVHistory;
 import edu.nju.service.UserService.UserService;
+import edu.nju.service.Utils.MethodUtils;
 import edu.nju.service.Utils.ListUtils;
 import edu.nju.service.Utils.UnitTransformation;
 import edu.nju.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.xml.crypto.Data;
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -31,11 +31,22 @@ public class SearchServiceImpl implements SearchService {
     @Autowired
     UserService userService;
 
+    private ProductCache productCache;
+
     static final int MAX_RESULT = 500;
+
+    public SearchServiceImpl() {
+        this.productCache = new ProductCache();
+        productCache.setMaxCacheNum(10000);
+    }
 
     @SuppressWarnings("unchecked")
     @Override
     public List<Product> getProductByName(String productName) throws NoSuchProductException {
+        if (productCache.getCached(productName) != null) {
+            return productCache.getCached(productName);
+        }
+
         List<Integer> list = userService.getCommonDao().find("SELECT id FROM NameToId nameToId WHERE nameToId.name='" + productName + "'");
         if (list == null || list.size() == 0) {
             throw  new NoSuchProductException(productName);
@@ -50,11 +61,16 @@ public class SearchServiceImpl implements SearchService {
             productList.add(getProductByID(id));
         }
 
+        productCache.cache(productName, productList, null);
         return productList;
     }
 
     @Override
     public Product getProductByID(Integer ID) throws NoSuchProductException {
+        if (productCache.getCached(ID) != null) {
+            return productCache.getCached(ID).get(0);
+        }
+
         Category biggerCategory = ProductCategoryManager.getCategoryByID(ID).getBiggerCategory();
         int index = ProductCategoryManager.getProductItemIndex(ID);
 
@@ -68,6 +84,7 @@ public class SearchServiceImpl implements SearchService {
                 throw new NoSuchProductException(ID);
             }
             else {
+                productCache.cache(product.getID(), product, null);
                 return product;
             }
         }
@@ -101,6 +118,11 @@ public class SearchServiceImpl implements SearchService {
     @SuppressWarnings("unchecked")
     @Override
     public List<Product> searchProductsByKey(String keyWord, String searchType) {
+        String tag = "key:" + keyWord + "type:" + searchType;
+        if (productCache.getCached(tag) != null) {
+            return productCache.getCached(tag);
+        }
+
         try {
             List<Product> productList = new ArrayList<>();
             if (keyWord == null) {
@@ -126,6 +148,7 @@ public class SearchServiceImpl implements SearchService {
                 }
             }
 
+            productCache.cache(tag, productList, null);
             return productList;
         }
         catch (Exception e) {
@@ -168,9 +191,17 @@ public class SearchServiceImpl implements SearchService {
 
     @Override
     public List<Product> searchProductsByCondition(String type, String cond) {
-        Category category = ProductCategoryManager.getCategoryByName(type);
-        List list;
+        String tag = "type:" + type + "cond:" + cond;
+        if (productCache.getCached(tag) != null) {
+            return productCache.getCached(tag);
+        }
 
+        Category category = ProductCategoryManager.getCategoryByName(type);
+        if (category == null) {
+            return new ArrayList<>();
+        }
+
+        List list;
         if (!category.belongTo(ProductCategoryManager.categoryFund)) {
             list = userService.getCommonDao().find("FROM Product" + category + " p WHERE " + cond);
         }
@@ -183,11 +214,17 @@ public class SearchServiceImpl implements SearchService {
             productList = ProductFactory.createProduct(list.toArray());
         }
 
+        productCache.cache(tag, productList, null);
         return productList;
     }
 
     @Override
     public List<Product> getProductListByOrder(String type, String order) {
+        String tag = "type:" + type + "order:" + order;
+        if (productCache.getCached(tag) != null) {
+            return productCache.getCached(tag);
+        }
+
         Category category = ProductCategoryManager.getCategoryByName(type);
         List list;
 
@@ -203,16 +240,22 @@ public class SearchServiceImpl implements SearchService {
             productList = ProductFactory.createProduct(list.toArray());
         }
 
+        productCache.cache(tag, productList, null);
         return productList;
     }
 
     @Override
     public List<Product> searchProductsByConditionWithOrder(String type, String cond, String order) {
+        String tag = "type:" + type + "cond:" + cond;
+        if (productCache.getCached(tag) != null) {
+            return productCache.getCached(tag);
+        }
+
         Category category = ProductCategoryManager.getCategoryByName(type);
         List list;
 
         if (!category.belongTo(ProductCategoryManager.categoryFund)) {
-            list = userService.getCommonDao().find("FROM Product" + category + " WHERE " + cond + " p ORDER BY " + order);
+            list = userService.getCommonDao().find("FROM Product" + category + " p WHERE " + cond + " ORDER BY " + order);
         }
         else {
             list = userService.getCommonDao().find("FROM Product" + category.getBiggerCategory() + " p WHERE p.category=" + category.getSubTypeIndex() + " AND " + cond + " ORDER BY " + order);
@@ -223,6 +266,7 @@ public class SearchServiceImpl implements SearchService {
             productList = ProductFactory.createProduct(list.toArray());
         }
 
+        productCache.cache(tag, productList, null);
         return productList;
     }
 
@@ -256,28 +300,6 @@ public class SearchServiceImpl implements SearchService {
         }
         else {
             return (Product[]) list.toArray();
-        }
-    }
-
-    private List<Product> getProductsByIds(List<Integer> ids) {
-        List<Product> list = new ArrayList<>();
-
-        for (int id :ids) {
-            try {
-                Product product = getProductByID(id);
-                if (product != null) {
-                    list.add(product);
-                }
-            }
-            catch (NoSuchProductException n) {
-                n.printStackTrace();
-            }
-        }
-        if (list.size() == 0) {
-            return null;
-        }
-        else {
-            return list;
         }
     }
 
@@ -369,6 +391,7 @@ public class SearchServiceImpl implements SearchService {
             return null;
         }
         deal_null(list);
+        Collections.reverse(list);
 
         return list;
     }
@@ -377,11 +400,10 @@ public class SearchServiceImpl implements SearchService {
         for (CategoryRtrWeeklyHistory categoryRtrWeeklyHistory : list) {
             setValue(categoryRtrWeeklyHistory, "Bank");
             setValue(categoryRtrWeeklyHistory, "Bond");
-            setValue(categoryRtrWeeklyHistory, "Insurance");
             setValue(categoryRtrWeeklyHistory, "StockFund");
             setValue(categoryRtrWeeklyHistory, "CurrencyFund");
             setValue(categoryRtrWeeklyHistory, "EtfFund");
-            setValue(categoryRtrWeeklyHistory, "QDllFund");
+            setValue(categoryRtrWeeklyHistory, "qdllFund");
             setValue(categoryRtrWeeklyHistory, "IndexFund");
         }
     }
@@ -390,12 +412,12 @@ public class SearchServiceImpl implements SearchService {
     void setValue(CategoryRtrWeeklyHistory categoryRtrWeeklyHistory, String fieldName) {
         try {
             Class cls = CategoryRtrWeeklyHistory.class;
-            Method getter = cls.getMethod("get" + fieldName);
+            Method getter = MethodUtils.getGetter(CategoryRtrWeeklyHistory.class, fieldName);
 
             BigDecimal value = (BigDecimal)getter.invoke(categoryRtrWeeklyHistory);
             if (value == null) {
-                Method setter = cls.getMethod("set" + fieldName);
-                setter.invoke(new BigDecimal(0));
+                Method setter = MethodUtils.getSetter(CategoryRtrWeeklyHistory.class, fieldName, BigDecimal.class);
+                setter.invoke(categoryRtrWeeklyHistory, new BigDecimal(0));
             }
         }
         catch (Exception e) {
@@ -430,8 +452,8 @@ public class SearchServiceImpl implements SearchService {
 
     @SuppressWarnings("unchecked")
     @Override
-    public double[] getHS_300ByTime() {
-        List<Hs300> list = userService.getCommonDao().find("FROM Hs300 h ORDER by date DESC");
+    public double[] getHS_300ByTime(int days) {
+        List<Hs300> list = userService.getCommonDao().find("FROM Hs300 h ORDER by date DESC", days);
 
         if (list.size() == 0) {
             return new double[0];

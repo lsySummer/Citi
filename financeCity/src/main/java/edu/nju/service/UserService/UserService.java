@@ -4,7 +4,6 @@ import edu.nju.dao.UserDao;
 import edu.nju.dao.impl.CommonDao;
 import edu.nju.model.UserTemperPrefer;
 import edu.nju.service.ExceptionsAndError.*;
-import edu.nju.service.POJO.RegisterInfo;
 import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.vo.UserVO;
 import org.springframework.stereotype.Service;

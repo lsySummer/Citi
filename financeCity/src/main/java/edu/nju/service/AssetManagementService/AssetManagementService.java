@@ -1,7 +1,5 @@
 package edu.nju.service.AssetManagementService;
 
-import edu.nju.model.InvestedProducts;
-import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.ExceptionsAndError.NotLoginException;
 import edu.nju.service.POJO.AssetValue;
 import edu.nju.service.Sessions.FinanceCityUser;

@@ -7,7 +7,6 @@ import edu.nju.model.User;
 import edu.nju.model.UserLogin;
 import edu.nju.model.UserTemperPrefer;
 import edu.nju.service.ExceptionsAndError.*;
-import edu.nju.service.POJO.RegisterInfo;
 import edu.nju.service.Sessions.FinanceCityUser;
 import edu.nju.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
- * Created by Sun YuHao on 2016/9/16.
+ * Created by Sun YuHao on 2016/9/18.
  */
 @Entity
 @Table(name = "trade_history", schema = "citi", catalog = "")
@@ -19,6 +19,8 @@ public class TradeHistory {
     private BigDecimal tradingVolume;
     private BigDecimal buyingPrice;
     private BigDecimal nav;
+    private Timestamp date;
+    private Integer portfolioId;
 
     @Id
     @Column(name = "id")
@@ -110,6 +112,26 @@ public class TradeHistory {
         this.nav = nav;
     }
 
+    @Basic
+    @Column(name = "date")
+    public Timestamp getDate() {
+        return date;
+    }
+
+    public void setDate(Timestamp date) {
+        this.date = date;
+    }
+
+    @Basic
+    @Column(name = "portfolio_id")
+    public Integer getPortfolioId() {
+        return portfolioId;
+    }
+
+    public void setPortfolioId(Integer portfolioId) {
+        this.portfolioId = portfolioId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -127,6 +149,8 @@ public class TradeHistory {
             return false;
         if (buyingPrice != null ? !buyingPrice.equals(that.buyingPrice) : that.buyingPrice != null) return false;
         if (nav != null ? !nav.equals(that.nav) : that.nav != null) return false;
+        if (date != null ? !date.equals(that.date) : that.date != null) return false;
+        if (portfolioId != null ? !portfolioId.equals(that.portfolioId) : that.portfolioId != null) return false;
 
         return true;
     }
@@ -142,6 +166,8 @@ public class TradeHistory {
         result = 31 * result + (tradingVolume != null ? tradingVolume.hashCode() : 0);
         result = 31 * result + (buyingPrice != null ? buyingPrice.hashCode() : 0);
         result = 31 * result + (nav != null ? nav.hashCode() : 0);
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + (portfolioId != null ? portfolioId.hashCode() : 0);
         return result;
     }
 }

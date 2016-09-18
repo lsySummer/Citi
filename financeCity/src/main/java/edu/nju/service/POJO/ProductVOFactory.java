@@ -6,8 +6,6 @@ import edu.nju.model.ProductFund;
 import edu.nju.model.ProductInsurance;
 import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.CategoryAndProduct.ProductCategoryManager;
-import edu.nju.service.ExceptionsAndError.DataNotFoundException;
-import edu.nju.service.SearchService.ProductFilter;
 import edu.nju.service.SearchService.SearchService;
 import edu.nju.vo.BankVO;
 import edu.nju.vo.BondVO;
@@ -20,7 +18,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.SimpleTimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
 

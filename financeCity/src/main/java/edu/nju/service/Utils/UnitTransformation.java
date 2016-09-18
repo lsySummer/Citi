@@ -7,7 +7,6 @@ import edu.nju.model.ProductInsurance;
 import edu.nju.service.CategoryAndProduct.Product;
 import edu.nju.service.CategoryAndProduct.ProductCategoryManager;
 import edu.nju.service.POJO.AmountAndLeft;
-import edu.nju.service.CategoryAndProduct.Category;
 
 /**
  * Created by Sun YuHao on 2016/8/19.

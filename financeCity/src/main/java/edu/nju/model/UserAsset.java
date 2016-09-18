@@ -5,12 +5,12 @@ import java.math.BigDecimal;
 import java.sql.Date;
 
 /**
- * Created by Sun YuHao on 2016/9/13.
+ * Created by Sun YuHao on 2016/9/18.
  */
 @Entity
 @Table(name = "user_asset", schema = "citi", catalog = "")
 public class UserAsset {
-    private int userId;
+    private Integer userId;
     private BigDecimal initialPrice;
     private BigDecimal currentPrice;
     private BigDecimal futurePrice;
@@ -18,14 +18,15 @@ public class UserAsset {
     private BigDecimal longTermAssets;
     private BigDecimal emergencyAssets;
     private Date date;
+    private int id;
 
-    @Id
+    @Basic
     @Column(name = "user_id")
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
@@ -99,6 +100,16 @@ public class UserAsset {
         this.date = date;
     }
 
+    @Id
+    @Column(name = "id")
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -106,7 +117,8 @@ public class UserAsset {
 
         UserAsset userAsset = (UserAsset) o;
 
-        if (userId != userAsset.userId) return false;
+        if (id != userAsset.id) return false;
+        if (userId != null ? !userId.equals(userAsset.userId) : userAsset.userId != null) return false;
         if (initialPrice != null ? !initialPrice.equals(userAsset.initialPrice) : userAsset.initialPrice != null)
             return false;
         if (currentPrice != null ? !currentPrice.equals(userAsset.currentPrice) : userAsset.currentPrice != null)
@@ -125,7 +137,7 @@ public class UserAsset {
 
     @Override
     public int hashCode() {
-        int result = userId;
+        int result = userId != null ? userId.hashCode() : 0;
         result = 31 * result + (initialPrice != null ? initialPrice.hashCode() : 0);
         result = 31 * result + (currentPrice != null ? currentPrice.hashCode() : 0);
         result = 31 * result + (futurePrice != null ? futurePrice.hashCode() : 0);
@@ -133,6 +145,7 @@ public class UserAsset {
         result = 31 * result + (longTermAssets != null ? longTermAssets.hashCode() : 0);
         result = 31 * result + (emergencyAssets != null ? emergencyAssets.hashCode() : 0);
         result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + id;
         return result;
     }
 }
