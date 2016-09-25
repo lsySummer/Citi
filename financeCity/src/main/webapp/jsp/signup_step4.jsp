@@ -21,6 +21,7 @@
     <link type="text/css" rel="stylesheet" href="${basePath}plugins/ion.rangeSlider-master/css/ion.rangeSlider.skinFlat.css"/>
     <link type="text/css" rel="stylesheet" href="${basePath}css/order.css"/>
     <link type="text/css" rel="stylesheet" href="${basePath}css/common.css"/>
+     <link type="text/css" rel="stylesheet" href="${basePath}css/mycss.css"/>
     <script type="text/javascript" rel="script" src="js/jquery.min.js"></script>
     <script type="text/javascript" rel="script" src="plugins/bootstrap-toggle-master/js/bootstrap-toggle.min.js"></script>
     <script type="text/javascript" rel="script" src="plugins/ion.rangeSlider-master/js/ion.rangeSlider.min.js"></script>
@@ -91,6 +92,7 @@
 		  showDiv3.style.display="none";
 	  }
   }
+  
 </script>
 </head>
 <body>
@@ -102,7 +104,7 @@
 			<div class="smallBlock"></div>
 			<span class="blueFont">投资偏好</span>
 			<div class="signup2Content">
-			<s:form action="signup4" method="post">
+			<s:form action="signup4" method="post" name="signForm" id="signForm">
 				<span style="font-size:15px">请输入您想投资的金额(单位：元)</span><br/>
 				<input type="text" style="height:26px;width:340px" name="amount">
                   <br/><br/>
@@ -222,6 +224,11 @@
 
 		</div>
 	</div>
+	<%if(session.getAttribute("user")!=null){%>
+		<script type="text/javascript">
+		document.signForm.action="recommend";
+		</script>
+<%} %>
 	<script type="text/javascript">
 	var msg = "${requestScope.message}";
 	if (msg != "") {

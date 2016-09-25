@@ -56,6 +56,17 @@ public class UserAction extends BaseAction {
             return ERROR;
         }
     }
+    
+    @SuppressWarnings("unchecked")
+    public String logout() {
+    	session.remove("user");
+    	return SUCCESS;
+    }
+    
+    @SuppressWarnings("unchecked")
+    public String newQuestion() {
+    	return SUCCESS;
+    }
 
     @SuppressWarnings("unchecked")
     public String login() {

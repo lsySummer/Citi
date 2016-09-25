@@ -47,7 +47,7 @@ function buySubmit(id){
 <div class="main">
 <s:form action="buyCombine" name="buyCombine" method="post" id="buyCombine">
 <input type="hidden" id="hidValue" name="hidValue"/>
-    <div class="container top-margin inline-container">
+    <div class="container top-margin inline-container"  style="width:75%;">
        <%List<CommonPortfolio> recArr=(List<CommonPortfolio>)request.getAttribute("recArr"); 
        int arraySize=recArr.size();
        for(int i=0;i<recArr.size();i++){ 
@@ -67,7 +67,7 @@ function buySubmit(id){
             <ul>
             <%List<CommonProductInfo> commonList=recArr.get(i).getProducts();
             for(int k=0;k<commonList.size();k++){
-            	String percentId = "percentChart"+k;
+            	String percentId = "percentChart"+i+"_"+k;
             	%>
                 <li class="product">
                     <div class="product-title">
@@ -220,7 +220,7 @@ function buySubmit(id){
             },
             "scale-v": {
                 "values": [
-                    30,40,60,80,100
+                    0,20,40,60,80,100
                 ],
                 "item": {
                     "font-color":"Transparent",
@@ -238,7 +238,8 @@ function buySubmit(id){
             "series": [
                 {
                     "values": [
-                        <%=yieldscore%>,<%=flowScore%>, <%=lthScore%>,<%=riskscore%>
+                   
+                   <%=yieldscore%>,<%=flowScore%>, <%=lthScore%>,<%=riskscore%>
                     ],
                     "aspect": "line",
                     "text": "ER",
