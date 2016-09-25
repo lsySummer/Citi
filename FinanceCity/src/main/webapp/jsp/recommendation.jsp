@@ -59,7 +59,7 @@ function buySubmit(id){
         		int j=i+1;
         %>
      
-        <div class="recommendation-container" style="border:1px solid red">
+        <div class="recommendation-container">
             <div class="recommendation-header">
                 <h6>推荐<%=j %></h6>
                 <h5><span>¥ &nbsp;</span><%=recArr.get(i).getTotal_amount() %></h5>
@@ -67,7 +67,7 @@ function buySubmit(id){
             <ul>
             <%List<CommonProductInfo> commonList=recArr.get(i).getProducts();
             for(int k=0;k<commonList.size();k++){
-            	String percentId = "percentChart"+k;
+            	String percentId = "percentChart"+i+"_"+k;
             	%>
                 <li class="product">
                     <div class="product-title">
