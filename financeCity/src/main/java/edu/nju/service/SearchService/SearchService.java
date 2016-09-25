@@ -152,5 +152,7 @@ public interface SearchService {
 
     List<String> getFundState();
 
-    double[] getHS_300ByTime(int days);
+    double[] getHS300Daily(int days);
+
+    double[] getHS300Weekly(int weeks);
 }

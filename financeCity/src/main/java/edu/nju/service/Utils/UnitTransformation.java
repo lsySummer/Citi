@@ -23,7 +23,7 @@ public class UnitTransformation {
             int increasingAmount = productBank.getIncreasingUnit();
             int threshold = productBank.getPurchaseThreshold();
             left = (capital - threshold) % increasingAmount;
-            amount = capital - left;
+            //amount = capital - left;
         }//ProductBank
         if (product.getCategory().equals(ProductCategoryManager.categoryBond)) {
             ProductBond productBond = (ProductBond)product.getProduct();
@@ -33,10 +33,11 @@ public class UnitTransformation {
         }//productBond
         if(product.getCategory().equals(ProductCategoryManager.categoryFund)) {
             ProductFund productFund = (ProductFund)product.getProduct();
-            int increasingAmount = productFund.getIncreasingUnit();
-            int threshold = productFund.getPurchaseThreshold();
-            left = (capital - threshold) % increasingAmount;
-            amount = capital - left;
+            //int increasingAmount = productFund.getIncreasingUnit();
+            //int threshold = productFund.getPurchaseThreshold();
+            //left = (capital - threshold) % increasingAmount;
+            left = capital % 100;
+            //amount = capital - left;
         }//productFund
 
         tradingVolume = capital - left;

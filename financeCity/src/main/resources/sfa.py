@@ -30,9 +30,12 @@ def sfa_inner(lnrptA, lnmptA, SBInvestRatioA, fundScaleA, ALRatioA, institutionR
 	
 	return result.x['b1'];
 
-
+'''
 def sfa_wrapper(param_list):
 	return sfa_inner(param_list[0], param_list[1], param_list[2], param_list[3], param_list[4], param_list[5])
+'''
+def sfa_wrapper(param_list):
+	return score_fund(param_list[0], param_list[1], param_list[2], param_list[3], param_list[4], param_list[5], param_list[6])
 
 def param_reader():
 	param_list = []
@@ -51,8 +54,10 @@ def sfa():
 	return sfa_wrapper(param_list)
 
 def score_fund(rpt, csi300, treasury_bond_index, SBInvestRatio, fundScale, ALRatio, institutionRatio):
-	lnrpt = math.log(rpt)
-	lnrmt = 0.8 * csi300 + 0.2 * treasury_bond_index
+	mpt = 0.8 * (csi300) + 0.2 * (treasury_bond_index)
+
+	lnrpt = np.log(rpt)
+	lnmpt = np.log(mpt)
 
 	return sfa_inner(lnrpt, lnmpt, SBInvestRatio, fundScale, ALRatio, institutionRatio)
 
@@ -64,4 +69,4 @@ fileHandler = open(sys.path[0] + os.sep + "PythonResult.txt", 'w')
 ret = str(res)
 fileHandler.write(ret)
 fileHandler.flush()
-fileHandler.close
+fileHandler.close()

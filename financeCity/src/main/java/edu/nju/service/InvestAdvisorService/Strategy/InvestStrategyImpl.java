@@ -45,10 +45,13 @@ public class InvestStrategyImpl implements InvestStrategy {
         List<Category> categoryList = ProductCategoryManager.getCategoryList();
         InvestResult insuranceList = new InvestResult();
         for (Category category : categoryList) {
-            if (category.belongTo(ProductCategoryManager.categoryFund)) {
+            if (category.equals(ProductCategoryManager.categoryFund)) {
                 continue;
             }
             AssetCategoryAllocation allocation = assetCategoryAllocator.getCategoryAllocation(category.getCategoryName());
+            if (allocation.getFlowCapital() + allocation.getFreeCapital() < 100) {
+                continue;
+            }
             //AssetCategoryAllocation allocation = new AssetCategoryAllocation();
             //allocation.setFreeCapital(5000);
             //allocation.setFlowCapital(5000);
@@ -88,6 +91,7 @@ public class InvestStrategyImpl implements InvestStrategy {
                 SimpleTradeInfo simpleTradeInfo = new SimpleTradeInfo();
                 simpleTradeInfo.setAmount(insuranceList.getUnusedAmount());
                 simpleTradeInfo.setProductId(insurance_item.get(i).getProduct().getID());
+                simpleTradeInfoList.add(simpleTradeInfo);
 
                 lists.add(simpleTradeInfoList);
             }

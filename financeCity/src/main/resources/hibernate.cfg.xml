@@ -10,6 +10,7 @@
         <mapping class="edu.nju.model.DeletedProduct"/>
         <mapping class="edu.nju.model.UserTemperPrefer"/>
         <mapping class="edu.nju.model.InvestHistory"/>
+        <mapping class="edu.nju.model.InvestStatus"/>
         <mapping class="edu.nju.model.NameToId"/>
         <mapping class="edu.nju.model.ProductBond"/>
         <mapping class="edu.nju.model.ProductFund"/>
@@ -28,18 +29,17 @@
         <mapping class="edu.nju.model.User"/>
         <mapping class="edu.nju.model.PayWay"/>
         <mapping class="edu.nju.model.InstitutionCategoryRelation"/>
-        <mapping class="edu.nju.model.Hs300"/>
         <mapping class="edu.nju.model.FundDailyHistory"/>
         <mapping class="edu.nju.model.InsuranceDailyHistory"/>
         <mapping class="edu.nju.model.BondIndexReturn"/>
+        <mapping class="edu.nju.model.CategoryMarketWeeklyHistory"/>
+        <mapping class="edu.nju.model.CategoryRtrWeeklyHistory"/>
         <mapping class="edu.nju.model.History"/>
-        <mapping class="edu.nju.model.BondIndex"/>
         <mapping class="edu.nju.model.InvestmentPortfolio"/>
         <mapping class="edu.nju.model.MarketStatus"/>
         <mapping class="edu.nju.model.InvestedProducts"/>
         <mapping class="edu.nju.model.BankDailyHistory"/>
-        <mapping class="edu.nju.model.InvestStatus"/>
-        <mapping class="edu.nju.model.CategoryRtrWeeklyHistory"/>
-        <mapping class="edu.nju.model.CategoryMarketWeeklyHistory"/>
+        <mapping class="edu.nju.model.Hs300Daily"/>
+        <mapping class="edu.nju.model.Hs300Weekly"/>
     </session-factory>
 </hibernate-configuration>

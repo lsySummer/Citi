@@ -40,15 +40,31 @@ public class AssetCategoryAllocatorImpl implements AssetCategoryAllocator {
 
         for (CategoryInfo categoryInfo : categoryInfos) {
             AssetCategoryAllocation assetCategoryAllocation = new AssetCategoryAllocation();
-            assetCategoryAllocation.setFlowCapital(categoryInfo.getFlowCapital());
-            assetCategoryAllocation.setFreeCapital(categoryInfo.getFreeCapital());
+            assetCategoryAllocation.setFlowCapital(deal45(categoryInfo.getFlowCapital()));
+            assetCategoryAllocation.setFreeCapital(deal45(categoryInfo.getFreeCapital()));
             assetCategoryAllocationList.put(categoryInfo.getCategory().getCategoryName(), assetCategoryAllocation);
+        }
+    }
+
+    double deal45(double num) {
+        if (num % 1 > 0.5) {
+            return num / 1 + 1;
+        }
+        else {
+            return num / 1;
         }
     }
 
     @Override
     public AssetCategoryAllocation getCategoryAllocation(String category) {
-        return assetCategoryAllocationList.get(category);
+        AssetCategoryAllocation assetCategoryAllocation = assetCategoryAllocationList.get(category);
+        if (assetCategoryAllocation == null) {
+            assetCategoryAllocation = new AssetCategoryAllocation();
+            assetCategoryAllocation.setFlowCapital(0);
+            assetCategoryAllocation.setFreeCapital(0);
+        }
+
+        return assetCategoryAllocation;
     }
 
     private void init(SharedInfo sharedInfo) {
@@ -201,7 +217,7 @@ public class AssetCategoryAllocatorImpl implements AssetCategoryAllocator {
     private double[][] getHS_300(SearchService searchService) {
         double[][] ret;
 
-        double[] hs300 = searchService.getHS_300ByTime(CategoryInfo.historyNum);
+        double[] hs300 = searchService.getHS300Weekly(CategoryInfo.historyNum);
         if (hs300.length > 0) {
             ret = new double[1][];
             ret[0] = hs300;

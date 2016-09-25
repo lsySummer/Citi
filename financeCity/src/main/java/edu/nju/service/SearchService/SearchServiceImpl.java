@@ -452,8 +452,26 @@ public class SearchServiceImpl implements SearchService {
 
     @SuppressWarnings("unchecked")
     @Override
-    public double[] getHS_300ByTime(int days) {
-        List<Hs300> list = userService.getCommonDao().find("FROM Hs300 h ORDER by date DESC", days);
+    public double[] getHS300Daily(int days) {
+        List<Hs300Daily> list = userService.getCommonDao().find("FROM Hs300Daily h ORDER by date DESC", days);
+
+        if (list.size() == 0) {
+            return new double[0];
+        }
+        else {
+            double[] ret = new double[list.size()];
+
+            for (int i = 0; i < list.size(); ++i) {
+                ret[i] = list.get(i).getHs300Return().doubleValue();
+            }
+
+            return ret;
+        }
+    }
+
+    @Override
+    public double[] getHS300Weekly(int weeks) {
+        List<Hs300Weekly> list = userService.getCommonDao().find("FROM Hs300Weekly h ORDER by date DESC", weeks);
 
         if (list.size() == 0) {
             return new double[0];

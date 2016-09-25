@@ -1,6 +1,7 @@
 package edu.nju.service.InvestAdvisorService;
 
 import edu.nju.model.UserTemperPrefer;
+import edu.nju.service.CategoryAndProduct.ProductCategoryManager;
 import edu.nju.service.ExceptionsAndError.InvalidUserPreferenceException;
 import edu.nju.service.ExceptionsAndError.NotAllConfigurationSetException;
 import edu.nju.service.InvestAdvisorService.Strategy.InvestStrategy;
@@ -58,9 +59,12 @@ public class InvestAdvisorServiceImpl implements InvestAdvisorService {
 
         for (CommonProductInfo productInfo : commonPortfolio.getProducts()) {
             flow_score += productInfo.isFlow() ? productInfo.getPercentage() : 0;
-            length_score += productInfo.getLength() * productInfo.getPercentage() / (100 * 30);
             risk_score += productInfo.isRisk() ? productInfo.getPercentage() : 0;
-            yield_score += productInfo.getPercentage() / 100 * productInfo.getRtr() * 5;
+            yield_score += productInfo.getPercentage() / 100 * productInfo.getRtr() * 10;
+
+            if (!productInfo.getProductType().equals(ProductCategoryManager.categoryInsurance)) {
+                length_score += productInfo.getLength() * productInfo.getPercentage() / (100 * 30);
+            }
         }
 
         PortfolioScores portfolioScores = new PortfolioScores();

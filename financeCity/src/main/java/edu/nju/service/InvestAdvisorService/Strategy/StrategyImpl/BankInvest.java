@@ -66,7 +66,14 @@ public class BankInvest implements CategoryInvest {
 
     private Product findMaxYieldProduct(List<Product> products) {
         Product wanted = products.get(0);
+        if (((ProductBank)wanted.getProduct()).getExpectedRate() == null) {
+            return null;
+        }
+
         for (Product product : products) {
+            if (((ProductBank)product.getProduct()).getExpectedRate() == null) {
+                continue;
+            }
             if (((ProductBank)product.getProduct()).getExpectedRate().compareTo(((ProductBank)wanted.getProduct()).getExpectedRate()) > 0) {
                 wanted = product;
             }
@@ -147,7 +154,7 @@ public class BankInvest implements CategoryInvest {
 
         //get meta info
         flowAmount = capital;
-        timeLimit = TimeTransformation.getTimeFromNow(backDate, TimeTransformation.year);
+        timeLimit = TimeTransformation.getTimeFromNow(backDate, TimeTransformation.day);
 
         //find max threshold and duration for such capital
         int max_threshold = findMaxThresholdIndex(flowAmount);
@@ -159,8 +166,8 @@ public class BankInvest implements CategoryInvest {
         while (floorDuration >= 0) {
             candidateList = searchService.searchProductsByConditionWithOrder(
                     ProductCategoryManager.categoryBank,
-                    "p.threshold BETWEEN " + thresholdList[max_threshold] + " AND " + flowAmount +
-                            " AND p.dateLimit BETWEEN " + durationList[floorDuration] + " AND " + timeLimit,
+                    "p.purchaseThreshold BETWEEN " + thresholdList[max_threshold] + " AND " + flowAmount +
+                            " AND p.length BETWEEN " + durationList[floorDuration] + " AND " + timeLimit,
                     "p.expectedRate DESC");
 
             if (candidateList != null && candidateList.size() != 0) {

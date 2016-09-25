@@ -27,6 +27,11 @@ public class TimeTransformation {
         return getTimeFromNow(timestamp, type);
     }
 
+    static public Date getDateBeforeNow(int num, long type) {
+        long time = System.currentTimeMillis() - num * type;
+        return new Date(time);
+    }
+
     static public double getTimeFromDate(Date start, Date end, long type) {
         return getTimeFromNow(end, type) - getTimeFromNow(start, type);
     }

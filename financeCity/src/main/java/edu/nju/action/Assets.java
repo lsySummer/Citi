@@ -44,6 +44,8 @@ public class Assets extends BaseAction {
 	@Autowired
 	UserService userService;
 
+	static private final String CONFIG = "config";
+
 	public String execute() throws ServletException, IOException {
 		try {
 			return SUCCESS;
@@ -80,14 +82,14 @@ public class Assets extends BaseAction {
 			ErrorManager.setError(request, ErrorManager.errorNoSuchProduct);
 			return ERROR;
 		}
-
 		catch (NotAllConfigurationSetException t) {
 			t.printStackTrace();
 			ErrorManager.setError(request, ErrorManager.errorUserInfoNotSet);
-			return ERROR;
+			return CONFIG;
 		}
 		catch (InvalidUserPreferenceException i) {
-			i.printStackTrace(); ErrorManager.setError(request, ErrorManager.errorInvalidUserPreference); return ERROR;
+			i.printStackTrace(); ErrorManager.setError(request, ErrorManager.errorInvalidUserPreference);
+			return CONFIG;
 		}
 	}
 

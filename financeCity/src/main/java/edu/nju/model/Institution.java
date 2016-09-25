@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import java.sql.Timestamp;
 
 /**
- * Created by Sun YuHao on 2016/9/18.
+ * Created by Sun YuHao on 2016/9/25.
  */
 @Entity
 public class Institution {

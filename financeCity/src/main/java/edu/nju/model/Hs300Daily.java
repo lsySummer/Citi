@@ -8,10 +8,10 @@ import java.sql.Date;
  * Created by Sun YuHao on 2016/9/25.
  */
 @Entity
-@Table(name = "bond_index_return", schema = "citi", catalog = "")
-public class BondIndexReturn {
+@Table(name = "Hs300_daily", schema = "citi", catalog = "")
+public class Hs300Daily {
     private int id;
-    private BigDecimal bondIndexReturn;
+    private BigDecimal hs300Return;
     private Date date;
 
     @Id
@@ -25,13 +25,13 @@ public class BondIndexReturn {
     }
 
     @Basic
-    @Column(name = "bond_index_return")
-    public BigDecimal getBondIndexReturn() {
-        return bondIndexReturn;
+    @Column(name = "HS300_return")
+    public BigDecimal getHs300Return() {
+        return hs300Return;
     }
 
-    public void setBondIndexReturn(BigDecimal bondIndexReturn) {
-        this.bondIndexReturn = bondIndexReturn;
+    public void setHs300Return(BigDecimal hs300Return) {
+        this.hs300Return = hs300Return;
     }
 
     @Basic
@@ -49,11 +49,10 @@ public class BondIndexReturn {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        BondIndexReturn that = (BondIndexReturn) o;
+        Hs300Daily that = (Hs300Daily) o;
 
         if (id != that.id) return false;
-        if (bondIndexReturn != null ? !bondIndexReturn.equals(that.bondIndexReturn) : that.bondIndexReturn != null)
-            return false;
+        if (hs300Return != null ? !hs300Return.equals(that.hs300Return) : that.hs300Return != null) return false;
         if (date != null ? !date.equals(that.date) : that.date != null) return false;
 
         return true;
@@ -62,7 +61,7 @@ public class BondIndexReturn {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (bondIndexReturn != null ? bondIndexReturn.hashCode() : 0);
+        result = 31 * result + (hs300Return != null ? hs300Return.hashCode() : 0);
         result = 31 * result + (date != null ? date.hashCode() : 0);
         return result;
     }

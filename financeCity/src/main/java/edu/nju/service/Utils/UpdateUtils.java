@@ -6,6 +6,9 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
 
 /**
  * Created by Sun YuHao on 2016/9/7.
@@ -210,6 +213,152 @@ public class UpdateUtils {
         return conn;
     }
 
+    public static void updateFundScore() {
+        final int history_num = 365;
+        Connection connection = getConn();
+
+        try {
+            //get HS300,bond index return
+            String getSci300 = "SELECT HS300_return, bond_index_return FROM Hs300_daily INNER JOIN bond_index_return ON Hs300_daily.date = bond_index_return.date ORDER BY Hs300_daily.date DESC";
+            PreparedStatement preparedStatement = connection.prepareStatement(getSci300);
+            preparedStatement.setMaxRows(history_num);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            List<Double> hs300 = new ArrayList<>();
+            List<Double> bondIndex = new ArrayList<>();
+            while (resultSet.next()) {
+                hs300.add(resultSet.getBigDecimal("HS300_return").doubleValue() / 100 + 1);
+                bondIndex.add(resultSet.getBigDecimal("bond_index_return").doubleValue() / 100 + 1);
+            }
+
+            //get total
+            String getTotal = "SELECT COUNT(*) AS count FROM product_fund";
+            preparedStatement = connection.prepareStatement(getTotal);
+            resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            int total = resultSet.getInt("count");
+
+            //get rpt
+            String getFunds = "SELECT id, category FROM product_fund ORDER BY id";
+            String getFundDaily = "SELECT daily_return FROM fund_daily_history WHERE fund_id=? ORDER BY date DESC";
+            preparedStatement = connection.prepareStatement(getFunds);
+            resultSet = preparedStatement.executeQuery();
+            int done = 0;
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                Byte category_byte = resultSet.getByte("category");
+                if (resultSet.wasNull()) {
+                    category_byte = null;
+                }
+
+                Category category = ProductCategoryManager.getFundCategory(category_byte);
+                int pid = ProductCategoryManager.generateProductID(id, category.getCategoryName());
+
+                PreparedStatement prep = connection.prepareStatement(getFundDaily);
+                prep.setInt(1, pid);
+                prep.setMaxRows(history_num);
+
+                ResultSet res = prep.executeQuery();
+                List<Double> rpt = new ArrayList<>();
+                while (res.next()) {
+                    rpt.add(res.getBigDecimal("daily_return").doubleValue() / 100 + 1);
+                }
+
+                int min_size = Math.min(hs300.size(), bondIndex.size());
+                min_size = Math.min(min_size, rpt.size());
+                System.out.print("Process Size:" + min_size);
+
+                List<Double> hs300_t = hs300.subList(0, min_size);
+                List<Double> bondIndex_t = bondIndex.subList(0, min_size);
+                List<Double> rpt_t = rpt.subList(0, min_size);
+
+                List<Double> empty =  getEmptyList(min_size);
+                double ret = SFA.getFundScore(rpt_t, hs300_t, bondIndex_t, empty, empty, empty, empty);
+
+                String add_score = "UPDATE product_fund SET fund_score=? WHERE id=?";
+                prep = connection.prepareStatement(add_score);
+                prep.setBigDecimal(1, new BigDecimal(ret));
+                prep.setInt(2, ProductCategoryManager.getProductItemIndex(pid));
+                prep.executeUpdate();
+
+                done++;
+                System.out.println("Fund " + pid + " Scores:" + ret);
+                System.out.println(done + "/" + total + " items have been done");
+
+                //if (done >= 10) {
+                //    break;
+                //}
+            }
+
+
+        }
+        catch (SQLException s) {
+            s.printStackTrace();
+        }
+    }
+
+    static public void updateFundYearlyRate() {
+        Connection connection = getConn();
+
+        String getFunds = "SELECT id, category FROM product_fund";
+        try {
+            PreparedStatement prep = connection.prepareStatement(getFunds);
+            ResultSet resultSet = prep.executeQuery();
+
+            int done = 0;
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                Byte type = resultSet.getByte("category");
+                if (resultSet.wasNull()) {
+                    type = null;
+                }
+                Category category = ProductCategoryManager.getFundCategory(type);
+                int pid = ProductCategoryManager.generateProductID(id, category.getCategoryName());
+
+                System.out.print("Fund " + pid);
+
+                String getNowNAV = "SELECT NAV FROM fund_daily_history WHERE fund_id=? ORDER BY date DESC LIMIT 1";
+                prep = connection.prepareStatement(getNowNAV);
+                prep.setInt(1, pid);
+                ResultSet res = prep.executeQuery();
+                res.next();
+                double nowNAV = res.getBigDecimal("NAV").doubleValue();
+
+                Date yearBefore = TimeTransformation.getDateBeforeNow(1, TimeTransformation.year);
+                String getYearBefore = "SELECT NAV FROM fund_daily_history WHERE fund_id=? AND to_days(?)<to_days(date) ORDER BY date LIMIT 1";
+                prep = connection.prepareStatement(getYearBefore);
+                prep.setInt(1, pid);
+                prep.setDate(2, yearBefore);
+                res = prep.executeQuery();
+                res.next();
+                double yearBeforeNAV = res.getBigDecimal("NAV").doubleValue();
+
+                double RTR = (nowNAV - yearBeforeNAV) / yearBeforeNAV;
+                RTR *= 100;
+                System.out.println(" RTR:" + RTR);
+
+
+                String insert = "UPDATE product_fund SET yearly_rtn_rate=? WHERE id=?";
+                prep = connection.prepareStatement(insert);
+                prep.setBigDecimal(1, new BigDecimal(RTR));
+                prep.setInt(2, ProductCategoryManager.getProductItemIndex(pid));
+                prep.executeUpdate();
+            }
+        }
+        catch (SQLException s) {
+            s.printStackTrace();
+        }
+    }
+
+    static private List<Double> getEmptyList(int length) {
+        List<Double> list = new ArrayList<>();
+        for (int i = 0; i < length; ++i) {
+            list.add(0d);
+        }
+
+        return list;
+    }
+
     public static void test() {
         Connection connection = getConn();
         try {
@@ -224,6 +373,6 @@ public class UpdateUtils {
 
 
     static public void main(String[] args) {
-        UpdateUtils.cleanTradHistory();
+        UpdateUtils.updateFundScore();
     }
 }

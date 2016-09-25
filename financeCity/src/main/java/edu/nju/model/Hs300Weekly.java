@@ -1,17 +1,15 @@
 package edu.nju.model;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
 
 /**
- * Created by Sun YuHao on 2016/9/18.
+ * Created by Sun YuHao on 2016/9/25.
  */
 @Entity
-public class Hs300 {
+@Table(name = "Hs300_weekly", schema = "citi", catalog = "")
+public class Hs300Weekly {
     private int id;
     private BigDecimal hs300Return;
     private Date date;
@@ -51,11 +49,11 @@ public class Hs300 {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Hs300 hs300 = (Hs300) o;
+        Hs300Weekly that = (Hs300Weekly) o;
 
-        if (id != hs300.id) return false;
-        if (hs300Return != null ? !hs300Return.equals(hs300.hs300Return) : hs300.hs300Return != null) return false;
-        if (date != null ? !date.equals(hs300.date) : hs300.date != null) return false;
+        if (id != that.id) return false;
+        if (hs300Return != null ? !hs300Return.equals(that.hs300Return) : that.hs300Return != null) return false;
+        if (date != null ? !date.equals(that.date) : that.date != null) return false;
 
         return true;
     }

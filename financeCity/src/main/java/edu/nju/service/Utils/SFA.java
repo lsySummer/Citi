@@ -4,18 +4,20 @@ import org.python.core.*;
 import org.python.util.PythonInterpreter;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.*;
 
 /**
  * Created by Sun YuHao on 2016/8/24.
  */
 public class SFA {
-    static public Double getFundScore(Double[] lnrpt, Double[] lnrmt, Double[] SBInvestRatio,
+    static public Double getFundScore(Double[] rpt, Double[] sci300, Double[] bondIndex, Double[] SBInvestRatio,
                                Double[] fundScale, Double[] ALRatioin, Double[] institutionRatio) {
 
         List<List<Double>> list = new ArrayList<>();
-        list.add(Arrays.asList(lnrpt));
-        list.add(Arrays.asList(lnrmt));
+        list.add(Arrays.asList(rpt));
+        list.add(Arrays.asList(sci300));
+        list.add(Arrays.asList(bondIndex));
         list.add(Arrays.asList(SBInvestRatio));
         list.add(Arrays.asList(fundScale));
         list.add(Arrays.asList(ALRatioin));
@@ -26,11 +28,12 @@ public class SFA {
         return PythonInvoker.call(list);
     }
 
-    static public Double getFundScore(List<Double> lnrpt, List<Double> lnrmt, List<Double> SBInvestRatio,
+    static public Double getFundScore(List<Double> rpt, List<Double> sci300, List<Double> bondIndex, List<Double> SBInvestRatio,
                                       List<Double> fundScale, List<Double> ALRatioin, List<Double> institutionRatio) {
         List<List<Double>> list = new ArrayList<>();
-        list.add(lnrpt);
-        list.add(lnrmt);
+        list.add(rpt);
+        list.add(sci300);
+        list.add(bondIndex);
         list.add(SBInvestRatio);
         list.add(fundScale);
         list.add(ALRatioin);
@@ -126,21 +129,23 @@ public class SFA {
     }
 
     public static void main(String[] args) {
-        Double[] lnrpt = new Double[] {
-                0d, 0.10526316, 0.21052632, 0.31578947, 0.42105263, 0.52631579,
+        Double[] rpt = new Double[] {
+                1.23, 0.10526316, 0.21052632, 0.31578947, 0.42105263, 0.52631579,
                 0.63157895, 0.73684211, 0.84210526, 0.94736842, 1.05263158, 1.15789474,
                 1.26315789, 1.36842105, 1.47368421, 1.57894737, 1.68421053, 1.78947368,
                 1.89473684, 2d
         };
 
-        Double[] lnrmt = new Double[20];
+        Double[] sci300 = new Double[20];
+        Double[] bondIndex = new Double[20];
         Double[] SBInvestRatio = new Double[20];
 
         for (int i = 0; i < 20; ++i) {
-            lnrmt[i] = 0.5 * lnrpt[i] + 0.3;
+            sci300[i] = rpt[i];
+            bondIndex[i] = 0.3;
             SBInvestRatio[i] = 0d;
         }
 
-        System.out.print(SFA.getFundScore(lnrmt, lnrpt, SBInvestRatio, SBInvestRatio, SBInvestRatio, SBInvestRatio));
+        System.out.print(SFA.getFundScore(rpt, sci300, bondIndex, SBInvestRatio, SBInvestRatio, SBInvestRatio, SBInvestRatio));
     }
 }
