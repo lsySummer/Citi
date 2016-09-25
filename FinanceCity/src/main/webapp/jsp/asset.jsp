@@ -44,9 +44,9 @@
 <s:include value="header.jsp"></s:include>
 
 <div class="main" style="margin-bottom:20px">
-    <div class="container top-margin inline-container">
+    <div class="container top-margin inline-container" style="margin-left:5%;width:95%">
 
-        <div class="asset-allocation asset-block">
+        <div class="asset-allocation asset-block" style="width:43%">
             <h5 class="title">资产配置</h5>
             <div id="allocation-chart"></div>
         </div>
@@ -54,7 +54,9 @@
 		function initAllocationChart() {
 			var names = new  Array();  
 			var buys = new  Array();  
+			var shortArr=new Array();
 			<%List<String> nameArr=(List<String>)request.getAttribute("proArr");
+			List<String> shortPro=(List<String>)request.getAttribute("shortPro");
 			List<Double> buyArr=(List<Double>)request.getAttribute("buyArr");
 			List<Double> currentArr=(List<Double>)request.getAttribute("currentArr");
 			List<Integer> pidArr=(List<Integer>)request.getAttribute("pidArr");
@@ -66,6 +68,7 @@
 			    {
 			  %>
 			  names[<%=i%>]='<%=nameArr.get(i)%>';
+			  shortArr[<%=i%>]='<%=shortPro.get(i)%>';
 			  buys[<%=i%>]='<%=buyArr.get(i)%>';
 			  var lth=<%=nameArr.size()%>;
 			  <%   } 
@@ -75,15 +78,17 @@
 			for(i=0;i<lth;i++){
 			var key1 = 'title';
 			var key2 = 'value';
+			var key3='short';
 			var map = {};
 			map[key1] = names[i];
 			map[key2] = buys[i];
+			map[key3] = shortArr[i];
 			arrayObj[i]=map;
 				
 			}
 			var chart = AmCharts.makeChart( "allocation-chart", {
 			    "type": "pie",
-			    "theme": "light",
+			    "theme": "",
 			    "dataProvider": 
 			       arrayObj,
 			    "titleField": "title",
@@ -92,7 +97,7 @@
 
 			    "radius": "30%",
 			    "innerRadius": "60%",
-			    "labelText": "[[title]]",
+			    "labelText": "[[short]]",
 			    "export": {
 			        "enabled": false
 			    }
@@ -141,20 +146,20 @@
             <div id="price-chart"></div>
         </div>
 
-        <div class="asset-product asset-block">
+        <div class="asset-product asset-block" style="width:40%"> 
             <h5 class="title">投资产品</h5>
             <s:form action="sold" name="sold" method="post">
              <input type="hidden" id="hiddenId" name="hiddenId"/>
             <table>
                 <tr>
-                    <th class="product-name">产品</th>
-                    <th class="product-price">投资金额(￥)</th>
-                    <th class="product-total">本利和(￥)</th>
-                    <th></th>
+                    <th width="40%">产品</th>
+                    <th  width="22%">投资金额(￥)</th>
+                    <th  width="22%">本利和(￥)</th>
+                    <th width="16%"></th>
                 </tr>
                 <%for(int i=0;i<arrLth;i++){%>
                 	<tr>
-                    <td width=220><span style="font-size: 12px"><%=nameArr.get(i) %></span></td>
+                    <td><span style="font-size: 12px"><%=nameArr.get(i) %></span></td>
                     <td><%=buyArr.get(i) %></td>
                     <td><%=currentArr.get(i) %></td>
                     <%int pid=pidArr.get(i); %>
@@ -165,7 +170,7 @@
             </s:form>
         </div>
 
-        <div class="asset-timeline asset-block">
+        <div class="asset-timeline asset-block" style="width:50%">
             <h5 class="title">投资时间线</h5>
             <table>
 			<% List<TradeHistoryVO> tradeList=(List<TradeHistoryVO>)request.getAttribute("tradeList");%>

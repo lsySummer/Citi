@@ -159,6 +159,7 @@ public class Assets extends BaseAction {
 				if (investList != null) {
 					if (investList.size() != 0) {
 						List<String> proArr = new ArrayList<String>();
+						List<String> shortPro=new ArrayList<String>();
 						List<Integer> pidArr = new ArrayList<Integer>();
 						List<Double> buyArr = new ArrayList<Double>();
 						List<Double> currentArr = new ArrayList<Double>();
@@ -172,6 +173,11 @@ public class Assets extends BaseAction {
 								String name = proList.get(i).getName();
 								int pid = proList.get(i).getId();
 								proArr.add(name);
+								if(name.length()<9){
+									shortPro.add(name);
+								}else{
+								shortPro.add(name.substring(0,8)+"...");
+								}
 								buyArr.add(buyingValue);
 								currentArr.add(Double.parseDouble(df.format(currentValue)));
 								pidArr.add(pid);
@@ -179,6 +185,7 @@ public class Assets extends BaseAction {
 
 						}
 						request.setAttribute("proArr", proArr);
+						request.setAttribute("shortPro", shortPro);
 						request.setAttribute("buyArr", buyArr);
 						request.setAttribute("currentArr", currentArr);
 						request.setAttribute("pidArr", pidArr);

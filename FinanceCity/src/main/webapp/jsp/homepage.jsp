@@ -28,7 +28,7 @@
             <img src="img/homepage_title.png">
             <h1>一站式智能投顾平台</h1>
         </div>
-        <Button id="startVoyage">开启智能投顾之旅</Button>
+       <a href="login"><Button id="startVoyage">开启智能投顾之旅</Button></a>
     </div>
 
     <div id="aim_outer">
