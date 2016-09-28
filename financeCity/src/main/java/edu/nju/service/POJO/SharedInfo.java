@@ -28,7 +28,7 @@ public class SharedInfo {
     private ClassProcess3 process3;
 
     @Autowired
-    SharedInfo(SearchService searchService, ClassProcess3 process3) {
+    SharedInfo(SearchService searchService) {
         bankYieldList = searchService.getBankYieldType();
         bondYieldList = searchService.getBondYieldType();
         bondStateList = searchService.getBondStateType();
@@ -39,8 +39,7 @@ public class SharedInfo {
         bondInstitutionList = searchService.getInstitutionNameList(ProductCategoryManager.categoryBond);
         fundInstitutionList = searchService.getInstitutionNameList(ProductCategoryManager.categoryFund);
         insuranceInstitutionList = searchService.getInstitutionNameList(ProductCategoryManager.categoryInsurance);
-
-        this.process3 = process3;
+//        this.process3 = process3;
     }
 
     public ClassProcess3 getProcess3() {

@@ -311,4 +311,14 @@ public class UserAction extends BaseAction {
         }
         return url.replace(server, "");
     }
+    
+    @SuppressWarnings("unchecked")
+    public String getVerify() {
+//    	if(){
+//    		return SUCCESS;
+//    	}else{
+//    		return ERROR;
+//    	}
+    	return SUCCESS;
+    }
 }

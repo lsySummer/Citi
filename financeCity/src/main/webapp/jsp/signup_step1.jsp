@@ -16,8 +16,32 @@
 <title>InvestGO</title>
 <base href="<%=basePath%>">
 	<link href="${basePath}css/common.css" rel="stylesheet">
+	   <script type="text/javascript" rel="script" src="js/jquery.min.js"></script>
 	<%--<link href="${basePath}css/order.css" rel="stylesheet">--%>
 	<link href="${basePath}css/mycss.css" rel="stylesheet">
+	<script type="text/javascript">
+	$(function() {
+		$("#getVerify").click(function() {
+			//提交的参数，name和inch是和struts action中对应的接收变量
+			var params = {
+			};
+			$.ajax({
+				type : "POST",
+				url : "getVerify",
+				data : params,
+				dataType : "text", //ajax返回值设置为text（json格式也可用它返回，可打印出结果，也可设置成json）
+				success : function(json) {
+					document.getElementById('getVerify').value='已发送';
+					return true;
+				},
+				error : function(json) {
+					document.getElementById('getVerify').value='发送失败';
+					return false;
+				}
+			});
+		});
+	});
+</script>
 </head>
 <body>
 	<jsp:include page="header.jsp" flush="true"/>
@@ -39,7 +63,7 @@
 							<td><span style="font-size: 14px">短信验证码</span></td>
 							<td><input type="text" style="height: 30px; width: 150px"
 								name="verify">
-								<button class="platButton">获取</button></td>
+								<input type="button" class="platButton" id="getVerify" name="getVerify" value="获取"></td>
 
 						</tr>
 						<tr>

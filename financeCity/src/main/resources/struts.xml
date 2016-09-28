@@ -230,6 +230,9 @@
 		<action name="dayTJ" class="edu.nju.action.PurchaseAction" method="getHistory">
 			<result type="json"></result>
 		</action>
+		<action name="getVerify" class="edu.nju.action.UserAction" method="getVerify">
+			<result type="json"></result>
+		</action>
 	</package>
 	<constant name="struts.action.extension" value="," />
 
