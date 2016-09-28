@@ -21,8 +21,17 @@ public class UserAction extends BaseAction {
     private final String default_after_login = "";
     private final String server = "http://localhost:8080";
     private final String DEFAULT = "default";
+    private String phone;
+    
+    public String getPhone() {
+		return phone;
+	}
 
-    @Autowired
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	@Autowired
     UserService userService;
 
     @SuppressWarnings("unchecked")
@@ -314,6 +323,7 @@ public class UserAction extends BaseAction {
     
     @SuppressWarnings("unchecked")
     public String getVerify() {
+    	System.out.println("phone"+phone);
 //    	if(){
 //    		return SUCCESS;
 //    	}else{

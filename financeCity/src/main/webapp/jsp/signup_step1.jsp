@@ -24,6 +24,7 @@
 		$("#getVerify").click(function() {
 			//提交的参数，name和inch是和struts action中对应的接收变量
 			var params = {
+				phone:$("#mobile").val()
 			};
 			$.ajax({
 				type : "POST",
@@ -57,7 +58,7 @@
 					<table border="0" style="margin-left: 15%; width: 70%">
 						<tr>
 							<td><span style="font-size: 14px">手机号码</span></td>
-							<td><input type="text" class="inputSize" name="mobile"></td>
+							<td><input type="text" class="inputSize" name="mobile" id="mobile"></td>
 						</tr>
 						<tr>
 							<td><span style="font-size: 14px">短信验证码</span></td>
