@@ -60,7 +60,7 @@ public class InvestAdvisorServiceImpl implements InvestAdvisorService {
         for (CommonProductInfo productInfo : commonPortfolio.getProducts()) {
             flow_score += productInfo.isFlow() ? productInfo.getPercentage() : 0;
             risk_score += productInfo.isRisk() ? productInfo.getPercentage() : 0;
-            yield_score += productInfo.getPercentage() / 100 * productInfo.getRtr() * 10;
+            yield_score += productInfo.getPercentage() / 100 * productInfo.getRtr();
 
             if (!productInfo.getProductType().equals(ProductCategoryManager.categoryInsurance)) {
                 length_score += productInfo.getLength() * productInfo.getPercentage() / (100 * 30);
@@ -71,7 +71,7 @@ public class InvestAdvisorServiceImpl implements InvestAdvisorService {
         portfolioScores.setFlow_score((int)flow_score);
         portfolioScores.setLength_score((int)(length_score > 100 ? 100 : length_score));
         portfolioScores.setRisk_score((int)risk_score);
-        portfolioScores.setYield_score((int)yield_score);
+        portfolioScores.setYield_score((int)(yield_score > 100 ? 100 : yield_score));
 
         return portfolioScores;
     }

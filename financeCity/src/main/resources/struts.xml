@@ -51,13 +51,13 @@
 		</action>
 		
 		<action name="signup3" class="edu.nju.action.UserAction" method="bindPayWay">
-			<result name="success">/jsp/signup_step4.jsp</result>
+			<result name="success" type="redirectAction">search</result>
 			<result name="error">/jsp/signup_step3.jsp</result>
 			<result name="login">/jsp/login.jsp</result>
 		</action>
-		
+
 		<action name="signup4" class="edu.nju.action.UserAction" method="setTemperPrefer">
-			<result name="success" type="redirectAction">search</result>
+			<result name="success" type="redirectAction">recommend</result>
 			<result name="error">/jsp/signup_step4.jsp</result>
 			<result name="login">/jsp/login.jsp</result>
 		</action>

@@ -61,11 +61,11 @@
 		<s:form name="getAsset" method="post">	 
 	        <ul id="nav">
 	        <li style="margin-top:10px"><a href="javascript:void(0);" onclick="product()">产品</a></li>
-	            <li style="margin:10px"><a href="">资产</a>
+	            <li style="margin:10px"><a href="javascript:void(0)">资产</a>
 	                <div>
 	                    <ul>
-	                        <li><a href="javascript:void(0);" onclick="assets()">我的资产</a></li>
-	                        <li><a href="javascript:void(0);" onclick="newQuestion()">资产推荐</a></li>
+	                        <li style="background-color: white; border-bottom: solid 1px darkgray"><a href="javascript:void(0);" onclick="assets()">我的资产</a></li>
+	                        <li style="background-color: white;"><a href="javascript:void(0);" onclick="newQuestion()">资产推荐</a></li>
 	                    </ul>
 	                </div>
 	            </li>
